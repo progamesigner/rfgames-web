@@ -1,0 +1,13 @@
+baseURL = "https://rfgames.tw/"
+languageCode = "en-us"
+title = "Stop At Nothing [Rush]"
+
+disableKinds = [
+  "404",
+  "robotsTXT",
+  "RSS",
+  "section",
+  "sitemap",
+  "taxonomy",
+  "taxonomyTerm"
+]

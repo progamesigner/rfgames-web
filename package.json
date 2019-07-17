@@ -1,0 +1,22 @@
+{
+  "name": "rfgames",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npx webpack --mode development",
+    "build:prod": "npx webpack --mode production",
+    "build:watch": "npx webpack --mode development --watch"
+  },
+  "author": "Yang Sheng Han <progamesigner@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^3.0.0",
+    "cssnano": "^4.1.10",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6"
+  }
+}

@@ -1,0 +1,22 @@
+{{- $script := "main.js" | resources.Get | minify | fingerprint "sha512" -}}
+{{- $style := "main.css" | resources.Get | minify | fingerprint "sha512" -}}
+
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+    <meta charset="utf-8">
+
+    <title>{{ .Title }} | {{ .Site.Title }}</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    {{ hugo.Generator }}
+
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
+</head>
+
+<body>
+    <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous"></script>
+</body>
+</html>
