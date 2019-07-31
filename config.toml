@@ -6,8 +6,13 @@ disableKinds = [
   "404",
   "robotsTXT",
   "RSS",
-  "section",
   "sitemap",
   "taxonomy",
   "taxonomyTerm"
 ]
+
+defaultContentLanguage = "en-us"
+disableAliases = true
+enableRobotsTXT = false
+hasCJKLanguage = true
+relativeURLs = true

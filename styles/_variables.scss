@@ -1,0 +1,57 @@
+// Colors
+$black-color: #0a0a0a !default;
+$white-color: #ffffff !default;
+
+// Typography
+$font-family-sans-serif: Roboto, 'Noto Sans TC', sans-serif !default;
+
+// Responsiveness
+$gap: 32px !default;
+$tablet-breakpoint: 769px !default;
+$desktop-breakpoint: 960px + (2 * $gap) !default;
+
+// Miscellaneous
+$radius-large: 6px !default;
+
+// Color Palette
+$primary-color: #4682b4 !default;
+
+$background-color: #1b1b1b !default;
+$foreground-color: #f2f3f4 !default;
+
+$text-color: $foreground-color !default;
+
+$link-color: $primary-color !default;
+$link-hover-color: lighten($primary-color, 5%) !default;
+
+:root {
+    // Primitive
+    --shadow-color: #{$black-color};
+    --shadow-alpha: 0.15;
+
+    // Derived
+    --drop-shadow: 0 8px 8px rgba(var(--shadow-color), var(--shadow-alpha));
+
+    // Layouts
+    --link-color: #{$link-color};
+    --link-hover-color: #{$link-hover-color};
+
+    --body-background-color: #{$background-color};
+    --body-font-family: #{$font-family-sans-serif};
+    --body-font-size: 16px;
+    --body-min-width: 300px;
+    --body-text-color: #{$text-color};
+
+    --container-gap: #{$gap};
+
+    --header-background-color: #{darken($background-color, 5%)};
+
+    --nav-text-color: #{$link-color};
+    --nav-text-hover-color: #{$link-hover-color};
+    --nav-dropdown-z: 20;
+    --nav-dropdown-background-color: #{darken($background-color, 5%)};
+    --nav-dropdown-radius: #{$radius-large};
+    --nav-dropdown-item-hover-background-color: #{lighten($background-color, 5%)};
+    --nav-dropdown-arrow-color: #{$link-color};
+    --nav-dropdown-arrow-hover-color: #{$link-hover-color};
+}

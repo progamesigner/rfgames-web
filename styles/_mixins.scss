@@ -1,0 +1,52 @@
+@mixin arrow($border-color) {
+    border: 3px solid $border-color;
+    border-radius: 2px;
+    border-right: 0;
+    border-top: 0;
+    content: " ";
+    display: block;
+    height: 0.5rem;
+    margin-top: -0.4375rem;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: rotate(-45deg);
+    transform-origin: center;
+    width: 0.5rem;
+}
+
+@mixin between($from, $until) {
+    @media screen and (min-width: $from) and (max-width: $until) {
+        @content;
+    }
+}
+
+@mixin from($width) {
+    @media screen and (min-width: $width) {
+        @content;
+    }
+}
+
+@mixin until($width) {
+    @media screen and (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @include until($tablet-breakpoint - 1) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @include from($tablet-breakpoint) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @include from($desktop-breakpoint) {
+        @content;
+    }
+}

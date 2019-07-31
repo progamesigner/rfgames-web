@@ -1,0 +1,13 @@
+body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--body-background-color);
+    color: var(--body-text-color);
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size);
+    min-width: var(--body-min-width);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-rendering: optimizeLegibility;
+    text-size-adjust: 100%;
+}

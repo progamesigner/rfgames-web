@@ -1,0 +1,9 @@
+{{- $entry := 0 | index . -}}
+{{- $page := 1 | index . -}}
+{{- $menu := 2 | index . -}}
+
+{{- if $entry | $page.IsMenuCurrent $menu -}}
+{{- printf "nav-item is-active" -}}
+{{- else -}}
+{{- printf "nav-item" -}}
+{{- end -}}

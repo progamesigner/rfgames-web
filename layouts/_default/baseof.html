@@ -3,6 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
+
 <head>
     <meta charset="utf-8">
 
@@ -13,10 +14,27 @@
 
     {{ hugo.Generator }}
 
-    <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
+    <link href="{{ $style.RelPermalink }}" rel="stylesheet" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:500|Roboto:500&display=swap&subset=chinese-traditional" rel="stylesheet">
 </head>
 
 <body>
+    <header class="header">
+        <div class="container">
+            {{ partial "layouts/header-nav.html" . }}
+        </div>
+    </header>
+
+    <main class="main" role="main">
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    <footer class="footer">
+        <div class="container"></div>
+    </footer>
+
     <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous"></script>
 </body>
+
 </html>
