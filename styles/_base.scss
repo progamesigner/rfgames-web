@@ -11,3 +11,13 @@ body {
     text-rendering: optimizeLegibility;
     text-size-adjust: 100%;
 }
+
+a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+
+    @include has-hover() {
+        color: var(--link-hover-color);
+    }
+}
