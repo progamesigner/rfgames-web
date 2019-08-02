@@ -1,0 +1,43 @@
+.button {
+    @include control();
+    @include unselectable();
+
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    cursor: pointer;
+    padding: var(--button-padding-vertical) var(--button-padding-horizontal);
+    text-align: center;
+    white-space: nowrap;
+
+    @include has-active {
+        color: var(--button-text-active-color);
+    }
+
+    @include has-disabled() {
+        background-color: var(--button-disabled-background-color);
+        opacity: var(--button-disabled-opacity);
+    }
+
+    @include has-focus() {
+        color: var(--button-text-focus-color);
+    }
+
+    @include has-hover() {
+        color: var(--button-text-hover-color);
+    }
+}
+
+.buttons {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    .button {
+        margin-bottom: var(--button-spacing);
+
+        &:not(:last-child) {
+            margin-right: var(--button-spacing);
+        }
+    }
+}
