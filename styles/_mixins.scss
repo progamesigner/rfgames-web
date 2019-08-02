@@ -1,3 +1,38 @@
+/* ========================================================================== *\
+ * Modifiers                                                                  *
+\* ========================================================================== */
+@mixin has-active() {
+    &:active,
+    &.is-active {
+        @content;
+    }
+}
+
+@mixin has-disabled() {
+    &.is-disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        @content;
+    }
+}
+
+@mixin has-focus() {
+    &:focus,
+    &.is-focused {
+        @content;
+    }
+}
+
+@mixin has-hover() {
+    &:hover,
+    &.is-hovered {
+        @content;
+    }
+}
+
+/* ========================================================================== *\
+ * Elements                                                                   *
+\* ========================================================================== */
 @mixin arrow($border-color) {
     border: 3px solid $border-color;
     border-radius: 2px;
@@ -15,6 +50,50 @@
     width: 0.5rem;
 }
 
+@mixin control() {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    align-items: center;
+    border-radius: var(--control-radius);
+    box-shadow: none;
+    display: inline-flex;
+    font-size: var(--control-font-size);
+    justify-content: flex-start;
+    padding: var(--control-padding-horizontal) var(--control-padding-vertical);
+    position: relative;
+
+    @include has-active() {
+        outline: none;
+    }
+
+    @include has-disabled() {
+        cursor: not-allowed;
+    }
+
+    @include has-focus() {
+        outline: none;
+    }
+}
+
+@mixin overlay($offset: 0) {
+    bottom: $offset;
+    left: $offset;
+    position: absolute;
+    right: $offset;
+    top: $offset;
+}
+
+@mixin unselectable() {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ========================================================================== *\
+ * Responsiveness                                                             *
+\* ========================================================================== */
 @mixin between($from, $until) {
     @media screen and (min-width: $from) and (max-width: $until) {
         @content;
@@ -33,19 +112,19 @@
     }
 }
 
-@mixin mobile {
+@mixin mobile() {
     @include until($tablet-breakpoint - 1) {
         @content;
     }
 }
 
-@mixin tablet {
+@mixin tablet() {
     @include from($tablet-breakpoint) {
         @content;
     }
 }
 
-@mixin desktop {
+@mixin desktop() {
     @include from($desktop-breakpoint) {
         @content;
     }
