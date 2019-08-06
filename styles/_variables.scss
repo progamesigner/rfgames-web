@@ -1,24 +1,38 @@
 /* ========================================================================== *\
  * Colors                                                                     *
 \* ========================================================================== */
-// Basic
 $black-color: #0a0a0a !default;
 $black-bis-color: #1b1b1b !default;
+$black-ter-color: #232323 !default;
 
-$white-bis-color: #f2f3f4 !default;
-$white-color: #ffffff !default;
+$grey-darker-color: #353839 !default;
+$grey-dark-color: #4d5359 !default;
+$grey-color: #54626f !default;
+$grey-light-color: #6b778d !default;
+$grey-lighter-color: #8c92ac !default;
 
-// Color palette
+$white-ter-color: #d3d3d3 !default;
+$white-bis-color: #ebebeb !default;
+$white-color: #fafafa !default;
+
 $primary-color: #4682b4 !default;
+$secondary-color: #263859 !default;
+$accent-color: #e3ab57 !default;
+
+$info-color: #57b3f9 !default;
+$success-color: #7ab527 !default;
+$warning-color: #f9c639 !default;
+$danger-color: #ff4f38 !default;
 
 $background-color: $black-bis-color !default;
 $foreground-color: $white-bis-color !default;
 
+$border-color: $black-color !default;
+
 /* ========================================================================== *\
  * Typography                                                                 *
 \* ========================================================================== */
-// Basic
-$font-family-sans-serif: Roboto, 'Noto Sans TC', sans-serif !default;
+$font-family-primary: Roboto, 'Noto Sans TC', sans-serif !default;
 
 $font-size-1: 3rem !default;
 $font-size-2: 2.5rem !default;
@@ -34,14 +48,6 @@ $font-weight-medium: 500 !default;
 $font-weight-semibold: 600 !default;
 $font-weight-bold: 700 !default;
 
-// Named veriables
-$font-family-primary: $font-family-sans-serif !default;
-
-$font-size-small: $font-size-7 !default;
-$font-size-normal: $font-size-6 !default;
-$font-size-medium: $font-size-5 !default;
-$font-size-large: $font-size-4 !default;
-
 /* ========================================================================== *\
  * Responsiveness                                                             *
 \* ========================================================================== */
@@ -53,14 +59,25 @@ $desktop-breakpoint: 960px + (2 * $gap) !default;
  * Miscellaneous                                                              *
 \* ========================================================================== */
 $block-spacing: 1.5rem !default;
+$easing: ease-out !default;
 $radius-small: 2px !default;
 $radius: 4px !default;
 $radius-large: 6px !default;
 $radius-rounded: 290486px !default;
+$speed: 86ms !default;
 
 /* ========================================================================== *\
  * Defined                                                                    *
 \* ========================================================================== */
+$button-background-active-color: lighten($accent-color, 5%) !default;
+$button-background-color: $accent-color !default;
+$button-background-focus-color: lighten($accent-color, 5%) !default;
+$button-background-hover-color: darken($accent-color, 5%) !default;
+$button-text-active-color: darken($background-color, 5%) !default;
+$button-text-color: $background-color !default;
+$button-text-focus-color: darken($background-color, 5%) !default;
+$button-text-hover-color: lighten($background-color, 5%) !default;
+
 $link-color: $primary-color !default;
 
 $link-active-color: darken($primary-color, 5%) !default;
@@ -71,11 +88,19 @@ $text-color: $foreground-color !default;
 
 :root {
     // Primitive
+    --border-color: #{$border-color};
+
+    --easing: #{$easing};
+
     --shadow-color: #{$black-color};
     --shadow-alpha: 0.15;
 
+    --speed: #{$speed};
+
+    --selection-background-color: #{$secondary-color};
+
     // Derived
-    --drop-shadow: 0 8px 8px rgba(var(--shadow-color), var(--shadow-alpha));
+    --drop-shadow: 0 0.5rem 0.5rem rgba(var(--shadow-color), var(--shadow-alpha));
 
     // Layouts
     --link-color: #{$link-color};
@@ -88,36 +113,36 @@ $text-color: $foreground-color !default;
     --body-min-width: 300px;
     --body-text-color: #{$text-color};
 
-    --button-background-color: #{$background-color};
-    --button-disabled-background-color: #{lighten($background-color, 15%)};
-    --button-disabled-opacity: 0.5;
-    --button-padding-horizontal: 0.75rem;
-    --button-padding-vertical: 0.375rem;
+    --button-background-active-color: #{$button-background-active-color};
+    --button-background-color: #{$button-background-color};
+    --button-background-focus-color: #{$button-background-focus-color};
+    --button-background-hover-color: #{$button-background-hover-color};
+    --button-padding-horizontal: 1rem;
+    --button-padding-vertical: 0.5rem;
     --button-spacing: 0.5rem;
-    --button-text-active-color: #{$link-active-color};
-    --button-text-color: #{$text-color};
-    --button-text-focus-color: #{$link-focus-color};
-    --button-text-hover-color: #{$link-hover-color};
+    --button-text-active-color: #{$button-text-active-color};
+    --button-text-color: #{$button-text-color};
+    --button-text-focus-color: #{$button-text-focus-color};
+    --button-text-hover-color: #{$button-text-hover-color};
 
     --container-gap: #{$gap};
 
-    --control-font-size: #{$font-size-normal};
+    --control-font-size: #{$font-size-6};
     --control-padding-horizontal: 0.675rem;
     --control-padding-vertical: 0.375rem;
     --control-radius: #{$radius};
 
     --header-background-color: #{darken($background-color, 5%)};
 
-    --home-image-button-background-color: black;
-
-    --nav-text-color: #{$link-color};
-    --nav-text-hover-color: #{$link-hover-color};
-    --nav-dropdown-z: 100;
-    --nav-dropdown-background-color: #{darken($background-color, 5%)};
-    --nav-dropdown-radius: #{$radius};
-    --nav-dropdown-item-hover-background-color: #{lighten($background-color, 5%)};
     --nav-dropdown-arrow-color: #{$link-color};
     --nav-dropdown-arrow-hover-color: #{$link-hover-color};
+    --nav-dropdown-background-color: #{darken($background-color, 5%)};
+    --nav-dropdown-item-hover-background-color: #{lighten($background-color, 5%)};
+    --nav-dropdown-radius: #{$radius};
+    --nav-dropdown-z: 100;
+    --nav-min-height: 3.25rem;
+    --nav-text-color: #{$link-color};
+    --nav-text-hover-color: #{$link-hover-color};
 
     --section-gap: #{$gap};
 
