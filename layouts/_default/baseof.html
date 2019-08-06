@@ -26,9 +26,11 @@
         </div>
     </header>
 
-    <main class="main" role="main">
-        {{ block "main" . }}{{ end }}
-    </main>
+    {{ block "main" . }}
+        <main class="main" role="main">
+            {{ .Content }}
+        </main>
+    {{ end }}
 
     <footer class="footer">
         <div class="container"></div>
