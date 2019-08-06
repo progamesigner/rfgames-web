@@ -1,7 +1,7 @@
 .nav {
     align-items: stretch;
     display: flex;
-    min-height: 3.25rem;
+    min-height: var(--nav-min-height);
 }
 
 .nav-brand {

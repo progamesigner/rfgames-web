@@ -16,8 +16,14 @@ a {
     color: var(--link-color);
     cursor: pointer;
     text-decoration: none;
+    transition: background-color var(--easing) var(--speed), color var(--easing) var(--speed);
 
     @include has-hover() {
         color: var(--link-hover-color);
     }
+}
+
+::selection,
+::-moz-selection {
+    background-color: var(--selection-background-color);
 }
