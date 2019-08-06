@@ -1,3 +1,7 @@
 .container {
-    margin: 0 var(--container-gap);
+    margin: 0 auto;
+
+    @include desktop() {
+        max-width: calc(#{$desktop-breakpoint} - var(--container-offset));
+    }
 }

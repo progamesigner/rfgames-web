@@ -7,6 +7,12 @@
 .nav-brand {
     align-items: center;
     display: flex;
+
+    .nav-item,
+    .nav-link {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .nav-menu {
