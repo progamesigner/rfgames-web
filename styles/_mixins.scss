@@ -50,6 +50,12 @@
     width: 0.5rem;
 }
 
+@mixin block($spacing: var(--block-spacing)) {
+    &:not(:last-child) {
+        margin-bottom: $spacing;
+    }
+}
+
 @mixin control() {
     -moz-appearance: none;
     -webkit-appearance: none;

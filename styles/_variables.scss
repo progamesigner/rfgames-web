@@ -52,6 +52,7 @@ $desktop-breakpoint: 960px + (2 * $gap) !default;
 /* ========================================================================== *\
  * Miscellaneous                                                              *
 \* ========================================================================== */
+$block-spacing: 1.5rem !default;
 $radius-small: 2px !default;
 $radius: 4px !default;
 $radius-large: 6px !default;
@@ -80,6 +81,7 @@ $text-color: $foreground-color !default;
     --link-color: #{$link-color};
     --link-hover-color: #{$link-hover-color};
 
+    --block-spacing: #{$block-spacing};
     --body-background-color: #{$background-color};
     --body-font-family: #{$font-family-primary};
     --body-font-size: 16px;
@@ -106,6 +108,8 @@ $text-color: $foreground-color !default;
 
     --header-background-color: #{darken($background-color, 5%)};
 
+    --home-image-button-background-color: black;
+
     --nav-text-color: #{$link-color};
     --nav-text-hover-color: #{$link-hover-color};
     --nav-dropdown-z: 100;
@@ -116,4 +120,15 @@ $text-color: $foreground-color !default;
     --nav-dropdown-arrow-hover-color: #{$link-hover-color};
 
     --section-gap: #{$gap};
+
+    --subtitle-font-family: #{$font-family-primary};
+    --subtitle-font-size: #{$font-size-5};
+    --subtitle-font-weight: #{$font-weight-semibold};
+    --subtitle-negative-margin: -1.25rem;
+    --subtitle-text-color: #{$text-color};
+
+    --title-font-family: #{$font-family-primary};
+    --title-font-size: #{$font-size-3};
+    --title-font-weight: #{$font-weight-semibold};
+    --title-text-color: #{$text-color};
 }
