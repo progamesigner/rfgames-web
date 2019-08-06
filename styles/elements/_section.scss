@@ -1,0 +1,7 @@
+.section {
+    position: relative;
+
+    &:not(:last-child) {
+        margin-bottom: var(--section-gap);
+    }
+}
