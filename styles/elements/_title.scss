@@ -2,9 +2,9 @@
 .subtitle {
     @include block();
 
+    text-shadow: var(--text-shadow);
     word-break: break-word;
 }
-
 
 .title {
     color: var(--title-text-color);
@@ -16,6 +16,20 @@
     &:not(.is-spaced) {
         & + .subtitle {
             margin-top: var(--subtitle-negative-margin);
+        }
+    }
+}
+
+.subtitle {
+    color: var(--subtitle-text-color);
+    font-family: var(--subtitle-font-family);
+    font-size: var(--subtitle-font-size);
+    font-weight: var(--subtitle-font-weight);
+    line-height: var(--subtitle-line-height);
+
+    &:not(.is-spaced) {
+        & + .title {
+            margin-top: var(--title-negative-margin);
         }
     }
 }

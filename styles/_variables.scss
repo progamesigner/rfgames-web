@@ -92,15 +92,13 @@ $text-color: $foreground-color !default;
 
     --easing: #{$easing};
 
-    --shadow-color: #{$black-color};
-    --shadow-alpha: 0.15;
-
     --speed: #{$speed};
 
     --selection-background-color: #{$secondary-color};
 
     // Derived
-    --drop-shadow: 0 0.5rem 0.5rem rgba(var(--shadow-color), var(--shadow-alpha));
+    --drop-shadow: 0 0.5rem 0.5rem #{rgba($black-color, 0.15)};
+    --text-shadow: 0.125rem 0.125rem 0.25rem #{rgba($warning-color, 0.15)};
 
     // Layouts
     --link-color: #{$link-color};
@@ -125,7 +123,7 @@ $text-color: $foreground-color !default;
     --button-text-focus-color: #{$button-text-focus-color};
     --button-text-hover-color: #{$button-text-hover-color};
 
-    --container-gap: #{$gap};
+    --container-offset: #{$gap * 2};
 
     --control-font-size: #{$font-size-6};
     --control-padding-horizontal: 0.675rem;
@@ -149,11 +147,14 @@ $text-color: $foreground-color !default;
     --subtitle-font-family: #{$font-family-primary};
     --subtitle-font-size: #{$font-size-5};
     --subtitle-font-weight: #{$font-weight-semibold};
+    --subtitle-line-height: 1.5rem;
     --subtitle-negative-margin: -1.25rem;
     --subtitle-text-color: #{$text-color};
 
     --title-font-family: #{$font-family-primary};
     --title-font-size: #{$font-size-3};
     --title-font-weight: #{$font-weight-semibold};
+    --title-line-height: 1.5rem;
+    --title-negative-margin: 0.25rem;
     --title-text-color: #{$text-color};
 }
