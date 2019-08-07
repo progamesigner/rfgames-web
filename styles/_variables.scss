@@ -1,38 +1,116 @@
 /* ========================================================================== *\
+ * Palettes                                                                   *
+\* ========================================================================== */
+$primary-palette: (
+    100: hsl(195, 79%, 92%),
+    200: hsl(198, 79%, 85%),
+    300: hsl(201, 65%, 74%),
+    400: hsl(204, 52%, 63%),
+    500: hsl(207, 44%, 49%),
+    600: hsl(210, 50%, 40%),
+    700: hsl(214, 57%, 32%),
+    800: hsl(217, 65%, 25%),
+    900: hsl(220, 74%, 19%)
+) !default;
+
+$accent-palette: (
+    100: hsl(37, 68%, 96%),
+    200: hsl(36, 70%, 89%),
+    300: hsl(36, 70%, 79%),
+    400: hsl(36, 71%, 68%),
+    500: hsl(36, 71%, 62%),
+    600: hsl(36, 45%, 51%),
+    700: hsl(36, 44%, 34%),
+    800: hsl(36, 44%, 17%),
+    900: hsl(37, 45%, 6%)
+) !default;
+
+$info-palette: (
+    100: hsl(189, 94%, 93%),
+    200: hsl(194, 97%, 87%),
+    300: hsl(197, 98%, 80%),
+    400: hsl(201, 97%, 75%),
+    500: hsl(204, 96%, 67%),
+    600: hsl(208, 66%, 55%),
+    700: hsl(211, 61%, 44%),
+    800: hsl(215, 68%, 34%),
+    900: hsl(218, 76%, 27%)
+) !default;
+
+$success-palette: (
+    100: hsl(126, 84%, 90%),
+    200: hsl(132, 86%, 81%),
+    300: hsl(138, 76%, 69%),
+    400: hsl(144, 65%, 58%),
+    500: hsl(150, 75%, 43%),
+    600: hsl(156, 79%, 36%),
+    700: hsl(162, 83%, 30%),
+    800: hsl(168, 87%, 23%),
+    900: hsl(174, 90%, 19%)
+) !default;
+
+$warning-palette: (
+    100: hsl(46, 95%, 92%),
+    200: hsl(44, 95%, 84%),
+    300: hsl(42, 90%, 76%),
+    400: hsl(40, 86%, 69%),
+    500: hsl(38, 83%, 58%),
+    600: hsl(36, 65%, 48%),
+    700: hsl(33, 71%, 39%),
+    800: hsl(31, 77%, 30%),
+    900: hsl(29, 82%, 24%)
+) !default;
+
+$danger-palette: (
+    100: hsl(16, 100%, 93%),
+    200: hsl(11, 100%, 85%),
+    300: hsl(5, 100%, 78%),
+    400: hsl(0, 100%, 73%),
+    500: hsl(354, 100%, 64%),
+    600: hsl(349, 70%, 53%),
+    700: hsl(343, 68%, 43%),
+    800: hsl(337, 74%, 33%),
+    900: hsl(332, 81%, 26%)
+) !default;
+
+$shade-palette: (
+    100: hsl(0, 0%, 95%),
+    200: hsl(0, 0%, 86%),
+    300: hsl(0, 0%, 73%),
+    400: hsl(0, 0%, 59%),
+    500: hsl(0, 0%, 50%),
+    600: hsl(0, 0%, 41%),
+    700: hsl(0, 0%, 27%),
+    800: hsl(0, 0%, 14%),
+    900: hsl(0, 0%, 5%)
+) !default;
+
+/* ========================================================================== *\
  * Colors                                                                     *
 \* ========================================================================== */
-$black-color: #0a0a0a !default;
-$black-bis-color: #1b1b1b !default;
-$black-ter-color: #232323 !default;
+$button-background-active-color: map-get($primary-palette, 400) !default;
+$button-background-color: map-get($primary-palette, 500) !default;
+$button-background-focus-color: map-get($primary-palette, 400) !default;
+$button-background-hover-color: map-get($primary-palette, 600) !default;
+$button-text-active-color: map-get($shade-palette, 900) !default;
+$button-text-color: map-get($shade-palette, 900) !default;
+$button-text-focus-color: map-get($shade-palette, 900) !default;
+$button-text-hover-color: map-get($shade-palette, 900) !default;
 
-$grey-darker-color: #353839 !default;
-$grey-dark-color: #4d5359 !default;
-$grey-color: #54626f !default;
-$grey-light-color: #6b778d !default;
-$grey-lighter-color: #8c92ac !default;
+$link-color: map-get($primary-palette, 300) !default;
+$link-active-color: map-get($primary-palette, 200) !default;
+$link-focus-color: map-get($primary-palette, 200) !default;
+$link-hover-color: map-get($primary-palette, 200) !default;
 
-$white-ter-color: #d3d3d3 !default;
-$white-bis-color: #ebebeb !default;
-$white-color: #fafafa !default;
-
-$primary-color: #4682b4 !default;
-$secondary-color: #263859 !default;
-$accent-color: #e3ab57 !default;
-
-$info-color: #57b3f9 !default;
-$success-color: #7ab527 !default;
-$warning-color: #f9c639 !default;
-$danger-color: #ff4f38 !default;
-
-$background-color: $black-bis-color !default;
-$foreground-color: $white-bis-color !default;
-
-$border-color: $black-color !default;
+$background-color: map-get($shade-palette, 900) !default;
+$background-alternative-color: map-get($shade-palette, 800) !default;
+$foreground-color: map-get($shade-palette, 100) !default;
+$foreground-alternative-color: map-get($shade-palette, 200) !default;
 
 /* ========================================================================== *\
  * Typography                                                                 *
 \* ========================================================================== */
-$font-family-primary: Roboto, 'Noto Sans TC', sans-serif !default;
+$font-family: Roboto, 'Noto Sans TC', sans-serif !default;
 
 $font-size-1: 3rem !default;
 $font-size-2: 2.5rem !default;
@@ -66,45 +144,25 @@ $radius-large: 6px !default;
 $radius-rounded: 290486px !default;
 $speed: 86ms !default;
 
-/* ========================================================================== *\
- * Defined                                                                    *
-\* ========================================================================== */
-$button-background-active-color: lighten($accent-color, 5%) !default;
-$button-background-color: $accent-color !default;
-$button-background-focus-color: lighten($accent-color, 5%) !default;
-$button-background-hover-color: darken($accent-color, 5%) !default;
-$button-text-active-color: darken($background-color, 5%) !default;
-$button-text-color: $background-color !default;
-$button-text-focus-color: darken($background-color, 5%) !default;
-$button-text-hover-color: lighten($background-color, 5%) !default;
-
-$link-color: $primary-color !default;
-
-$link-active-color: darken($primary-color, 5%) !default;
-$link-focus-color: darken($primary-color, 5%) !default;
-$link-hover-color: lighten($primary-color, 5%) !default;
-
-$text-color: $foreground-color !default;
-
 :root {
     // Primitive
     --block-spacing: #{$block-spacing};
-    --border-color: #{$border-color};
-    --drop-shadow: 0 0.5rem 0.5rem #{rgba($black-color, 0.15)};
+    --border-color: #{map-get($shade-palette, 700)};
+    --drop-shadow: 0 0.5rem 0.5rem #{rgba($background-color, 0.15)};
     --easing: #{$easing};
-    --selection-background-color: #{$secondary-color};
+    --selection-background-color: #{map-get($primary-palette, 700)};
     --speed: #{$speed};
-    --text-shadow: 0.125rem 0.125rem 0.25rem #{rgba($warning-color, 0.15)};
+    --text-shadow: 0.125rem 0.125rem 0.25rem #{rgba($background-color, 0.15)};
 
     // Base
     --link-color: #{$link-color};
     --link-hover-color: #{$link-hover-color};
 
     --body-background-color: #{$background-color};
-    --body-font-family: #{$font-family-primary};
+    --body-font-family: #{$font-family};
     --body-font-size: 16px;
     --body-min-width: 300px;
-    --body-text-color: #{$text-color};
+    --body-text-color: #{$foreground-color};
 
     --button-background-active-color: #{$button-background-active-color};
     --button-background-color: #{$button-background-color};
@@ -128,25 +186,25 @@ $text-color: $foreground-color !default;
     // Elements
     --section-gap: #{$gap};
 
-    --subtitle-font-family: #{$font-family-primary};
+    --subtitle-font-family: #{$font-family};
     --subtitle-font-size: #{$font-size-5};
     --subtitle-font-weight: #{$font-weight-semibold};
     --subtitle-line-height: 1.5rem;
     --subtitle-negative-margin: -1.25rem;
-    --subtitle-text-color: #{$text-color};
+    --subtitle-text-color: #{$foreground-alternative-color};
 
-    --title-font-family: #{$font-family-primary};
+    --title-font-family: #{$font-family};
     --title-font-size: #{$font-size-3};
     --title-font-weight: #{$font-weight-semibold};
     --title-line-height: 1.5rem;
     --title-negative-margin: 0.25rem;
-    --title-text-color: #{$text-color};
+    --title-text-color: #{$foreground-alternative-color};
 
     // Components
     --nav-dropdown-arrow-color: #{$link-color};
     --nav-dropdown-arrow-hover-color: #{$link-hover-color};
-    --nav-dropdown-background-color: #{darken($background-color, 5%)};
-    --nav-dropdown-item-hover-background-color: #{lighten($background-color, 5%)};
+    --nav-dropdown-background-color: #{$background-color};
+    --nav-dropdown-item-hover-background-color: #{$background-alternative-color};
     --nav-dropdown-radius: #{$radius};
     --nav-dropdown-z: 100;
     --nav-min-height: 3.25rem;
@@ -154,5 +212,5 @@ $text-color: $foreground-color !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     // Layouts
-    --header-background-color: #{darken($background-color, 5%)};
+    --header-background-color: #{$background-color};
 }
