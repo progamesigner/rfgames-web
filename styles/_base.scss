@@ -1,3 +1,8 @@
+::selection,
+::-moz-selection {
+    background-color: var(--selection-background-color);
+}
+
 body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -21,9 +26,4 @@ a {
     @include has-hover() {
         color: var(--link-hover-color);
     }
-}
-
-::selection,
-::-moz-selection {
-    background-color: var(--selection-background-color);
 }

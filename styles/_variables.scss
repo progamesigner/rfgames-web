@@ -88,19 +88,19 @@ $shade-palette: (
 /* ========================================================================== *\
  * Colors                                                                     *
 \* ========================================================================== */
-$button-background-active-color: map-get($primary-palette, 400) !default;
+$button-background-active-color: map-get($primary-palette, 600) !default;
 $button-background-color: map-get($primary-palette, 500) !default;
-$button-background-focus-color: map-get($primary-palette, 400) !default;
+$button-background-focus-color: map-get($primary-palette, 600) !default;
 $button-background-hover-color: map-get($primary-palette, 600) !default;
-$button-text-active-color: map-get($shade-palette, 900) !default;
+$button-text-active-color: map-get($shade-palette, 100) !default;
 $button-text-color: map-get($shade-palette, 900) !default;
-$button-text-focus-color: map-get($shade-palette, 900) !default;
-$button-text-hover-color: map-get($shade-palette, 900) !default;
+$button-text-focus-color: map-get($shade-palette, 100) !default;
+$button-text-hover-color: map-get($shade-palette, 100) !default;
 
 $link-color: map-get($primary-palette, 300) !default;
-$link-active-color: map-get($primary-palette, 200) !default;
-$link-focus-color: map-get($primary-palette, 200) !default;
-$link-hover-color: map-get($primary-palette, 200) !default;
+$link-active-color: map-get($primary-palette, 100) !default;
+$link-focus-color: map-get($primary-palette, 100) !default;
+$link-hover-color: map-get($primary-palette, 100) !default;
 
 $background-color: map-get($shade-palette, 900) !default;
 $background-alternative-color: map-get($shade-palette, 800) !default;
@@ -146,8 +146,13 @@ $speed: 86ms !default;
 
 :root {
     // Primitive
+    --danger-color: #{map-get($danger-palette, 500)};
+    --info-color: #{map-get($info-palette, 500)};
+    --success-color: #{map-get($success-palette, 500)};
+    --warning-color: #{map-get($warning-palette, 500)};
+
     --block-spacing: #{$block-spacing};
-    --border-color: #{map-get($shade-palette, 700)};
+    --border-color: #{$background-alternative-color};
     --drop-shadow: 0 0.5rem 0.5rem #{rgba($background-color, 0.15)};
     --easing: #{$easing};
     --selection-background-color: #{map-get($primary-palette, 700)};
@@ -212,5 +217,6 @@ $speed: 86ms !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     // Layouts
+    --footer-background-color: #{$background-alternative-color};
     --header-background-color: #{$background-color};
 }
