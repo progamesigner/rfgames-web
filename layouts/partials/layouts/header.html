@@ -1,0 +1,40 @@
+{{- $currentPage := . -}}
+
+<header class="header">
+    <div class="container">
+        <nav class="nav" role="navigation" aria-label="dropdown navigation">
+            <div class="nav-brand">
+                <a class="nav-item" href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
+                <a class="nav-toggle" role="button" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="nav-menu">
+                {{ range "nav" | index .Site.Menus }}
+                {{ if .HasChildren }}
+                <div class="{{ slice . $currentPage "nav" | partial "functions/nav-item-class.text" }} has-dropdown">
+                    <a class="nav-link" href="{{ .URL }}">
+                        {{ .Pre }}<span>{{ .Title }}</span>{{ .Post }}
+                    </a>
+
+                    <div class="nav-dropdown">
+                        {{ range .Children }}
+                        <a class="{{ slice . $currentPage "nav" | partial "functions/nav-item-class.text" }}" href="{{ .URL }}">
+                            {{ .Pre }}<span>{{ .Title }}</span>{{ .Post }}
+                        </a>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ else }}
+                <a class="{{ slice . $currentPage "nav" | partial "functions/nav-item-class.text" }}" href="{{ .URL }}">
+                    {{ .Pre }}<span>{{ .Title }}</span>{{ .Post }}
+                </a>
+                {{ end }}
+                {{ end }}
+            </div>
+        </nav>
+    </div>
+</header>

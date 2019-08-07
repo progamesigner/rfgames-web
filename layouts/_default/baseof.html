@@ -20,11 +20,7 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="container">
-            {{ partial "layouts/header-nav.html" . }}
-        </div>
-    </header>
+    {{ partial "layouts/header.html" . }}
 
     {{ block "main" . }}
         <main class="main" role="main">
@@ -32,9 +28,7 @@
         </main>
     {{ end }}
 
-    <footer class="footer">
-        <div class="container"></div>
-    </footer>
+    {{ partial "layouts/footer.html" . }}
 
     <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous"></script>
 </body>
