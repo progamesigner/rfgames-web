@@ -159,6 +159,9 @@ $speed: 86ms !default;
     --speed: #{$speed};
     --text-shadow: 0.125rem 0.125rem 0.25rem #{rgba($background-color, 0.15)};
 
+    --tablet-breakpoint: #{$tablet-breakpoint};
+    --desktop-breakpoint: #{$desktop-breakpoint};
+
     // Base
     --link-color: #{$link-color};
     --link-hover-color: #{$link-hover-color};

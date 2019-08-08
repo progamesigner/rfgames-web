@@ -1,7 +1,11 @@
 .container {
     margin: 0 auto;
 
+    @include tablet() {
+        max-width: calc(var(--tablet-breakpoint) - var(--container-offset));
+    }
+
     @include desktop() {
-        max-width: calc(#{$desktop-breakpoint} - var(--container-offset));
+        max-width: calc(var(--desktop-breakpoint) - var(--container-offset));
     }
 }
