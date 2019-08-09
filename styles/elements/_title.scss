@@ -2,6 +2,7 @@
 .subtitle {
     @include block();
 
+    margin: 0;
     text-shadow: var(--text-shadow);
     word-break: break-word;
 }
