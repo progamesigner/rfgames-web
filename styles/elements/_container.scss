@@ -1,5 +1,6 @@
 .container {
     margin: 0 auto;
+    width: 100%;
 
     @include tablet() {
         max-width: calc(var(--tablet-breakpoint) - var(--container-offset));
