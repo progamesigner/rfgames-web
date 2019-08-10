@@ -1,0 +1,23 @@
+.columns {
+    display: flex;
+    margin-left: calc(-1 * var(--column-gap));
+    margin-right: calc(-1 * var(--column-gap));
+    margin-top: calc(-1 * var(--column-gap));
+    margin-bottom: calc(var(--block-spacing) - var(--column-gap));
+
+    &.is-multiline {
+        flex-wrap: wrap;
+    }
+
+    &.is-centered {
+        justify-content: center;
+    }
+}
+
+.column {
+    display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: var(--column-gap);
+}

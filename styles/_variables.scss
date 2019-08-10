@@ -198,6 +198,8 @@ $speed: 86ms !default;
     // Elements
     --container-offset: #{$gap * 2};
 
+    --icon-dimensions: 1.5rem;
+
     --section-gap: #{$gap};
 
     --subtitle-font-family: #{$font-family};
@@ -215,9 +217,11 @@ $speed: 86ms !default;
     --title-text-color: #{$foreground-alternative-color};
 
     // Components
+    --column-gap: 0.75rem;
+
     --member-nameplate-background-color: #{rgba($background-color, 0.75)};
-    --member-nameplate-padding: 0.75rem 1.25rem;
     --member-nameplate-height: 3.5rem;
+    --member-nameplate-padding: 0.75rem 1.25rem;
 
     --nav-dropdown-arrow-color: #{$link-color};
     --nav-dropdown-arrow-hover-color: #{$link-hover-color};
