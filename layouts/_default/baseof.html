@@ -1,5 +1,5 @@
-{{- $script := "main.js" | resources.Get | minify | fingerprint "sha512" -}}
-{{- $style := "main.css" | resources.Get | minify | fingerprint "sha512" -}}
+{{- $script := "main.js" | resources.Get | slice | resources.Concat "script.js" | fingerprint "sha512" -}}
+{{- $style := "main.css" | resources.Get | slice | resources.Concat "style.css" | fingerprint "sha512" -}}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
@@ -15,7 +15,6 @@
     {{ hugo.Generator }}
 
     <link href="{{ $style.RelPermalink }}" rel="stylesheet" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
-
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:500|Roboto:500&display=swap&subset=chinese-traditional" rel="stylesheet">
 </head>
 
