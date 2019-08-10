@@ -1,0 +1,40 @@
+{{- $members := index .Site.Data "members" -}}
+
+<div class="columns is-centered is-multiline">
+    {{- range $members -}}
+    <div class="column">
+        <div class="member">
+            <figure class="member-avatar image">
+                <img src="{{ index . "avatar" }}">
+            </figure>
+            <div class="member-nameplate">
+                <div class="member-nameplate-side is-front">
+                    <span class="member-nameplate-item">{{ index . "name" }}</span>
+                </div>
+                <div class="member-nameplate-side is-back">
+                    {{ with index . "account" }}
+                    <div class="member-nameplate-item">
+                        <span class="icon icon-account-name" data-tooltip="{{ . }}"></span>
+                    </div>
+                    {{ end }}
+                    {{ with index . "discord" }}
+                    <a class="member-nameplate-item">
+                        <span class="icon icon-discord" data-tooltip="{{ . }}"></span>
+                    </a>
+                    {{ end }}
+                    {{ with index . "youtube" }}
+                    <a class="member-nameplate-item">
+                        <span class="icon icon-youtube" data-tooltip="{{ . }}"></span>
+                    </a>
+                    {{ end }}
+                    {{ with index . "twitch" }}
+                    <a class="member-nameplate-item">
+                        <span class="icon icon-twitch" data-tooltip="{{ . }}"></span>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{- end -}}
+</div>

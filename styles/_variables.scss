@@ -137,11 +137,12 @@ $desktop-breakpoint: 960px + (2 * $gap) !default;
  * Miscellaneous                                                              *
 \* ========================================================================== */
 $block-spacing: 1.5rem !default;
-$easing: ease-out !default;
-$radius-small: 2px !default;
-$radius: 4px !default;
+$delay: 240ms !default;
+$easing: ease-in-out !default;
 $radius-large: 6px !default;
 $radius-rounded: 290486px !default;
+$radius-small: 2px !default;
+$radius: 4px !default;
 $speed: 86ms !default;
 
 :root {
@@ -153,9 +154,14 @@ $speed: 86ms !default;
 
     --block-spacing: #{$block-spacing};
     --border-color: #{$background-alternative-color};
+    --delay-long: #{$delay * 1.5};
+    --delay-short: #{$delay / 1.5};
+    --delay: #{$delay};
     --drop-shadow: 0 0.5rem 0.5rem #{rgba($background-color, 0.15)};
     --easing: #{$easing};
     --selection-background-color: #{map-get($primary-palette, 700)};
+    --speed-fast: #{$speed / 1.5};
+    --speed-slow: #{$speed * 1.5};
     --speed: #{$speed};
     --text-shadow: 0.125rem 0.125rem 0.25rem #{rgba($background-color, 0.15)};
 
@@ -184,14 +190,14 @@ $speed: 86ms !default;
     --button-text-focus-color: #{$button-text-focus-color};
     --button-text-hover-color: #{$button-text-hover-color};
 
-    --container-offset: #{$gap * 2};
-
     --control-font-size: #{$font-size-6};
     --control-padding-horizontal: 0.675rem;
     --control-padding-vertical: 0.375rem;
     --control-radius: #{$radius};
 
     // Elements
+    --container-offset: #{$gap * 2};
+
     --section-gap: #{$gap};
 
     --subtitle-font-family: #{$font-family};
@@ -209,6 +215,10 @@ $speed: 86ms !default;
     --title-text-color: #{$foreground-alternative-color};
 
     // Components
+    --member-nameplate-background-color: #{rgba($background-color, 0.75)};
+    --member-nameplate-padding: 0.75rem 1.25rem;
+    --member-nameplate-height: 3.5rem;
+
     --nav-dropdown-arrow-color: #{$link-color};
     --nav-dropdown-arrow-hover-color: #{$link-hover-color};
     --nav-dropdown-background-color: #{$background-color};

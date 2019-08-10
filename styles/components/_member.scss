@@ -1,0 +1,49 @@
+.member {
+    display: block;
+    min-width: 12rem;
+    position: relative;
+    padding-top: 100%;
+
+    @include has-hover() {
+        .member-nameplate-side {
+            transform: translateY(-100%);
+        }
+    }
+}
+
+.member-avatar {
+    @include overlay();
+}
+
+.member-nameplate {
+    background-color: var(--member-nameplate-background-color);
+    bottom: 0;
+    height: var(--member-nameplate-height);
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+}
+
+.member-nameplate-side {
+    align-items: center;
+    display: flex;
+    height: var(--member-nameplate-height);
+    padding: var(--member-nameplate-padding);
+    transform: translateY(0);
+    transition: transform var(--speed) var(--easing);
+    white-space: nowrap;
+
+    &.is-back {
+        justify-content: center;
+
+        .member-nameplate-item {
+            display: flex;
+
+            &:not(:last-child) {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+}
+
