@@ -16,3 +16,7 @@ disableAliases = true
 enableRobotsTXT = false
 hasCJKLanguage = true
 relativeURLs = true
+
+[params]
+  applicationFormURL = "https://apis.rfgames.tw/v1/apply"
+  contactFormURL = "https://apis.rfgames.tw/v1/contact"

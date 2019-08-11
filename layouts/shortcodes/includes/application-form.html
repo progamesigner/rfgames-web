@@ -1,0 +1,165 @@
+<form class="form" action="{{ .Page.Param "applicationFormURL" | default "#" }}" method="POST">
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Display Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="account" placeholder="Display Name.1234">
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="field">
+                <label class="label">Discord Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="discord" placeholder="Discord Name#1234">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Are you 18 years old or older?</label>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="age"> Yes
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="age" checked> No
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Do you understand our visions, goals, and requirements?</label>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="goals"> Yes
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="goals" checked> No
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Are you able to play during SEA-time in weekends?</label>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="times"> Yes
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="times" checked> No
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Do you have a working microphone?</label>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="microphone"> Yes
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="microphone" checked> No
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Are you able to speak and listen to important English commands?</label>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="commands"> Yes
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="commands" checked> No
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">What's your main in WvW fights?</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="main">
+                            <option value="warrior">Warrior / Berserker / Spellbreaker</option>
+                            <option value="guardian">Guardian / Dragonhunter / Firebrand</option>
+                            <option value="revenant">Revenant / Herald / Renegade</option>
+                            <option value="thief">Thief / Daredevil / Deadeye</option>
+                            <option value="ranger">Ranger / Druid / Soulbeast</option>
+                            <option value="engineer">Engineer / Scrapper / Holosmith</option>
+                            <option value="elementalist">Elementalist / Tempest / Weaver</option>
+                            <option value="necromancer">Necromancer / Reaper / Scourge</option>
+                            <option value="mesmer">Mesmer / Chronomancer / Mirage</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="field">
+                <label class="label">What's your alt in WvW fights?</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="alt">
+                            <option value="warrior">Warrior / Berserker / Spellbreaker</option>
+                            <option value="guardian">Guardian / Dragonhunter / Firebrand</option>
+                            <option value="revenant">Revenant / Herald / Renegade</option>
+                            <option value="thief">Thief / Daredevil / Deadeye</option>
+                            <option value="ranger">Ranger / Druid / Soulbeast</option>
+                            <option value="engineer">Engineer / Scrapper / Holosmith</option>
+                            <option value="elementalist">Elementalist / Tempest / Weaver</option>
+                            <option value="necromancer">Necromancer / Reaper / Scourge</option>
+                            <option value="mesmer">Mesmer / Chronomancer / Mirage</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Questions / Comments / Anything?</label>
+                <div class="control">
+                    <textarea class="textarea" name="message" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <div class="control">
+                    <button class="button" type="submit">Apply as Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

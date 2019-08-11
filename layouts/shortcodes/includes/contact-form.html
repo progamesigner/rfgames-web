@@ -1,0 +1,42 @@
+<form class="form" action="{{ .Page.Param "contactFormURL" | default "#" }}" method="POST">
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    <input class="input" type="text">
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input class="input" type="email">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <label class="label">Message</label>
+                <div class="control">
+                    <textarea class="textarea" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <div class="control">
+                    <button class="button" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
