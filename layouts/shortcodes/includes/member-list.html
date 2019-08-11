@@ -1,11 +1,13 @@
 {{- $members := index .Site.Data "members" -}}
 
 <div class="columns is-centered is-multiline">
-    {{- range $members -}}
+    {{ range $members }}
+    {{- $avatar := index . "avatar" | printf "images/members/%s.jpg" | resources.Get | fingerprint "sha512" -}}
+
     <div class="column">
         <div class="member">
             <figure class="member-avatar image">
-                <img src="{{ index . "avatar" }}">
+                <img src="{{ $avatar.RelPermalink }}">
             </figure>
             <div class="member-nameplate">
                 <div class="member-nameplate-side is-front">
@@ -36,5 +38,5 @@
             </div>
         </div>
     </div>
-    {{- end -}}
+    {{ end }}
 </div>
