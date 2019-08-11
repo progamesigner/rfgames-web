@@ -1,0 +1,92 @@
+.control {
+    position: relative;
+    text-align: left;
+}
+
+.input {
+    @include control();
+
+    background-color: var(--input-background-color);
+    box-shadow: var(--input-shadow);
+    color: var(--input-text-color);
+    display: block;
+    padding: var(--input-padding);
+    width: 100%;
+}
+
+.field {
+    @include block(var(--form-field-block-spacing));
+}
+
+.form {
+    .columns {
+        margin-bottom: 0;
+    }
+}
+
+.label {
+    @include block(var(--form-label-block-spacing));
+
+    display: block;
+    font-weight: var(--form-label-font-weight);
+}
+
+.radio {
+    cursor: pointer;
+    display: inline-block;
+
+    & + .radio {
+        margin-left: 0.5rem;
+    }
+
+    input {
+        @include control();
+
+        background-color: var(--input-background-color);
+        border-radius: 50%;
+        border: 0.175rem solid var(--input-background-color);
+        cursor: pointer;
+        padding: 0.325rem;
+        top: 0.125rem;
+
+        &:checked {
+            background-color: var(--input-text-color);
+        }
+    }
+}
+
+.select {
+    display: inline-block;
+    max-width: 100%;
+    position: relative;
+
+    &::after {
+        @include arrow(var(--input-dropdown-arrow-color));
+
+        right: 1rem;
+    }
+
+    select {
+        @include control();
+
+        background-color: var(--input-background-color);
+        box-shadow: var(--input-shadow);
+        color: var(--input-text-color);
+        cursor: pointer;
+        max-width: 100%;
+        outline: none;
+        padding-right: calc(2 * var(--control-padding-horizontal) + 1rem);
+    }
+}
+
+.textarea {
+    @include control();
+
+    background-color: var(--input-background-color);
+    box-shadow: var(--input-shadow);
+    color: var(--input-text-color);
+    display: block;
+    padding: var(--input-padding);
+    resize: vertical;
+    width: 100%;
+}
