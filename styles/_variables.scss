@@ -205,14 +205,14 @@ $speed: 86ms !default;
     --subtitle-font-family: #{$font-family};
     --subtitle-font-size: #{$font-size-5};
     --subtitle-font-weight: #{$font-weight-semibold};
-    --subtitle-line-height: 1.5rem;
+    --subtitle-line-height: #{$font-size-5};
     --subtitle-negative-margin: -1.25rem;
     --subtitle-text-color: #{$foreground-alternative-color};
 
     --title-font-family: #{$font-family};
     --title-font-size: #{$font-size-3};
     --title-font-weight: #{$font-weight-semibold};
-    --title-line-height: 1.5rem;
+    --title-line-height: #{$font-size-3};
     --title-negative-margin: 0.25rem;
     --title-text-color: #{$foreground-alternative-color};
 
@@ -221,6 +221,7 @@ $speed: 86ms !default;
 
     --member-nameplate-background-color: #{rgba($background-color, 0.75)};
     --member-nameplate-height: 3.5rem;
+    --member-nameplate-icon-dimensions: 2rem;
     --member-nameplate-padding: 0.75rem 1.25rem;
 
     --nav-dropdown-arrow-color: #{$link-color};
@@ -236,4 +237,22 @@ $speed: 86ms !default;
     // Layouts
     --footer-background-color: #{$background-alternative-color};
     --header-background-color: #{$background-color};
+
+    --page-background-color: #{rgba($background-color, 0.85)};
+    --page-background-z-index: -5;
+    --page-body-padding: 2rem;
+    --page-foot-padding: 0;
+    --page-head-icon-dimensions: 15rem;
+    --page-head-padding: 2rem 0.5rem;
+    --page-head-subtitle-font-size: #{$font-size-3};
+    --page-head-subtitle-font-weight: #{$font-weight-bold};
+    --page-head-subtitle-line-height: #{$font-size-3};
+    --page-head-subtitle-negative-margin: -1rem;
+    --page-head-subtitle-text-color: #{$foreground-color};
+    --page-head-title-font-size: #{$font-size-1};
+    --page-head-title-font-weight: #{$font-weight-bold};
+    --page-head-title-line-height: #{$font-size-1};
+    --page-head-title-negative-margin: -1.75rem;
+    --page-head-title-text-color: #{$foreground-color};
+    --page-overlay-z-index: -3;
 }

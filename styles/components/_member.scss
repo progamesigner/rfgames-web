@@ -16,6 +16,8 @@
 }
 
 .member-nameplate {
+    --icon-dimensions: var(--member-nameplate-icon-dimensions);
+
     background-color: var(--member-nameplate-background-color);
     bottom: 0;
     height: var(--member-nameplate-height);
