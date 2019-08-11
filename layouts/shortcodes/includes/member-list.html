@@ -14,6 +14,7 @@
                     <span class="member-nameplate-item">{{ index . "name" }}</span>
                 </div>
                 <div class="member-nameplate-side is-back">
+                    {{ with index . "accounts" }}
                     {{ with index . "account" }}
                     <div class="member-nameplate-item">
                         <span class="icon icon-account-name" data-tooltip="{{ . }}"></span>
@@ -33,6 +34,7 @@
                     <a class="member-nameplate-item">
                         <span class="icon icon-twitch" data-tooltip="{{ . }}"></span>
                     </a>
+                    {{ end }}
                     {{ end }}
                 </div>
             </div>
