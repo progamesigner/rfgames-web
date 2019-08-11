@@ -20,3 +20,4 @@ relativeURLs = true
 [params]
   applicationFormURL = "https://apis.rfgames.tw/v1/apply"
   contactFormURL = "https://apis.rfgames.tw/v1/contact"
+  footer = "<p>Made with <span class=\"has-text-danger\">&hearts;</span> by Stop At Nothing [Rush].</p>"
