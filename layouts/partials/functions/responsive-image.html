@@ -1,0 +1,42 @@
+{{- $name := 0 | index . -}}
+{{- $sizes := 1 | index . -}}
+{{- $alt := 2 | index . | default "" -}}
+
+{{- $widths := split $sizes "," -}}
+
+{{- define "__rfgames_partials_functions__image_srcset__" -}}
+{{- $name := 0 | index . -}}
+{{- $widths := 1 | index . -}}
+{{- $srcs := slice -}}
+{{- range $widths -}}
+{{- $image := printf "%s-%sw.jpg" $name . | resources.Get | fingerprint "sha512" -}}
+{{- $src := printf "%s %sw" $image.RelPermalink . | slice -}}
+{{- $srcs = append $src $srcs -}}
+{{- end -}}
+{{- delimit $srcs "," | printf "%s" -}}
+{{- end -}}
+
+{{- define "__rfgames_partials_functions__image_placeholder__" -}}
+{{- $name := 0 | index . -}}
+{{- $image := printf "%s-placeholder.jpg" $name | resources.Get | fingerprint "sha512" -}}
+{{- base64Encode $image.Content | printf "data:image/jpeg;base64,%s" | safeURL -}}
+{{- end -}}
+
+{{- define "__rfgames_partials_functions__image_fallback__" -}}
+{{- $name := 0 | index . -}}
+{{- $image := printf "%s-fallback.jpg" $name | resources.Get | fingerprint "sha512" -}}
+{{- $image.RelPermalink | printf "%s" -}}
+{{- end -}}
+
+<figure class="image">
+    <img
+        src="{{ template "__rfgames_partials_functions__image_placeholder__" (slice $name) }}"
+        alt="{{ $alt }}"
+        data-placeholder
+    >
+    <img
+        srcset="{{ template "__rfgames_partials_functions__image_srcset__" (slice $name $widths) }}"
+        src="{{ template "__rfgames_partials_functions__image_fallback__" (slice $name) }}"
+        alt="{{ $alt }}"
+    >
+</figure>

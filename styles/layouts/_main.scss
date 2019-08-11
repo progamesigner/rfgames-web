@@ -1,0 +1,12 @@
+.main {
+    &.is-page {
+        .page-background,
+        .page-overlay {
+            position: fixed;
+        }
+
+        .page-overlay {
+            top: calc(-1 * var(--nav-min-height));
+        }
+    }
+}

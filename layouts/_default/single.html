@@ -1,0 +1,55 @@
+{{ define "main" }}
+
+{{- $background := .Param "background" | default "default" | printf "images/backgrounds/%s" -}}
+{{- $overlay := .Param "overlay" | default "default" | printf "images/overlays/%s.png" | resources.Get | fingerprint "sha512" -}}
+
+<main class="main is-page has-theme-{{ .Param "theme" | default "default" }}" role="main">
+    <div class="page-background">
+        {{- slice $background "1280,1920,3840" .Title | partial "functions/responsive-image.html" -}}
+    </div>
+
+    <div class="page-overlay">
+        <figure class="image">
+            <img src="{{ $overlay.RelPermalink }}" alt="{{ .Title }}">
+        </figure>
+    </div>
+
+    <div class="container">
+        <div class="page-head">
+            {{ with .Param "header" }}
+            {{ if index . "image" }}
+            {{- $icon := index . "image" | printf "images/headers/%s.png" | resources.Get | fingerprint "sha512" -}}
+            <div class="page-head-icon">
+                <figure class="image">
+                    <img src="{{ $icon.RelPermalink }}" alt="{{ index . "title" | default $.Title | safeHTML }}">
+                </figure>
+            </div>
+            {{ end }}
+            {{ end }}
+            <div class="page-head-text">
+                {{ with .Param "header" }}
+                {{ with index . "subtitle" }}
+                <h3 class="subtitle">{{ . | safeHTML }}</h3>
+                {{ end }}
+                {{ with index . "title" }}
+                <h2 class="title">{{ . | safeHTML }}</h2>
+                {{ else }}
+                <h2 class="title">{{ $.Title | safeHTML }}</h2>
+                {{ end }}
+                {{ else }}
+                <h2 class="title">{{ .Title | safeHTML }}</h2>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="content">
+                {{ .Content }}
+            </div>
+        </div>
+
+        <div class="page-foot">
+        </div>
+    </div>
+</main>
+{{ end }}

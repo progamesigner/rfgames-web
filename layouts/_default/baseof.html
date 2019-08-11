@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>{{ .Title }} | {{ .Site.Title }}</title>
+    <title>{{ .Title | safeHTML }} | {{ .Site.Title | safeHTML }}</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">

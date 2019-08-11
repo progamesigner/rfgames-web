@@ -1,0 +1,70 @@
+.page-background,
+.page-overlay {
+    @include overlay();
+
+    pointer-events: none;
+
+    .image {
+        @include overlay();
+    }
+}
+
+.page-background {
+    z-index: var(--page-background-z-index);
+}
+
+.page-overlay {
+    z-index: var(--page-overlay-z-index);
+}
+
+.page-head {
+    --subtitle-font-size: var(--page-head-subtitle-font-size);
+    --subtitle-font-weight: var(--page-head-title-font-weight);
+    --subtitle-line-height: var(--page-head-subtitle-line-height);
+    --subtitle-negative-margin: var(--page-head-subtitle-negative-margin);
+    --subtitle-text-color: var(--page-head-subtitle-text-color);
+    --title-font-size: var(--page-head-title-font-size);
+    --title-font-weight: var(--page-head-title-font-weight);
+    --title-line-height: var(--page-head-title-line-height);
+    --title-negative-margin: var(--page-head-title-negative-margin);
+    --title-text-color: var(--page-head-title-text-color);
+
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--page-head-padding);
+    text-align: center;
+    text-transform: uppercase;
+    min-height: var(--page-head-icon-dimensions);
+
+    @include desktop() {
+        flex-direction: row;
+        text-align: right;
+    }
+}
+
+.page-head-icon {
+    .image {
+        width: var(--page-head-icon-dimensions);
+        padding-top: 100%;
+    }
+}
+
+.page-body {
+    background-color: var(--page-background-color);
+    margin-bottom: var(--section-gap);
+    padding: var(--page-body-padding);
+
+    .banner {
+        .subtitle {
+            &:last-child {
+                text-align: right;
+            }
+        }
+    }
+}
+
+.page-foot {
+    padding: var(--page-foot-padding);
+}

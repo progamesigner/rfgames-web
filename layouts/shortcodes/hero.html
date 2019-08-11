@@ -1,0 +1,6 @@
+{{- $alt := .Get "alt" | default "" -}}
+{{- $src := .Get "src" -}}
+
+{{- $name := printf "images/heros/%s" $src -}}
+
+{{- slice $name "320,640,1280,1440,1920,2880,3840" $alt | partial "functions/responsive-image.html" -}}
