@@ -6,16 +6,16 @@
     margin-right: calc(-1 * var(--column-gap));
     margin-top: calc(-1 * var(--column-gap));
 
-    &.is-multiline {
-        flex-wrap: wrap;
-    }
-
     &.is-centered {
         justify-content: center;
     }
 
     @include tablet() {
         flex-direction: row;
+
+        &.is-multiline {
+            flex-wrap: wrap;
+        }
     }
 }
 
