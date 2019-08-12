@@ -1,8 +1,10 @@
 .member {
+    border-radius: var(--member-radius);
     display: block;
-    min-width: 12rem;
-    position: relative;
+    min-width: var(--member-max-width);
+    overflow: hidden;
     padding-top: 100%;
+    position: relative;
 
     @include has-hover() {
         .member-nameplate-side {
@@ -40,12 +42,42 @@
         justify-content: center;
 
         .member-nameplate-item {
-            display: flex;
+            background-color: var(--member-nameplate-item-background-color);
+            color: var(--member-nameplate-item-text-color);
+            max-width: var(--member-nameplate-icon-dimensions);
+            transition: max-width var(--easing) var(--speed-slow);
 
-            &:not(:last-child) {
-                margin-right: 0.5rem;
+            @include has-hover() {
+                max-width: var(--member-max-width);
             }
         }
     }
 }
 
+.member-nameplate-item {
+    border-radius: var(--member-nameplate-item-radius);
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    &:not(:last-child) {
+        margin-right: var(--member-nameplate-item-spacing);
+    }
+
+    .icon {
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+}
+
+.member-nameplate-item-text {
+    align-items: center;
+    display: flex;
+    font-size: var(--member-nameplate-item-font-size);
+    height: var(--member-nameplate-icon-dimensions);
+    justify-content: center;
+    padding: var(--member-nameplate-item-padding);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

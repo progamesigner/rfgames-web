@@ -147,6 +147,7 @@ $speed: 86ms !default;
 
 :root {
     // Primitive
+    --brand-color: #{map-get($primary-palette, 500)};
     --danger-color: #{map-get($danger-palette, 500)};
     --info-color: #{map-get($info-palette, 500)};
     --success-color: #{map-get($success-palette, 500)};
@@ -208,7 +209,10 @@ $speed: 86ms !default;
     --form-label-block-spacing: 0.5rem;
     --form-label-font-weight: #{$font-weight-bold};
 
+    --icon-color: #{map-get($shade-palette, 100)};
     --icon-dimensions: 1.5rem;
+    --icon-padding: 0.25rem;
+    --icon-raduis: #{$radius};
 
     --section-gap: #{$gap};
 
@@ -229,10 +233,18 @@ $speed: 86ms !default;
     // Components
     --column-gap: 0.75rem;
 
+    --member-max-width: 12rem;
     --member-nameplate-background-color: #{rgba($background-color, 0.75)};
     --member-nameplate-height: 3.5rem;
     --member-nameplate-icon-dimensions: 2rem;
+    --member-nameplate-item-background-color: #{rgba($background-color, 0.75)};
+    --member-nameplate-item-font-size: #{$font-size-7};
+    --member-nameplate-item-padding: 0.25rem 0.5rem;
+    --member-nameplate-item-radius: #{$radius};
+    --member-nameplate-item-spacing: 0.5rem;
+    --member-nameplate-item-text-color: #{$foreground-color};
     --member-nameplate-padding: 0.75rem 1.25rem;
+    --member-radius: #{$radius};
 
     --nav-dropdown-arrow-color: #{$link-color};
     --nav-dropdown-arrow-hover-color: #{$link-hover-color};

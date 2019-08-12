@@ -1,7 +1,29 @@
 .icon {
     align-items: center;
+    border-radius: var(--icon-raduis);
     display: inline-flex;
     height: var(--icon-dimensions);
     justify-content: center;
+    padding: var(--icon-padding);
     width: var(--icon-dimensions);
+
+    svg {
+        fill: var(--icon-color);
+    }
+}
+
+.icon-account-name {
+    background-color: var(--brand-color);
+}
+
+.icon-discord {
+    background-color: #7289da;
+}
+
+.icon-twitch {
+    background-color: #6441a5;
+}
+
+.icon-youtube {
+    background-color: #ff0000;
 }
