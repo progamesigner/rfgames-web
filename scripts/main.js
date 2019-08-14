@@ -1,4 +1,4 @@
-import { onLoaded as onImageLoaded } from './image'
+import onImageLoaded from './image'
 import onFormSubmit from './form'
 
 const bootstrap = () => {
@@ -47,14 +47,11 @@ const bootstrap = () => {
       })
     }))
 
-  document.querySelectorAll('img[data-placeholder] ~ img').forEach(async image => {
-    try {
-      const { classList } = await onImageLoaded(image)
-      classList.add('is-loaded')
-    } catch (error) {
-      console.error(error)
-    }
-  })
+  document
+    .querySelectorAll('img[data-placeholder] ~ img')
+    .forEach(image => onImageLoaded(image, () => {
+      image.classList.add('is-loaded')
+    }))
 }
 
 if (document.readyState === 'loading') {

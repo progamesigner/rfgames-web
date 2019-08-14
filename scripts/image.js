@@ -9,3 +9,7 @@ export async function onLoaded (image) {
     }
   })
 }
+
+export default function bind (image, callback) {
+  onLoaded(image).then(callback).catch(console.error)
+}
