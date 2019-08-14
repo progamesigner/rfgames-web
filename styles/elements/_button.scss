@@ -24,6 +24,25 @@
         background-color: var(--button-background-hover-color);
         color: var(--button-text-hover-color);
     }
+
+    &.is-danger {
+        background-color: var(--button-background-danger-color);
+        color: var(--button-text-danger-color);
+    }
+
+    &.is-loading {
+        color: transparent;
+        pointer-events: none;
+
+        &::after {
+            @include loader();
+        }
+    }
+
+    &.is-success {
+        background-color: var(--button-background-success-color);
+        color: var(--button-text-success-color);
+    }
 }
 
 .buttons {

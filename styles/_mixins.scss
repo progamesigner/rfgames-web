@@ -37,7 +37,7 @@
     border: 0.125rem solid $color;
     border-right: 0;
     border-top: 0;
-    content: " ";
+    content: '';
     display: block;
     height: 0.5rem;
     margin-top: -0.375rem;
@@ -59,7 +59,9 @@
     -moz-appearance: none;
     -webkit-appearance: none;
     align-items: center;
+    appearance: none;
     border-radius: var(--control-radius);
+    border: none;
     box-shadow: none;
     display: inline-flex;
     font-size: var(--control-font-size);
@@ -78,6 +80,21 @@
     @include has-focus() {
         outline: none;
     }
+}
+
+@mixin loader($dimensions: 1rem, $width: 0.125rem) {
+    animation: spin-around 360ms infinite linear;
+    border-radius: $radius-rounded;
+    border: $width solid $loader-color;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: '';
+    display: block;
+    height: $dimensions;
+    left: calc(50% - #{$dimensions / 2});
+    position: absolute;
+    top: calc(50% - #{$dimensions / 2});
+    width: $dimensions;
 }
 
 @mixin overlay($offset: 0) {

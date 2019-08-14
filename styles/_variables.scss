@@ -90,17 +90,23 @@ $shade-palette: (
 \* ========================================================================== */
 $button-background-active-color: map-get($primary-palette, 600) !default;
 $button-background-color: map-get($primary-palette, 500) !default;
+$button-background-danger-color: map-get($danger-palette, 500) !default;
 $button-background-focus-color: map-get($primary-palette, 600) !default;
 $button-background-hover-color: map-get($primary-palette, 600) !default;
+$button-background-success-color: map-get($success-palette, 500) !default;
 $button-text-active-color: map-get($shade-palette, 100) !default;
 $button-text-color: map-get($shade-palette, 900) !default;
+$button-text-danger-color: map-get($shade-palette, 100) !default;
 $button-text-focus-color: map-get($shade-palette, 100) !default;
 $button-text-hover-color: map-get($shade-palette, 100) !default;
+$button-text-success-color: map-get($shade-palette, 100) !default;
 
 $link-color: map-get($primary-palette, 300) !default;
 $link-active-color: map-get($primary-palette, 100) !default;
 $link-focus-color: map-get($primary-palette, 100) !default;
 $link-hover-color: map-get($primary-palette, 100) !default;
+
+$loader-color: map-get($shade-palette, 300) !default;
 
 $background-color: map-get($shade-palette, 900) !default;
 $background-alternative-color: map-get($shade-palette, 800) !default;
@@ -181,15 +187,19 @@ $speed: 86ms !default;
 
     --button-background-active-color: #{$button-background-active-color};
     --button-background-color: #{$button-background-color};
+    --button-background-danger-color: #{$button-background-danger-color};
     --button-background-focus-color: #{$button-background-focus-color};
     --button-background-hover-color: #{$button-background-hover-color};
+    --button-background-success-color: #{$button-background-success-color};
     --button-padding-horizontal: 1rem;
     --button-padding-vertical: 0.5rem;
     --button-spacing: 0.5rem;
     --button-text-active-color: #{$button-text-active-color};
     --button-text-color: #{$button-text-color};
+    --button-text-danger-color: #{$button-text-danger-color};
     --button-text-focus-color: #{$button-text-focus-color};
     --button-text-hover-color: #{$button-text-hover-color};
+    --button-text-success-color: #{$button-text-success-color};
 
     --control-font-size: #{$font-size-6};
     --control-padding-horizontal: 0.675rem;
