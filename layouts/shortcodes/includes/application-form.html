@@ -1,4 +1,4 @@
-<form class="form" action="{{ .Page.Param "applicationFormURL" | default "#" }}" method="POST">
+<form class="form" action="{{ .Page.Param "applicationFormURL" | default "#" }}" method="POST" data-form="application">
     <div class="columns">
         <div class="column">
             <div class="field">
@@ -25,10 +25,10 @@
                 <label class="label">Are you 18 years old or older?</label>
                 <div class="control">
                     <label class="radio">
-                        <input type="radio" name="age"> Yes
+                        <input type="radio" name="age" value="true"> Yes
                     </label>
                     <label class="radio">
-                        <input type="radio" name="age" checked> No
+                        <input type="radio" name="age" value="false" checked> No
                     </label>
                 </div>
             </div>
@@ -41,10 +41,10 @@
                 <label class="label">Do you understand our visions, goals, and requirements?</label>
                 <div class="control">
                     <label class="radio">
-                        <input type="radio" name="goals"> Yes
+                        <input type="radio" name="goals" value="true"> Yes
                     </label>
                     <label class="radio">
-                        <input type="radio" name="goals" checked> No
+                        <input type="radio" name="goals" value="false" checked> No
                     </label>
                 </div>
             </div>
@@ -57,10 +57,10 @@
                 <label class="label">Are you able to play during SEA-time in weekends?</label>
                 <div class="control">
                     <label class="radio">
-                        <input type="radio" name="times"> Yes
+                        <input type="radio" name="times" value="true"> Yes
                     </label>
                     <label class="radio">
-                        <input type="radio" name="times" checked> No
+                        <input type="radio" name="times" value="false" checked> No
                     </label>
                 </div>
             </div>
@@ -73,10 +73,10 @@
                 <label class="label">Do you have a working microphone?</label>
                 <div class="control">
                     <label class="radio">
-                        <input type="radio" name="microphone"> Yes
+                        <input type="radio" name="microphone" value="true"> Yes
                     </label>
                     <label class="radio">
-                        <input type="radio" name="microphone" checked> No
+                        <input type="radio" name="microphone" value="false" checked> No
                     </label>
                 </div>
             </div>
@@ -89,10 +89,10 @@
                 <label class="label">Are you able to speak and listen to important English commands?</label>
                 <div class="control">
                     <label class="radio">
-                        <input type="radio" name="commands"> Yes
+                        <input type="radio" name="commands" value="true"> Yes
                     </label>
                     <label class="radio">
-                        <input type="radio" name="commands" checked> No
+                        <input type="radio" name="commands" value="false" checked> No
                     </label>
                 </div>
             </div>
