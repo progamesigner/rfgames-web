@@ -12,6 +12,12 @@
     display: block;
     padding: var(--input-padding);
     width: 100%;
+
+    &::-moz-placeholder,
+    &::-webkit-input-placeholder,
+    &::placeholder {
+        color: var(--input-placeholder-text-color);
+    }
 }
 
 .field {

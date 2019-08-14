@@ -209,6 +209,7 @@ $speed: 86ms !default;
     --input-background-color: #{$background-alternative-color};
     --input-dropdown-arrow-color: #{$foreground-alternative-color};
     --input-padding: 0.625rem;
+    --input-placeholder-text-color: #{rgba($foreground-alternative-color, 0.75)};
     --input-shadow: inset 0 0.0625rem 0.125rem #{rgba($background-color, 0.15)};
     --input-text-color: #{$foreground-alternative-color};
 
