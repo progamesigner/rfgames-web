@@ -52,6 +52,18 @@ const bootstrap = () => {
     .forEach(image => onImageLoaded(image, () => {
       image.classList.add('is-loaded')
     }))
+
+  document
+    .querySelectorAll('[data-toggler]')
+    .forEach(toggler => {
+      toggler.addEventListener('click', event => {
+        toggler.classList.toggle('is-active')
+        toggler.parentNode.parentNode.querySelectorAll('[data-menu]').forEach(menu => {
+          menu.classList.toggle('is-active')
+        })
+        event.preventDefault()
+      })
+    })
 }
 
 if (document.readyState === 'loading') {
