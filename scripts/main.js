@@ -64,6 +64,15 @@ const bootstrap = () => {
         event.preventDefault()
       })
     })
+
+  document
+    .querySelectorAll('a[href^="http"]')
+    .forEach(link => {
+      link.addEventListener('click', event => {
+        open(link.getAttribute('href'), '_blank', 'noopener')
+        event.preventDefault()
+      })
+    })
 }
 
 if (document.readyState === 'loading') {
