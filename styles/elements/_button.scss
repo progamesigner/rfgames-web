@@ -43,6 +43,12 @@
         background-color: var(--button-background-success-color);
         color: var(--button-text-success-color);
     }
+
+    &.has-image {
+        background-color: var(--button-image-background-color);
+        border-radius: unset;
+        padding: 0;
+    }
 }
 
 .buttons {

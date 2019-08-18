@@ -1,4 +1,5 @@
 .main {
+    &.is-list,
     &.is-page {
         .page-background,
         .page-overlay {
@@ -7,6 +8,51 @@
 
         .page-overlay {
             top: calc(-1 * var(--nav-min-height));
+        }
+    }
+
+    &.is-list {
+        .column {
+            align-items: center;
+            display: flex;
+            flex-basis: calc(100% / 3);
+            flex-grow: 0;
+            justify-content: center;
+        }
+
+        .list-item {
+            display: flex;
+            max-width: 32rem;
+            min-width: 12rem;
+            width: 100%;
+
+            .image {
+                overflow: hidden;
+                padding-top: 75%;
+                width: 100%;
+
+                img {
+                    transform: scale(1.25);
+                    transition: transform var(--easing) var(--speed-slow);
+                }
+
+                @include has-hover() {
+                    img {
+                        transform: scale(1.0);
+                    }
+                }
+            }
+
+            .title {
+                --title-font-size: var(--list-title-font-size);
+
+                background-color: var(--list-title-background-color);
+                bottom: 0;
+                left: 0;
+                padding: var(--list-title-padding);
+                position: absolute;
+                right: 0;
+            }
         }
     }
 }

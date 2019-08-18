@@ -193,6 +193,7 @@ $speed: 86ms !default;
     --button-background-focus-color: #{$button-background-focus-color};
     --button-background-hover-color: #{$button-background-hover-color};
     --button-background-success-color: #{$button-background-success-color};
+    --button-image-background-color: #{$background-color};
     --button-padding-horizontal: 1rem;
     --button-padding-vertical: 0.5rem;
     --button-spacing: 0.5rem;
@@ -272,6 +273,10 @@ $speed: 86ms !default;
     // Layouts
     --footer-background-color: #{$background-alternative-color};
     --header-background-color: #{$background-color};
+
+    --list-title-background-color: #{rgba($background-color, 0.75)};
+    --list-title-font-size: #{$font-size-5};
+    --list-title-padding: 0.25rem 1.25rem;
 
     --page-background-color: #{rgba($background-color, 0.85)};
     --page-background-z-index: -5;
