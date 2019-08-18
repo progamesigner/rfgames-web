@@ -3,4 +3,4 @@
 
 {{- $name := printf "images/heros/%s" $src -}}
 
-{{- slice $name "320,640,1280,1440,1920,2880,3840" $alt | partial "functions/responsive-image.html" -}}
+{{- slice $name "320,640,1280,1440,1920,2880,3840" "jpg" $alt | partial "functions/responsive-image.html" -}}
