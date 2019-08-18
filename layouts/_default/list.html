@@ -3,7 +3,7 @@
 {{- $background := .Param "background" | default "default" | printf "backgrounds/%s" -}}
 {{- $overlay := .Param "overlay" | default "default" | printf "overlays/%s" -}}
 
-<main class="main is-page has-theme-{{ .Param "theme" | default "default" }}" role="main">
+<main class="main is-list has-theme-{{ .Param "theme" | default "default" }}" role="main">
     <div class="page-background">
         {{- slice $background "1280,1920,3840" "jpg" .Title | partial "functions/responsive-image.html" -}}
     </div>
@@ -43,6 +43,20 @@
         <div class="page-body">
             <div class="content">
                 {{ .Content }}
+
+                <div class="columns is-multiline">
+                    {{ range .Pages }}
+                    <div class="column">
+                        <a class="list-item button has-image" href="{{ .RelPermalink }}">
+                            <figure class="image">
+                                {{- $button := .Param "button" | default "default" | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
+                                <img src="{{ $button.RelPermalink }}">
+                                <figcaption class="title">{{ .Title }}</figcaption>
+                            </figure>
+                        </a>
+                    </div>
+                    {{ end }}
+                </div>
             </div>
         </div>
 
