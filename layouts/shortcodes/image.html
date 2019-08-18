@@ -1,0 +1,11 @@
+{{- $alt := .Get "alt" | default "" -}}
+{{- $src := .Get "src" -}}
+
+{{- $image := printf "images/%s" $src | resources.Get | fingerprint "sha512" -}}
+
+<figure class="image">
+    <img
+        src="{{ $image.RelPermalink }}"
+        alt="{{ $alt }}"
+    >
+</figure>
