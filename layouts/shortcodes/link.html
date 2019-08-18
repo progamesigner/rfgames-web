@@ -1,0 +1,9 @@
+{{- $page := .Get 0 -}}
+
+{{- with .Site.GetPage $page -}}
+{{- $menu := or (.Param "menu") (.Param "menus") | default dict -}}
+{{- $nav := "nav" | index $menu | default dict -}}
+{{- "url" | index $nav | default .RelPermalink | printf -}}
+{{- else -}}
+{{- relref .Page $page -}}
+{{- end -}}
