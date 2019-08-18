@@ -1,4 +1,69 @@
 .main {
+    &.is-home {
+        --section-gap: 0;
+        --page-body-padding: 4rem 2rem;
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 50vh;
+            position: relative;
+
+            &:not(:last-child) {
+                border-bottom: 0.125rem solid var(--border-color);
+            }
+
+            &.is-landing {
+                align-items: center;
+                justify-content: center;
+                min-height: calc(100vh - var(--nav-min-height));
+                text-align: center;
+
+                .page-overlay {
+                    background-image: radial-gradient(var(--home-section-radial-gradient));
+                }
+
+                .page-body {
+                    width: 100%;
+                }
+            }
+
+            &.is-about,
+            &.is-website {
+                .page-body {
+                    margin-left: 0;
+                    margin-right: auto;
+                }
+
+                .page-overlay {
+                    background-image: linear-gradient(to right, var(--home-section-linear-gradient));
+                }
+            }
+
+            &.is-recruitment,
+            &.is-github {
+                .page-body {
+                    margin-left: auto;
+                    margin-right: 0;
+                }
+
+                .page-overlay {
+                    background-image: linear-gradient(to left, var(--home-section-linear-gradient));
+                }
+            }
+        }
+
+        .page-body {
+            align-items: center;
+            background-color: unset;
+
+            @include desktop() {
+                width: 50%;
+            }
+        }
+    }
+
     &.is-list,
     &.is-page {
         .page-background,

@@ -274,6 +274,9 @@ $speed: 86ms !default;
     --footer-background-color: #{$background-alternative-color};
     --header-background-color: #{$background-color};
 
+    --home-section-linear-gradient: #{$background-color} 0%, rgba(0, 0, 0, 0.75) 40%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 60%;
+    --home-section-radial-gradient: #{$background-color} 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%;
+
     --list-title-background-color: #{rgba($background-color, 0.75)};
     --list-title-font-size: #{$font-size-5};
     --list-title-padding: 0.25rem 1.25rem;
