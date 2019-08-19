@@ -1,7 +1,7 @@
 .member {
     border-radius: var(--member-radius);
     display: block;
-    min-width: var(--member-max-width);
+    min-width: var(--member-width);
     overflow: hidden;
     padding-top: 100%;
     position: relative;
@@ -48,7 +48,7 @@
             transition: max-width var(--easing) var(--speed-slow);
 
             @include has-hover() {
-                max-width: var(--member-max-width);
+                max-width: var(--member-width);
             }
         }
     }
