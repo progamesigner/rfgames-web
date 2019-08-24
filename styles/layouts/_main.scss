@@ -86,13 +86,14 @@
         }
 
         .list-item {
+            border-radius: var(--list-item-radius);
             display: flex;
             max-width: 32rem;
             min-width: 12rem;
+            overflow: hidden;
             width: 100%;
 
             .image {
-                overflow: hidden;
                 padding-top: 75%;
                 width: 100%;
 
