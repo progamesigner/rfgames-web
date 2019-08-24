@@ -46,8 +46,12 @@
 
                 <div class="columns is-multiline">
                     {{ range .Pages }}
+                    {{- $menu := or (.Param "menu") (.Param "menus") | default dict -}}
+                    {{- $nav := "nav" | index $menu | default dict -}}
+                    {{- $url := "url" | index $nav | default .RelPermalink | printf -}}
+
                     <div class="column">
-                        <a class="list-item button has-image" href="{{ .RelPermalink }}">
+                        <a class="list-item button has-image" href="{{ $url }}">
                             <figure class="image">
                                 {{- $button := .Param "button" | default "default" | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
                                 <img src="{{ $button.RelPermalink }}">
