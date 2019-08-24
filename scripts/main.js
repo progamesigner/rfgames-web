@@ -1,6 +1,37 @@
 import onImageLoaded from './image'
 import onFormSubmit from './form'
 
+function onFormSubmitBegin (form) {
+  return () => {
+    form.querySelectorAll('button[type="submit"]').forEach(button => {
+      button.classList.add('is-loading')
+      button.classList.remove('is-danger')
+      button.classList.remove('is-success')
+    })
+  }
+}
+
+function onFormSubmitEnd (form) {
+  return success => {
+    form.querySelectorAll('button[type="submit"]').forEach(button => {
+      button.classList.add(success ? 'is-success' : 'is-danger')
+      button.classList.remove('is-loading')
+    })
+
+    form.querySelectorAll('.modal').forEach(modal => {
+      modal.classList.add('is-active')
+
+      modal.querySelectorAll('[data-failure-message], [data-success-message').forEach(content => {
+        content.classList.remove('is-active')
+      })
+
+      modal.querySelectorAll(`[data-${success ? 'success' : 'failure'}-message`).forEach(content => {
+        content.classList.add('is-active')
+      })
+    })
+  }
+}
+
 const bootstrap = () => {
   document
     .querySelectorAll('form[data-form="application"]')
@@ -15,18 +46,7 @@ const bootstrap = () => {
       main: data.get('main').toLowerCase(),
       alt: data.get('alt').toLowerCase(),
       message: data.get('message') || null
-    }), () => {
-      form.querySelectorAll('button[type="submit"]').forEach(button => {
-        button.classList.add('is-loading')
-        button.classList.remove('is-danger')
-        button.classList.remove('is-success')
-      })
-    }, success => {
-      form.querySelectorAll('button[type="submit"]').forEach(button => {
-        button.classList.add(success ? 'is-success' : 'is-danger')
-        button.classList.remove('is-loading')
-      })
-    }))
+    }), onFormSubmitBegin(form), onFormSubmitEnd(form)))
 
   document
     .querySelectorAll('form[data-form="contact"]')
@@ -34,18 +54,7 @@ const bootstrap = () => {
       name: data.get('account') || null,
       email: data.get('discord') || null,
       message: data.get('message') || null
-    }), () => {
-      form.querySelectorAll('button[type="submit"]').forEach(button => {
-        button.classList.add('is-loading')
-        button.classList.remove('is-danger')
-        button.classList.remove('is-success')
-      })
-    }, success => {
-      form.querySelectorAll('button[type="submit"]').forEach(button => {
-        button.classList.add(success ? 'is-success' : 'is-danger')
-        button.classList.remove('is-loading')
-      })
-    }))
+    }), onFormSubmitBegin(form), onFormSubmitEnd(form)))
 
   document
     .querySelectorAll('img[data-placeholder] ~ img')

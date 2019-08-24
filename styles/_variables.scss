@@ -287,6 +287,12 @@ $speed: 86ms !default;
 
     // Layouts
     --footer-background-color: #{$background-alternative-color};
+
+    --form-modal-content-background-color: #{$foreground-color};
+    --form-modal-content-border-radius: #{$radius};
+    --form-modal-content-padding: 1.5rem;
+    --form-modal-content-text-color: #{$background-color};
+
     --header-background-color: #{$background-color};
 
     --home-section-linear-gradient: #{$background-color} 0%, rgba(0, 0, 0, 0.75) 40%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 60%;

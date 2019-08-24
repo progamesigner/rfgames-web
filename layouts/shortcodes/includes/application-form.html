@@ -1,4 +1,13 @@
 <form class="form" action="{{ .Page.Param "applicationFormURL" | default "#" }}" method="POST" data-form="application">
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p data-success-message>Your application has been submitted. We will contact you in-game or through Discord after we reviewed your application.</p>
+            <p data-failure-message>There are something wrong with your application or our server. Make sure all fields are correctly filled. If this problem still exists, please contact us on Discord.</p>
+        </div>
+        <button class="modal-close" aria-label="close"></button>
+    </div>
+
     <div class="columns">
         <div class="column">
             <div class="field">

@@ -1,4 +1,13 @@
 <form class="form" action="{{ .Page.Param "contactFormURL" | default "#" }}" method="POST" data-form="contact">
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p data-success-message>Your message has been submitted. We will reply you as soon as possible.</p>
+            <p data-failure-message>There are something wrong our server problem. Please try again later or contact us on Discord directly.</p>
+        </div>
+        <button class="modal-close" aria-label="close"></button>
+    </div>
+
     <div class="columns">
         <div class="column">
             <div class="field">

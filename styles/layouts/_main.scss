@@ -128,3 +128,24 @@
         flex-shrink: 0;
     }
 }
+
+.form {
+    .modal-content {
+        align-items: center;
+        background-color: var(--form-modal-content-background-color);
+        border-radius: var(--form-modal-content-border-radius);
+        color: var(--form-modal-content-text-color);
+        display: flex;
+        justify-content: center;
+        padding: var(--form-modal-content-padding);
+
+        [data-failure-message],
+        [data-success-message] {
+            display: none;
+
+            @include has-active() {
+                display: block;
+            }
+        }
+    }
+}
