@@ -73,6 +73,20 @@ const bootstrap = () => {
         event.preventDefault()
       })
     })
+
+  document
+    .querySelectorAll('.modal-close')
+    .forEach(button => {
+      button.addEventListener('click', event => {
+        document
+          .querySelectorAll('.modal.is-active')
+          .forEach(modal => {
+            modal.classList.remove('is-active')
+          })
+
+        event.preventDefault()
+      })
+    })
 }
 
 if (document.readyState === 'loading') {
