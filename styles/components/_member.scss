@@ -6,7 +6,16 @@
     padding-top: 100%;
     position: relative;
 
+    img {
+        transform: scale(1.25);
+        transition: transform var(--easing) var(--speed-slow);
+    }
+
     @include has-hover() {
+        img {
+            transform: scale(1.0);
+        }
+
         .member-nameplate-side {
             transform: translateY(-100%);
         }
