@@ -84,7 +84,7 @@ const bootstrap = () => {
     })
 
   document
-    .querySelectorAll('.modal-close')
+    .querySelectorAll('.modal-background, .modal-close')
     .forEach(button => {
       button.addEventListener('click', event => {
         document
