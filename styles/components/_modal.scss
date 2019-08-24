@@ -1,0 +1,44 @@
+.modal {
+    @include overlay();
+
+    align-items: center;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    position: fixed;
+    z-index: var(--modal-z-index);
+
+    @include has-active {
+        display: flex;
+    }
+}
+
+.modal-background {
+    @include overlay();
+
+    background-color: var(--modal-background-background-color);
+}
+
+.modal-content {
+    margin: var(--modal-content-margin);
+    max-height: calc(100vh - var(--modal-content-spacing-mobile));
+    overflow: auto;
+    position: relative;
+    width: 100%;
+
+    @include tablet() {
+        margin: 0 auto;
+        width: var(--modal-content-width);
+    }
+}
+
+.modal-close {
+    @include delete(var(--modal-close-background-color), var(--modal-close-background-hover-color), var(--modal-close-background-active-color));
+
+    height: var(--modal-close-dimensions);
+    position: fixed;
+    right: var(--modal-close-offset);
+    top: var(--modal-close-offset);
+    width: var(--modal-close-dimensions);
+}

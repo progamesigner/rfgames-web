@@ -82,10 +82,59 @@
     }
 }
 
+@mixin delete($background-color, $background-hover-color, $background-active-color) {
+    @include unselectable();
+
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: $background-color;
+    border-radius: var(--delete-radius);
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    pointer-events: auto;
+    position: relative;
+
+    &::before,
+    &::after {
+        background-color: var(--delete-color);
+        content: '';
+        display: block;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform-origin: center center;
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::before {
+        height: 0.125rem;
+        width: 50%;
+    }
+
+    &::after {
+        height: 50%;
+        width: 0.125rem;
+    }
+
+    @include has-focus() {
+        background-color: $background-hover-color;
+    }
+
+    @include has-hover() {
+        background-color: $background-hover-color;
+    }
+
+    @include has-active() {
+        background-color: $background-active-color;
+    }
+}
+
 @mixin loader($dimensions: 1rem, $width: 0.125rem) {
     animation: spin-around 360ms infinite linear;
-    border-radius: $radius-rounded;
-    border: $width solid $loader-color;
+    border-radius: var(--loader-radius);
+    border: $width solid var(--loader-color);
     border-right-color: transparent;
     border-top-color: transparent;
     content: '';
