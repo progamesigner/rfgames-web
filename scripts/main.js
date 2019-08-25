@@ -1,5 +1,6 @@
 import onImageLoaded from './image'
 import onFormSubmit from './form'
+import { init as initConsent, bind as onAcceptConsent } from './consent'
 
 function onFormSubmitBegin (form) {
   return () => {
@@ -33,6 +34,8 @@ function onFormSubmitEnd (form) {
 }
 
 const bootstrap = () => {
+  initConsent(window)
+
   document
     .querySelectorAll('form[data-form="application"]')
     .forEach(form => onFormSubmit(form, data => ({
@@ -96,6 +99,10 @@ const bootstrap = () => {
         event.preventDefault()
       })
     })
+
+  document
+    .querySelectorAll('.consent')
+    .forEach(onAcceptConsent)
 }
 
 if (document.readyState === 'loading') {

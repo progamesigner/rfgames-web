@@ -1,0 +1,26 @@
+.consent {
+    align-items: center;
+    background-color: var(--consent-background-color);
+    border-top: 0.0625rem solid var(--consent-border-color);
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    padding: var(--consent-padding);
+    position: fixed;
+    right: 0;
+    z-index: var(--consent-z-index);
+
+    &[disabled] {
+        display: none;
+    }
+}
+
+.consent-content {
+    margin: 0;
+    padding: 0;
+}
+
+.consent-button {
+    margin-left: 3rem;
+}

@@ -29,6 +29,13 @@
 
     {{ partial "layouts/footer.html" . }}
 
+    <script>
+        window.__shared_states__ = {
+            {{- with .Site.Config.Services.GoogleAnalytics.ID -}}
+            gtag: '{{ . }}',
+            {{- end -}}
+        };
+    </script>
     <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous"></script>
 </body>
 

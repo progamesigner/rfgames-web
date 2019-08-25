@@ -1,5 +1,11 @@
 {{- $currentPage := . -}}
 
+<div class="consent" disabled>
+    {{- $legal := .GetPage "legal" -}}
+    <p class="consent-content">We use cookies and other tracking technologies to improve your browsing experience. By keeping browsing our website, you consent to the use of cookies and other tracking technologies. <a href="{{ $legal.RelPermalink }}">Learn more</a></p>
+    <a class="consent-button button">Accept</a>
+</div>
+
 <header class="header">
     <div class="container">
         <nav class="nav" role="navigation" aria-label="dropdown navigation">

@@ -221,6 +221,11 @@ $speed: 86ms !default;
     --loader-radius: #{$radius-rounded};
 
     // Elements
+    --consent-background-color: #{$background-color};
+    --consent-border-color: #{$background-alternative-color};
+    --consent-padding: 1.25rem 3.5rem;
+    --consent-z-index: 30;
+
     --container-offset: #{$gap * 2};
 
     --form-field-block-spacing: 0.5rem;
