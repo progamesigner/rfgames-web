@@ -21,7 +21,7 @@
                 text-align: center;
 
                 .page-overlay {
-                    background-image: radial-gradient(var(--home-section-radial-gradient));
+                    background-image: var(--home-section-fullheight-overlay-background-image);
                 }
 
                 .page-body {
@@ -37,7 +37,7 @@
                 }
 
                 .page-overlay {
-                    background-image: linear-gradient(to right, var(--home-section-linear-gradient));
+                    background-image: var(--home-section-left-overlay-background-image);
                 }
             }
 
@@ -49,7 +49,7 @@
                 }
 
                 .page-overlay {
-                    background-image: linear-gradient(to left, var(--home-section-linear-gradient));
+                    background-image: var(--home-section-right-overlay-background-image);
                 }
             }
         }
@@ -87,10 +87,12 @@
 
         .list-item {
             border-radius: var(--list-item-radius);
+            border: var(--list-item-border);
             display: flex;
             max-width: 32rem;
             min-width: 12rem;
             overflow: hidden;
+            transition: border-color var(--easing) var(--speed-slow);
             width: 100%;
 
             .image {
@@ -112,12 +114,15 @@
             .title {
                 --title-font-size: var(--list-title-font-size);
 
-                background-color: var(--list-title-background-color);
-                bottom: 0;
+                background-image: var(--list-title-background-image);
                 left: 0;
+                letter-spacing: var(--list-title-letter-spacing);
                 padding: var(--list-title-padding);
                 position: absolute;
                 right: 0;
+                text-shadow: var(--list-title-text-shadow);
+                top: 50%;
+                transform: translateY(-50%);
             }
         }
     }
