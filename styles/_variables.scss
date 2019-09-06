@@ -116,7 +116,8 @@ $foreground-form-color: map-get($shade-palette, 100) !default;
 /* ========================================================================== *\
  * Typography                                                                 *
 \* ========================================================================== */
-$font-family: Roboto, 'Noto Sans TC', sans-serif !default;
+$font-family: Roboto, sans-serif !default;
+$font-family-title: Comfortaa, cursive, serif !default;
 
 $font-size-1: 3rem !default;
 $font-size-2: 2.5rem !default;
@@ -239,14 +240,14 @@ $speed: 86ms !default;
 
     --section-gap: #{$gap};
 
-    --subtitle-font-family: #{$font-family};
+    --subtitle-font-family: #{$font-family-title};
     --subtitle-font-size: #{$font-size-5};
     --subtitle-font-weight: #{$font-weight-semibold};
     --subtitle-line-height: #{$font-size-5};
     --subtitle-negative-margin: -1.25rem;
     --subtitle-text-color: #{$foreground-alternative-color};
 
-    --title-font-family: #{$font-family};
+    --title-font-family: #{$font-family-title};
     --title-font-size: #{$font-size-3};
     --title-font-weight: #{$font-weight-semibold};
     --title-line-height: #{$font-size-3};
