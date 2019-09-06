@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npx webpack --mode development",
-    "build:prod": "npx webpack --mode production",
-    "build:watch": "npx webpack --mode development --watch"
+    "build": "npx webpack-cli --mode development",
+    "build:prod": "npx webpack-cli --mode production",
+    "build:watch": "npx webpack-cli --mode development --watch"
   },
   "author": "Yang Sheng Han <progamesigner@gmail.com>",
   "license": "MIT",
