@@ -4,12 +4,18 @@
     border-top: 0.0625rem solid var(--consent-border-color);
     bottom: 0;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     left: 0;
     padding: var(--consent-padding);
     position: fixed;
     right: 0;
     z-index: var(--consent-z-index);
+
+    @include tablet() {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
     &[disabled] {
         display: none;
@@ -22,5 +28,10 @@
 }
 
 .consent-button {
-    margin-left: 3rem;
+    margin-top: 1.25rem;
+
+    @include tablet() {
+        margin-top: 0;
+        margin-left: 3rem;
+    }
 }
