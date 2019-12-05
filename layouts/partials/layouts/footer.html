@@ -1,5 +1,9 @@
+{{- $about := .GetPage "about" -}}
+{{- $legal := .GetPage "legal" -}}
+
 <footer class="footer">
     <div class="container">
         <p>Made with <span class="has-text-danger">&hearts;</span> by Stop At Nothing [Rush].</p>
+        <p><a href="{{ $about.RelPermalink }}">About</a> &middot; <a href="{{ $legal.RelPermalink }}">Legal</a> &middot; Netlify &middot; GitHub</p>
     </div>
 </footer>
