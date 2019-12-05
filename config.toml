@@ -1,6 +1,6 @@
 baseURL = "https://rfgames.tw/"
 languageCode = "en-us"
-title = "Stop At Nothing [Rush]"
+title = "Stop At Nothing"
 
 disableKinds = [
   "404",
