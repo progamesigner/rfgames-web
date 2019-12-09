@@ -3,6 +3,11 @@
     background-color: var(--selection-background-color);
 }
 
+html {
+    scrollbar-color: var(--scrollbar-foreground-color) var(--scrollbar-background-color);
+    scrollbar-width: var(--scrollbar-width);
+}
+
 body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
