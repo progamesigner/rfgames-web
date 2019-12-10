@@ -10,21 +10,21 @@
   "author": "Yang Sheng Han <progamesigner@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "css-loader": "^3.0.0",
+    "css-loader": "^3.3.0",
     "cssnano": "^4.1.10",
-    "eslint": "^6.1.0",
+    "eslint": "^6.7.2",
     "eslint-config-standard": "^13.0.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^9.2.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-standard": "^4.0.1",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "normalize.css": "^8.0.1",
     "postcss-loader": "^3.0.0",
-    "sass-loader": "^7.1.0",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.6"
+    "sass-loader": "^7.3.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {
     "axios": "^0.19.0"
