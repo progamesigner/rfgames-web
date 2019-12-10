@@ -9,35 +9,31 @@
 
 @include print() {
     :root {
-        --body-background-color: white;
-        --body-text-color: black;
+        --body-background-color: var(--print-background-color);
+        --body-text-color: var(--print-text-color);
         --drop-shadow: none;
-        --input-background-color: white;
-        --input-dropdown-arrow-color: black;
-        --input-placeholder-text-color: gray;
+        --input-background-color: var(--print-background-color);
+        --input-dropdown-arrow-color: var(--print-text-color);
+        --input-placeholder-text-color: var(--print-alternative-color);
         --input-shadow: none;
-        --input-text-color: black;
-        --member-nameplate-background-color: white;
+        --input-text-color: var(--print-text-color);
+        --member-nameplate-background-color: var(--print-background-color);
         --member-nameplate-height: auto;
-        --member-nameplate-item-background-color: white;
-        --member-nameplate-item-text-color: black;
+        --member-nameplate-item-background-color: var(--print-background-color);
+        --member-nameplate-item-text-color: var(--print-text-color);
         --member-width: auto;
-        --page-background-color: white;
-        --subtitle-text-color: black;
+        --page-background-color: var(--print-background-color);
+        --subtitle-text-color: var(--print-text-color);
         --text-shadow: none;
-        --title-text-color: black;
+        --title-text-color: var(--print-text-color);
     }
 
     a {
-        &:after {
-            content: ' (' attr(href) ')';
-            font-size: 0.75rem;
-        }
-
-        &[href^="."],
-        &[href^="#"] {
+        &[href^="http"],
+        &[href^="https"] {
             &:after {
-                display: none;
+                content: ' (' attr(href) ')';
+                font-size: var(--print-link-font-size);
             }
         }
     }

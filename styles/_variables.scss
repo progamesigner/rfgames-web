@@ -179,6 +179,11 @@ $speed: 86ms !default;
     --tablet-breakpoint: #{$tablet-breakpoint};
     --desktop-breakpoint: #{$desktop-breakpoint};
 
+    --print-alternative-color: gray;
+    --print-background-color: white;
+    --print-link-font-size: #{$font-size-7};
+    --print-text-color: black;
+
     // Base
     --link-color: #{$link-color};
     --link-hover-color: #{$link-hover-color};
