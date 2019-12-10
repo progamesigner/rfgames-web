@@ -59,7 +59,7 @@
             background-color: var(--input-text-color);
 
             @include print() {
-                background-color: transparent;
+                background-color: var(--input-background-color);
 
                 &:after {
                     content: '\2713';
