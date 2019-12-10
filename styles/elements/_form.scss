@@ -57,6 +57,14 @@
 
         &:checked {
             background-color: var(--input-text-color);
+
+            @include print() {
+                background-color: transparent;
+
+                &:after {
+                    content: '\2713';
+                }
+            }
         }
     }
 }

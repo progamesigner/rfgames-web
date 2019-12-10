@@ -2,4 +2,8 @@
     background-color: var(--footer-background-color);
     padding: var(--block-spacing);
     text-align: center;
+
+    @include print() {
+        display: none;
+    }
 }

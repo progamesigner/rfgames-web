@@ -10,8 +10,20 @@
             min-height: 75vh;
             position: relative;
 
+            @include print() {
+                min-height: auto;
+
+                .button {
+                    display: none;
+                }
+            }
+
             &:not(:last-child) {
                 border-bottom: 0.125rem solid var(--border-color);
+
+                @include print() {
+                    border-bottom: none;
+                }
             }
 
             &.is-landing {
@@ -26,6 +38,10 @@
                 justify-content: center;
                 min-height: calc(100vh - var(--nav-min-height));
                 text-align: center;
+
+                @include print() {
+                    min-height: auto;
+                }
 
                 .page-overlay {
                     background-image: var(--home-section-fullheight-overlay-background-image);
@@ -149,9 +165,20 @@
 }
 
 .member-list {
+    .columns {
+        @include print() {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    }
+
     .column {
         flex-grow: 0;
         flex-shrink: 0;
+
+        @include print() {
+            flex-basis: 50%;
+        }
     }
 }
 

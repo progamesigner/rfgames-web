@@ -4,6 +4,10 @@
 
     pointer-events: none;
 
+    @include print() {
+        display: none;
+    }
+
     .image {
         @include overlay();
     }
@@ -41,6 +45,10 @@
     @include desktop() {
         flex-direction: row;
         text-align: right;
+    }
+
+    @include print() {
+        min-height: auto;
     }
 }
 

@@ -1,0 +1,44 @@
+@page {
+    margin: 1.5cm;
+
+    :left,
+    :right {
+        margin: 2.75cm;
+    }
+}
+
+@include print() {
+    :root {
+        --body-background-color: white;
+        --body-text-color: black;
+        --drop-shadow: none;
+        --input-background-color: white;
+        --input-dropdown-arrow-color: black;
+        --input-placeholder-text-color: gray;
+        --input-shadow: none;
+        --input-text-color: black;
+        --member-nameplate-background-color: white;
+        --member-nameplate-height: auto;
+        --member-nameplate-item-background-color: white;
+        --member-nameplate-item-text-color: black;
+        --member-width: auto;
+        --page-background-color: white;
+        --subtitle-text-color: black;
+        --text-shadow: none;
+        --title-text-color: black;
+    }
+
+    a {
+        &:after {
+            content: ' (' attr(href) ')';
+            font-size: 0.75rem;
+        }
+
+        &[href^="."],
+        &[href^="#"] {
+            &:after {
+                display: none;
+            }
+        }
+    }
+}

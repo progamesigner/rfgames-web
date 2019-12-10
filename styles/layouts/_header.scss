@@ -1,3 +1,7 @@
 .header {
     background-color: var(--header-background-color);
+
+    @include print() {
+        display: none;
+    }
 }

@@ -9,6 +9,10 @@
     img {
         transform: scale(1.25);
         transition: transform var(--easing) var(--speed-slow);
+
+        @include print() {
+            transform: none;
+        }
     }
 
     @include has-hover() {
@@ -19,6 +23,10 @@
         .member-nameplate-side {
             transform: translateY(-100%);
         }
+    }
+
+    @include print() {
+        overflow: visible;
     }
 }
 
@@ -36,6 +44,10 @@
     overflow: hidden;
     position: absolute;
     right: 0;
+
+    @include print() {
+        position: relative;
+    }
 }
 
 .member-nameplate-side {
@@ -52,11 +64,14 @@
 
         .member-nameplate-item {
             background-color: var(--member-nameplate-item-background-color);
-            color: var(--member-nameplate-item-text-color);
             max-width: var(--member-nameplate-icon-dimensions);
             transition: max-width var(--easing) var(--speed-slow);
 
             @include has-hover() {
+                max-width: var(--member-width);
+            }
+
+            @include print() {
                 max-width: var(--member-width);
             }
         }
@@ -65,6 +80,7 @@
 
 .member-nameplate-item {
     border-radius: var(--member-nameplate-item-radius);
+    color: var(--member-nameplate-item-text-color);
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -74,9 +90,19 @@
         margin-right: var(--member-nameplate-item-spacing);
     }
 
+    @include print() {
+        &:not(:first-child) {
+            display: none;
+        }
+    }
+
     .icon {
         flex-grow: 0;
         flex-shrink: 0;
+
+        @include print() {
+            display: none;
+        }
     }
 }
 

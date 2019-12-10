@@ -4,6 +4,10 @@
     @include desktop() {
         display: flex;
     }
+
+    @include print() {
+        display: none;
+    }
 }
 
 .nav-brand {
