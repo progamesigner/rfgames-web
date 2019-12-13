@@ -9,7 +9,7 @@
 
     <title>{{ .Title | safeHTML }} | {{ .Site.Title | safeHTML }}</title>
 
-    <meta name="description" content="">
+    <meta name="description" content="{{ .Site.Params.Description }}">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     {{ hugo.Generator }}
