@@ -17,6 +17,8 @@ enableRobotsTXT = false
 hasCJKLanguage = true
 relativeURLs = true
 
+googleAnalytics = "UA-109064425-4"
+
 [params]
   applicationFormURL = "https://apis.rfgames.tw/v1/apply"
   contactFormURL = "https://apis.rfgames.tw/v1/contact"
