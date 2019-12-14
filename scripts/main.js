@@ -54,8 +54,8 @@ const bootstrap = () => {
   document
     .querySelectorAll('form[data-form="contact"]')
     .forEach(form => onFormSubmit(form, data => ({
-      name: data.get('account') || null,
-      email: data.get('discord') || null,
+      name: data.get('name') || null,
+      email: data.get('email') || null,
       message: data.get('message') || null
     }), onFormSubmitBegin(form), onFormSubmitEnd(form)))
 
