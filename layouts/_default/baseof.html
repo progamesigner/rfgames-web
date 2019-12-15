@@ -29,6 +29,10 @@
         {{- $button := . | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
         <meta property="og:image" content="{{ $button.Permalink }}">
         <meta name="twitter:image" content="{{ $button.Permalink }}">
+    {{ else }}
+        {{- $button := .Param "background" | default "default" | printf "backgrounds/%s-fallback.jpg" | resources.Get | fingerprint "sha512" -}}
+        <meta property="og:image" content="{{ $button.Permalink }}">
+        <meta name="twitter:image" content="{{ $button.Permalink }}">
     {{ end }}
 
     <meta name="theme-color" content="#0D0D0D">
