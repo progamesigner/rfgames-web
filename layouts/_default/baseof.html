@@ -1,5 +1,7 @@
+{{- $description := .Param "description" | default .Site.Params.Description | safeHTML -}}
 {{- $script := "main.js" | resources.Get | slice | resources.Concat "script.js" | fingerprint "sha512" -}}
 {{- $style := "main.css" | resources.Get | slice | resources.Concat "style.css" | fingerprint "sha512" -}}
+{{- $title := printf "%s | %s" .Title .Site.Title | safeHTML -}}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
@@ -7,12 +9,27 @@
 <head>
     <meta charset="utf-8">
 
-    <title>{{ .Title | safeHTML }} | {{ .Site.Title | safeHTML }}</title>
+    <title>{{ $title }}</title>
 
-    <meta name="description" content="{{ .Site.Params.Description }}">
+    <meta name="description" content="{{ $description }}">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     {{ hugo.Generator }}
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $title }}">
+    <meta property="og:description" content="{{ $description }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ $title }}">
+    <meta name="twitter:description" content="{{ $description }}">
+
+    {{ with .Param "button" }}
+        {{- $button := . | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
+        <meta property="og:image" content="{{ $button.Permalink }}">
+        <meta name="twitter:image" content="{{ $button.Permalink }}">
+    {{ end }}
 
     <meta name="theme-color" content="#0D0D0D">
     <link rel="icon" href="{{ "/favicon-32.png" | absURL }}" sizes="32x32">
