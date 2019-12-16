@@ -12,6 +12,14 @@ export function init (window) {
   const id = window.__shared_states__.gtag
   const dnt = (window.navigator.doNotTrack || window.doNotTrack || window.navigator.msDoNotTrack)
 
+  const load = () => {
+    const script = document.createElement('script')
+    script.async = true
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`
+    document.removeEventListener(EVENT_NAME, load)
+    document.head.appendChild(script)
+  }
+
   window.dataLayer = window.dataLayer || []
 
   window[`ga-disable-${id}`] = (dnt === '1' || dnt === 'yes')
@@ -26,12 +34,7 @@ export function init (window) {
     anonymize_ip: true
   })
 
-  document.addEventListener(EVENT_NAME, () => {
-    const script = document.createElement('script')
-    script.async = true
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`
-    document.head.appendChild(script)
-  })
+  document.addEventListener(EVENT_NAME, load)
 }
 
 export function bind (consent) {
@@ -40,15 +43,18 @@ export function bind (consent) {
       if (window.localStorage.getItem(CONSENT_KEY)) {
         emitAcceptEvent()
       } else {
-        button.addEventListener('click', event => {
+        const click = event => {
           window.localStorage.setItem(CONSENT_KEY, btoa(JSON.stringify({
             value: true,
             timestamp: +new Date()
           })))
+          button.removeEventListener('click', click)
           consent.setAttribute('disabled', true)
           emitAcceptEvent()
           event.preventDefault()
-        })
+        }
+
+        button.addEventListener('click', click)
         consent.removeAttribute('disabled')
       }
     })
