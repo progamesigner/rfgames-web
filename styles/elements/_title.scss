@@ -3,8 +3,9 @@
     @include block();
 
     margin: 0;
+    overflow-wrap: break-word;
     text-shadow: var(--text-shadow);
-    word-break: break-word;
+    word-break: normal;
 }
 
 .title {
