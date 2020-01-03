@@ -17,9 +17,9 @@
 
     <link rel="preconnect dns-prefetch" href="https://fonts.gstatic.com/" crossorigin>
 
-    <link rel="preload" href="{{ $fonts }}" as="style">
-    <link rel="preload" href="{{ $script.RelPermalink }}" as="script">
-    <link rel="preload" href="{{ $style.RelPermalink }}" as="style">
+    <link rel="preload" href="{{ $fonts }}" as="style" crossorigin>
+    <link rel="preload" href="{{ $script.RelPermalink }}" as="script" crossorigin>
+    <link rel="preload" href="{{ $style.RelPermalink }}" as="style" crossorigin>
 
     {{ hugo.Generator }}
 
