@@ -1,5 +1,5 @@
 {{- $description := .Param "description" | default .Site.Params.Description | safeHTML -}}
-{{- $fonts := "https://fonts.googleapis.com/css?family=Comfortaa:700|Roboto" -}}
+{{- $fonts := "https://fonts.googleapis.com/css?family=Comfortaa:700|Roboto&display=swap" -}}
 {{- $script := "main.js" | resources.Get | slice | resources.Concat "script.js" | fingerprint "sha512" -}}
 {{- $style := "main.css" | resources.Get | slice | resources.Concat "style.css" | fingerprint "sha512" -}}
 {{- $title := printf "%s | %s" .Title .Site.Title | safeHTML -}}
