@@ -5,6 +5,21 @@
 
 {{- $widths := split $sizes "," -}}
 
+{{- define "__rfgames_partials_functions__image_sizes__" -}}
+{{- $widths := 0 | index . -}}
+{{- $head := $widths | len | add -1 -}}
+{{- $sizes := slice -}}
+{{- range $widths | first $head -}}
+{{- $size := printf "(max-width: %spx) %spx" . . | slice -}}
+{{- $sizes = append $size $sizes -}}
+{{- end -}}
+{{- range $widths | after $head -}}
+{{- $size := printf "%spx" . | slice -}}
+{{- $sizes = append $size $sizes -}}
+{{- end -}}
+{{- delimit $sizes "," | printf "%s" -}}
+{{- end -}}
+
 {{- define "__rfgames_partials_functions__image_srcset__" -}}
 {{- $name := 0 | index . -}}
 {{- $ext := 1 | index . -}}
@@ -39,6 +54,7 @@
         data-placeholder
     >
     <img
+        sizes="{{ template "__rfgames_partials_functions__image_sizes__" (slice $widths) }}"
         srcset="{{ template "__rfgames_partials_functions__image_srcset__" (slice $name $ext $widths) }}"
         src="{{ template "__rfgames_partials_functions__image_fallback__" (slice $name $ext) }}"
         alt="{{ $alt }}"
