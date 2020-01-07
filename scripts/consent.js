@@ -49,13 +49,13 @@ export function bind (consent) {
             timestamp: +new Date()
           })))
           button.removeEventListener('click', click)
-          consent.setAttribute('disabled', true)
+          consent.classList.add('is-disabled')
           emitAcceptEvent()
           event.preventDefault()
         }
 
         button.addEventListener('click', click)
-        consent.removeAttribute('disabled')
+        consent.classList.remove('is-disabled')
       }
     })
   } else {
