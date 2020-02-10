@@ -1,6 +1,6 @@
-const path = require("path");
+const path = require("path")
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
   entry: ["./scripts/main.js", "./styles/main.scss"],
@@ -45,4 +45,4 @@ module.exports = {
       filename: "[name].css"
     })
   ]
-};
+}
