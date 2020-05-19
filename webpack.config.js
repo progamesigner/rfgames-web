@@ -13,24 +13,7 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: [
-                require('cssnano')({
-                  preset: [
-                    'default',
-                    {
-                      autoprefixer: {},
-                      discardComments: {
-                        removeAll: true
-                      }
-                    }
-                  ]
-                })
-              ]
-            }
-          },
+          'postcss-loader',
           'sass-loader'
         ]
       }
