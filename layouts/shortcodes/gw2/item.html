@@ -1,0 +1,6 @@
+<div
+    data-armory-embed="items"
+    {{ range $key, $value := .Params }}
+        {{ printf "data-armory-%s=%q" $key $value | safeHTMLAttr }}
+    {{ end }}
+></div>
