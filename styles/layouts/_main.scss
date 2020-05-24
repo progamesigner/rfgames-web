@@ -164,24 +164,6 @@
     }
 }
 
-.member-list {
-    .columns {
-        @include print() {
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-    }
-
-    .column {
-        flex-grow: 0;
-        flex-shrink: 0;
-
-        @include print() {
-            flex-basis: 50%;
-        }
-    }
-}
-
 .form {
     .modal-content {
         align-items: center;

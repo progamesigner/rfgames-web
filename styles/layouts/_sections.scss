@@ -1,3 +1,21 @@
 .page-section-discussion {
     padding: var(--page-section-discussion-padding);
 }
+
+.page-section-members {
+    .columns {
+        @include print() {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    }
+
+    .column {
+        flex-grow: 0;
+        flex-shrink: 0;
+
+        @include print() {
+            flex-basis: 50%;
+        }
+    }
+}
