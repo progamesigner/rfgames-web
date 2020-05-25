@@ -1,4 +1,15 @@
 .gw2-embed {
+    &[data-armory-embed="items"],
+    &[data-armory-embed="skills"],
+    &[data-armory-embed="traits"] {
+        height: var(--gw2-item-embed-size);
+        width: var(--gw2-item-embed-size);
+    }
+
+    &[data-armory-embed="specializations"] {
+        min-height: var(--gw2-embed-specialization-min-height);
+    }
+
     &.is-small {
         --gw2-item-embed-size: var(--gw2-embed-item-size-small);
         --gw2-skill-embed-size: var(--gw2-embed-skill-size-small);
