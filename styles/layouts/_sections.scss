@@ -2,17 +2,21 @@
     display: grid;
     grid-gap: var(--build-section-spacing);
 
+    margin-left: calc(-1 * var(--page-body-padding));
+    margin-right: calc(-1 * var(--page-body-padding));
+
     grid-template-areas: "armors" "weapons" "trinkets" "consumables" "template" "skills" "specializations";
     grid-template-columns: auto;
 
     @include tablet() {
+        margin: 0;
         grid-template-areas: "armors weapons" "trinkets trinkets" "consumables skills" "template template" "specializations specializations";
-        grid-template-columns: auto auto;
+        grid-template-columns: 50% 50%;
     }
 
     @include desktop() {
         grid-template-areas: "armors armors weapons weapons" "consumables consumables trinkets trinkets" "template template template template" "skills specializations specializations specializations";
-        grid-template-columns: 25% auto auto 25%;
+        grid-template-columns: repeat(4, calc((100% - var(--page-body-padding)) / 4));
     }
 
     .build-card {
@@ -21,7 +25,7 @@
 
         background-color: var(--build-section-card-background-color);
         border-radius: var(--build-section-card-radius);
-        max-width: calc(100vw - 2 * var(--page-body-padding));
+        max-width: 100vw;
         width: 100%;
 
         @include tablet() {
@@ -78,6 +82,15 @@
 
         .gw2-embed-container {
             justify-content: flex-start;
+
+            @include tablet() {
+                margin-left: calc(-1 * var(--block-spacing));
+                margin-right: calc(-1 * var(--block-spacing));
+            }
+
+            @include desktop() {
+                margin: 0;
+            }
         }
     }
 
@@ -160,7 +173,6 @@
         }
 
         &.is-consumable,
-        &.is-trinket,
         &.is-skill {
             grid-template-areas: "embed name";
             grid-template-columns: var(--build-section-item-size) auto;
@@ -168,6 +180,25 @@
             .build-card-name {
                 align-items: center;
                 display: flex;
+            }
+        }
+
+        &.is-trinket {
+            grid-template-areas: ". embed .";
+            grid-template-columns: auto var(--build-section-item-size) auto;
+
+            @include tablet() {
+                grid-template-areas: "embed name";
+                grid-template-columns: var(--build-section-item-size) auto;
+            }
+
+            .build-card-name {
+                align-items: center;
+                display: none;
+
+                @include tablet() {
+                    display: flex;
+                }
             }
         }
 
