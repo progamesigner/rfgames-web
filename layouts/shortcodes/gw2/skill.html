@@ -1,7 +1,1 @@
-<div
-    class="gw2-embed is-skills"
-    data-armory-embed="skills"
-    {{ range $key, $value := .Params }}
-        {{ printf "data-armory-%s=%q" $key $value | safeHTMLAttr }}
-    {{ end }}
-></div>
+{{ .Params | slice "skills" | partial "elements/embed.html" }}
