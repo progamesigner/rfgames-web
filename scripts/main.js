@@ -1,6 +1,7 @@
-import onImageLoaded from './image'
-import onFormSubmit from './form'
 import { init as initConsent, bind as onAcceptConsent } from './consent'
+import { init as initDisqus } from './disqus'
+import onFormSubmit from './form'
+import onImageLoaded from './image'
 
 function onFormSubmitBegin (form) {
   return () => {
@@ -35,6 +36,7 @@ function onFormSubmitEnd (form) {
 
 const bootstrap = () => {
   initConsent(window)
+  initDisqus(window)
 
   document
     .querySelectorAll('form[data-form="application"]')

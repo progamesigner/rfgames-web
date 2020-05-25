@@ -16,6 +16,7 @@ enableRobotsTXT = false
 hasCJKLanguage = true
 relativeURLs = true
 
+disqusShortname = "rfgames"
 googleAnalytics = "UA-109064425-4"
 
 [params]
