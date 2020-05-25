@@ -85,7 +85,9 @@
             page: {
                 permalink: '{{ .Permalink }}',
                 title: '{{ $title }}',
-                uniqueId: '{{ .File.UniqueID }}'
+                {{ with .File }}
+                uniqueId: '{{ .UniqueID }}',
+                {{ end }}
             }
         };
     </script>
