@@ -5,7 +5,7 @@ export function bind (container) {
   document
     .querySelectorAll('[data-chat-code-target]')
     .forEach(target => {
-      target.addEventListener('mouseenter', () => {
+      target.addEventListener('click', () => {
         if (window.getSelection && window.document.createRange) {
           const selection = window.getSelection()
           const range = window.document.createRange()
