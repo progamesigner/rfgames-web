@@ -300,6 +300,8 @@ $speed: 86ms !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     // Layouts
+    --discussion-section-padding: 0;
+
     --footer-background-color: #{$background-alternative-color};
 
     --form-modal-content-background-color: #{$foreground-color};
@@ -350,6 +352,4 @@ $speed: 86ms !default;
     --page-head-title-text-color: #{$foreground-color};
     --page-overlay-z-index: -3;
     --page-radius: #{$radius};
-
-    --page-section-discussion-padding: 0;
 }
