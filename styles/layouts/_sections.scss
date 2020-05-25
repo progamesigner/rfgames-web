@@ -1,13 +1,19 @@
 .page-section-build {
     display: grid;
     grid-gap: var(--build-section-spacing);
-    grid-template-areas:
-        "template template template template"
-        "armors armors weapons weapons"
-        "consumables consumables trinkets trinkets"
-        "skills specializations specializations specializations"
-    ;
-    grid-template-columns: 25% auto auto 25%;
+
+    grid-template-areas: "armors" "weapons" "trinkets" "consumables" "template" "skills" "specializations";
+    grid-template-columns: auto;
+
+    @include tablet() {
+        grid-template-areas: "armors weapons" "trinkets trinkets" "consumables skills" "template template" "specializations specializations";
+        grid-template-columns: auto auto;
+    }
+
+    @include desktop() {
+        grid-template-areas: "armors armors weapons weapons" "consumables consumables trinkets trinkets" "template template template template" "skills specializations specializations specializations";
+        grid-template-columns: 25% auto auto 25%;
+    }
 
     .build-card {
         --block-spacing: var(--build-section-spacing);
@@ -15,6 +21,16 @@
 
         background-color: var(--build-section-card-background-color);
         border-radius: var(--build-section-card-radius);
+        max-width: calc(100vw - 2 * var(--page-body-padding));
+        width: 100%;
+
+        @include tablet() {
+            max-width: calc(var(--tablet-breakpoint) - var(--container-offset) - 2 * var(--page-body-padding));
+        }
+
+        @include desktop() {
+            max-width: calc(var(--desktop-breakpoint) - var(--container-offset) - 2 * var(--page-body-padding));
+        }
 
         &.is-template {
             grid-area: template;
@@ -107,8 +123,11 @@
         .template-code {
             color: var(--build-section-template-code-text-color);
             flex-basis: 100%;
-            padding: 0 var(--block-spacing);
             margin: 0 var(--block-spacing);
+            overflow: hidden;
+            padding: 0 var(--block-spacing);
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .template-copy {
