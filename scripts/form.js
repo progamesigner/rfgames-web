@@ -1,6 +1,6 @@
 import { request } from 'axios'
 
-export default function (form, formatter, onBegin, onEnd) {
+export function bind (form, formatter, onBegin, onEnd) {
   form.addEventListener('submit', async event => {
     const data = formatter(new FormData(event.target))
 

@@ -1,7 +1,7 @@
-import { init as initConsent, bind as onAcceptConsent } from './consent'
+import { bind as onAcceptConsent, init as initConsent } from './consent'
 import { init as initDisqus } from './disqus'
-import onFormSubmit from './form'
-import onImageLoaded from './image'
+import { bind as onFormSubmit } from './form'
+import { bind as onImageLoaded } from './image'
 
 function onFormSubmitBegin (form) {
   return () => {
