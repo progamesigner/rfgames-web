@@ -2,7 +2,7 @@
 {{- $data := 1 | index . | default dict -}}
 
 <div
-    class="gw2-embed"
+    class="gw2-embed is-{{ $type | singularize }}"
     data-armory-embed="{{ $type }}"
     {{ range $key, $value := $data }}
         {{ printf "data-armory-%s=%q" $key $value | safeHTMLAttr }}

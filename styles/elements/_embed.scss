@@ -1,7 +1,7 @@
 .gw2-embed {
-    &[data-armory-embed="items"],
-    &[data-armory-embed="skills"],
-    &[data-armory-embed="traits"] {
+    &.is-item,
+    &.is-skill,
+    &.is-trait {
         height: var(--gw2-item-embed-size);
         width: var(--gw2-item-embed-size);
     }
