@@ -1,5 +1,6 @@
 import { bind as onAcceptConsent, init as initConsent } from './consent'
 import { init as initDisqus } from './disqus'
+import { init as initEmbed } from './embed'
 import { bind as onFormSubmit } from './form'
 import { bind as onImageLoaded } from './image'
 
@@ -36,6 +37,7 @@ function onFormSubmitEnd (form) {
 
 const bootstrap = () => {
   initConsent(window)
+  initEmbed(window)
   initDisqus(window)
 
   document

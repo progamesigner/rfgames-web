@@ -88,15 +88,8 @@
                 uniqueId: '{{ .File.UniqueID }}'
             }
         };
-
-        document.GW2A_EMBED_OPTIONS = {
-            forceCacheClearOnNextRun: '1',
-            lang: 'en',
-            persistToLocalStorage: true,
-        };
     </script>
     <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin async defer></script>
-    <script src="https://unpkg.com/armory-embeds@0.4.3/armory-embeds.js" crossorigin async defer></script>
 </body>
 
 </html>
