@@ -1,3 +1,4 @@
+import { bind as onChatCodeLoaded } from './chatcode'
 import { bind as onAcceptConsent, init as initConsent } from './consent'
 import { init as initDisqus } from './disqus'
 import { init as initEmbed } from './embed'
@@ -62,6 +63,10 @@ const bootstrap = () => {
       email: data.get('email') || null,
       message: data.get('message') || null
     }), onFormSubmitBegin(form), onFormSubmitEnd(form)))
+
+  document
+    .querySelectorAll('[data-chat-code]')
+    .forEach(container => onChatCodeLoaded(container))
 
   document
     .querySelectorAll('img[data-placeholder] ~ img')
