@@ -10,7 +10,7 @@
     text-transform: uppercase;
     white-space: nowrap;
 
-    @include has-active {
+    @include has-active() {
         background-color: var(--button-background-active-color);
         color: var(--button-text-active-color);
     }
