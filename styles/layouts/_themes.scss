@@ -1,0 +1,127 @@
+$default-palette: (
+    lighter: hsl(0, 0%, 93%),
+    light: hsl(0, 0%, 87%),
+    medium: hsl(0, 0%, 73%),
+    dark: hsl(0, 0%, 40%),
+    darker: hsl(0, 0%, 20%)
+) !default;
+
+$elementalist-palette: (
+    lighter: hsl(2, 69%, 93%),
+    light: hsl(2, 69%, 87%),
+    medium: hsl(2, 69%, 73%),
+    dark: hsl(2, 69%, 40%),
+    darker:hsl(2, 69%, 20%)
+) !default;
+
+$engineer-palette: (
+    lighter: hsl(35, 58%, 93%),
+    light: hsl(35, 58%, 87%),
+    medium: hsl(35, 58%, 73%),
+    dark: hsl(38, 58%, 40%),
+    darker: hsl(35, 58%, 20%)
+) !default;
+
+$guardian-palette: (
+    lighter: hsl(194, 78%, 93%),
+    light: hsl(194, 78%, 87%),
+    medium: hsl(194, 78%, 73%),
+    dark: hsl(194, 78%, 40%),
+    darker: hsl(194, 78%, 20%)
+) !default;
+
+$mesmer-palette: (
+    lighter: hsl(280, 53%, 93%),
+    light: hsl(280, 53%, 87%),
+    medium: hsl(280, 53%, 73%),
+    dark: hsl(280, 53%, 40%),
+    darker: hsl(280, 53%, 20%)
+) !default;
+
+$ranger-palette: (
+    lighter: hsl(93, 76%, 93%),
+    light: hsl(93, 76%, 87%),
+    medium: hsl(93, 76%, 73%),
+    dark: hsl(93, 76%, 40%),
+    darker: hsl(93, 76%, 20%)
+) !default;
+
+$necromancer-palette: (
+    lighter: hsl(146, 40%, 93%),
+    light: hsl(146, 40%, 87%),
+    medium: hsl(146, 40%, 73%),
+    dark: hsl(146, 40%, 40%),
+    darker: hsl(146, 40%, 20%)
+) !default;
+
+$revenant-palette: (
+    lighter: hsl(10, 55%, 93%),
+    light: hsl(10, 55%, 87%),
+    medium: hsl(10, 55%, 73%),
+    dark: hsl(10, 55%, 40%),
+    darker: hsl(10, 55%, 20%)
+) !default;
+
+$thief-palette: (
+    lighter: hsl(353, 27%, 93%),
+    light: hsl(353, 27%, 87%),
+    medium: hsl(353, 27%, 73%),
+    dark: hsl(353, 27%, 40%),
+    darker: hsl(353, 27%, 20%)
+) !default;
+
+$warrior-palette: (
+    lighter: hsl(48, 100%, 93%),
+    light: hsl(48, 100%, 87%),
+    medium: hsl(48, 100%, 73%),
+    dark: hsl(48, 100%, 40%),
+    darker: hsl(48, 100%, 20%)
+) !default;
+
+@mixin build-section-palette($palette: $default-palette) {
+    --build-section-item-name-text-color: #{map-get($palette, 'medium')};
+    --build-section-item-upgrade-name-text-color: #{rgba(map-get($palette, 'medium'), 0.5)};
+    --build-section-template-addon-alternative-background-color: #{rgba(map-get($palette, 'darker'), 0.5)};
+    --build-section-template-addon-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
+    --build-section-title-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
+}
+
+.main {
+    @include build-section-palette();
+
+    &.has-theme-elementalist {
+        @include build-section-palette($elementalist-palette);
+    }
+
+    &.has-theme-engineer {
+        @include build-section-palette($engineer-palette);
+    }
+
+    &.has-theme-guardian {
+        @include build-section-palette($guardian-palette);
+    }
+
+    &.has-theme-mesmer {
+        @include build-section-palette($mesmer-palette);
+    }
+
+    &.has-theme-ranger {
+        @include build-section-palette($ranger-palette);
+    }
+
+    &.has-theme-necromancer {
+        @include build-section-palette($necromancer-palette);
+    }
+
+    &.has-theme-revenant {
+        @include build-section-palette($revenant-palette);
+    }
+
+    &.has-theme-thief {
+        @include build-section-palette($thief-palette);
+    }
+
+    &.has-theme-warrior {
+        @include build-section-palette($warrior-palette);
+    }
+}
