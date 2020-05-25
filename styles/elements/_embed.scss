@@ -1,0 +1,70 @@
+.gw2-embed {
+    &.is-small {
+        --gw2-item-embed-size: var(--gw2-embed-item-size-small);
+        --gw2-skill-embed-size: var(--gw2-embed-skill-size-small);
+        --gw2-trait-embed-size: var(--gw2-embed-trait-size-small);
+    }
+
+    &.is-medium {
+        --gw2-item-embed-size: var(--gw2-embed-item-size-medium);
+        --gw2-skill-embed-size: var(--gw2-embed-skill-size-medium);
+        --gw2-trait-embed-size: var(--gw2-embed-trait-size-medium);
+    }
+
+    &,
+    &.is-large {
+        --gw2-item-embed-size: var(--gw2-embed-item-size-large);
+        --gw2-skill-embed-size: var(--gw2-embed-skill-size-large);
+        --gw2-trait-embed-size: var(--gw2-embed-trait-size-large);
+    }
+
+    &.is-inline {
+        display: inline-block;
+    }
+
+    .gw2a-items-embed {
+        height: var(--gw2-item-embed-size);
+        width: var(--gw2-item-embed-size);
+
+        & > div {
+            height: var(--gw2-item-embed-size);
+            width: var(--gw2-item-embed-size);
+        }
+    }
+
+    .gw2a-skills-embed {
+        height: var(--gw2-skill-embed-size);
+        width: var(--gw2-skill-embed-size);
+
+        & > div {
+            height: var(--gw2-skill-embed-size);
+            width: var(--gw2-skill-embed-size);
+        }
+    }
+
+    .gw2a-specializations-embed {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        & > div {
+            width: 100%;
+        }
+    }
+
+    .gw2a-traits-embed {
+        height: var(--gw2-trait-embed-size);
+        width: var(--gw2-skill-embed-size);
+
+        & > div {
+            height: var(--gw2-trait-embed-size);
+            width: var(--gw2-trait-embed-size);
+        }
+    }
+}
+
+.gw2-embed-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

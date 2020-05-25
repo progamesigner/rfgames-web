@@ -307,6 +307,16 @@ $speed: 86ms !default;
     --form-modal-content-padding: 1.5rem;
     --form-modal-content-text-color: #{$background-color};
 
+    --gw2-embed-item-size-large: 4rem;
+    --gw2-embed-item-size-medium: 2rem;
+    --gw2-embed-item-size-small: 1.25rem;
+    --gw2-embed-skill-size-large: 4rem;
+    --gw2-embed-skill-size-medium: 2rem;
+    --gw2-embed-skill-size-small: 1.25rem;
+    --gw2-embed-trait-size-large: 4rem;
+    --gw2-embed-trait-size-medium: 2rem;
+    --gw2-embed-trait-size-small: 1.25rem;
+
     --header-background-color: #{$background-color};
 
     --home-section-fullheight-overlay-background-image: radial-gradient(#{$background-color} 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%);
