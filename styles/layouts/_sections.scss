@@ -1,3 +1,231 @@
+.page-section-build {
+    display: grid;
+    grid-gap: var(--build-section-spacing);
+    grid-template-areas:
+        "template template template template"
+        "armors armors weapons weapons"
+        "consumables consumables trinkets trinkets"
+        "skills specializations specializations specializations"
+    ;
+    grid-template-columns: 25% auto auto 25%;
+
+    .build-card {
+        --block-spacing: var(--build-section-spacing);
+        --title-font-size: var(--build-section-title-font-size);
+
+        background-color: var(--build-section-card-background-color);
+        border-radius: var(--build-section-card-radius);
+
+        &.is-template {
+            grid-area: template;
+        }
+
+        &.is-armors {
+            grid-area: armors;
+        }
+
+        &.is-weapons {
+            grid-area: weapons;
+        }
+
+        &.is-trinkets {
+            grid-area: trinkets;
+        }
+
+        &.is-consumables {
+            grid-area: consumables;
+        }
+
+        &.is-skills {
+            grid-area: skills;
+        }
+
+        &.is-specializations {
+            grid-area: specializations;
+        }
+
+        .title {
+            background-color: var(--build-section-title-background-color);
+            border-radius: var(--build-section-card-radius) var(--build-section-card-radius) 0 0;
+            margin: 0;
+            padding: var(--build-section-title-padding);
+            text-align: center;
+        }
+    }
+
+    .build-card-content {
+        padding: var(--block-spacing);
+    }
+
+    .build-card-weapon-container {
+        @include block(var(--build-section-item-spacing));
+
+        .gw2-embed-container {
+            justify-content: flex-start;
+        }
+    }
+
+    .build-card-trinket-container {
+        display: grid;
+        grid-gap: var(--build-section-item-spacing) 0;
+        grid-template-areas: "back accessory1 accessory2" "amulet ring1 ring2";
+    }
+
+    .build-card-skill-container {
+        .gw2-embed-container {
+            align-items: flex-start;
+            flex-direction: column;
+
+            .build-card-item {
+                @include block(var(--build-section-item-spacing));
+            }
+        }
+    }
+
+    .build-card-template-code-container {
+        display: flex;
+
+        .template-addon,
+        .template-copy {
+            @include control();
+            @include unselectable();
+
+            background-color: var(--build-section-template-addon-background-color);
+            color: var(--build-section-template-addon-text-color);
+            margin: calc(-1 * var(--block-spacing));
+            padding: var(--build-section-template-addon-padding);
+            text-align: center;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .template-addon {
+            border-top-right-radius: unset;
+            border-bottom-right-radius: unset;
+        }
+
+        .template-code {
+            color: var(--build-section-template-code-text-color);
+            flex-basis: 100%;
+            padding: 0 var(--block-spacing);
+            margin: 0 var(--block-spacing);
+        }
+
+        .template-copy {
+            border-bottom-left-radius: unset;
+            border-top-left-radius: unset;
+            cursor: pointer;
+
+            @include has-hover() {
+                background-color: var(--build-section-template-addon-alternative-background-color);
+            }
+        }
+    }
+
+    .build-card-item {
+        &.is-armor,
+        &.is-weapon,
+        &.is-trinket,
+        &.is-consumable {
+            @include block(var(--build-section-item-spacing));
+
+            display: grid;
+            grid-gap: 0 var(--build-section-item-spacing);
+        }
+
+        &.is-armor,
+        &.is-weapon {
+            grid-template-areas: "embed name" "embed upgrade";
+            grid-template-columns: var(--build-section-item-size) auto;
+            grid-template-rows: calc(var(--build-section-item-size) / 2) calc(var(--build-section-item-size) / 2);
+        }
+
+        &.is-consumable,
+        &.is-trinket,
+        &.is-skill {
+            grid-template-areas: "embed name";
+            grid-template-columns: var(--build-section-item-size) auto;
+
+            .build-card-name {
+                align-items: center;
+                display: flex;
+            }
+        }
+
+        &.is-back {
+            grid-area: back;
+        }
+
+        &.is-accessory1 {
+            grid-area: accessory1;
+        }
+
+        &.is-accessory2 {
+            grid-area: accessory2;
+        }
+
+        &.is-amulet {
+            grid-area: amulet;
+        }
+
+        &.is-ring1 {
+            grid-area: ring1;
+        }
+
+        &.is-ring2 {
+            grid-area: ring2;
+        }
+
+        &.is-skill {
+            display: grid;
+            grid-gap: 0 var(--build-section-item-spacing);
+        }
+
+        &.is-weapon-skill {
+            grid-gap: 0;
+
+            .build-card-name {
+                display: none;
+            }
+        }
+
+        .gw2-embed {
+            --gw2-item-embed-size: var(--build-section-item-size);
+            grid-area: embed;
+        }
+    }
+
+    .build-card-name {
+        color: var(--build-section-item-name-text-color);
+        font-size: var(--build-section-item-name-font-size);
+        grid-area: name;
+        line-height: calc(var(--build-section-item-size) / 2);
+    }
+
+    .build-card-upgrade {
+        display: grid;
+        grid-area: upgrade;
+        grid-gap: 0 var(--build-section-item-spacing);
+        grid-template-areas: "embed name";
+        grid-template-columns: var(--build-section-attachment-item-size) auto;
+
+        .gw2-embed {
+            --gw2-item-embed-size: var(--build-section-attachment-item-size);
+        }
+    }
+
+    .build-card-upgrade-name {
+        color: var(--build-section-item-upgrade-name-text-color);
+        font-size: var(--build-section-item-upgrade-name-font-size);
+        grid-area: name;
+        line-height: calc(var(--build-section-item-size) / 2);
+    }
+
+    .build-card-infusion {
+        display: none;
+    }
+}
+
 .page-section-discussion {
     padding: var(--discussion-section-padding);
 }

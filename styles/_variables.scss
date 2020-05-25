@@ -300,6 +300,25 @@ $speed: 86ms !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     // Layouts
+    --build-section-attachment-item-size: 2rem;
+    --build-section-card-background-color: #{rgba($background-color, 0.25)};
+    --build-section-card-radius: #{$radius};
+    --build-section-item-name-font-size: #{$font-size-6};
+    --build-section-item-name-text-color: #{$foreground-color};
+    --build-section-item-size: 4rem;
+    --build-section-item-spacing: 0.25rem;
+    --build-section-item-upgrade-name-font-size: #{$font-size-6};
+    --build-section-item-upgrade-name-text-color: #{rgba($foreground-color, 0.75)};
+    --build-section-spacing: 0.5rem;
+    --build-section-template-addon-alternative-background-color: #{rgba($background-color, 0.5)};
+    --build-section-template-addon-background-color: #{rgba($background-color, 0.75)};
+    --build-section-template-addon-padding: 0.5rem 1rem;
+    --build-section-template-addon-text-color: #{$foreground-color};
+    --build-section-template-code-text-color: #{rgba($foreground-color, 0.75)};
+    --build-section-title-background-color: #{rgba($background-color, 0.75)};
+    --build-section-title-font-size: #{$font-size-4};
+    --build-section-title-padding: 0.5rem 0 0.25rem;
+
     --discussion-section-padding: 0;
 
     --footer-background-color: #{$background-alternative-color};
