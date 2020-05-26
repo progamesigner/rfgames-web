@@ -1,9 +1,5 @@
 {{- $position := 0 | index . | string | lower -}}
 
-{{- $positionCodes := dict -}}
-
-{{- $positionCodes = dict "top" 1 | merge $positionCodes -}}
-{{- $positionCodes = dict "middle" 2 | merge $positionCodes -}}
-{{- $positionCodes = dict "bottom" 3 | merge $positionCodes -}}
+{{- $positionCodes := partialCached "functions/gw2-chat-link-trait-position-code.dict" . -}}
 
 {{- return ($position | index $positionCodes | default 0) -}}

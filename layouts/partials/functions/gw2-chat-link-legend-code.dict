@@ -1,0 +1,10 @@
+{{- $map := dict -}}
+
+{{- $map = dict "dragon" 13 | merge $map -}}
+{{- $map = dict "assassin" 14 | merge $map -}}
+{{- $map = dict "dwarf" 15 | merge $map -}}
+{{- $map = dict "demon" 16 | merge $map -}}
+{{- $map = dict "renegade" 17 | merge $map -}}
+{{- $map = dict "centaur" 18 | merge $map -}}
+
+{{- return $map -}}

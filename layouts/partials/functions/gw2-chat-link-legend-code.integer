@@ -1,12 +1,5 @@
 {{- $legend := 0 | index . | string | lower -}}
 
-{{- $legendCodes := dict -}}
-
-{{- $legendCodes = dict "dragon" 13 | merge $legendCodes -}}
-{{- $legendCodes = dict "assassin" 14 | merge $legendCodes -}}
-{{- $legendCodes = dict "dwarf" 15 | merge $legendCodes -}}
-{{- $legendCodes = dict "demon" 16 | merge $legendCodes -}}
-{{- $legendCodes = dict "renegade" 17 | merge $legendCodes -}}
-{{- $legendCodes = dict "centaur" 18 | merge $legendCodes -}}
+{{- $legendCodes := partialCached "gw2-chat-link-legend-code.dict" . -}}
 
 {{- return ($legend | index $legendCodes | default 0) -}}

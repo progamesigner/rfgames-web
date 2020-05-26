@@ -1,0 +1,7 @@
+{{- $map := dict -}}
+
+{{- $map = dict "top" 1 | merge $map -}}
+{{- $map = dict "middle" 2 | merge $map -}}
+{{- $map = dict "bottom" 3 | merge $map -}}
+
+{{- return $map -}}

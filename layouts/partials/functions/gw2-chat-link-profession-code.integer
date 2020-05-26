@@ -1,15 +1,5 @@
 {{- $profession := 0 | index . | string | lower -}}
 
-{{- $professionCodes := dict -}}
-
-{{- $professionCodes = dict "guardian" 1 | merge $professionCodes -}}
-{{- $professionCodes = dict "warrior" 2 | merge $professionCodes -}}
-{{- $professionCodes = dict "engineer" 3 | merge $professionCodes -}}
-{{- $professionCodes = dict "ranger" 4 | merge $professionCodes -}}
-{{- $professionCodes = dict "thief" 5 | merge $professionCodes -}}
-{{- $professionCodes = dict "elementalist" 6 | merge $professionCodes -}}
-{{- $professionCodes = dict "mesmer" 7 | merge $professionCodes -}}
-{{- $professionCodes = dict "necromancer" 8 | merge $professionCodes -}}
-{{- $professionCodes = dict "revenant" 9 | merge $professionCodes -}}
+{{- $professionCodes := partialCached "functions/gw2-chat-link-profession-code.dict" . -}}
 
 {{- return ($profession | index $professionCodes | default 0) -}}
