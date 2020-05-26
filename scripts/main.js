@@ -1,4 +1,4 @@
-import { bind as onChatCodeLoaded } from './chatcode'
+import { bind as onChatCodeLoaded, encode as encodeChatCode } from './chatcode'
 import { bind as onAcceptConsent, init as initConsent } from './consent'
 import { init as initDisqus } from './disqus'
 import { init as initEmbed } from './embed'
@@ -67,6 +67,21 @@ const bootstrap = () => {
   document
     .querySelectorAll('[data-chat-code]')
     .forEach(container => onChatCodeLoaded(container))
+
+  document
+    .querySelectorAll('a[data-wiki-link]')
+    .forEach(link => {
+      const [type, target] = link.getAttribute('data-wiki-link').split('|')
+      switch (type.toLowerCase()) {
+        case 'code':
+          link.setAttribute('href', `https://wiki-en.guildwars2.com/?search=${encodeURIComponent(encodeChatCode(target.split(',')))}`)
+          break
+        case 'name':
+        case 'wiki':
+          link.setAttribute('href', `https://wiki-en.guildwars2.com/wiki/Special:Search/${encodeURIComponent(target)}`)
+          break
+      }
+    })
 
   document
     .querySelectorAll('img[data-placeholder] ~ img')

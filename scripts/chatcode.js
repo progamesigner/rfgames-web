@@ -1,6 +1,9 @@
+export function encode (bytes) {
+  return `[&${btoa(String.fromCharCode(...bytes))}]`
+}
+
 export function bind (container) {
-  const values = container.getAttribute('data-chat-code').split(',')
-  const code = `[&${btoa(String.fromCharCode(...values))}]`
+  const code = encode(container.getAttribute('data-chat-code').split(','))
 
   document
     .querySelectorAll('[data-chat-code-target]')

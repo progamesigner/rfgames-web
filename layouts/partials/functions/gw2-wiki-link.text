@@ -1,0 +1,14 @@
+{{- $type := 0 | index . -}}
+{{- $id := 1 | index . -}}
+{{- $name := 2 | index . -}}
+{{- $wiki := 3 | index . -}}
+
+{{- with $wiki -}}
+    {{- . | printf "wiki|%s" -}}
+{{- else -}}
+    {{- with $id | int -}}
+        {{- slice $type $id | partial "functions/gw2-chat-link.text" | printf "code|%s" -}}
+    {{- else -}}
+        {{- . | printf "name|%s" -}}
+    {{- end -}}
+{{- end -}}

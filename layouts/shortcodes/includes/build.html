@@ -148,30 +148,46 @@
     <div class="{{ delimit $classes " " }}">
         {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $item }}
         {{- with $item -}}
+            {{- $itemId := "id" | index . -}}
             {{- $itemName := "name" | index . -}}
+            {{- $itemWiki := "wiki" | index . -}}
 
-            <span class="build-card-name">{{ $itemName }}</span>
+            <a
+                class="build-card-name"
+                data-wiki-link="{{ slice "item" $itemId $itemName $itemWiki | partial "functions/gw2-wiki-link.text" }}"
+                href="#"
+            >{{ $itemName }}</a>
         {{- end -}}
         {{- with $upgrade -}}
             {{- $upgradeId := "id" | index . -}}
             {{- $upgradeName := "name" | index . -}}
+            {{- $upgradeWiki := "wiki" | index . -}}
 
             {{- $upgradeItem := dict "id" $upgradeId -}}
 
             <div class="build-card-upgrade">
                 {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $upgradeItem }}
-                <span class="build-card-upgrade-name">{{ $upgradeName }}</span>
+                <a
+                    class="build-card-upgrade-name"
+                    data-wiki-link="{{ slice "item" $upgradeId $upgradeName $upgradeWiki | partial "functions/gw2-wiki-link.text" }}"
+                    href="#"
+                >{{ $upgradeName }}</a>
             </div>
         {{- end -}}
         {{- with $infusion -}}
             {{- $infusionId := "id" | index . -}}
             {{- $infusionName := "name" | index . -}}
+            {{- $infusionWiki := "wiki" | index . -}}
 
             {{- $infusionItem := dict "id" $infusionId -}}
 
             <div class="build-card-infusion">
                 {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $infusionItem }}
-                <span class="build-card-infusion-name">{{ $infusionName }}</span>
+                <a
+                    class="build-card-infusion-name"
+                    data-wiki-link="{{ slice "item" $infusionId $infusionName $infusionWiki | partial "functions/gw2-wiki-link.text" }}"
+                    href="#"
+                >{{ $infusionName }}</a>
             </div>
         {{- end -}}
     </div>
