@@ -6,45 +6,48 @@
 {{- $widths := split $sizes "," -}}
 
 {{- define "__rfgames_partials_functions__image_sizes__" -}}
-{{- $widths := 0 | index . -}}
-{{- $head := $widths | len | add -1 -}}
-{{- $sizes := slice -}}
-{{- range $widths | first $head -}}
-{{- $size := printf "(max-width: %spx) %spx" . . | slice -}}
-{{- $sizes = append $size $sizes -}}
-{{- end -}}
-{{- range $widths | after $head -}}
-{{- $size := printf "%spx" . | slice -}}
-{{- $sizes = append $size $sizes -}}
-{{- end -}}
-{{- delimit $sizes "," | printf "%s" -}}
+    {{- $widths := 0 | index . -}}
+    {{- $head := $widths | len | add -1 -}}
+    {{- $sizes := slice -}}
+
+    {{- range $widths | first $head -}}
+        {{- $size := printf "(max-width: %spx) %spx" . . | slice -}}
+        {{- $sizes = append $size $sizes -}}
+    {{- end -}}
+
+    {{- range $widths | after $head -}}
+        {{- $size := printf "%spx" . | slice -}}
+        {{- $sizes = append $size $sizes -}}
+    {{- end -}}
+    {{- delimit $sizes "," | printf "%s" -}}
 {{- end -}}
 
 {{- define "__rfgames_partials_functions__image_srcset__" -}}
-{{- $name := 0 | index . -}}
-{{- $ext := 1 | index . -}}
-{{- $widths := 2 | index . -}}
-{{- $srcs := slice -}}
-{{- range $widths -}}
-{{- $image := printf "%s-%sw.%s" $name . $ext | resources.Get | fingerprint "sha512" -}}
-{{- $src := printf "%s %sw" $image.RelPermalink . | slice -}}
-{{- $srcs = append $src $srcs -}}
-{{- end -}}
-{{- delimit $srcs "," | printf "%s" -}}
+    {{- $name := 0 | index . -}}
+    {{- $ext := 1 | index . -}}
+    {{- $widths := 2 | index . -}}
+    {{- $srcs := slice -}}
+
+    {{- range $widths -}}
+        {{- $image := printf "%s-%sw.%s" $name . $ext | resources.Get | fingerprint "sha512" -}}
+        {{- $src := printf "%s %sw" $image.RelPermalink . | slice -}}
+        {{- $srcs = append $src $srcs -}}
+    {{- end -}}
+    {{- delimit $srcs "," | printf "%s" -}}
 {{- end -}}
 
 {{- define "__rfgames_partials_functions__image_placeholder__" -}}
-{{- $name := 0 | index . -}}
-{{- $ext := 1 | index . -}}
-{{- $image := printf "%s-placeholder.%s" $name $ext | resources.Get | fingerprint "sha512" -}}
-{{- base64Encode $image.Content | printf "data:image/jpeg;base64,%s" | safeURL -}}
+    {{- $name := 0 | index . -}}
+    {{- $ext := 1 | index . -}}
+    {{- $image := printf "%s-placeholder.%s" $name $ext | resources.Get | fingerprint "sha512" -}}
+    {{- base64Encode $image.Content | printf "data:image/jpeg;base64,%s" | safeURL -}}
 {{- end -}}
 
 {{- define "__rfgames_partials_functions__image_fallback__" -}}
-{{- $name := 0 | index . -}}
-{{- $ext := 1 | index . -}}
-{{- $image := printf "%s-fallback.%s" $name $ext | resources.Get | fingerprint "sha512" -}}
-{{- $image.RelPermalink | printf "%s" -}}
+    {{- $name := 0 | index . -}}
+    {{- $ext := 1 | index . -}}
+    {{- $image := printf "%s-fallback.%s" $name $ext | resources.Get | fingerprint "sha512" -}}
+    {{- $image.RelPermalink | printf "%s" -}}
 {{- end -}}
 
 <figure class="image">

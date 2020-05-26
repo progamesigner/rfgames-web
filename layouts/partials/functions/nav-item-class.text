@@ -3,7 +3,7 @@
 {{- $menu := 2 | index . -}}
 
 {{- if $entry | $page.IsMenuCurrent $menu -}}
-{{- printf "nav-item is-active" -}}
+    {{- printf "nav-item is-active" -}}
 {{- else -}}
-{{- printf "nav-item" -}}
+    {{- printf "nav-item" -}}
 {{- end -}}
