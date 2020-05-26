@@ -86,4 +86,6 @@
     {{- end -}}
 {{- end -}}
 
-{{- return printf "[&%s]" (partial "functions/encode-base64.string" $code) -}}
+{{- $chatlink := $code | partial "functions/encode-base64.string" | printf "[&%s]" -}}
+
+{{- return $chatlink -}}
