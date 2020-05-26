@@ -1,9 +1,10 @@
-import { bind as onChatCodeLoaded, encode as encodeChatCode } from './chatcode'
 import { bind as onAcceptConsent, init as initConsent } from './consent'
 import { init as initDisqus } from './disqus'
 import { init as initEmbed } from './embed'
 import { bind as onFormSubmit } from './form'
 import { bind as onImageLoaded } from './image'
+
+import * as ClipboardJS from 'clipboard'
 
 function onFormSubmitBegin (form) {
   return () => {
@@ -41,6 +42,33 @@ const bootstrap = () => {
   initEmbed(window)
   initDisqus(window)
 
+  const clipboard = new ClipboardJS('[data-chat-code-copy]', {
+    text: button => button.getAttribute('data-chat-code-copy')
+  })
+
+  clipboard
+    .on('success', event => {
+      alert(`Chat Code Copied: ${event.trigger.getAttribute('data-chat-code-copy')}`)
+
+      event.clearSelection()
+    })
+    .on('error', () => {
+      alert('Your browser is not yet supported, please copy chat code manually.')
+    })
+
+  document
+    .querySelectorAll('[data-chat-code-selection]')
+    .forEach(target => {
+      target.addEventListener('click', () => {
+        if (window.getSelection && window.document.createRange) {
+          const selection = window.getSelection()
+          const range = window.document.createRange()
+          range.selectNodeContents(target)
+          selection.addRange(range)
+        }
+      })
+    })
+
   document
     .querySelectorAll('form[data-form="application"]')
     .forEach(form => onFormSubmit(form, data => ({
@@ -63,25 +91,6 @@ const bootstrap = () => {
       email: data.get('email') || null,
       message: data.get('message') || null
     }), onFormSubmitBegin(form), onFormSubmitEnd(form)))
-
-  document
-    .querySelectorAll('[data-chat-code]')
-    .forEach(container => onChatCodeLoaded(container))
-
-  document
-    .querySelectorAll('a[data-wiki-link]')
-    .forEach(link => {
-      const [type, target] = link.getAttribute('data-wiki-link').split('|')
-      switch (type.toLowerCase()) {
-        case 'code':
-          link.setAttribute('href', `https://wiki-en.guildwars2.com/?search=${encodeURIComponent(encodeChatCode(target.split(',')))}`)
-          break
-        case 'name':
-        case 'wiki':
-          link.setAttribute('href', `https://wiki-en.guildwars2.com/wiki/Special:Search/${encodeURIComponent(target)}`)
-          break
-      }
-    })
 
   document
     .querySelectorAll('img[data-placeholder] ~ img')

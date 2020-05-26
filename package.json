@@ -14,10 +14,10 @@
   },
   "author": "Yang Sheng Han <progamesigner@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "axios": "^0.19.2"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "axios": "^0.19.2",
+    "clipboard": "^2.0.6",
     "css-loader": "^3.5.3",
     "cssnano": "^4.1.10",
     "eslint": "^7.1.0",
