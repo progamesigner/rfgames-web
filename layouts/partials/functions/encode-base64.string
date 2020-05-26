@@ -1,0 +1,34 @@
+{{- $bytes := . | default slice -}}
+
+{{- $chatacters := partialCached "functions/base64.dict" . -}}
+
+{{- $length := $bytes | len -}}
+{{- $tailLength := mod $length 3 -}}
+{{- $paddingLength := mod (sub 3 $tailLength) 3 -}}
+
+{{- $encoded := slice -}}
+{{- range $length | seq 0 3 -}}
+    {{- $byte1 := . | add 0 | index $bytes -}}
+    {{- $byte2 := . | add 1 | index $bytes -}}
+    {{- $byte3 := . | add 2 | index $bytes -}}
+
+    {{- $value := 0 | add (mul (mod $byte1 256) 65536) | add (mul (mod $byte2 256) 256) | add (mod $byte3 256) -}}
+
+    {{- $keys := slice -}}
+    {{- $keys = $keys | append (div $value 262144) -}}
+    {{- $keys = $keys | append (div (mod $value 262144) 4096) -}}
+    {{- $keys = $keys | append (div (mod $value 4096) 64) -}}
+    {{- $keys = $keys | append (mod $value 64) -}}
+
+    {{- range $keys -}}
+        {{- $encoded = $encoded | append (index $chatacters .) -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $encoded = $encoded | first (sub (len $encoded) $paddingLength) -}}
+
+{{- range $paddingLength | seq -}}
+    {{- $encoded = $encoded | append "=" -}}
+{{- end -}}
+
+{{- return delimit $encoded "" -}}

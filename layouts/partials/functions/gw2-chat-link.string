@@ -86,4 +86,4 @@
     {{- end -}}
 {{- end -}}
 
-{{- return delimit $code "," -}}
+{{- return printf "[&%s]" (partial "functions/encode-base64.string" $code) -}}

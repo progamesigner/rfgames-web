@@ -1,0 +1,12 @@
+{{- $characters := slice -}}
+
+{{- $characters = $characters | append "A" "B" "C" "D" "E" "F" "G" "H" -}}
+{{- $characters = $characters | append "I" "J" "K" "L" "M" "N" "O" "P" -}}
+{{- $characters = $characters | append "Q" "R" "S" "T" "U" "V" "W" "X" -}}
+{{- $characters = $characters | append "Y" "Z" "a" "b" "c" "d" "e" "f" -}}
+{{- $characters = $characters | append "g" "h" "i" "j" "k" "l" "m" "n" -}}
+{{- $characters = $characters | append "o" "p" "q" "r" "s" "t" "u" "v" -}}
+{{- $characters = $characters | append "w" "x" "y" "z" "0" "1" "2" "3" -}}
+{{- $characters = $characters | append "4" "5" "6" "7" "8" "9" "+" "/" -}}
+
+{{- return $characters -}}

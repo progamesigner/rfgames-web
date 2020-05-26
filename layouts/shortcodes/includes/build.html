@@ -9,6 +9,8 @@
 {{- $specializations := $build.specializations -}}
 {{- $template := $build.template -}}
 
+{{- $chatcode := slice "build" $template | partial "functions/gw2-chat-link.string" -}}
+
 {{- range $armorParts -}}
     {{- $armorItem := . | index $equipments -}}
     {{- $armorRuneItem := "rune" | index $armorItem -}}
@@ -401,11 +403,10 @@
     <div class="build-card-content">
         <div
             class="build-card-template-code-container"
-            data-chat-code="{{ slice "build" $template | partial "functions/gw2-chat-link.string" }}"
         >
             <span class="template-addon">Template</span>
-            <span class="template-code" data-chat-code-target>Generating ...</span>
-            <button class="template-copy" data-chat-code-copy>Copy</button>
+            <span class="template-code" data-chat-code-selection>{{ $chatcode }}</span>
+            <button class="template-copy" data-chat-code-copy={{ $chatcode }}>Copy</button>
         </div>
     </div>
 </div>
