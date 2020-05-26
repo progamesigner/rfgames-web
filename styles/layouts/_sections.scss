@@ -1,22 +1,23 @@
 .page-section-build {
     display: grid;
     grid-gap: var(--build-section-spacing);
-
+    grid-template-areas: "armors" "weapons" "trinkets" "consumables" "template" "skills" "specializations";
+    grid-template-columns: auto;
     margin-left: calc(-1 * var(--page-body-padding));
     margin-right: calc(-1 * var(--page-body-padding));
 
-    grid-template-areas: "armors" "weapons" "trinkets" "consumables" "template" "skills" "specializations";
-    grid-template-columns: auto;
-
     @include tablet() {
-        margin: 0;
         grid-template-areas: "armors weapons" "trinkets trinkets" "consumables skills" "template template" "specializations specializations";
-        grid-template-columns: 50% 50%;
+        grid-template-columns: repeat(2, calc((var(--tablet-breakpoint) - var(--container-offset) - var(--page-body-padding) - var(--build-section-spacing)) / 2));
+        margin-left: calc(-0.5 * var(--page-body-padding));
+        margin-right: calc(-0.5 * var(--page-body-padding));
     }
 
     @include desktop() {
         grid-template-areas: "armors armors weapons weapons" "consumables consumables trinkets trinkets" "template template template template" "skills specializations specializations specializations";
-        grid-template-columns: repeat(4, calc((100% - var(--page-body-padding)) / 4));
+        grid-template-columns: repeat(4, calc((var(--desktop-breakpoint) - var(--container-offset) - 2 * var(--page-body-padding) - 3 * var(--build-section-spacing)) / 4));
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .build-card {
@@ -26,15 +27,6 @@
         background-color: var(--build-section-card-background-color);
         border-radius: var(--build-section-card-radius);
         max-width: 100vw;
-        width: 100%;
-
-        @include tablet() {
-            max-width: calc(var(--tablet-breakpoint) - var(--container-offset) - 2 * var(--page-body-padding));
-        }
-
-        @include desktop() {
-            max-width: calc(var(--desktop-breakpoint) - var(--container-offset) - 2 * var(--page-body-padding));
-        }
 
         &.is-template {
             grid-area: template;
@@ -77,20 +69,19 @@
         padding: var(--block-spacing);
     }
 
+    .build-card-armor-container,
+    .build-card-consumable-container,
+    .build-card-skill-container,
     .build-card-weapon-container {
-        @include block(var(--build-section-item-spacing));
+        .build-card-item {
+            @include block(var(--build-section-item-spacing));
+        }
+    }
 
+    .build-card-skill-container {
         .gw2-embed-container {
-            justify-content: flex-start;
-
-            @include tablet() {
-                margin-left: calc(-1 * var(--block-spacing));
-                margin-right: calc(-1 * var(--block-spacing));
-            }
-
-            @include desktop() {
-                margin: 0;
-            }
+            align-items: flex-start;
+            flex-direction: column;
         }
     }
 
@@ -100,14 +91,11 @@
         grid-template-areas: "back accessory1 accessory2" "amulet ring1 ring2";
     }
 
-    .build-card-skill-container {
-        .gw2-embed-container {
-            align-items: flex-start;
-            flex-direction: column;
+    .build-card-weapon-container {
+        @include block(var(--build-section-item-spacing));
 
-            .build-card-item {
-                @include block(var(--build-section-item-spacing));
-            }
+        .gw2-embed-container {
+            justify-content: flex-start;
         }
     }
 
@@ -159,8 +147,6 @@
         &.is-weapon,
         &.is-trinket,
         &.is-consumable {
-            @include block(var(--build-section-item-spacing));
-
             display: grid;
             grid-gap: 0 var(--build-section-item-spacing);
         }
@@ -169,7 +155,7 @@
         &.is-weapon {
             grid-template-areas: "embed name" "embed upgrade";
             grid-template-columns: var(--build-section-item-size) auto;
-            grid-template-rows: calc(var(--build-section-item-size) / 2) calc(var(--build-section-item-size) / 2);
+            grid-template-rows: repeat(2, calc(var(--build-section-item-size) / 2));
         }
 
         &.is-consumable,
@@ -184,8 +170,7 @@
         }
 
         &.is-trinket {
-            grid-template-areas: ". embed .";
-            grid-template-columns: auto var(--build-section-item-size) auto;
+            grid-template-areas: "embed" "name";
 
             @include tablet() {
                 grid-template-areas: "embed name";
@@ -194,10 +179,25 @@
 
             .build-card-name {
                 align-items: center;
-                display: none;
+                display: flex;
+                justify-content: center;
 
                 @include tablet() {
-                    display: flex;
+                    justify-content: flex-start;
+                }
+            }
+        }
+
+        &.is-consumable,
+        &.is-trinket {
+            @include desktop() {
+                grid-template-areas: "embed" "name";
+                grid-template-columns: auto;
+            }
+
+            .build-card-name {
+                @include desktop() {
+                    justify-content: center;
                 }
             }
         }
@@ -241,15 +241,18 @@
 
         .gw2-embed {
             --gw2-item-embed-size: var(--build-section-item-size);
+
             grid-area: embed;
+            margin: 0 auto;
         }
     }
 
-    .build-card-name {
+    .build-card-name,
+    .build-card-upgrade-name {
         color: var(--build-section-item-name-text-color);
         font-size: var(--build-section-item-name-font-size);
         grid-area: name;
-        line-height: calc(var(--build-section-item-size) / 2);
+        line-height: calc(var(--build-section-item-size) / 3);
     }
 
     .build-card-upgrade {
@@ -267,8 +270,6 @@
     .build-card-upgrade-name {
         color: var(--build-section-item-upgrade-name-text-color);
         font-size: var(--build-section-item-upgrade-name-font-size);
-        grid-area: name;
-        line-height: calc(var(--build-section-item-size) / 2);
     }
 
     .build-card-infusion {
