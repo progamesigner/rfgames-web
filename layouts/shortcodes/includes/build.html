@@ -154,7 +154,7 @@
 
             <a
                 class="build-card-name"
-                data-wiki-link="{{ slice "item" $itemId $itemName $itemWiki | partial "functions/gw2-wiki-link.text" }}"
+                data-wiki-link="{{ slice "item" $itemId $itemName $itemWiki | partial "functions/gw2-wiki-link.string" }}"
                 href="#"
             >{{ $itemName }}</a>
         {{- end -}}
@@ -169,7 +169,7 @@
                 {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $upgradeItem }}
                 <a
                     class="build-card-upgrade-name"
-                    data-wiki-link="{{ slice "item" $upgradeId $upgradeName $upgradeWiki | partial "functions/gw2-wiki-link.text" }}"
+                    data-wiki-link="{{ slice "item" $upgradeId $upgradeName $upgradeWiki | partial "functions/gw2-wiki-link.string" }}"
                     href="#"
                 >{{ $upgradeName }}</a>
             </div>
@@ -185,7 +185,7 @@
                 {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $infusionItem }}
                 <a
                     class="build-card-infusion-name"
-                    data-wiki-link="{{ slice "item" $infusionId $infusionName $infusionWiki | partial "functions/gw2-wiki-link.text" }}"
+                    data-wiki-link="{{ slice "item" $infusionId $infusionName $infusionWiki | partial "functions/gw2-wiki-link.string" }}"
                     href="#"
                 >{{ $infusionName }}</a>
             </div>
@@ -401,7 +401,7 @@
     <div class="build-card-content">
         <div
             class="build-card-template-code-container"
-            data-chat-code="{{ slice "build" $template | partial "functions/gw2-chat-link.text" }}"
+            data-chat-code="{{ slice "build" $template | partial "functions/gw2-chat-link.string" }}"
         >
             <span class="template-addon">Template</span>
             <span class="template-code" data-chat-code-target>Generating ...</span>

@@ -1,4 +1,4 @@
-{{- $profession := . | string | lower -}}
+{{- $profession := 0 | index . | string | lower -}}
 
 {{- $professionCodes := dict -}}
 
@@ -12,4 +12,4 @@
 {{- $professionCodes = dict "necromancer" 8 | merge $professionCodes -}}
 {{- $professionCodes = dict "revenant" 9 | merge $professionCodes -}}
 
-{{- $profession | index $professionCodes | default 0 -}}
+{{- return ($profession | index $professionCodes | default 0) -}}

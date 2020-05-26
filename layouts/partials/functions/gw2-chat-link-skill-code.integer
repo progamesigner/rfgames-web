@@ -1,4 +1,4 @@
-{{- $id := . | string -}}
+{{- $id := 0 | index . | string -}}
 
 {{- $skillCodes := dict -}}
 
@@ -409,4 +409,4 @@
 {{- $skillCodes = dict "12450" 25 | merge $skillCodes -}}
 {{- $skillCodes = dict "12457" 37 | merge $skillCodes -}}
 
-{{- $id | index $skillCodes | default 0 -}}
+{{- return ($id | index $skillCodes | default 0) -}}

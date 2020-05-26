@@ -1,37 +1,27 @@
 {{- $type := 0 | index . | string | lower -}}
 
+{{- $code := slice -}}
+
 {{- if $type | eq "item" -}}
     {{- $id := 1 | index . -}}
-
-    {{- $code := slice -}}
 
     {{- $code = $code | append 2 -}}
     {{- $code = $code | append 1 -}}
     {{- $code = $code | append (mod $id 256) (div $id 256) (div $id 65536) 0 -}}
-
-    {{- delimit $code "," -}}
 {{- end -}}
 
 {{- if $type | eq "skill" -}}
     {{- $id := 1 | index . -}}
 
-    {{- $code := slice -}}
-
     {{- $code = $code | append 6 -}}
     {{- $code = $code | append (mod $id 256) (div $id 256) (div $id 65536) 0 -}}
-
-    {{- delimit $code "," -}}
 {{- end -}}
 
 {{- if $type | eq "trait" -}}
     {{- $id := 1 | index . -}}
 
-    {{- $code := slice -}}
-
     {{- $code = $code | append 7 -}}
     {{- $code = $code | append (mod $id 256) (div $id 256) (div $id 65536) 0 -}}
-
-    {{- delimit $code "," -}}
 {{- end -}}
 
 {{- if $type | eq "build" -}}
@@ -42,21 +32,19 @@
         {{- $skills := "skills" | index . -}}
         {{- $traits := "traits" | index . -}}
 
-        {{- $code := slice -}}
-
         {{- $code = $code | append 13 -}}
-        {{- $code = $code | append ($profession | partial "functions/gw2-chat-link-profession-code.integer" | int) -}}
+        {{- $code = $code | append ($profession | slice | partial "functions/gw2-chat-link-profession-code.integer") -}}
         {{- range $traits | first 3 -}}
             {{- $specializtion := 0 | index . -}}
-            {{- $trait1 := 1 | index . | partial "functions/gw2-chat-link-trait-position-code.integer" | int -}}
-            {{- $trait2 := 2 | index . | partial "functions/gw2-chat-link-trait-position-code.integer" | int -}}
-            {{- $trait3 := 3 | index . | partial "functions/gw2-chat-link-trait-position-code.integer" | int -}}
+            {{- $trait1 := 1 | index . | slice | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
+            {{- $trait2 := 2 | index . | slice | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
+            {{- $trait3 := 3 | index . | slice | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
 
             {{- $code = $code | append $specializtion ($trait1 | add (mul $trait2 4) | add (mul $trait3 16)) -}}
         {{- end -}}
         {{- range $skills | first 5 -}}
-            {{- $terrestrialSkill := 0 | index . | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
-            {{- $aquaticSkill := 1 | index . | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
+            {{- $terrestrialSkill := 0 | index . | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $aquaticSkill := 1 | index . | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
 
             {{- $code = $code | append (mod $terrestrialSkill 256) (div $terrestrialSkill 256) -}}
             {{- $code = $code | append (mod $aquaticSkill 256) (div $aquaticSkill 256) -}}
@@ -73,16 +61,16 @@
         {{- end -}}
 
         {{- if $profession | eq 9 | and $legends -}}
-            {{- $terrestrialLegend1 := 0 | index $legends | partial "functions/gw2-chat-link-legend-code.integer" | int -}}
-            {{- $terrestrialLegend2 := 1 | index $legends | partial "functions/gw2-chat-link-legend-code.integer" | int -}}
-            {{- $aquaticLegend1 := 2 | index $legends | partial "functions/gw2-chat-link-legend-code.integer" | int -}}
-            {{- $aquaticLegend2 := 3 | index $legends | partial "functions/gw2-chat-link-legend-code.integer" | int -}}
-            {{- $inactiveTerrestrialSkill1 := 4 | index $legends | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
-            {{- $inactiveTerrestrialSkill2 := 5 | index $legends | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
-            {{- $inactiveTerrestrialSkill3 := 6 | index $legends | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
-            {{- $inactiveAquaticSkill1 := 7 | index $legends | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
-            {{- $inactiveAquaticSkill2 := 8 | index $legends | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
-            {{- $inactiveAquaticSkill3 := 9 | index $legends | partial "functions/gw2-chat-link-skill-code.integer" | int -}}
+            {{- $terrestrialLegend1 := 0 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $terrestrialLegend2 := 1 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $aquaticLegend1 := 2 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $aquaticLegend2 := 3 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $inactiveTerrestrialSkill1 := 4 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveTerrestrialSkill2 := 5 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveTerrestrialSkill3 := 6 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveAquaticSkill1 := 7 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveAquaticSkill2 := 8 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveAquaticSkill3 := 9 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
 
             {{- $inactiveSkillValue1 := 0 | add (math.Pow $inactiveTerrestrialSkill1 2) | add (math.Pow $inactiveTerrestrialSkill2 0) -}}
             {{- $inactiveSkillValue2 := 0 | add (math.Pow $inactiveTerrestrialSkill3 2) | add (math.Pow $inactiveAquaticSkill1 0) -}}
@@ -95,7 +83,7 @@
         {{- if and ($profession | ne 4) ($profession | ne 9) -}}
             {{- $code = $code | append 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -}}
         {{- end -}}
-
-        {{- delimit $code "," -}}
     {{- end -}}
 {{- end -}}
+
+{{- return delimit $code "," -}}

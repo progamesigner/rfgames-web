@@ -2,8 +2,9 @@
 {{- $page := 1 | index . -}}
 {{- $menu := 2 | index . -}}
 
+{{- $classes := slice "nav-item" -}}
 {{- if $entry | $page.IsMenuCurrent $menu -}}
-    {{- printf "nav-item is-active" -}}
-{{- else -}}
-    {{- printf "nav-item" -}}
+    {{- $classes = $classes | append "is-active" -}}
 {{- end -}}
+
+{{- return delimit $classes " " -}}
