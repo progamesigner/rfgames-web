@@ -233,7 +233,7 @@
 }
 
 @mixin mobile() {
-    @include until($tablet-breakpoint - 1) {
+    @include until($tablet-breakpoint - 0.02px) {
         @content;
     }
 }
