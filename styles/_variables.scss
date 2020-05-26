@@ -137,8 +137,8 @@ $font-weight-bold: 700 !default;
  * Responsiveness                                                             *
 \* ========================================================================== */
 $gap: 32px !default;
-$tablet-breakpoint: 769px !default;
-$desktop-breakpoint: 1152px + (2 * $gap) !default;
+$tablet-breakpoint: 768px !default;
+$desktop-breakpoint: 960px + (2 * $gap) !default;
 
 /* ========================================================================== *\
  * Miscellaneous                                                              *
