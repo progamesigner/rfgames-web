@@ -162,11 +162,6 @@
         &.is-skill {
             grid-template-areas: "embed name";
             grid-template-columns: var(--build-section-item-size) auto;
-
-            .build-card-name {
-                align-items: center;
-                display: flex;
-            }
         }
 
         &.is-trinket {
@@ -178,8 +173,6 @@
             }
 
             .build-card-name {
-                align-items: center;
-                display: flex;
                 justify-content: center;
 
                 @include tablet() {
@@ -249,7 +242,9 @@
 
     .build-card-name,
     .build-card-upgrade-name {
+        align-items: center;
         color: var(--build-section-item-name-text-color);
+        display: flex;
         font-size: var(--build-section-item-name-font-size);
         grid-area: name;
         line-height: calc(var(--build-section-item-size) / 3);
