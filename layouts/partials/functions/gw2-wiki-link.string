@@ -1,7 +1,5 @@
 {{- $type := 0 | index . -}}
 {{- $id := 1 | index . -}}
-{{- $name := 2 | index . -}}
-{{- $wiki := 3 | index . -}}
 
 {{- $chatlink := slice $type $id | partial "functions/gw2-chat-link.string" | replaceRE "&" "%26" -}}
 
