@@ -71,8 +71,7 @@
 
     .build-card-armor-container,
     .build-card-consumable-container,
-    .build-card-skill-container,
-    .build-card-weapon-container {
+    .build-card-skill-container {
         .build-card-item {
             @include block(var(--build-section-item-spacing));
         }
@@ -92,10 +91,20 @@
     }
 
     .build-card-weapon-container {
-        @include block(var(--build-section-item-spacing));
+        &:not(:last-child) {
+            .gw2-embed-container {
+                margin-bottom: var(--build-section-item-spacing);
+            }
+        }
 
         .gw2-embed-container {
             justify-content: flex-start;
+        }
+
+        .build-card-item {
+            &.is-weapon {
+                @include block(var(--build-section-item-spacing));
+            }
         }
     }
 
