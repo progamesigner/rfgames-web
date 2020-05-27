@@ -154,16 +154,12 @@
 
             <a
                 href="{{ slice "item" $itemId | partial "functions/gw2-wiki-link.string" }}"
-                rel="noopener noreferrer"
-                target="_blank"
             >
                 {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
             </a>
             <span class="build-card-name">
                 <a
                     href="{{ slice "item" $itemId | partial "functions/gw2-wiki-link.string" }}"
-                    rel="noopener noreferrer"
-                    target="_blank"
                 >{{ $itemName }}</a>
             </span>
         {{- end -}}
@@ -174,16 +170,12 @@
             <div class="build-card-upgrade">
                 <a
                     href="{{ slice "item" $upgradeId | partial "functions/gw2-wiki-link.string" }}"
-                    rel="noopener noreferrer"
-                    target="_blank"
                 >
                     {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
                 </a>
                 <span class="build-card-upgrade-name">
                     <a
                         href="{{ slice "item" $upgradeId | partial "functions/gw2-wiki-link.string" }}"
-                        rel="noopener noreferrer"
-                        target="_blank"
                     >{{ $upgradeName }}</a>
                 </span>
             </div>
@@ -195,16 +187,12 @@
             <div class="build-card-infusion">
                 <a
                     href="{{ slice "item" $infusionId | partial "functions/gw2-wiki-link.string" }}"
-                    rel="noopener noreferrer"
-                    target="_blank"
                 >
                     {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
                 </a>
                 <span class="build-card-infusion-name">
                     <a
                         href="{{ slice "item" $infusionId | partial "functions/gw2-wiki-link.string" }}"
-                        rel="noopener noreferrer"
-                        target="_blank"
                     >{{ $infusionName }}</a>
                 </span>
             </div>
@@ -228,16 +216,12 @@
 
             <a
                 href="{{ slice "skill" $skillId | partial "functions/gw2-wiki-link.string" }}"
-                rel="noopener noreferrer"
-                target="_blank"
             >
                 {{ template "__rfgames_shortcode_includes__build_skills_embed__" slice . }}
             </a>
             <span class="build-card-name">
                 <a
                     href="{{ slice "skill" $skillId | partial "functions/gw2-wiki-link.string" }}"
-                    rel="noopener noreferrer"
-                    target="_blank"
                 >{{ $skillName }}</a>
             </span>
         {{- end -}}
