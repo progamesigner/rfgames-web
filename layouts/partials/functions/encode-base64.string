@@ -2,30 +2,34 @@
 
 {{- $chatacters := partialCached "functions/base64.dict" . -}}
 
+{{- $divisor00 := math.Pow 2 0 | int -}}
+{{- $divisor06 := math.Pow 2 6 | int -}}
+{{- $divisor08 := math.Pow 2 8 | int -}}
+{{- $divisor12 := math.Pow 2 12 | int -}}
+{{- $divisor18 := math.Pow 2 18 | int -}}
+{{- $multiplier08 := math.Pow 2 8 | int -}}
+{{- $multiplier16 := math.Pow 2 16 | int -}}
+
 {{- $length := $bytes | len -}}
 {{- $tailLength := mod $length 3 -}}
-{{- $paddingLength := mod (sub 3 $tailLength) 3 -}}
+{{- $encodedLength := 3 | div ($tailLength | sub $length | add 3 | mul 4) -}}
+{{- $paddingLength := 3 | mod ($tailLength | sub 3) -}}
 
 {{- $encoded := slice -}}
 {{- range $length | seq 0 3 -}}
-    {{- $byte1 := . | add 0 | index $bytes -}}
-    {{- $byte2 := . | add 1 | index $bytes -}}
-    {{- $byte3 := . | add 2 | index $bytes -}}
+    {{- $byte1 := . | add 0 | index $bytes | default 0 -}}
+    {{- $byte2 := . | add 1 | index $bytes | default 0 -}}
+    {{- $byte3 := . | add 2 | index $bytes | default 0 -}}
 
-    {{- $value := 0 | add (mul (mod $byte1 256) 65536) | add (mul (mod $byte2 256) 256) | add (mod $byte3 256) -}}
+    {{- $value := 0 | add ($divisor08 | mod $byte1 | mul $multiplier16) | add ($divisor08 | mod $byte2 | mul $multiplier08) | add ($divisor08 | mod $byte3) -}}
 
-    {{- $keys := slice -}}
-    {{- $keys = $keys | append (div $value 262144) -}}
-    {{- $keys = $keys | append (div (mod $value 262144) 4096) -}}
-    {{- $keys = $keys | append (div (mod $value 4096) 64) -}}
-    {{- $keys = $keys | append (mod $value 64) -}}
-
-    {{- range $keys -}}
-        {{- $encoded = $encoded | append (index $chatacters .) -}}
-    {{- end -}}
+    {{- $encoded = $encoded | append ($divisor06 | mod ($divisor18 | div $value) | index $chatacters) -}}
+    {{- $encoded = $encoded | append ($divisor06 | mod ($divisor12 | div $value) | index $chatacters) -}}
+    {{- $encoded = $encoded | append ($divisor06 | mod ($divisor06 | div $value) | index $chatacters) -}}
+    {{- $encoded = $encoded | append ($divisor06 | mod ($divisor00 | div $value) | index $chatacters) -}}
 {{- end -}}
 
-{{- $encoded = $encoded | first (sub (len $encoded) $paddingLength) -}}
+{{- $encoded = $encoded | first ($paddingLength | sub $encodedLength) -}}
 
 {{- range $paddingLength | seq -}}
     {{- $encoded = $encoded | append "=" -}}
