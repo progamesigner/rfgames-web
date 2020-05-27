@@ -80,7 +80,9 @@ $warrior-palette: (
 
 @mixin build-section-palette($palette: $default-palette) {
     --build-section-item-name-text-color: #{map-get($palette, 'medium')};
-    --build-section-item-upgrade-name-text-color: #{rgba(map-get($palette, 'medium'), 0.5)};
+    --build-section-item-name-text-hover-color: #{map-get($palette, 'lighter')};
+    --build-section-item-upgrade-name-text-color: #{rgba(map-get($palette, 'medium'), 0.75)};
+    --build-section-item-upgrade-name-text-hover-color: #{rgba(map-get($palette, 'lighter'), 0.75)};
     --build-section-template-addon-alternative-background-color: #{rgba(map-get($palette, 'darker'), 0.5)};
     --build-section-template-addon-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
     --build-section-title-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};

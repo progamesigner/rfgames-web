@@ -243,11 +243,17 @@
     .build-card-name,
     .build-card-upgrade-name {
         align-items: center;
-        color: var(--build-section-item-name-text-color);
         display: flex;
-        font-size: var(--build-section-item-name-font-size);
         grid-area: name;
         line-height: calc(var(--build-section-item-size) / 3);
+    }
+
+    .build-card-name {
+        --link-color: var(--build-section-item-name-text-color);
+        --link-hover-color: var(--build-section-item-name-text-hover-color);
+
+        color: var(--build-section-item-name-text-color);
+        font-size: var(--build-section-item-name-font-size);
     }
 
     .build-card-upgrade {
@@ -263,6 +269,9 @@
     }
 
     .build-card-upgrade-name {
+        --link-color: var(--build-section-item-upgrade-name-text-color);
+        --link-hover-color: var(--build-section-item-upgrade-name-text-hover-color);
+
         color: var(--build-section-item-upgrade-name-text-color);
         font-size: var(--build-section-item-upgrade-name-font-size);
     }
