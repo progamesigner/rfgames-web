@@ -78,7 +78,7 @@ $warrior-palette: (
     darker: hsl(48, 100%, 20%)
 ) !default;
 
-@mixin build-section-palette($palette: $default-palette) {
+@mixin theme($palette: $default-palette) {
     --build-section-item-name-text-color: #{map-get($palette, 'medium')};
     --build-section-item-name-text-hover-color: #{map-get($palette, 'lighter')};
     --build-section-item-upgrade-name-text-color: #{rgba(map-get($palette, 'medium'), 0.75)};
@@ -89,41 +89,41 @@ $warrior-palette: (
 }
 
 .main {
-    @include build-section-palette();
+    @include theme();
 
     &.has-theme-elementalist {
-        @include build-section-palette($elementalist-palette);
+        @include theme($elementalist-palette);
     }
 
     &.has-theme-engineer {
-        @include build-section-palette($engineer-palette);
+        @include theme($engineer-palette);
     }
 
     &.has-theme-guardian {
-        @include build-section-palette($guardian-palette);
+        @include theme($guardian-palette);
     }
 
     &.has-theme-mesmer {
-        @include build-section-palette($mesmer-palette);
+        @include theme($mesmer-palette);
     }
 
     &.has-theme-ranger {
-        @include build-section-palette($ranger-palette);
+        @include theme($ranger-palette);
     }
 
     &.has-theme-necromancer {
-        @include build-section-palette($necromancer-palette);
+        @include theme($necromancer-palette);
     }
 
     &.has-theme-revenant {
-        @include build-section-palette($revenant-palette);
+        @include theme($revenant-palette);
     }
 
     &.has-theme-thief {
-        @include build-section-palette($thief-palette);
+        @include theme($thief-palette);
     }
 
     &.has-theme-warrior {
-        @include build-section-palette($warrior-palette);
+        @include theme($warrior-palette);
     }
 }
