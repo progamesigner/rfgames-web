@@ -129,7 +129,7 @@
     {{ $data | slice "specializations" | partial "elements/embed.html" }}
 {{- end -}}
 
-{{- define "__rfgames_shortcode_includes__build_equipment_item__" -}}
+{{- define "__rfgames_shortcode_includes__build_item_item__" -}}
     {{- $styles := 0 | index . -}}
     {{- $item := 1 | index . -}}
     {{- $upgrade := 2 | index . -}}
@@ -148,48 +148,65 @@
     {{- end -}}
 
     <div class="{{ delimit $classes " " }}">
-        {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $item }}
         {{- with $item -}}
             {{- $itemId := "id" | index . -}}
             {{- $itemName := "name" | index . -}}
-            {{- $itemWiki := "wiki" | index . -}}
 
             <a
-                class="build-card-name"
-                data-wiki-link="{{ slice "item" $itemId $itemName $itemWiki | partial "functions/gw2-wiki-link.string" }}"
-                href="#"
-            >{{ $itemName }}</a>
+                href="{{ slice "item" $itemId | partial "functions/gw2-wiki-link.string" }}"
+                rel="noopener noreferrer"
+                target="_blank"
+            >
+                {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
+            </a>
+            <span class="build-card-name">
+                <a
+                    href="{{ slice "item" $itemId | partial "functions/gw2-wiki-link.string" }}"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >{{ $itemName }}</a>
+            </span>
         {{- end -}}
         {{- with $upgrade -}}
             {{- $upgradeId := "id" | index . -}}
             {{- $upgradeName := "name" | index . -}}
-            {{- $upgradeWiki := "wiki" | index . -}}
-
-            {{- $upgradeItem := dict "id" $upgradeId -}}
 
             <div class="build-card-upgrade">
-                {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $upgradeItem }}
                 <a
-                    class="build-card-upgrade-name"
-                    data-wiki-link="{{ slice "item" $upgradeId $upgradeName $upgradeWiki | partial "functions/gw2-wiki-link.string" }}"
-                    href="#"
-                >{{ $upgradeName }}</a>
+                    href="{{ slice "item" $upgradeId | partial "functions/gw2-wiki-link.string" }}"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
+                </a>
+                <span class="build-card-upgrade-name">
+                    <a
+                        href="{{ slice "item" $upgradeId | partial "functions/gw2-wiki-link.string" }}"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >{{ $upgradeName }}</a>
+                </span>
             </div>
         {{- end -}}
         {{- with $infusion -}}
             {{- $infusionId := "id" | index . -}}
             {{- $infusionName := "name" | index . -}}
-            {{- $infusionWiki := "wiki" | index . -}}
-
-            {{- $infusionItem := dict "id" $infusionId -}}
 
             <div class="build-card-infusion">
-                {{ template "__rfgames_shortcode_includes__build_item_embed__" slice $infusionItem }}
                 <a
-                    class="build-card-infusion-name"
-                    data-wiki-link="{{ slice "item" $infusionId $infusionName $infusionWiki | partial "functions/gw2-wiki-link.string" }}"
-                    href="#"
-                >{{ $infusionName }}</a>
+                    href="{{ slice "item" $infusionId | partial "functions/gw2-wiki-link.string" }}"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
+                </a>
+                <span class="build-card-infusion-name">
+                    <a
+                        href="{{ slice "item" $infusionId | partial "functions/gw2-wiki-link.string" }}"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >{{ $infusionName }}</a>
+                </span>
             </div>
         {{- end -}}
     </div>
@@ -205,11 +222,24 @@
     {{- $classes = $classes | append "has-name" -}}
 
     <div class="{{ delimit $classes " " }}">
-        {{ template "__rfgames_shortcode_includes__build_skills_embed__" slice $skill }}
         {{- with $skill -}}
+            {{- $skillId := "id" | index . -}}
             {{- $skillName := "name" | index . -}}
 
-            <span class="build-card-name">{{ $skillName }}</span>
+            <a
+                href="{{ slice "skill" $skillId | partial "functions/gw2-wiki-link.string" }}"
+                rel="noopener noreferrer"
+                target="_blank"
+            >
+                {{ template "__rfgames_shortcode_includes__build_skills_embed__" slice . }}
+            </a>
+            <span class="build-card-name">
+                <a
+                    href="{{ slice "skill" $skillId | partial "functions/gw2-wiki-link.string" }}"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >{{ $skillName }}</a>
+            </span>
         {{- end -}}
     </div>
 {{- end -}}
@@ -229,7 +259,7 @@
 
         {{- $classes := printf "is-%s" $block | slice "is-armor" -}}
 
-        {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $rune -}}
+        {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $rune -}}
     {{- end -}}
 {{- end -}}
 
@@ -256,7 +286,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-dual-wield" "is-main-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $sigil1 -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil1 -}}
             {{- end -}}
 
             {{- with $weapon2 -}}
@@ -266,7 +296,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-dual-wield" "is-off-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $sigil2 -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil2 -}}
             {{- end -}}
         {{- end -}}
         {{- if $type | eq "MainHandOnly" -}}
@@ -277,7 +307,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-main-hand-only" "is-main-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $sigil1 -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil1 -}}
             {{- end -}}
 
             {{- with . -}}
@@ -285,7 +315,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-main-hand-only" "is-off-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item -}}
             {{- end -}}
         {{- end -}}
         {{- if $type | eq "OffHandOnly" -}}
@@ -294,7 +324,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-off-hand-only" "is-main-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item -}}
             {{- end -}}
 
             {{- with $weapon2 -}}
@@ -304,7 +334,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-off-hand-only" "is-off-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $sigil2 -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil2 -}}
             {{- end -}}
         {{- end -}}
         {{- if $type | eq "TwoHand" -}}
@@ -315,7 +345,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-two-hand" "is-main-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $sigil1 -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil1 -}}
             {{- end -}}
 
             {{- with . -}}
@@ -323,7 +353,7 @@
 
                 {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-two-hand" "is-off-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $sigil2 -}}
+                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil2 -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
@@ -349,7 +379,7 @@
 
         {{- $classes := printf "is-%s" $block | slice "is-trinket" -}}
 
-        {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item $upgrade -}}
+        {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $upgrade -}}
     {{- end -}}
 {{- end -}}
 
@@ -362,7 +392,7 @@
 
         {{- $classes := printf "is-%s" $block | slice "is-consumable" -}}
 
-        {{- template "__rfgames_shortcode_includes__build_equipment_item__" slice $classes $item -}}
+        {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item -}}
     {{- end -}}
 {{- end -}}
 
@@ -373,7 +403,6 @@
     {{- with $data -}}
         {{- $id := "id" | index . -}}
         {{- $name := "name" | index . -}}
-        {{- $wiki := "wiki" | index . -}}
 
         {{- $data := dict -}}
         {{- $data = $id | dict "id" | merge $data -}}
