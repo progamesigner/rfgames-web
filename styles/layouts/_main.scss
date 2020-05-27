@@ -149,6 +149,8 @@
 
             .title {
                 --title-font-size: var(--list-title-font-size);
+                --title-line-height: var(--list-title-line-height);
+                --title-text-color: var(--list-title-text-color);
 
                 background-image: var(--list-title-background-image);
                 left: 0;
