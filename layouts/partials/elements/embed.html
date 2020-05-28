@@ -1,11 +1,21 @@
 {{- $type := 0 | index . | lower -}}
-{{- $data := 1 | index . | default dict -}}
+{{- $line := 1 | index . | default false -}}
+{{- $data := 2 | index . | default dict -}}
 
 {{- $armoryTypes := dict "item" "items" "skill" "skills" "specialization" "specializations" "trait" "traits" -}}
 
+{{- $classes := slice -}}
+{{- $classes = $classes | append "gw2-embed" -}}
+{{- with $line -}}
+    {{- $classes = $classes | append "is-inline" -}}
+{{- end -}}
+{{- with $type | printf "is-%s" -}}
+    {{- $classes = $classes | append . -}}
+{{- end -}}
+
 {{- with $type | index $armoryTypes -}}
     <div
-        class="gw2-embed is-{{ $type  }}"
+        class="{{ delimit $classes " " }}"
         data-armory-embed="{{ . }}"
         {{ range $key, $value := $data }}
             {{ printf "data-armory-%s=%q" $key $value | safeHTMLAttr }}
