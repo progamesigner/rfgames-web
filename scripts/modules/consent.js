@@ -4,7 +4,7 @@ const CONSENT_KEY = 'rfgames_consent_store'
 
 const EVENT_NAME = 'tw.rfgames.consent.accept'
 
-function accept(document) {
+function onConsentAccepted(document) {
   document.dispatchEvent(new CustomEvent(EVENT_NAME, {
     value: true
   }))
@@ -28,6 +28,35 @@ function init(window, id) {
   })
 }
 
+function bind(localStorage, consent) {
+  if (localStorage && localStorage.getItem(CONSENT_KEY)) {
+    onConsentAccepted(document)
+  } else {
+    consent
+      .querySelectorAll('.consent-button')
+      .forEach(button => {
+        const click = event => {
+          if (localStorage) {
+            localStorage.setItem(CONSENT_KEY, btoa(JSON.stringify({
+              value: true,
+              timestamp: +new Date()
+            })))
+          }
+
+          button.removeEventListener('click', click)
+          consent.classList.add('is-disabled')
+          onConsentAccepted(document)
+
+          event.preventDefault()
+        }
+
+        button.addEventListener('click', click)
+      })
+
+    consent.classList.remove('is-disabled')
+  }
+}
+
 export default function (window) {
   const {
     __shared_states__: {
@@ -48,32 +77,5 @@ export default function (window) {
 
   document
     .querySelectorAll('.consent')
-    .forEach(consent => {
-      if (localStorage && localStorage.getItem(CONSENT_KEY)) {
-        accept(document)
-      } else {
-        consent
-          .querySelectorAll('.consent-button')
-          .forEach(button => {
-            const click = event => {
-              if (localStorage) {
-                localStorage.setItem(CONSENT_KEY, btoa(JSON.stringify({
-                  value: true,
-                  timestamp: +new Date()
-                })))
-              }
-
-              button.removeEventListener('click', click)
-              consent.classList.add('is-disabled')
-              accept(document)
-
-              event.preventDefault()
-            }
-
-            button.addEventListener('click', click)
-          })
-
-        consent.classList.remove('is-disabled')
-      }
-    })
+    .forEach(bind.bind(null, localStorage))
 }
