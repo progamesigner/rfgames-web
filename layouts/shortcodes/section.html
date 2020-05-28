@@ -1,7 +1,7 @@
 <section class="section">
     <h4 class="title">{{ .Get "title" }}</h4>
-    {{ with .Get "subtitle" }}
+    {{- with .Get "subtitle" -}}
         <h5 class="subtitle">{{ . }}</h5>
-    {{ end }}
-    {{ .Inner }}
+    {{- end -}}
+    {{- .Inner -}}
 </section>
