@@ -1,5 +1,4 @@
 import { bind as onFormSubmit } from './form'
-import { bind as onImageLoaded } from './image'
 
 import * as ClipboardJS from 'clipboard'
 
@@ -50,6 +49,7 @@ const bootstrap = () => {
   bootstrapModule('consent', window)
   bootstrapModule('disqus', window)
   bootstrapModule('embed', window)
+  bootstrapModule('image', window)
 
   const clipboard = new ClipboardJS('[data-chat-code-copy]', {
     text: button => button.getAttribute('data-chat-code-copy')
@@ -100,12 +100,6 @@ const bootstrap = () => {
       email: data.get('email') || null,
       message: data.get('message') || null
     }), onFormSubmitBegin(form), onFormSubmitEnd(form)))
-
-  document
-    .querySelectorAll('img[data-placeholder] ~ img')
-    .forEach(image => onImageLoaded(image, () => {
-      image.classList.add('is-loaded')
-    }))
 
   document
     .querySelectorAll('[data-toggler]')
