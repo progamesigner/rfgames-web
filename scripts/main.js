@@ -1,4 +1,3 @@
-import { init as initEmbed } from './embed'
 import { bind as onFormSubmit } from './form'
 import { bind as onImageLoaded } from './image'
 
@@ -48,10 +47,9 @@ async function bootstrapModule(name, window) {
 }
 
 const bootstrap = () => {
-  initEmbed(window)
-
   bootstrapModule('consent', window)
   bootstrapModule('disqus', window)
+  bootstrapModule('embed', window)
 
   const clipboard = new ClipboardJS('[data-chat-code-copy]', {
     text: button => button.getAttribute('data-chat-code-copy')
