@@ -18,18 +18,7 @@ const bootstrap = () => {
   bootstrapModule('form', window)
   bootstrapModule('image', window)
   bootstrapModule('selection', window)
-
-  document
-    .querySelectorAll('[data-toggler]')
-    .forEach(toggler => {
-      toggler.addEventListener('click', event => {
-        toggler.classList.toggle('is-active')
-        toggler.parentNode.parentNode.querySelectorAll('[data-menu]').forEach(menu => {
-          menu.classList.toggle('is-active')
-        })
-        event.preventDefault()
-      })
-    })
+  bootstrapModule('toggler', window)
 
   document
     .querySelectorAll('a[href^="http"]')
