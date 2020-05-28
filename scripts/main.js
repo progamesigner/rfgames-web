@@ -11,25 +11,13 @@ async function bootstrapModule(name, window) {
 }
 
 const bootstrap = () => {
+  bootstrapModule('clipboard', window)
   bootstrapModule('consent', window)
   bootstrapModule('disqus', window)
   bootstrapModule('embed', window)
   bootstrapModule('form', window)
   bootstrapModule('image', window)
-  bootstrapModule('clipboard', window)
-
-  document
-    .querySelectorAll('[data-chat-code-selection]')
-    .forEach(target => {
-      target.addEventListener('click', () => {
-        if (window.getSelection && window.document.createRange) {
-          const selection = window.getSelection()
-          const range = window.document.createRange()
-          range.selectNodeContents(target)
-          selection.addRange(range)
-        }
-      })
-    })
+  bootstrapModule('selection', window)
 
   document
     .querySelectorAll('[data-toggler]')
