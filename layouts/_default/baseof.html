@@ -1,8 +1,15 @@
 {{- $description := .Param "description" | default .Site.Params.Description | safeHTML -}}
+{{- $title := printf "%s | %s" .Title .Site.Title | safeHTML -}}
+
 {{- $fonts := "https://fonts.googleapis.com/css?family=Comfortaa:700|Roboto&display=swap" -}}
 {{- $script := "main.js" | resources.Get | slice | resources.Concat "script.js" | fingerprint "sha512" -}}
 {{- $style := "main.css" | resources.Get | slice | resources.Concat "style.css" | fingerprint "sha512" -}}
-{{- $title := printf "%s | %s" .Title .Site.Title | safeHTML -}}
+
+{{- $assets := slice -}}
+{{- range $name, $path := "assets" | index .Site.Data | default dict -}}
+    {{- $asset := $path | resources.Get | slice | resources.Concat $name -}}
+    {{- $assets = $assets | append $asset.RelPermalink -}}
+{{- end -}}
 
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
@@ -76,6 +83,7 @@
 
     <script>
         window.__shared_states__ = {
+            assets: {{ $assets | jsonify | safeJS }},
             {{- with .Site.Config.Services.Disqus.Shortname -}}
             disqus: '{{ . }}',
             {{- end -}}

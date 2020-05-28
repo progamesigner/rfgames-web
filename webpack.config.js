@@ -1,4 +1,6 @@
 const path = require('path')
+
+const ManifestPlugin = require('webpack-assets-manifest')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
@@ -20,10 +22,19 @@ module.exports = {
     ]
   },
   output: {
+    chunkFilename: '[chunkhash].chunk.js',
+    filename: '[name].js',
+    jsonpFunction: 'rfgamesJsonp', // @note: to avoid conflict with gw2-embed
     path: path.resolve(__dirname, 'assets'),
-    filename: '[name].js'
+    publicPath: '/'
   },
   plugins: [
+    new ManifestPlugin({
+      integrity: true,
+      integrityHashes: ['sha512'],
+      output: path.join(path.resolve(__dirname, 'data'), 'assets.json'),
+      publicPath: false
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].css'
     })
