@@ -1,4 +1,3 @@
-import { bind as onAcceptConsent, init as initConsent } from './consent'
 import { init as initDisqus } from './disqus'
 import { init as initEmbed } from './embed'
 import { bind as onFormSubmit } from './form'
@@ -37,10 +36,23 @@ function onFormSubmitEnd (form) {
   }
 }
 
+async function bootstrapModule(name, window) {
+  try {
+    const {
+      default: bootstrap
+    } = await import(`./modules/${name}`)
+
+    bootstrap(window)
+  } catch (error) {
+    console.error(`Cannot load module: ${name}, because ${error.message}`)
+  }
+}
+
 const bootstrap = () => {
-  initConsent(window)
   initEmbed(window)
   initDisqus(window)
+
+  bootstrapModule('consent', window)
 
   const clipboard = new ClipboardJS('[data-chat-code-copy]', {
     text: button => button.getAttribute('data-chat-code-copy')
@@ -132,10 +144,6 @@ const bootstrap = () => {
         event.preventDefault()
       })
     })
-
-  document
-    .querySelectorAll('.consent')
-    .forEach(onAcceptConsent)
 }
 
 if (document.readyState === 'loading') {
