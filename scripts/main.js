@@ -18,22 +18,9 @@ const bootstrap = () => {
   bootstrapModule('form', window)
   bootstrapModule('image', window)
   bootstrapModule('link', window)
+  bootstrapModule('modal', window)
   bootstrapModule('selection', window)
   bootstrapModule('toggler', window)
-
-  document
-    .querySelectorAll('.modal-background, .modal-close')
-    .forEach(button => {
-      button.addEventListener('click', event => {
-        document
-          .querySelectorAll('.modal.is-active')
-          .forEach(modal => {
-            modal.classList.remove('is-active')
-          })
-
-        event.preventDefault()
-      })
-    })
 }
 
 if (document.readyState === 'loading') {
