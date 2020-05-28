@@ -1,5 +1,3 @@
-import * as ClipboardJS from 'clipboard'
-
 async function bootstrapModule(name, window) {
   try {
     const {
@@ -8,7 +6,7 @@ async function bootstrapModule(name, window) {
 
     bootstrap(window)
   } catch (error) {
-    console.error(`Cannot load module: ${name}, because ${error.message}`)
+    console.error(error.message)
   }
 }
 
@@ -18,20 +16,7 @@ const bootstrap = () => {
   bootstrapModule('embed', window)
   bootstrapModule('form', window)
   bootstrapModule('image', window)
-
-  const clipboard = new ClipboardJS('[data-chat-code-copy]', {
-    text: button => button.getAttribute('data-chat-code-copy')
-  })
-
-  clipboard
-    .on('success', event => {
-      alert(`Chat Code Copied: ${event.trigger.getAttribute('data-chat-code-copy')}`)
-
-      event.clearSelection()
-    })
-    .on('error', () => {
-      alert('Your browser is not yet supported, please copy chat code manually.')
-    })
+  bootstrapModule('clipboard', window)
 
   document
     .querySelectorAll('[data-chat-code-selection]')

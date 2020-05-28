@@ -419,7 +419,11 @@
         >
             <span class="template-addon">Template</span>
             <span class="template-code" data-chat-code-selection>{{ $chatcode }}</span>
-            <button class="template-copy" data-chat-code-copy={{ $chatcode }}>Copy</button>
+            <button
+                class="template-copy"
+                data-clipboard-text="{{ $chatcode }}"
+                data-clipboard-message="Copied {{ .Page.Title }} template code to clipboard"
+            >Copy</button>
         </div>
     </div>
 </div>
