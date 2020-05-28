@@ -1,10 +1,14 @@
-{{- $type := 0 | index . -}}
+{{- $type := 0 | index . | lower -}}
 {{- $data := 1 | index . | default dict -}}
 
-<div
-    class="gw2-embed is-{{ $type | singularize }}"
-    data-armory-embed="{{ $type }}"
-    {{ range $key, $value := $data }}
-        {{ printf "data-armory-%s=%q" $key $value | safeHTMLAttr }}
-    {{ end }}
-></div>
+{{- $armoryTypes := dict "item" "items" "skill" "skills" "specialization" "specializations" "trait" "traits" -}}
+
+{{- with $type | index $armoryTypes -}}
+    <div
+        class="gw2-embed is-{{ $type  }}"
+        data-armory-embed="{{ . }}"
+        {{ range $key, $value := $data }}
+            {{ printf "data-armory-%s=%q" $key $value | safeHTMLAttr }}
+        {{ end }}
+    ></div>
+{{- end -}}
