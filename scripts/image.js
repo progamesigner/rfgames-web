@@ -16,5 +16,5 @@ export async function onLoaded (image) {
 }
 
 export function bind (image, callback) {
-  onLoaded(image).then(callback).catch(console.error)
+  onLoaded(image).then(image => callback.call(image)).catch(console.error)
 }
