@@ -4,13 +4,13 @@ const CONSENT_KEY = 'rfgames_consent_store'
 
 const EVENT_NAME = 'tw.rfgames.consent.accept'
 
-const emitAcceptEvent = document => {
+function accept(document) {
   document.dispatchEvent(new CustomEvent(EVENT_NAME, {
     value: true
   }))
 }
 
-const init = (window, id) => {
+function init(window, id) {
   const dnt = window.navigator.doNotTrack || window.doNotTrack || window.navigator.msDoNotTrack
 
   window.dataLayer = window.dataLayer || []
@@ -50,7 +50,7 @@ export default function (window) {
     .querySelectorAll('.consent')
     .forEach(consent => {
       if (localStorage && localStorage.getItem(CONSENT_KEY)) {
-        emitAcceptEvent(document)
+        accept(document)
       } else {
         consent
           .querySelectorAll('.consent-button')
@@ -65,7 +65,7 @@ export default function (window) {
 
               button.removeEventListener('click', click)
               consent.classList.add('is-disabled')
-              emitAcceptEvent(document)
+              accept(document)
 
               event.preventDefault()
             }

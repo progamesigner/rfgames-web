@@ -1,6 +1,6 @@
 import { loadScript } from '../libs/dom'
 
-const init = (window) => {
+function init(window) {
   const {
     __shared_states__: {
       page: {
