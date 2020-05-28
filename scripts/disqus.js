@@ -20,5 +20,7 @@ export function init (window) {
     this.page.url = permalink
   }
 
-  load()
+  if (window.document.getElementById('disqus_thread')) {
+    load()
+  }
 }
