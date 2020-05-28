@@ -1,26 +1,27 @@
-async function bootstrapModule(name, window) {
-  try {
-    const {
-      default: bootstrap
-    } = await import(`./modules/${name}`)
-
-    bootstrap(window)
-  } catch (error) {
-    console.error(error.message)
-  }
-}
+import {
+  bootstrapClipboardModule,
+  bootstrapConsentModule,
+  bootstrapDisqusModule,
+  bootstrapEmbedModule,
+  bootstrapFormModule,
+  bootstrapImageModule,
+  bootstrapLinkModule,
+  bootstrapModalModule,
+  bootstrapSelectionModule,
+  bootstrapTogglerModule
+} from './modules'
 
 const bootstrap = () => {
-  bootstrapModule('clipboard', window)
-  bootstrapModule('consent', window)
-  bootstrapModule('disqus', window)
-  bootstrapModule('embed', window)
-  bootstrapModule('form', window)
-  bootstrapModule('image', window)
-  bootstrapModule('link', window)
-  bootstrapModule('modal', window)
-  bootstrapModule('selection', window)
-  bootstrapModule('toggler', window)
+  bootstrapClipboardModule(window)
+  bootstrapConsentModule(window)
+  bootstrapDisqusModule(window)
+  bootstrapEmbedModule(window)
+  bootstrapFormModule(window)
+  bootstrapImageModule(window)
+  bootstrapLinkModule(window)
+  bootstrapModalModule(window)
+  bootstrapSelectionModule(window)
+  bootstrapTogglerModule(window)
 }
 
 if (document.readyState === 'loading') {
