@@ -17,17 +17,9 @@ const bootstrap = () => {
   bootstrapModule('embed', window)
   bootstrapModule('form', window)
   bootstrapModule('image', window)
+  bootstrapModule('link', window)
   bootstrapModule('selection', window)
   bootstrapModule('toggler', window)
-
-  document
-    .querySelectorAll('a[href^="http"]')
-    .forEach(link => {
-      link.addEventListener('click', event => {
-        open(link.getAttribute('href'), '_blank', 'noopener')
-        event.preventDefault()
-      })
-    })
 
   document
     .querySelectorAll('.modal-background, .modal-close')
