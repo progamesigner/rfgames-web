@@ -11,7 +11,7 @@ import {
   bootstrapTogglerModule
 } from './modules'
 
-const bootstrap = () => {
+export default function (window: Window): void {
   bootstrapClipboardModule(window)
   bootstrapConsentModule(window)
   bootstrapDisqusModule(window)
@@ -22,10 +22,4 @@ const bootstrap = () => {
   bootstrapModalModule(window)
   bootstrapSelectionModule(window)
   bootstrapTogglerModule(window)
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', bootstrap)
-} else {
-  setTimeout(bootstrap, 1)
 }

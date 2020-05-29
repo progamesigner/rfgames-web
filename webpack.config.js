@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 module.exports = {
   devtool: isProduction ? false : 'eval-source-map',
   entry: [
-    './scripts/main.js',
+    './scripts/main.ts',
     './styles/main.scss'
   ],
   module: {
@@ -21,6 +21,11 @@ module.exports = {
           'postcss-loader',
           'sass-loader'
         ]
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader'
       }
     ]
   },
@@ -39,5 +44,8 @@ module.exports = {
       fileName: path.join(path.resolve(__dirname, 'data'), 'assets.json'),
       publicPath: false
     })
-  ]
+  ],
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss'],
+  }
 }

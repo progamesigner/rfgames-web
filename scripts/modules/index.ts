@@ -1,3 +1,12 @@
+import { ConsentSharedStates } from './consent'
+import { DisqusSharedStates } from './disqus'
+
+declare global {
+  interface Window {
+    __shared_states__: ConsentSharedStates | DisqusSharedStates;
+  }
+}
+
 export { default as bootstrapClipboardModule } from './clipboard'
 export { default as bootstrapConsentModule } from './consent'
 export { default as bootstrapDisqusModule } from './disqus'
