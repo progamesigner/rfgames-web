@@ -25,15 +25,15 @@ module.exports = {
     ]
   },
   output: {
-    chunkFilename: '.chunks/[chunkhash].chunk.js',
-    filename: '[name].js',
+    chunkFilename: '[contenthash].chunk.js',
+    filename: '[contenthash].js',
     jsonpFunction: 'rfgamesJsonp', // @note: to avoid conflict with gw2-embed
-    path: path.resolve(__dirname, 'assets'),
+    path: path.resolve(__dirname, 'assets', 'dist'),
     publicPath: '/'
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css'
+      filename: '[contenthash].css'
     }),
     new ManifestPlugin({
       fileName: path.join(path.resolve(__dirname, 'data'), 'assets.json'),

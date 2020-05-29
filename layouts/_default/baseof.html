@@ -1,14 +1,15 @@
 {{- $description := .Param "description" | default .Site.Params.Description | safeHTML -}}
 {{- $title := printf "%s | %s" .Title .Site.Title | safeHTML -}}
 
+{{- $assets := "assets" | index .Site.Data | default dict -}}
 {{- $fonts := "https://fonts.googleapis.com/css?family=Comfortaa:700|Roboto&display=swap" -}}
-{{- $script := "main.js" | resources.Get | slice | resources.Concat "script.js" | fingerprint "sha512" -}}
-{{- $style := "main.css" | resources.Get | slice | resources.Concat "style.css" | fingerprint "sha512" -}}
+{{- $script := "main.js" | index $assets | printf "dist/%s" | resources.Get | slice | resources.Concat "script.js" | fingerprint "sha512" -}}
+{{- $style := "main.css" | index $assets | printf "dist/%s" | resources.Get | slice | resources.Concat "style.css" | fingerprint "sha512" -}}
 
-{{- $assets := slice -}}
+{{- $files := slice -}}
 {{- range $name, $path := "assets" | index .Site.Data | default dict -}}
-    {{- $asset := $path | resources.Get | slice | resources.Concat $name -}}
-    {{- $assets = $assets | append $asset.RelPermalink -}}
+    {{- $asset := $path | printf "dist/%s" | resources.Get | slice | resources.Concat $path -}}
+    {{- $files = $files | append $asset.RelPermalink -}}
 {{- end -}}
 
 <!DOCTYPE html>
@@ -83,7 +84,9 @@
 
     <script>
         window.__shared_states__ = {
-            assets: {{ $assets | jsonify | safeJS }},
+            {{- with $files -}}
+            assets: {{ . | jsonify | safeJS }},
+            {{- end -}}
             {{- with .Site.Config.Services.Disqus.Shortname -}}
             disqus: '{{ . }}',
             {{- end -}}
