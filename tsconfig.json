@@ -4,6 +4,7 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "jsx": "react",
+    "jsxFactory": "m",
     "module": "ES2020",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
