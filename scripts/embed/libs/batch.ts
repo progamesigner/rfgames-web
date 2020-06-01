@@ -18,10 +18,10 @@ function deferred<R, E = Error>(): Deferred<R, E> {
   return { promise, resolve, reject }
 }
 
-type NormalizedFunction<T, R, A extends unknown[]> = (arg: T, ...args: A) => R
-type BatchedFunction<T, R, A extends unknown[]> = NormalizedFunction<Array<T>, R, A>
+type NormalizedFunction<T, R, A extends Array<unknown>> = (arg: T, ...args: A) => R
+type BatchedFunction<T, R, A extends Array<unknown>> = NormalizedFunction<Array<T>, R, A>
 
-export function batch<T, R, A extends unknown[]>(
+export function batch<T, R, A extends Array<unknown>>(
   func: BatchedFunction<T, R, A>,
   wait: number
 ): NormalizedFunction<T, Promise<R>, A> {
