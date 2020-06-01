@@ -2,7 +2,7 @@ async function init() {
   try {
     const {
       default: bootstrap
-  } = await import(/* webpackChunkName: 'bootstrap' */ './bootstrap')
+    } = await import(/* webpackChunkName: 'bootstrap' */ './bootstrap')
     bootstrap(window)
   } catch (error) {
     console.error(error.message)
