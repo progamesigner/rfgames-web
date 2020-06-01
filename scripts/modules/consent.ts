@@ -1,4 +1,4 @@
-import { loadScript } from '../libs'
+import { bindEventListener, loadScript } from '../libs'
 
 type GAData = string | Date | GADataConfig;
 
@@ -49,10 +49,10 @@ export default function (window: Window): void {
     window.navigator.msDoNotTrack ||
     false
 
-  const load = () => {
+  const unbindEvent = bindEventListener(document, EVENT_NAME, () => {
     loadScript(window, `https://www.googletagmanager.com/gtag/js?id=${id}`)
-    document.removeEventListener(EVENT_NAME, load)
-  }
+    unbindEvent()
+  })
 
   window.dataLayer = window.dataLayer || []
 
@@ -68,8 +68,6 @@ export default function (window: Window): void {
     anonymize_ip: true
   })
 
-  document.addEventListener(EVENT_NAME, load)
-
   document
     .querySelectorAll('.consent')
     .forEach(element => {
@@ -79,21 +77,20 @@ export default function (window: Window): void {
         element
           .querySelectorAll('.consent-button')
           .forEach(button => {
-            const click: EventListener = event => {
+            const unbindEvent = bindEventListener(button, 'click', event => {
               if (localStorage) {
                 localStorage.setItem(CONSENT_KEY, btoa(JSON.stringify({
                   timestamp: +new Date()
                 })))
               }
 
-              button.removeEventListener('click', click)
+              unbindEvent()
+
               element.classList.add('is-disabled')
               onConsentAccepted(document)
 
               event.preventDefault()
-            }
-
-            button.addEventListener('click', click)
+            })
           })
 
           element.classList.remove('is-disabled')

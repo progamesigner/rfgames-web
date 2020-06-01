@@ -8,13 +8,10 @@ export default function (window: Window): void {
     .forEach(element => {
       const image = element as HTMLImageElement
 
-      const load = () => {
-        requestAnimationFrame(() => {
-          image.removeEventListener('error', console.error)
-          image.removeEventListener('load', load)
-          image.classList.add('is-loaded')
-        })
-      }
+      const load = () => requestAnimationFrame(() => {
+        image.removeEventListener('load', load)
+        image.classList.add('is-loaded')
+      })
 
       image.addEventListener('error', console.error)
       if (image.complete) {
