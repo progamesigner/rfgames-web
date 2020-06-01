@@ -1,9 +1,6 @@
 import * as m from 'mithril'
 
-import {
-  default as config
-} from '../config'
-
+import { default as config } from '../config'
 import {
   GW2BaseRecord,
   GW2Item,
