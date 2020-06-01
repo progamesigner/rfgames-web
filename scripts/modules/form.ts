@@ -1,4 +1,4 @@
-import axios from 'axios'
+import * as m from 'mithril'
 
 interface ApplicationFormData {
   account: string | null;
@@ -87,27 +87,21 @@ function onSubmitEnd(form: HTMLFormElement, success: boolean): void {
 
 function bind<T>(form: HTMLFormElement, transformer: FormTransformer<T>) {
   form.addEventListener('submit', async event => {
-    const data = transformer(new FormData(event.target as HTMLFormElement))
+    const body = transformer(new FormData(event.target as HTMLFormElement))
 
     event.preventDefault()
 
     onSubmitBegin(form)
     try {
-      const response = await axios.request({
-        url: form.getAttribute('action') || '',
-        method: form.getAttribute('method') === 'POST' ? 'POST' : 'GET',
+      await m.request(form.getAttribute('action') || '', {
+        method: form.getAttribute('method') || 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        data: data,
-        responseType: 'json'
+        body
       })
 
-      if (response.status >= 200 && response.status < 300) {
-        onSubmitEnd(form, true)
-      } else {
-        onSubmitEnd(form, false)
-      }
+      onSubmitEnd(form, true)
     } catch (error) {
       onSubmitEnd(form, false)
       console.error(error)
