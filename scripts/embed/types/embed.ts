@@ -2,15 +2,15 @@ import { Store } from 'redux'
 
 import { EmbedState } from './store'
 
-interface ContainerAttributes {
-  classes?: string | Array<string>;
-}
+type ClassValue = boolean | null | number | string | undefined | { [index: number]: ClassValue; } | { [classname: string]: ClassValue; }
 
-interface StoreAttributes {
-  store: Store<EmbedState>
+export interface EmbedContainerAttributes<T> {
+  id: T;
+  store: Store<EmbedState>;
 }
 
 export interface EmbedAttributes {
+  classes?: false | null | string | { [index: string]: ClassValue; };
   enableInline: boolean;
   enableLink: boolean;
   enableName: boolean;
@@ -22,7 +22,3 @@ export interface EmbedOptions {
   language: string;
   useLocalStorageAsCache: boolean;
 }
-
-export type ConnectedAttributes<
-  Attrs extends EmbedAttributes
-> = Attrs & ContainerAttributes & StoreAttributes
