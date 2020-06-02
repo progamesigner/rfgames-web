@@ -2,17 +2,8 @@ import { uniq } from 'lodash/fp'
 
 import { Dispatch } from 'redux'
 
-import {
-  fetchGW2Items,
-  fetchGW2ItemStats,
-  fetchGW2Pets,
-  fetchGW2Professions,
-  fetchGW2Skills,
-  fetchGW2Specializations,
-  fetchGW2Traits,
-  GW2Fetcher,
-} from '../apis'
-import { default as config } from '../config'
+import { default as apis, GW2Fetcher } from '../apis'
+import { config } from '../config'
 import { batch } from '../libs'
 import {
   AsyncRecord,
@@ -180,10 +171,10 @@ export function makeActionNames(resource: GW2Resources): GW2ActionNames {
   }
 }
 
-export const fetchItem = actionFactory<number, GW2Item>(GW2Resources.ITEM, fetchGW2Items, 'items')
-export const fetchItemStat = actionFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, fetchGW2ItemStats, 'itemstats')
-export const fetchPet = actionFactory<number, GW2Pet>(GW2Resources.PET, fetchGW2Pets, 'pets')
-export const fetchProfession = actionFactory<string, GW2Profession>(GW2Resources.PROFESSION, fetchGW2Professions, 'professions')
-export const fetchSkill = actionFactory<number, GW2Skill>(GW2Resources.SKILL, fetchGW2Skills, 'skills')
-export const fetchSpecialization = actionFactory<number, GW2Specialization>(GW2Resources.TRAIT, fetchGW2Specializations, 'specializations')
-export const fetchTrait = actionFactory<number, GW2Trait>(GW2Resources.TRAIT, fetchGW2Traits, 'traits')
+export const fetchItem = actionFactory<number, GW2Item>(GW2Resources.ITEM, apis.fetchGW2Items, 'items')
+export const fetchItemStat = actionFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, apis.fetchGW2ItemStats, 'itemstats')
+export const fetchPet = actionFactory<number, GW2Pet>(GW2Resources.PET, apis.fetchGW2Pets, 'pets')
+export const fetchProfession = actionFactory<string, GW2Profession>(GW2Resources.PROFESSION, apis.fetchGW2Professions, 'professions')
+export const fetchSkill = actionFactory<number, GW2Skill>(GW2Resources.SKILL, apis.fetchGW2Skills, 'skills')
+export const fetchSpecialization = actionFactory<number, GW2Specialization>(GW2Resources.TRAIT, apis.fetchGW2Specializations, 'specializations')
+export const fetchTrait = actionFactory<number, GW2Trait>(GW2Resources.TRAIT, apis.fetchGW2Traits, 'traits')

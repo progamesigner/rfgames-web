@@ -1,4 +1,4 @@
-import * as m from 'mithril'
+import { request } from 'mithril'
 
 interface ApplicationFormData {
   account: string | null;
@@ -93,7 +93,7 @@ function bind<T>(form: HTMLFormElement, transformer: FormTransformer<T>) {
 
     onSubmitBegin(form)
     try {
-      await m.request(form.getAttribute('action') || '', {
+      await request(form.getAttribute('action') || '', {
         method: form.getAttribute('method') || 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -1,7 +1,7 @@
 import { debounce } from 'lodash/fp'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
-import { default as config } from '../config'
+import { config } from '../config'
 
 const CACHE_VERSION_KEY = 'CACHE_VERSION'
 const FORCE_CLEAR_CACHE_KEY = 'FORCE_CLEAR_CACHE'
