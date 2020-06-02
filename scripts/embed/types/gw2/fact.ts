@@ -1,65 +1,65 @@
-interface GW2BaseFact<T extends string> {
+type GW2BaseFact<T extends string> = {
   type: T;
   text: string;
   icon: string;
 }
 
-interface GW2BuffPrefix {
+type GW2BuffPrefix = {
   text: string;
   icon: string;
   status: string;
   description: string;
 }
 
-interface GW2TraitedFactFields {
+type GW2TraitedFactFields = {
   requires_trait: number;
   overrides: number;
 }
 
-interface GW2FactAttributeAdjustFields {
+type GW2FactAttributeAdjustFields = {
   value: number;
   target: string;
 }
 
-interface GW2FactBuffFields {
+type GW2FactBuffFields = {
   duration: number;
   status: string;
   description: string;
   apply_count: number;
 }
 
-interface GW2FactBuffConversionFields {
+type GW2FactBuffConversionFields = {
   source: string;
   percent: string;
   target: string;
 }
 
-interface GW2FactComboFieldFields {
+type GW2FactComboFieldFields = {
   field_type: string;
 }
 
-interface GW2FactComboFinisherFields {
+type GW2FactComboFinisherFields = {
   percent: number;
   finisher_type: string;
 }
 
-interface GW2FactDamageFields {
+type GW2FactDamageFields = {
   hit_count: number;
 }
 
-interface GW2FactDistanceFields {
+type GW2FactDistanceFields = {
   distance: number;
 }
 
-interface GW2FactNumberFields {
+type GW2FactNumberFields = {
   value: number;
 }
 
-interface GW2FactPercentFields {
+type GW2FactPercentFields = {
   percent: number;
 }
 
-interface GW2FactPrefixedBuffFields {
+type GW2FactPrefixedBuffFields = {
   percent: number;
   duration: number;
   status: string;
@@ -68,23 +68,23 @@ interface GW2FactPrefixedBuffFields {
   prefix: GW2BuffPrefix;
 }
 
-interface GW2FactRadiusFields {
+type GW2FactRadiusFields = {
   distance: number;
 }
 
-interface GW2FactRangeFields {
+type GW2FactRangeFields = {
   value: number;
 }
 
-interface GW2FactRechargeFields {
+type GW2FactRechargeFields = {
   value: number;
 }
 
-interface GW2FactTimeFields {
+type GW2FactTimeFields = {
   duration: number;
 }
 
-interface GW2FactUnblockableFields {
+type GW2FactUnblockableFields = {
   value: boolean;
 }
 

@@ -10,7 +10,7 @@ enum GW2TraitTier {
 
 type GW2TraitSlot = 'Major' | 'Minor'
 
-interface GW2TraitSkill extends GW2BaseRecord<number> {
+type GW2TraitSkill = GW2BaseRecord<number> & {
   name: string;
   description: string;
   icon: string;
@@ -18,7 +18,7 @@ interface GW2TraitSkill extends GW2BaseRecord<number> {
   traited_facts: Array<GW2TraitedFact>;
 }
 
-export interface GW2Trait extends GW2BaseRecord<number> {
+export type GW2Trait = GW2BaseRecord<number> & {
   name: string;
   profession: string;
   icon: string;

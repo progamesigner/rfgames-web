@@ -1,10 +1,13 @@
 import { debounce } from 'lodash/fp'
 
-interface Deferred<R, E> {
+type Deferred<R, E> = {
   promise: Promise<R>;
   resolve?: (response: R) => void;
   reject?: (error: E) => void
 }
+
+type NormalizedFunction<T, R, A extends Array<unknown>> = (arg: T, ...args: A) => R
+type BatchedFunction<T, R, A extends Array<unknown>> = NormalizedFunction<Array<T>, R, A>
 
 function deferred<R, E = Error>(): Deferred<R, E> {
   let resolve
@@ -17,9 +20,6 @@ function deferred<R, E = Error>(): Deferred<R, E> {
 
   return { promise, resolve, reject }
 }
-
-type NormalizedFunction<T, R, A extends Array<unknown>> = (arg: T, ...args: A) => R
-type BatchedFunction<T, R, A extends Array<unknown>> = NormalizedFunction<Array<T>, R, A>
 
 export function batch<T, R, A extends Array<unknown>>(
   func: BatchedFunction<T, R, A>,

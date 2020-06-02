@@ -1,6 +1,12 @@
 import { loadScript } from '../libs'
 
-interface DisqusConfig {
+declare global {
+  interface Window {
+    disqus_config:  (this: DisqusConfig) => void;
+  }
+}
+
+type DisqusConfig = {
   page: {
     identifier?: string;
     title?: string;
@@ -8,19 +14,13 @@ interface DisqusConfig {
   }
 }
 
-interface DisqusPage {
+type DisqusPage = {
   permalink?: string;
   title?: string;
   uniqueId?: string;
 }
 
-declare global {
-  interface Window {
-    disqus_config:  (this: DisqusConfig) => void;
-  }
-}
-
-export interface DisqusSharedStates {
+export type DisqusSharedStates = {
   disqus: string;
   page: DisqusPage;
 }

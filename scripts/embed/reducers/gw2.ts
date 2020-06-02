@@ -23,7 +23,7 @@ import {
   GW2Trait
 } from '../types'
 
-interface Reducers {
+type Reducers = {
   [key: string]: Reducer<EmbedState>;
 }
 

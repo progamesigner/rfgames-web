@@ -1,11 +1,5 @@
 import { bindEventListener, loadScript } from '../libs'
 
-type GAData = string | Date | GADataConfig;
-
-type GADataConfig = {
-  anonymize_ip: boolean;
-};
-
 declare global {
   interface Window {
     gtag: (...arguments: Array<GAData>) => void;
@@ -22,14 +16,20 @@ const CONSENT_KEY = 'rfgames_consent_store'
 
 const EVENT_NAME = 'tw.rfgames.consent.accept'
 
+type GAData = string | Date | GADataConfig
+
+type GADataConfig = {
+  anonymize_ip: boolean;
+}
+
+export type ConsentSharedStates = {
+  gtag: string;
+}
+
 function onConsentAccepted(document: Document) {
   const event = new CustomEvent(EVENT_NAME)
 
   document.dispatchEvent(event)
-}
-
-export interface ConsentSharedStates {
-  gtag: string;
 }
 
 export default function (window: Window): void {

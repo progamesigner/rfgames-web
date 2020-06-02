@@ -1,6 +1,6 @@
 import { request } from 'mithril'
 
-interface ApplicationFormData {
+type ApplicationFormData = {
   account: string | null;
   age: boolean;
   alt: string;
@@ -13,13 +13,13 @@ interface ApplicationFormData {
   times: boolean;
 }
 
-interface ContactFormData {
+type ContactFormData = {
   email: string | null;
   message: string | null;
   name: string | null;
 }
 
-type FormTransformer<T> = (data: FormData) => T;
+type FormTransformer<T> = (data: FormData) => T
 
 function formApplicationTransformer(data: FormData): ApplicationFormData {
   const account = data.get('account') as string

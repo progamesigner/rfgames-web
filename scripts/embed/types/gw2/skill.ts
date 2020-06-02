@@ -7,7 +7,7 @@ type GW2SkillCategory = 'DualWield' | 'StealthAttack' | string
 export type GW2SkillSlot = 'Downed_1' | 'Downed_2' | 'Downed_3' | 'Downed_4' | 'Downed_5' | 'Elite' | 'Heal' | 'Pet' | 'Profession_1' | 'Profession_2' | 'Profession_3' | 'Profession_4' | 'Profession_5' | 'Profession_6' | 'Utility' | 'Weapon_1' | 'Weapon_2' | 'Weapon_3' | 'Weapon_4' | 'Weapon_5'
 export type GW2SkillType = 'Bundle' | 'Elite' | 'Heal' | 'Profession' | 'Utility' |'Weapon'
 
-export interface GW2Skill extends GW2BaseRecord<number> {
+export type GW2Skill = GW2BaseRecord<number> & {
   name: string;
   description: string;
   icon: string;

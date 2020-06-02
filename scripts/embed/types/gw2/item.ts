@@ -26,7 +26,7 @@ export type GW2ItemAttribute = 'BoonDuration' | 'ConditionDamage' | 'ConditionDu
 export type GW2ItemArmorType = 'Boots' | 'Coat' | 'Gloves' | 'Helm' | 'HelmAquatic' | 'Leggings' | 'Shoulders'
 export type GW2ItemWeaponType = GW2ItemWeaponTypeOneHanded | GW2ItemWeaponTypeOffHanded | GW2ItemWeaponTypeTwoHanded | GW2ItemWeaponTypeAquatic | GW2ItemWeaponTypeOther
 
-interface GW2BaseItem<T extends string, D> extends GW2BaseRecord<number> {
+type GW2BaseItem<T extends string, D> = GW2BaseRecord<number> & {
   chat_link: string;
   name: string;
   icon: string;
@@ -44,36 +44,36 @@ interface GW2BaseItem<T extends string, D> extends GW2BaseRecord<number> {
   details: D;
 }
 
-interface GW2BaseItemDetail<T extends string> {
+type GW2BaseItemDetail<T extends string> = {
   type: T;
 }
 
-interface GW2InfixUpgradeAttribute {
+type GW2InfixUpgradeAttribute = {
   attribute: GW2ItemAttribute;
   modifier: number;
 }
 
-interface GW2InfixUpgradeBuff {
+type GW2InfixUpgradeBuff = {
   skill_id: number;
   description: string;
 }
 
-interface GW2InfixUpgrade extends GW2BaseRecord<number> {
+type GW2InfixUpgrade = GW2BaseRecord<number> & {
   attributes: Array<GW2InfixUpgradeAttribute>;
   buff?: GW2InfixUpgradeBuff;
 }
 
-interface GW2InfusionSlot {
+type GW2InfusionSlot = {
   flags: Array<GW2ItemUpgradeComponentInfusionFlag>;
   item_id?: number;
 }
 
-interface GW2UpgradeInfo {
+type GW2UpgradeInfo = {
   item_id: number;
   upgrade: GW2ItemUpgradeInfoUpgradeType;
 }
 
-interface GW2ItemArmorDetail extends GW2BaseItemDetail<GW2ItemArmorType> {
+type GW2ItemArmorDetail = GW2BaseItemDetail<GW2ItemArmorType> & {
   weight_class: GW2ItemArmorWeightClass;
   defense: number;
   infusion_slots: Array<GW2InfusionSlot>;
@@ -83,7 +83,7 @@ interface GW2ItemArmorDetail extends GW2BaseItemDetail<GW2ItemArmorType> {
   stat_choices: Array<number>;
 }
 
-interface GW2ItemBackDetail {
+type GW2ItemBackDetail = {
   infusion_slots: Array<GW2InfusionSlot>;
   infix_upgrade: GW2InfixUpgrade;
   suffix_item_id: number;
@@ -91,12 +91,12 @@ interface GW2ItemBackDetail {
   stat_choices: Array<number>;
 }
 
-interface GW2ItemBagDetail {
+type GW2ItemBagDetail = {
   size: number;
   no_sell_or_sort: boolean;
 }
 
-interface GW2ItemConsumableDetail extends GW2BaseItemDetail<GW2ItemConsumableType> {
+type GW2ItemConsumableDetail = GW2BaseItemDetail<GW2ItemConsumableType> & {
   name: string;
   icon: string;
   description: string;
@@ -110,20 +110,20 @@ interface GW2ItemConsumableDetail extends GW2BaseItemDetail<GW2ItemConsumableTyp
   skins?: Array<number>;
 }
 
-interface GW2ItemGizmoDetail extends GW2BaseItemDetail<GW2ItemGizmoType> {
+type GW2ItemGizmoDetail = GW2BaseItemDetail<GW2ItemGizmoType> & {
   guild_upgrade_id: number;
   vendor_ids: Array<number>;
 }
 
-interface GW2ItemMiniPetDetail {
+type GW2ItemMiniPetDetail = {
   minipet_id: number;
 }
 
-interface GW2ItemToolDetail extends GW2BaseItemDetail<'Salvage'> {
+type GW2ItemToolDetail = GW2BaseItemDetail<'Salvage'> & {
   charges: number;
 }
 
-interface GW2ItemTrinketDetail extends GW2BaseItemDetail<GW2ItemTrinketType> {
+type GW2ItemTrinketDetail = GW2BaseItemDetail<GW2ItemTrinketType> & {
   infusion_slots: Array<GW2InfusionSlot>;
   infix_upgrade: GW2InfixUpgrade;
   suffix_item_id: number;
@@ -131,7 +131,7 @@ interface GW2ItemTrinketDetail extends GW2BaseItemDetail<GW2ItemTrinketType> {
   stat_choices: Array<number>;
 }
 
-interface GW2ItemUpgradeComponentDetail extends GW2BaseItemDetail<GW2ItemUpgradeComponentType> {
+type GW2ItemUpgradeComponentDetail = GW2BaseItemDetail<GW2ItemUpgradeComponentType> & {
   flags: Array<GW2ItemUpgradeComponentFlag>;
   infusion_upgrade_flags: Array<GW2ItemUpgradeComponentInfusionFlag>;
   suffix: string;
@@ -139,7 +139,7 @@ interface GW2ItemUpgradeComponentDetail extends GW2BaseItemDetail<GW2ItemUpgrade
   bonuses?: Array<string>;
 }
 
-interface GW2ItemWeaponDetail extends GW2BaseItemDetail<GW2ItemWeaponType> {
+type GW2ItemWeaponDetail = GW2BaseItemDetail<GW2ItemWeaponType> & {
   damage_type: GW2ItemWeaponDamageType;
   min_power: number;
   max_power: number;
