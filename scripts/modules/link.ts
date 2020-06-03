@@ -9,7 +9,7 @@ export default function (window: Window): void {
       const url = element.getAttribute('href') || window.location.href
 
       element.addEventListener('click', event => {
-        open(url, '_blank', 'noopener')
+        open(url, '_blank', 'noopener noreferrer')
         event.preventDefault()
       })
     })
