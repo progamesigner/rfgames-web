@@ -1,25 +1,24 @@
 import * as m from 'mithril'
 
-import { cx } from '../../libs'
-import { EmbedAttributes } from '../../types'
+import { cx, makeClassName } from '../../libs'
 
-import { iconStyle, iconImageStyle } from './styles'
+import * as styles from './styles'
 
-export interface IconAttributes extends EmbedAttributes {
+export type IconAttributes = m.Attributes & {
   src: string;
 }
 
 export default class implements m.Component<IconAttributes> {
   public view({
-    attrs
+    attrs: {
+      className,
+      src,
+      ...attrs
+    }
   }: m.Vnode<IconAttributes>): m.Children {
-    const {
-      classes,
-      src
-    } = attrs
-
     return <div
-      class={cx(iconStyle, iconImageStyle(src), classes, 'gw2-embed-icon')}
+      className={cx(styles.root, styles.image(src), makeClassName('icon'), className)}
+      {...attrs}
     >
     </div>
   }
