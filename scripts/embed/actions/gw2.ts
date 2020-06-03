@@ -6,7 +6,6 @@ import { default as apis, GW2Fetcher } from '../apis'
 import { config } from '../config'
 import { batch } from '../libs'
 import {
-  AsyncRecord,
   BaseAction,
   EmbedState,
   GW2BaseRecord,
@@ -17,6 +16,7 @@ import {
   GW2RecordKey,
   GW2Skill,
   GW2Specialization,
+  GW2State,
   GW2Trait
 } from '../types'
 
@@ -30,21 +30,21 @@ export enum GW2Resources {
   TRAIT = 'GW2_TRAIT'
 }
 
-interface GW2ActionNames {
+type GW2ActionNames = {
   failure: string;
   request: string;
   success: string;
 }
 
-interface GW2RequestPayload<T extends GW2RecordKey> {
+type GW2RequestPayload<T extends GW2RecordKey> = {
   ids: Array<T>;
 }
 
-interface GW2ResponsePayload<T extends GW2RecordKey, R extends GW2BaseRecord<T>> {
+type GW2ResponsePayload<T extends GW2RecordKey, R extends GW2BaseRecord<T>> = {
   items: Record<T, R>;
 }
 
-interface GW2ErrorPayload<T extends GW2RecordKey, E extends Error> {
+type GW2ErrorPayload<T extends GW2RecordKey, E extends Error> = {
   errors: Record<T, E>;
 }
 
@@ -89,7 +89,7 @@ function actionFactory<
 
       const idsToFetch = uniq(ids.filter(id => {
         if (id && id !== -1 && id !== "") {
-          const item = state[resource] as Record<T, AsyncRecord<R, E>>
+          const item = state[resource] as GW2State<T, R, E>
           return !item || !item[id] || !!item[id].error
         }
         return false
@@ -132,7 +132,7 @@ function actionFactory<
                 errors: missedIds.reduce((errors, id) => {
                   errors[id] = error
                   return errors
-                }, ({} as Record<T, E>))
+                }, {} as Record<T, E>)
               }
             } as GW2ErrorAction<T, E>))
           }
@@ -145,7 +145,7 @@ function actionFactory<
               errors: idsToFetch.reduce((errors, id) => {
                 errors[id] = error
                 return errors
-              }, ({} as Record<T, E>))
+              }, {} as Record<T, E>)
             }
           } as GW2ErrorAction<T, E>))
 

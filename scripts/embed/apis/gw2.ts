@@ -15,7 +15,7 @@ import {
 
 type GW2Build = GW2BaseRecord<number>
 
-interface APIParams {
+type APIParams = {
   [key: string]: string;
 }
 

@@ -8,7 +8,10 @@ enum GW2TraitTier {
   Grandmaster = 3
 }
 
-type GW2TraitSlot = 'Major' | 'Minor'
+enum GW2TraitSlot {
+  MAJOR = 'Major',
+  MINOR = 'Minor',
+}
 
 type GW2TraitSkill = GW2BaseRecord<number> & {
   name: string;

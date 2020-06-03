@@ -1,6 +1,5 @@
 import { clearCacheIfNewBuild, get } from '../libs'
 import {
-  AsyncRecord,
   AsyncState,
   GW2BaseRecord,
   GW2Item,
@@ -10,6 +9,7 @@ import {
   GW2RecordKey,
   GW2Skill,
   GW2Specialization,
+  GW2State,
   GW2Trait
 } from '../types'
 
@@ -19,7 +19,7 @@ function stateFactory<
   T extends GW2RecordKey,
   R extends GW2BaseRecord<T>,
   E extends Error = Error
->(resource: string): Record<string, Record<T, AsyncRecord<R, E>>> {
+>(resource: string): Record<string, GW2State<T, R, E>> {
   const localStorageKey = `${resource}_DATA`
 
   clearCacheIfNewBuild(localStorageKey)
@@ -37,7 +37,7 @@ function stateFactory<
         }),
         {}
       ),
-    } as Record<T, AsyncRecord<R, E>>
+    } as GW2State<T, R, E>
   }
 }
 

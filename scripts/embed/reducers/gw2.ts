@@ -9,7 +9,6 @@ import {
 } from '../actions'
 import { set } from '../libs'
 import {
-  AsyncRecord,
   AsyncState,
   EmbedState,
   GW2BaseRecord,
@@ -20,6 +19,7 @@ import {
   GW2RecordKey,
   GW2Skill,
   GW2Specialization,
+  GW2State,
   GW2Trait
 } from '../types'
 
@@ -31,7 +31,7 @@ const failureReducer = <
   T extends GW2RecordKey,
   R extends GW2BaseRecord<T>,
   E extends Error,
-  S = Record<T, AsyncRecord<R, E>>
+  S = GW2State<T, R, E>
 >(resource: string): Reducer<EmbedState> => (state = {}, action) => {
   const {
     payload: {
@@ -60,7 +60,7 @@ const requestReducer = <
   T extends GW2RecordKey,
   R extends GW2BaseRecord<T>,
   E extends Error,
-  S = Record<T, AsyncRecord<R, E>>
+  S = GW2State<T, R, E>
 >(resource: string): Reducer<EmbedState> => (state = {}, action) => {
   const {
     payload:
@@ -90,7 +90,7 @@ const responseReducer = <
   T extends GW2RecordKey,
   R extends GW2BaseRecord<T>,
   E extends Error,
-  S = Record<T, AsyncRecord<R, E>>
+  S = GW2State<T, R, E>
 >(resource: string): Reducer<EmbedState> => (state = {}, action) => {
   const {
     payload: {
