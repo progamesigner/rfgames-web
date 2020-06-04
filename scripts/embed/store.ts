@@ -1,7 +1,7 @@
 import { Action, createStore, Store } from 'redux'
 
-import { default as rootReducer } from './reducers'
-import { default as initializeState } from './states'
+import { reducer } from './reducers'
+import { initializeState } from './states'
 import { EmbedOptions, EmbedState } from './types'
 
 function parseOptions(window: Window): EmbedOptions {
@@ -13,6 +13,6 @@ function parseOptions(window: Window): EmbedOptions {
   }
 }
 
-export default function(window: Window): Store<EmbedState, Action> {
-  return createStore(rootReducer, initializeState(parseOptions(window)))
+export function getStore(window: Window): Store<EmbedState, Action> {
+  return createStore(reducer, initializeState(parseOptions(window)))
 }

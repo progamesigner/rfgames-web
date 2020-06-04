@@ -17,6 +17,6 @@ function tooltipReducer<T extends TooltipType, D extends TooltipDataTypes>(
   }
 }
 
-export default {
+export const tooltipReducers = {
   [TOGGLE_TOOLTIP]: tooltipReducer as Reducer<EmbedState>
 }

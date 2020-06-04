@@ -1,6 +1,6 @@
 import { TooltipState, TooltipType } from '../types'
 
-export default {
+export const tooltipInitialState = {
   tooltip: {
     data: null,
     show: false,

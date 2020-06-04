@@ -146,7 +146,7 @@ function reducerFactory<
   }
 }
 
-export default {
+export const gw2Reducers = {
   ...reducerFactory<number, GW2Item>(GW2Resources.ITEM, 'items'),
   ...reducerFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, 'itemstats'),
   ...reducerFactory<number, GW2Pet>(GW2Resources.PET, 'pets'),

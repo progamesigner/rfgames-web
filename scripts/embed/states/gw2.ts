@@ -41,7 +41,7 @@ function stateFactory<
   }
 }
 
-export default {
+export const gw2InitialState = {
   ...stateFactory<number, GW2Item>('items'),
   ...stateFactory<number, GW2ItemStat>('itemstats'),
   ...stateFactory<number, GW2Pet>('pets'),
