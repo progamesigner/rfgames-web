@@ -1,6 +1,6 @@
-import { GW2BaseRecord } from './base'
+import { GW2Record } from './base'
 
-export type GW2Specialization = GW2BaseRecord<number> & {
+export interface GW2Specialization extends GW2Record<number> {
   name: string;
   profession: string;
   elite: boolean;

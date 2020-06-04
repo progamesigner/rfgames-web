@@ -1,8 +1,8 @@
-import { GW2BaseRecord } from './base'
+import { GW2Record } from './base'
 
-type GW2PetSkill = GW2BaseRecord<number>
+type GW2PetSkill = GW2Record<number>
 
-export type GW2Pet = GW2BaseRecord<number> & {
+export interface GW2Pet extends GW2Record<number> {
   name: string;
   description: string;
   icon: string;

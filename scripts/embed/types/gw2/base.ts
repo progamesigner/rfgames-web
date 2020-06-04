@@ -1,4 +1,4 @@
-export type GW2BaseRecord<T extends GW2RecordKey> = {
+export interface GW2Record<T extends GW2RecordKey> {
   id: T;
 }
 

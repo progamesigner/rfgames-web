@@ -1,109 +1,142 @@
-type GW2BaseFact<T extends string> = {
+export const enum GW2FactType {
+  ATTRIBUTE_ADJUST = 'AttributeAdjust',
+  BUFF = 'Buff',
+  BUFF_CONVERSION = 'BuffConversion',
+  COMBO_FIELD = 'ComboField',
+  COMBO_FINISHER = 'ComboFinisher',
+  DAMAGE = 'Damage',
+  DISTANCE = 'Distance',
+  DURATION = 'Duration',
+  HEAL = 'Heal',
+  HEALING_ADJUST = 'HealingAdjust',
+  NO_DATA = 'NoData',
+  NUMBER = 'Number',
+  PERCENT = 'Percent',
+  PREFIXED_BUFF = 'PrefixedBuff',
+  RADIUS = 'Radius',
+  RANGE = 'Range',
+  RECHARGE = 'Recharge',
+  TIME = 'Time',
+  UNBLOCKABLE = 'Unblockable'
+}
+
+interface GW2FactBase<T extends GW2FactType> {
   type: T;
   text: string;
   icon: string;
 }
 
-type GW2BuffPrefix = {
+interface GW2FactFieldsAttributeAdjust {
+  value: number;
+  target: string;
+}
+
+interface GW2FactFieldsBuff {
+  duration?: number;
+  status: string;
+  description?: string;
+  apply_count?: number;
+}
+
+interface GW2FactFieldsBuffConversion {
+  source: string;
+  percent: number;
+  target: string;
+}
+
+interface GW2FactFieldsComboField {
+  field_type: string;
+}
+
+interface GW2FactFieldsComboFinisher {
+  percent: number;
+  finisher_type: string;
+}
+
+interface GW2FactFieldsDamage {
+  hit_count: number;
+  dmg_multiplier?: number;
+}
+
+interface GW2FactFieldsDistance {
+  distance: number;
+}
+
+interface GW2FactFieldsDuration {
+  duration: number;
+}
+
+interface GW2FactFieldsHeal {
+  hit_count: number;
+}
+
+interface GW2FactFieldsHealingAdjust {
+  hit_count: number;
+}
+
+interface GW2FactFieldsNumber {
+  value: number;
+}
+
+interface GW2FactFieldsPercent {
+  percent: number;
+}
+
+interface GW2FactFieldsPrefixedBuff extends GW2FactFieldsBuff {
+  prefix: GW2FactPrefixedBuffPrefix;
+}
+
+interface GW2FactPrefixedBuffPrefix {
   text: string;
   icon: string;
   status: string;
   description: string;
 }
 
-type GW2TraitedFactFields = {
+interface GW2FactFieldsRadius {
+  distance: number;
+}
+
+interface GW2FactFieldsRange {
+  value: number;
+}
+
+interface GW2FactFieldsRecharge {
+  value: number;
+}
+
+interface GW2FactFieldsTime {
+  duration: number;
+}
+
+interface GW2FactFieldsUnblockable {
+  value: true;
+}
+
+interface GW2TraitedFactFields {
   requires_trait: number;
   overrides: number;
 }
 
-type GW2FactAttributeAdjustFields = {
-  value: number;
-  target: string;
-}
-
-type GW2FactBuffFields = {
-  duration: number;
-  status: string;
-  description: string;
-  apply_count: number;
-}
-
-type GW2FactBuffConversionFields = {
-  source: string;
-  percent: string;
-  target: string;
-}
-
-type GW2FactComboFieldFields = {
-  field_type: string;
-}
-
-type GW2FactComboFinisherFields = {
-  percent: number;
-  finisher_type: string;
-}
-
-type GW2FactDamageFields = {
-  hit_count: number;
-}
-
-type GW2FactDistanceFields = {
-  distance: number;
-}
-
-type GW2FactNumberFields = {
-  value: number;
-}
-
-type GW2FactPercentFields = {
-  percent: number;
-}
-
-type GW2FactPrefixedBuffFields = {
-  percent: number;
-  duration: number;
-  status: string;
-  description: string;
-  apply_count: number;
-  prefix: GW2BuffPrefix;
-}
-
-type GW2FactRadiusFields = {
-  distance: number;
-}
-
-type GW2FactRangeFields = {
-  value: number;
-}
-
-type GW2FactRechargeFields = {
-  value: number;
-}
-
-type GW2FactTimeFields = {
-  duration: number;
-}
-
-type GW2FactUnblockableFields = {
-  value: boolean;
-}
-
 export type GW2Fact =
-  GW2BaseFact<'AttributeAdjust'> & GW2FactAttributeAdjustFields |
-  GW2BaseFact<'Buff'> & GW2FactBuffFields |
-  GW2BaseFact<'BuffConversion'> & GW2FactBuffConversionFields |
-  GW2BaseFact<'ComboField'> & GW2FactComboFieldFields |
-  GW2BaseFact<'ComboFinisher'> & GW2FactComboFinisherFields |
-  GW2BaseFact<'Damage'> & GW2FactDamageFields |
-  GW2BaseFact<'Distance'> & GW2FactDistanceFields |
-  GW2BaseFact<'NoData'> |
-  GW2BaseFact<'Number'> & GW2FactNumberFields |
-  GW2BaseFact<'Percent'> & GW2FactPercentFields |
-  GW2BaseFact<'PrefixedBuff'> & GW2FactPrefixedBuffFields |
-  GW2BaseFact<'Radius'> & GW2FactRadiusFields |
-  GW2BaseFact<'Range'> & GW2FactRangeFields |
-  GW2BaseFact<'Recharge'> & GW2FactRechargeFields |
-  GW2BaseFact<'Time'> & GW2FactTimeFields |
-  GW2BaseFact<'Unblockable'> & GW2FactUnblockableFields
+  GW2FactBase<GW2FactType.ATTRIBUTE_ADJUST> & GW2FactFieldsAttributeAdjust |
+  GW2FactBase<GW2FactType.BUFF> & GW2FactFieldsBuff |
+  GW2FactBase<GW2FactType.BUFF_CONVERSION> & GW2FactFieldsBuffConversion |
+  GW2FactBase<GW2FactType.COMBO_FIELD> & GW2FactFieldsComboField |
+  GW2FactBase<GW2FactType.COMBO_FINISHER> & GW2FactFieldsComboFinisher |
+  GW2FactBase<GW2FactType.DAMAGE> & GW2FactFieldsDamage |
+  GW2FactBase<GW2FactType.DISTANCE> & GW2FactFieldsDistance |
+  GW2FactBase<GW2FactType.DURATION> & GW2FactFieldsDuration |
+  GW2FactBase<GW2FactType.HEAL> & GW2FactFieldsHeal |
+  GW2FactBase<GW2FactType.HEALING_ADJUST> & GW2FactFieldsHealingAdjust |
+  GW2FactBase<GW2FactType.NO_DATA> |
+  GW2FactBase<GW2FactType.NUMBER> & GW2FactFieldsNumber |
+  GW2FactBase<GW2FactType.PERCENT> & GW2FactFieldsPercent |
+  GW2FactBase<GW2FactType.PREFIXED_BUFF> & GW2FactFieldsPrefixedBuff |
+  GW2FactBase<GW2FactType.RADIUS> & GW2FactFieldsRadius |
+  GW2FactBase<GW2FactType.RANGE> & GW2FactFieldsRange |
+  GW2FactBase<GW2FactType.RECHARGE> & GW2FactFieldsRecharge |
+  GW2FactBase<GW2FactType.TIME> & GW2FactFieldsTime |
+  GW2FactBase<GW2FactType.UNBLOCKABLE> & GW2FactFieldsUnblockable
 
 export type GW2TraitedFact = GW2Fact & GW2TraitedFactFields

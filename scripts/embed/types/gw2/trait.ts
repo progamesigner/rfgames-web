@@ -1,19 +1,7 @@
-import { GW2BaseRecord } from './base'
+import { GW2Record } from './base'
 import { GW2Fact, GW2TraitedFact } from './fact'
 
-enum GW2TraitTier {
-  Proficiency = 0,
-  Adept = 1,
-  Master = 2,
-  Grandmaster = 3
-}
-
-enum GW2TraitSlot {
-  MAJOR = 'Major',
-  MINOR = 'Minor',
-}
-
-type GW2TraitSkill = GW2BaseRecord<number> & {
+interface GW2TraitSkill extends GW2Record<number> {
   name: string;
   description: string;
   icon: string;
@@ -21,7 +9,19 @@ type GW2TraitSkill = GW2BaseRecord<number> & {
   traited_facts: Array<GW2TraitedFact>;
 }
 
-export type GW2Trait = GW2BaseRecord<number> & {
+export const enum GW2TraitTier {
+  PROFICIENCY = 0,
+  ADEPT = 1,
+  MASTER = 2,
+  GRANDMASTER = 3
+}
+
+export const enum GW2TraitSlot {
+  MAJOR = 'Major',
+  MINOR = 'Minor'
+}
+
+export interface GW2Trait extends GW2Record<number> {
   name: string;
   profession: string;
   icon: string;
@@ -29,7 +29,7 @@ export type GW2Trait = GW2BaseRecord<number> & {
   specialization: number;
   tier: GW2TraitTier;
   slot: GW2TraitSlot;
-  facts: Array<string>;
-  traited_facts: Array<string>;
+  facts: Array<GW2Fact>;
+  traited_facts: Array<GW2TraitedFact>;
   skills: Array<GW2TraitSkill>;
 }
