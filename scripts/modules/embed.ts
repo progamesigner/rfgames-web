@@ -10,15 +10,13 @@ declare global {
   }
 }
 
-export default function (window: Window): void {
+export function bootstrap(window: Window): void {
   const {
     document
   } = window
 
-  const cacheVersion = '1'
-
   document.GW2A_EMBED_OPTIONS = {
-    forceCacheClearOnNextRun: cacheVersion,
+    forceCacheClearOnNextRun: '1',
     lang: 'en',
     persistToLocalStorage: true
   }

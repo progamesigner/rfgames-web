@@ -32,7 +32,7 @@ function onConsentAccepted(document: Document) {
   document.dispatchEvent(event)
 }
 
-export default function (window: Window): void {
+export function bootstrap(window: Window): void {
   const {
     __shared_states__: sharedStates,
     document,

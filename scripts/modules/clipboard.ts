@@ -1,6 +1,6 @@
 import * as ClipboardJS from 'clipboard'
 
-export default function (window: Window): void {
+export function bootstrap(window: Window): void {
   const {
     document
   } = window

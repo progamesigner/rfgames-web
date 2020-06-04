@@ -109,7 +109,7 @@ function bind<T>(form: HTMLFormElement, transformer: FormTransformer<T>) {
   })
 }
 
-export default function (window: Window): void {
+export function bootstrap(window: Window): void {
   const {
     document
   } = window

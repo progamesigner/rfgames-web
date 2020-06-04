@@ -7,13 +7,13 @@ declare global {
   }
 }
 
-export { default as bootstrapClipboardModule } from './clipboard'
-export { default as bootstrapConsentModule } from './consent'
-export { default as bootstrapDisqusModule } from './disqus'
-export { default as bootstrapEmbedModule } from './embed'
-export { default as bootstrapFormModule } from './form'
-export { default as bootstrapImageModule } from './image'
-export { default as bootstrapLinkModule } from './link'
-export { default as bootstrapModalModule } from './modal'
-export { default as bootstrapSelectionModule } from './selection'
-export { default as bootstrapTogglerModule } from './toggler'
+export { bootstrap as bootstrapClipboardModule } from './clipboard'
+export { bootstrap as bootstrapConsentModule } from './consent'
+export { bootstrap as bootstrapDisqusModule } from './disqus'
+export { bootstrap as bootstrapEmbedModule } from './embed'
+export { bootstrap as bootstrapFormModule } from './form'
+export { bootstrap as bootstrapImageModule } from './image'
+export { bootstrap as bootstrapLinkModule } from './link'
+export { bootstrap as bootstrapModalModule } from './modal'
+export { bootstrap as bootstrapSelectionModule } from './selection'
+export { bootstrap as bootstrapTogglerModule } from './toggler'

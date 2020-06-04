@@ -25,7 +25,7 @@ export type DisqusSharedStates = {
   page: DisqusPage;
 }
 
-export default function (window: Window): void {
+export function bootstrap(window: Window): void {
   const {
     __shared_states__: sharedStates,
     document
