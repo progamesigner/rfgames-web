@@ -8,11 +8,11 @@ import { batch } from '../libs'
 import {
   BaseAction,
   EmbedState,
-  GW2BaseRecord,
   GW2Item,
   GW2ItemStat,
   GW2Pet,
   GW2Profession,
+  GW2Record,
   GW2RecordKey,
   GW2Skill,
   GW2Specialization,
@@ -20,44 +20,30 @@ import {
   GW2Trait
 } from '../types'
 
-export enum GW2Resources {
-  ITEM = 'GW2_ITEM',
-  ITEM_STAT = 'GW2_ITEM_STAT',
-  PET = 'GW2_PET',
-  PROFESSION = 'GW2_PROFESSION',
-  SKILL = 'GW2_SKILL',
-  SPECIALIZATION = 'GW2_SPECIALIZATION',
-  TRAIT = 'GW2_TRAIT'
-}
+type GetState = () => EmbedState
+type GW2Action<T> = (dispatch: Dispatch, getState: GetState) => (id: T) => void
 
-type GW2ActionNames = {
+interface GW2ActionNames {
   failure: string;
   request: string;
   success: string;
 }
 
-type GW2RequestPayload<T extends GW2RecordKey> = {
+interface GW2RequestPayload<T extends GW2RecordKey> {
   ids: Array<T>;
 }
 
-type GW2ResponsePayload<T extends GW2RecordKey, R extends GW2BaseRecord<T>> = {
+interface GW2ResponsePayload<T extends GW2RecordKey, R extends GW2Record<T>> {
   items: Record<T, R>;
 }
 
-type GW2ErrorPayload<T extends GW2RecordKey, E extends Error> = {
+interface GW2ErrorPayload<T extends GW2RecordKey, E extends Error> {
   errors: Record<T, E>;
 }
 
-type GetState = () => EmbedState
-type GW2Action<T> = (dispatch: Dispatch, getState: GetState) => (id: T) => void
-
-export type GW2RequestAction<T extends GW2RecordKey> = BaseAction<GW2RequestPayload<T>>
-export type GW2ResponseAction<T extends GW2RecordKey, R extends GW2BaseRecord<T>> = BaseAction<GW2ResponsePayload<T, R>>
-export type GW2ErrorAction<T extends GW2RecordKey, E extends Error> = BaseAction<GW2ErrorPayload<T, E>>
-
 function flattenResponses<
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>
+  R extends GW2Record<T>
 >(responses: Array<Record<T, R>>): Record<T, R> {
   return responses.reduce((response, items) => {
     return {
@@ -69,7 +55,7 @@ function flattenResponses<
 
 function actionFactory<
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>,
+  R extends GW2Record<T>,
   E extends Error = Error
 >(
   type: GW2Resources,
@@ -101,9 +87,7 @@ function actionFactory<
 
         dispatch({
           type: request,
-          payload: {
-            ids: idsToFetch
-          }
+          ids: idsToFetch
         } as GW2RequestAction<T>)
 
         while (idsToSlice.length) {
@@ -118,9 +102,7 @@ function actionFactory<
 
           dispatch(({
             type: success,
-            payload: {
-              items
-            }
+            items
           } as GW2ResponseAction<T, R>))
 
           if (missedIds.length) {
@@ -128,12 +110,10 @@ function actionFactory<
 
             dispatch(({
               type: failure,
-              payload: {
-                errors: missedIds.reduce((errors, id) => {
-                  errors[id] = error
-                  return errors
-                }, {} as Record<T, E>)
-              }
+              errors: missedIds.reduce((errors, id) => {
+                errors[id] = error
+                return errors
+              }, {} as Record<T, E>)
             } as GW2ErrorAction<T, E>))
           }
 
@@ -141,12 +121,10 @@ function actionFactory<
         } catch (error) {
           dispatch(({
             type: failure,
-            payload: {
-              errors: idsToFetch.reduce((errors, id) => {
-                errors[id] = error
-                return errors
-              }, {} as Record<T, E>)
-            }
+            errors: idsToFetch.reduce((errors, id) => {
+              errors[id] = error
+              return errors
+            }, {} as Record<T, E>)
           } as GW2ErrorAction<T, E>))
 
           throw error
@@ -161,6 +139,28 @@ function actionFactory<
   return (dispatch, getState) => id => debounced(id, dispatch, getState)
 }
 
+export const enum GW2Resources {
+  ITEM = 'GW2_ITEM',
+  ITEM_STAT = 'GW2_ITEM_STAT',
+  PET = 'GW2_PET',
+  PROFESSION = 'GW2_PROFESSION',
+  SKILL = 'GW2_SKILL',
+  SPECIALIZATION = 'GW2_SPECIALIZATION',
+  TRAIT = 'GW2_TRAIT'
+}
+
+export type GW2RequestAction<T extends GW2RecordKey> = BaseAction<GW2RequestPayload<T>>
+export type GW2ResponseAction<T extends GW2RecordKey, R extends GW2Record<T>> = BaseAction<GW2ResponsePayload<T, R>>
+export type GW2ErrorAction<T extends GW2RecordKey, E extends Error> = BaseAction<GW2ErrorPayload<T, E>>
+
+export const fetchItem = actionFactory<number, GW2Item>(GW2Resources.ITEM, apis.fetchGW2Items, 'items')
+export const fetchItemStat = actionFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, apis.fetchGW2ItemStats, 'itemstats')
+export const fetchPet = actionFactory<number, GW2Pet>(GW2Resources.PET, apis.fetchGW2Pets, 'pets')
+export const fetchProfession = actionFactory<string, GW2Profession>(GW2Resources.PROFESSION, apis.fetchGW2Professions, 'professions')
+export const fetchSkill = actionFactory<number, GW2Skill>(GW2Resources.SKILL, apis.fetchGW2Skills, 'skills')
+export const fetchSpecialization = actionFactory<number, GW2Specialization>(GW2Resources.TRAIT, apis.fetchGW2Specializations, 'specializations')
+export const fetchTrait = actionFactory<number, GW2Trait>(GW2Resources.TRAIT, apis.fetchGW2Traits, 'traits')
+
 export function makeActionNames(resource: GW2Resources): GW2ActionNames {
   const name = resource.toUpperCase()
 
@@ -170,11 +170,3 @@ export function makeActionNames(resource: GW2Resources): GW2ActionNames {
     success: `FETCH_${name}_SUCCESS`
   }
 }
-
-export const fetchItem = actionFactory<number, GW2Item>(GW2Resources.ITEM, apis.fetchGW2Items, 'items')
-export const fetchItemStat = actionFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, apis.fetchGW2ItemStats, 'itemstats')
-export const fetchPet = actionFactory<number, GW2Pet>(GW2Resources.PET, apis.fetchGW2Pets, 'pets')
-export const fetchProfession = actionFactory<string, GW2Profession>(GW2Resources.PROFESSION, apis.fetchGW2Professions, 'professions')
-export const fetchSkill = actionFactory<number, GW2Skill>(GW2Resources.SKILL, apis.fetchGW2Skills, 'skills')
-export const fetchSpecialization = actionFactory<number, GW2Specialization>(GW2Resources.TRAIT, apis.fetchGW2Specializations, 'specializations')
-export const fetchTrait = actionFactory<number, GW2Trait>(GW2Resources.TRAIT, apis.fetchGW2Traits, 'traits')

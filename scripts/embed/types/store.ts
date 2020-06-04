@@ -11,18 +11,21 @@ import {
 } from './gw2'
 import { TooltipState } from './tooltip'
 
-export type EmbedState = {
-  cacheVersion?: string;
+export interface EmbedOptions {
+  cacheVersion: string;
+  language: string;
+  useLocalStorageAsCache: boolean;
+}
+
+export interface EmbedState extends Partial<EmbedOptions> {
   items?: GW2ItemsState;
   itemstates?: GW2ItemStatsState;
-  language?: string;
   pets?: GW2PetsState;
   professions?: GW2ProfessionsState;
   skills?: GW2SkillsState;
   specializations?: GW2SpecializationsState;
   tooltip?: TooltipState;
   traits?: GW2TraitsState;
-  useLocalStorageAsCache?: boolean;
   [key: string]: unknown;
 }
 

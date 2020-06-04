@@ -1,31 +1,35 @@
 import {
   BaseAction,
-  ExtractTooltipData,
+  ExtractTooltipDataType,
   ExtractTooltipType,
-  ToggleTooltipPayload,
-  TooltipDataTypes,
+  TooltipPayload,
+  TooltipState,
   TooltipType
 } from '../types'
 
+interface ToggleTooltipPayload {
+  payload: TooltipState;
+}
+
 export const TOGGLE_TOOLTIP = 'TOGGLE_TOOLTIP'
 
-export type ToggleTooltipAction<T extends TooltipType, D extends TooltipDataTypes> = BaseAction<ToggleTooltipPayload<T, D>>
+export type ToggleTooltipAction = BaseAction<ToggleTooltipPayload>
 
-export function showTooltip<T extends TooltipType, D extends TooltipDataTypes>(
+export function showTooltip<T extends TooltipType, D extends TooltipPayload>(
   type: ExtractTooltipType<T, D>,
-  data: ExtractTooltipData<T, D>
-): ToggleTooltipAction<T, D> {
+  data: ExtractTooltipDataType<T, D>
+): ToggleTooltipAction {
   return {
     type: TOGGLE_TOOLTIP,
     payload: {
       data,
       show: true,
       type
-    }
+    } as TooltipState
   }
 }
 
-export function hideTooltip(): ToggleTooltipAction<TooltipType.EMPTY, null> {
+export function hideTooltip(): ToggleTooltipAction {
   return {
     type: TOGGLE_TOOLTIP,
     payload: {

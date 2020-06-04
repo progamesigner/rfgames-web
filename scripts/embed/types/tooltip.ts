@@ -2,71 +2,57 @@ import {
   GW2Item,
   GW2ItemStat,
   GW2Pet,
-  GW2Profession,
   GW2Skill,
   GW2Specialization,
   GW2Trait
 } from './gw2'
 
-export enum TooltipType {
-  EMPTY = 'Empty',
-  ITEM = 'Item',
-  ITEM_STAT = 'ItemStat',
-  PET = 'Pet',
-  PROFESSION = 'Profession',
-  SKILL = 'Skill',
-  SPECIALIZATION = 'Specialization',
-  TEXT = 'Text',
-  TRAIT = 'Trait'
-}
-
-type TooltipPayload<
-  T extends TooltipType,
-  D extends TooltipDataTypes
-> = {
-  data: D;
+interface TooltipTypeBinding<T extends TooltipType, D extends TooltipPayload> {
   type: T;
+  data: D;
 }
 
-type TooltipData =
-  TooltipPayload<TooltipType.EMPTY, null> |
-  TooltipPayload<TooltipType.ITEM_STAT, GW2ItemStat> |
-  TooltipPayload<TooltipType.ITEM, GW2Item> |
-  TooltipPayload<TooltipType.PET, GW2Pet> |
-  TooltipPayload<TooltipType.PROFESSION, GW2Profession> |
-  TooltipPayload<TooltipType.SKILL, GW2Skill> |
-  TooltipPayload<TooltipType.SPECIALIZATION, GW2Specialization> |
-  TooltipPayload<TooltipType.TEXT, string> |
-  TooltipPayload<TooltipType.TRAIT, GW2Trait>
+type TooltipTypeBindingMap =
+  TooltipTypeBinding<TooltipType.EMPTY, null> |
+  TooltipTypeBinding<TooltipType.GW2_ITEM_STAT, GW2ItemStat> |
+  TooltipTypeBinding<TooltipType.GW2_ITEM, GW2Item> |
+  TooltipTypeBinding<TooltipType.GW2_PET, GW2Pet> |
+  TooltipTypeBinding<TooltipType.GW2_SKILL, GW2Skill> |
+  TooltipTypeBinding<TooltipType.GW2_SPECIALIZATION, GW2Specialization> |
+  TooltipTypeBinding<TooltipType.GW2_TRAIT, GW2Trait> |
+  TooltipTypeBinding<TooltipType.TEXT, string>
 
-export type TooltipDataTypes =
-  GW2Item |
+export const enum TooltipType {
+  EMPTY = 'Empty',
+  GW2_ITEM = 'Item',
+  GW2_ITEM_STAT = 'ItemStat',
+  GW2_PET = 'Pet',
+  GW2_SKILL = 'Skill',
+  GW2_SPECIALIZATION = 'Specialization',
+  GW2_TRAIT = 'Trait',
+  TEXT = 'Text'
+}
+
+export type TooltipPayload =
   GW2ItemStat |
+  GW2Item |
   GW2Pet |
-  GW2Profession |
   GW2Skill |
   GW2Specialization |
   GW2Trait |
   null |
   string
 
-export type ExtractTooltipType<T extends TooltipType, D extends TooltipDataTypes> = TooltipPayload<T, D> extends TooltipData ? T : never
-export type ExtractTooltipData<T extends TooltipType, D extends TooltipDataTypes> = TooltipPayload<T, D> extends TooltipData ? D : never
-
-export type ToggleTooltipPayload<
-  T extends TooltipType,
-  D extends TooltipDataTypes
-> = TooltipPayload<T, D> & {
+export type TooltipState = TooltipTypeBindingMap & {
   show: boolean;
 }
 
-export type TooltipState =
-  ToggleTooltipPayload<TooltipType.EMPTY, null> |
-  ToggleTooltipPayload<TooltipType.ITEM_STAT, GW2ItemStat> |
-  ToggleTooltipPayload<TooltipType.ITEM, GW2Item> |
-  ToggleTooltipPayload<TooltipType.PET, GW2Pet> |
-  ToggleTooltipPayload<TooltipType.PROFESSION, GW2Profession> |
-  ToggleTooltipPayload<TooltipType.SKILL, GW2Skill> |
-  ToggleTooltipPayload<TooltipType.SPECIALIZATION, GW2Specialization> |
-  ToggleTooltipPayload<TooltipType.TEXT, string> |
-  ToggleTooltipPayload<TooltipType.TRAIT, GW2Trait>
+export type ExtractTooltipType<
+  T extends TooltipType,
+  D extends TooltipPayload
+> = TooltipTypeBinding<T, D> extends TooltipTypeBindingMap ? T : never
+
+export type ExtractTooltipDataType<
+  T extends TooltipType,
+  D extends TooltipPayload
+> = TooltipTypeBinding<T, D> extends TooltipTypeBindingMap ? D : never

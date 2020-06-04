@@ -1,4 +1,4 @@
-import { EmbedState, EmbedOptions } from '../types'
+import { EmbedOptions, EmbedState } from '../types'
 
 import { gw2InitialState } from './gw2'
 import { tooltipInitialState } from './tooltip'

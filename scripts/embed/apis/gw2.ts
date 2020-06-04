@@ -2,18 +2,18 @@ import { request } from 'mithril'
 
 import { config } from '../config'
 import {
-  GW2BaseRecord,
   GW2Item,
   GW2ItemStat,
   GW2Pet,
   GW2Profession,
+  GW2Record,
   GW2RecordKey,
   GW2Skill,
   GW2Specialization,
   GW2Trait
 } from '../types'
 
-type GW2Build = GW2BaseRecord<number>
+type GW2Build = GW2Record<number>
 
 type APIParams = {
   [key: string]: string;
@@ -28,7 +28,7 @@ function buildParams(extra: APIParams): APIParams {
 
 function reduceById<
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>
+  R extends GW2Record<T>
 >(responses: Array<R>): Record<T, R> {
   return responses.reduce((data, item) => ({
     ...data,
@@ -38,7 +38,7 @@ function reduceById<
 
 function fetchGW2ApiFactory<
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>
+  R extends GW2Record<T>
 >(resource: string): GW2Fetcher<T, R> {
   return async (ids: Array<T>): Promise<Record<T, R>> => request<Array<R>>({
     params: buildParams({
@@ -50,7 +50,7 @@ function fetchGW2ApiFactory<
 
 export type GW2Fetcher<
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>
+  R extends GW2Record<T>
 > = (ids: Array<T>) => Promise<Record<T, R>>
 
 export async function fetchGW2Build(): Promise<GW2Build> {

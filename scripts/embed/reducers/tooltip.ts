@@ -1,19 +1,19 @@
 import { Reducer } from 'redux'
 
 import { TOGGLE_TOOLTIP, ToggleTooltipAction } from '../actions'
-import { EmbedState, TooltipDataTypes, TooltipState, TooltipType } from '../types'
+import { EmbedState } from '../types'
 
-function tooltipReducer<T extends TooltipType, D extends TooltipDataTypes>(
+function tooltipReducer(
   state: EmbedState = {},
-  action: ToggleTooltipAction<T, D>
+  action: ToggleTooltipAction
 ): EmbedState {
   const {
-    payload
+    payload: tooltip
   } = action
 
   return {
     ...state,
-    tooltip: payload as TooltipState
+    tooltip
   }
 }
 

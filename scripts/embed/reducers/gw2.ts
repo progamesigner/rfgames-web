@@ -9,9 +9,10 @@ import {
 } from '../actions'
 import { set } from '../libs'
 import {
-  AsyncState,
   EmbedState,
-  GW2BaseRecord,
+  GW2AsyncState,
+  GW2State,
+  GW2Record,
   GW2Item,
   GW2ItemStat,
   GW2Pet,
@@ -19,7 +20,6 @@ import {
   GW2RecordKey,
   GW2Skill,
   GW2Specialization,
-  GW2State,
   GW2Trait
 } from '../types'
 
@@ -29,14 +29,12 @@ type Reducers = {
 
 const failureReducer = <
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>,
+  R extends GW2Record<T>,
   E extends Error,
   S = GW2State<T, R, E>
 >(resource: string): Reducer<EmbedState> => (state = {}, action) => {
   const {
-    payload: {
-      errors
-    }
+    errors
   } = action as GW2ErrorAction<T, E>
 
   const data = Object.entries<E>(errors).reduce((previous, [id, error]) => {
@@ -45,7 +43,7 @@ const failureReducer = <
       [id]: {
         data: null,
         error: new Error(`ID:${id} | ${error.message}`),
-        state: AsyncState.FAILED
+        state: GW2AsyncState.FAILED
       }
     }
   }, state[resource] as S || {})
@@ -58,15 +56,12 @@ const failureReducer = <
 
 const requestReducer = <
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>,
+  R extends GW2Record<T>,
   E extends Error,
   S = GW2State<T, R, E>
 >(resource: string): Reducer<EmbedState> => (state = {}, action) => {
   const {
-    payload:
-    {
-      ids
-    }
+    ids
   } = action as GW2RequestAction<T>
 
   const items = ids.reduce((items, id) => {
@@ -75,7 +70,7 @@ const requestReducer = <
       [id]: {
         data: null,
         error: null,
-        state: AsyncState.PENDING
+        state: GW2AsyncState.PENDING
       }
     }
   }, state[resource] as S || {})
@@ -88,14 +83,12 @@ const requestReducer = <
 
 const responseReducer = <
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>,
+  R extends GW2Record<T>,
   E extends Error,
   S = GW2State<T, R, E>
 >(resource: string): Reducer<EmbedState> => (state = {}, action) => {
   const {
-    payload: {
-      items
-    }
+    items
   } = action as GW2ResponseAction<T, R>
 
   const data = Object.entries<R>(items).reduce((previous, [id, data]) => {
@@ -104,7 +97,7 @@ const responseReducer = <
       [id]: {
         data,
         error: null,
-        state: AsyncState.DONE
+        state: GW2AsyncState.DONE
       }
     }
   }, state[resource] as S || {})
@@ -130,7 +123,7 @@ const responseReducer = <
 
 function reducerFactory<
   T extends GW2RecordKey,
-  R extends GW2BaseRecord<T>,
+  R extends GW2Record<T>,
   E extends Error = Error
 >(type: GW2Resources, resource: string): Reducers {
   const {
