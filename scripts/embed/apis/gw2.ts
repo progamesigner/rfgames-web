@@ -36,7 +36,7 @@ function reduceById<
   }), {} as Record<T, R>)
 }
 
-function fetcherFactory<
+function fetchGW2ApiFactory<
   T extends GW2RecordKey,
   R extends GW2BaseRecord<T>
 >(resource: string): GW2Fetcher<T, R> {
@@ -53,19 +53,19 @@ export type GW2Fetcher<
   R extends GW2BaseRecord<T>
 > = (ids: Array<T>) => Promise<Record<T, R>>
 
-export async function fetchBuild(): Promise<GW2Build> {
+export async function fetchGW2Build(): Promise<GW2Build> {
   return request<GW2Build>({
     url: `${config.gw2ApiEndpoint}/v2/build`
   })
 }
 
-export default {
-  fetchGW2Build: fetchBuild,
-  fetchGW2Items: fetcherFactory<number, GW2Item>('items'),
-  fetchGW2ItemStats: fetcherFactory<number, GW2ItemStat>('itemstats'),
-  fetchGW2Pets: fetcherFactory<number, GW2Pet>('pets'),
-  fetchGW2Professions: fetcherFactory<string, GW2Profession>('professions'),
-  fetchGW2Skills: fetcherFactory<number, GW2Skill>('skills'),
-  fetchGW2Specializations: fetcherFactory<number, GW2Specialization>('specializations'),
-  fetchGW2Traits: fetcherFactory<number, GW2Trait>('traits')
+export const apis = {
+  fetchGW2Build: fetchGW2Build,
+  fetchGW2Items: fetchGW2ApiFactory<number, GW2Item>('items'),
+  fetchGW2ItemStats: fetchGW2ApiFactory<number, GW2ItemStat>('itemstats'),
+  fetchGW2Pets: fetchGW2ApiFactory<number, GW2Pet>('pets'),
+  fetchGW2Professions: fetchGW2ApiFactory<string, GW2Profession>('professions'),
+  fetchGW2Skills: fetchGW2ApiFactory<number, GW2Skill>('skills'),
+  fetchGW2Specializations: fetchGW2ApiFactory<number, GW2Specialization>('specializations'),
+  fetchGW2Traits: fetchGW2ApiFactory<number, GW2Trait>('traits')
 }

@@ -3,4 +3,4 @@ export const config = {
   gw2ApiBatchWait: 50,
   gw2ApiEndpoint: 'https://api.guildwars2.com',
   gw2ApiRequestLimit: 200
-}
+} as const

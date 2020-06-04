@@ -8,7 +8,7 @@ export type LinkAttributes = m.Attributes & {
   href?: string;
 }
 
-export default class implements m.Component<LinkAttributes> {
+export class Link implements m.Component<LinkAttributes> {
   public view({
     attrs: {
       className,

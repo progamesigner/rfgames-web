@@ -1,7 +1,7 @@
-import { default as gw2Apis } from './gw2'
+import { apis as gw2Apis } from './gw2'
 
 export { GW2Fetcher } from './gw2'
 
-export default {
+export const apis = {
   ...gw2Apis
 }

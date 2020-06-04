@@ -2,7 +2,7 @@ import { uniq } from 'lodash/fp'
 
 import { Dispatch } from 'redux'
 
-import { default as apis, GW2Fetcher } from '../apis'
+import { apis, GW2Fetcher } from '../apis'
 import { config } from '../config'
 import { batch } from '../libs'
 import {
