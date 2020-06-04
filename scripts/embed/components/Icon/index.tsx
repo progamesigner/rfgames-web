@@ -4,7 +4,7 @@ import { cx, makeClassName } from '../../libs'
 
 import * as styles from './styles'
 
-export type IconAttributes = m.Attributes & {
+interface IconAttributes extends m.Attributes {
   src: string;
 }
 

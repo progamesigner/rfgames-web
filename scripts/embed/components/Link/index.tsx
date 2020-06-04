@@ -4,7 +4,7 @@ import { cx, makeClassName } from '../../libs'
 
 import * as styles from './styles'
 
-export type LinkAttributes = m.Attributes & {
+interface LinkAttributes extends m.Attributes {
   href?: string;
 }
 
