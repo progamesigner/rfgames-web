@@ -1,8 +1,10 @@
+export type UnbindEventListener = () => void
+
 export function bindEventListener(
-  element: Document | Element,
+  element: Document | Element | Window,
   event: string,
   listener: EventListener
-): () => void {
+): UnbindEventListener {
   element.addEventListener(event, listener, false)
   return (): void => element.removeEventListener(event, listener, false)
 }
