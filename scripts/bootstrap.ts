@@ -11,7 +11,7 @@ import {
   bootstrapTogglerModule
 } from './modules'
 
-export default function (window: Window): void {
+export function bootstrap(window: Window): void {
   bootstrapClipboardModule(window)
   bootstrapConsentModule(window)
   bootstrapDisqusModule(window)

@@ -1,7 +1,7 @@
-async function init() {
+async function initialize() {
   try {
     const {
-      default: bootstrap
+      bootstrap
     } = await import(/* webpackChunkName: 'bootstrap' */ './bootstrap')
     bootstrap(window)
   } catch (error) {
@@ -10,7 +10,7 @@ async function init() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init)
+  document.addEventListener('DOMContentLoaded', initialize)
 } else {
-  setTimeout(init, 1)
+  setTimeout(initialize, 1)
 }
