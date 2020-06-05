@@ -3,10 +3,11 @@ export const enum TooltipType {
 }
 
 export interface TooltipTypeMapping {
-  [TooltipType.EMPTY]: null;
+  [TooltipType.EMPTY]: [null, null];
 }
 
-export type ExtractTooltipDataType<T extends TooltipType> = TooltipTypeMapping extends Pick<TooltipTypeMapping, T> ? TooltipTypeMapping[T] : never
+export type ExtractTooltipAttributeType<T extends TooltipType> = TooltipTypeMapping extends Pick<TooltipTypeMapping, T> ? TooltipTypeMapping[T][0] : never
+export type ExtractTooltipDataType<T extends TooltipType> = TooltipTypeMapping extends Pick<TooltipTypeMapping, T> ? TooltipTypeMapping[T][1] : never
 
 export interface TooltipState {
   data: ExtractTooltipDataType<TooltipType>;
