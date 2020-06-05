@@ -41,6 +41,7 @@ function fetchGW2ApiFactory<
   R extends GW2Record<T>
 >(resource: string): GW2Fetcher<T, R> {
   return async (ids: Array<T>): Promise<Record<T, R>> => request<Array<R>>({
+    background: true,
     params: buildParams({
       ids: ids.join(',')
     }),

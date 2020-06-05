@@ -1,3 +1,5 @@
+import * as m from 'mithril'
+
 import { Action, createStore, Store } from 'redux'
 
 import { reducer } from './reducers'
@@ -14,5 +16,7 @@ function parseOptions(window: Window): EmbedOptions {
 }
 
 export function getStore(window: Window): Store<EmbedState, Action> {
-  return createStore(reducer, initializeState(parseOptions(window)))
+  const store = createStore(reducer, initializeState(parseOptions(window)))
+  store.subscribe(() => m.redraw())
+  return store
 }
