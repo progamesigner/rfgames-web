@@ -1,10 +1,29 @@
 import * as m from 'mithril'
 
-import { Action, createStore, Store } from 'redux'
+import {
+  Action,
+  applyMiddleware,
+  createStore,
+  Middleware,
+  Store
+} from 'redux'
 
 import { reducer } from './reducers'
 import { initializeState } from './states'
 import { EmbedOptions, EmbedState } from './types'
+
+const logger: Middleware = store => dispatch => action => {
+  const next = dispatch(action)
+  console.debug('Action', action)
+  console.debug('Next State', store.getState())
+  return next
+}
+
+const mithril: Middleware = () => dispatch => action => {
+  const next = dispatch(action)
+  m.redraw()
+  return next
+}
 
 function parseOptions(window: Window): EmbedOptions {
   return {
@@ -16,7 +35,9 @@ function parseOptions(window: Window): EmbedOptions {
 }
 
 export function getStore(window: Window): Store<EmbedState, Action> {
-  const store = createStore(reducer, initializeState(parseOptions(window)))
-  store.subscribe(() => m.redraw())
-  return store
+  return createStore(
+    reducer,
+    initializeState(parseOptions(window)),
+    applyMiddleware(mithril, logger)
+  )
 }
