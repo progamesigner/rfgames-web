@@ -9,6 +9,7 @@ const COUNT_THRESHOLD = 1
 interface IconAttributes extends m.Attributes {
   applyCount?: number;
   classSize?: string;
+  inline?: boolean;
   src?: string;
 }
 
@@ -18,13 +19,20 @@ export class Icon implements m.Component<IconAttributes> {
       applyCount,
       className,
       classSize,
+      inline,
       src,
       ...attrs
     },
     children
   }: m.Vnode<IconAttributes>): m.Children {
     return <div
-      className={cx(styles.root, classSize, makeClassName('icon'), className)}
+      className={cx(
+        styles.root,
+        inline && styles.inline,
+        classSize,
+        makeClassName('icon'),
+        className
+      )}
       {...attrs}
     >
       <div className={cx(styles.icon, src && styles.image(src))}></div>

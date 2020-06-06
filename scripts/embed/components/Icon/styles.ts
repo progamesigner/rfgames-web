@@ -10,7 +10,6 @@ export const root = style({
   }),
   display: 'inline-block',
   height: rem(4),
-  pointerEvents: 'none',
   position: 'relative',
   width: rem(4)
 })
@@ -24,6 +23,13 @@ export const icon = style({
   position: 'absolute',
   right: 0,
   top: 0
+})
+
+export const inline = style({
+  backgroundColor: 'transparent',
+  backgroundImage: 'none',
+  border: 'none',
+  verticalAlign: 'middle'
 })
 
 export const image = (src: string): string => style({
