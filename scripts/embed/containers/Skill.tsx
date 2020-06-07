@@ -29,7 +29,7 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
       skills
     } = store.getState()
 
-    if (id && skills && skills[id]) {
+    if (id && skills && skills[id] && skills[id].data) {
       return <Skill data={skills[id].data} {...attrs} />
     }
     return <Empty type="skill" />

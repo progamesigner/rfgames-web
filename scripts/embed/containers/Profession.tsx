@@ -33,7 +33,7 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
       professions
     } = store.getState()
 
-    if (id && professions && professions[id]) {
+    if (id && professions && professions[id] && professions[id].data) {
       return <Profession
         data={professions[id].data}
         inline={true}

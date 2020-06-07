@@ -29,7 +29,7 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
       items
     } = store.getState()
 
-    if (id && items && items[id]) {
+    if (id && items && items[id] && items[id].data) {
       return <Item data={items[id].data} {...attrs} />
     }
     return <Empty type="item" />
