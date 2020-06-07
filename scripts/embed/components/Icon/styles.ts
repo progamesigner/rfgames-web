@@ -13,13 +13,6 @@ import {
 
 export const root = style({
   alignItems: 'center',
-  backgroundColor: color('#151718').toString(),
-  backgroundImage: `radial-gradient(circle, ${color('#606468').toString()}, ${color('#333333').toString()})`,
-  border: border({
-    color: color('#151718').darken(percent(25)).toString(),
-    style: 'solid',
-    width: px(1)
-  }),
   display: 'inline-flex',
   height: rem(iconMediumSize),
   position: 'relative',
@@ -38,11 +31,17 @@ export const icon = style({
   top: 0
 })
 
-export const inline = style({
-  backgroundColor: 'transparent',
-  backgroundImage: 'none',
-  border: 'none'
+export const block = style({
+  backgroundColor: color('#151718').toString(),
+  backgroundImage: `radial-gradient(circle, ${color('#606468').toString()}, ${color('#333333').toString()})`,
+  border: border({
+    color: color('#151718').darken(percent(25)).toString(),
+    style: 'solid',
+    width: px(1)
+  })
 })
+
+export const inline = style()
 
 export const image = (src: string): string => style({
   backgroundImage: url(src)

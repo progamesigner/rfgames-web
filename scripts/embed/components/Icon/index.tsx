@@ -28,7 +28,7 @@ export class Icon implements m.Component<IconAttributes> {
     return <div
       className={cx(
         styles.root,
-        inline && styles.inline,
+        inline ? styles.inline : styles.block,
         classSize,
         makeClassName('icon'),
         className
