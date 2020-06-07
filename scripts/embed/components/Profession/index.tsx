@@ -1,33 +1,68 @@
 import * as m from 'mithril'
 
 import { cx } from '../../libs'
-import { HasIDAttributes, GW2Profession } from '../../types'
+import {
+  GW2Profession,
+  HasIDAttributes,
+  HasRenderAttributes
+} from '../../types'
 
+import { Container } from '../Container'
 import { Icon } from '../Icon'
+import { Link } from '../Link'
+import { Name } from '../Name'
+
+import { buildWikiLink } from '../helpers'
 
 import * as styles from './styles'
 
-interface ProfessionAttributes extends m.Attributes, HasIDAttributes<string>, GW2Profession {
+interface ProfessionAttributes extends
+  m.Attributes,
+  HasIDAttributes<string>,
+  HasRenderAttributes
+{
+  data: GW2Profession;
   text?: string;
 }
 
 export class Profession implements m.Component<ProfessionAttributes> {
   public view({
-    attrs
+    attrs: {
+      data,
+      disableIcon,
+      disableLink,
+      disableText,
+      inline,
+      text
+    }
   }: m.Vnode<ProfessionAttributes>): m.Children {
     const {
       icon_big,
       id,
-      name,
-      text
-    } = attrs
+      name
+    } = data
 
-    return <div className={cx(styles.root, styles.inline)}>
-      <Icon
-        className={cx(styles.icon, 'is-profession', `is-${id.toLowerCase()}`)}
-        src={icon_big}
-      />
-      <span className={cx(styles.name)}>{text || name}</span>
-    </div>
+    return <Container inline={!disableText || inline} type="profession">
+      {
+        !disableIcon ?
+        <Icon
+          className={cx(styles.icon, 'is-profession', `is-${id.toLowerCase()}`)}
+          classSize={styles.size}
+          inline={!disableText || inline}
+          src={icon_big}
+        /> :
+        null
+      }
+      {
+        !disableText ?
+        <Name className={styles.name}>
+          {
+            !disableLink ?
+            <Link className={styles.link} href={buildWikiLink(name)}>{text || name}</Link> :
+            text || name
+          }</Name> :
+        null
+      }
+    </Container>
   }
 }
