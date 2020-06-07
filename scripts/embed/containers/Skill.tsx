@@ -2,11 +2,15 @@ import * as m from 'mithril'
 
 import { fetchSkill } from '../actions'
 import { Empty, Skill } from '../components'
-import { HasIDAttributes, HasStoreAttributes } from '../types'
+import { HasIDAttributes, HasRenderAttributes, HasStoreAttributes } from '../types'
 
 import { wrapAsyncAction } from './helpers'
 
-type SkillContainerAttributes = m.Attributes & HasStoreAttributes & HasIDAttributes<number>
+type SkillContainerAttributes =
+  m.Attributes &
+  HasIDAttributes<number> &
+  HasRenderAttributes &
+  HasStoreAttributes
 
 const fetch = wrapAsyncAction(fetchSkill)
 
@@ -19,18 +23,19 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
     fetch(store, id)
   }
 
-  public view({ attrs }: m.Vnode<SkillContainerAttributes>): m.Children {
-    const {
+  public view({
+    attrs: {
       store,
-      id
-    } = attrs
-
+      id,
+      ...attrs
+    }
+  }: m.Vnode<SkillContainerAttributes>): m.Children {
     const {
       skills
     } = store.getState()
 
     if (id && skills && skills[id] && skills[id].data) {
-      return <Skill data={skills[id].data} {...attrs} />
+      return <Skill data={skills[id].data} store={store} {...attrs} />
     }
     return <Empty type="skill" />
   }

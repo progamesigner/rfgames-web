@@ -5,6 +5,13 @@ export type HasIDAttributes<T extends GW2RecordKey> = {
   id: T;
 }
 
+export type HasRenderAttributes = {
+  disableIcon: boolean;
+  disableText: boolean;
+  disableLink: boolean;
+  inline: boolean;
+}
+
 export type HasStoreAttributes = {
   store: EmbedStore;
 }

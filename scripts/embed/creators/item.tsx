@@ -3,14 +3,20 @@ import * as m from 'mithril'
 import { Item } from '../containers'
 import { EmbedStore } from '../types'
 
-import { extractNumber } from './helpers'
+import { extractBoolean, extractNumber } from './helpers'
 
 export function create(store: EmbedStore, element: Element): m.Component {
-  const id = extractNumber(element, 'id', -1)
+  const attrs = {
+    disableIcon: extractBoolean(element, 'disable-icon', false),
+    disableLink: extractBoolean(element, 'disable-link', false),
+    disableText: extractBoolean(element, 'disable-text', false),
+    id: extractNumber(element, 'id', -1),
+    inline: extractBoolean(element, 'inline', false)
+  }
 
   return {
     view(): m.Children {
-      return <Item id={id} store={store}></Item>
+      return <Item {...attrs} store={store}></Item>
     }
   }
 }

@@ -2,11 +2,16 @@ import * as m from 'mithril'
 
 import { fetchProfession } from '../actions'
 import { Empty, Profession } from '../components'
-import { HasIDAttributes, HasStoreAttributes } from '../types'
+import { HasIDAttributes, HasRenderAttributes, HasStoreAttributes } from '../types'
 
 import { wrapAsyncAction } from './helpers'
 
-interface ProfessionEmbedAttributes extends m.Attributes, HasStoreAttributes, HasIDAttributes<string> {
+interface ProfessionEmbedAttributes extends
+  m.Attributes,
+  HasIDAttributes<string>,
+  HasRenderAttributes,
+  HasStoreAttributes
+{
   name?: string;
 }
 
@@ -22,13 +27,14 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
     fetch(store, id)
   }
 
-  public view({ attrs }: m.Vnode<ProfessionEmbedAttributes>): m.Children {
-    const {
+  public view({
+    attrs: {
       id,
       name,
-      store
-    } = attrs
-
+      store,
+      ...attrs
+    }
+  }: m.Vnode<ProfessionEmbedAttributes>): m.Children {
     const {
       professions
     } = store.getState()
@@ -36,9 +42,10 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
     if (id && professions && professions[id] && professions[id].data) {
       return <Profession
         data={professions[id].data}
-        inline={true}
+        store={store}
         text={name}
         {...attrs}
+        inline={true}
       />
     }
     return <Empty type="profession" />
