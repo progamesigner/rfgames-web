@@ -8,3 +8,11 @@ export type HasIDAttributes<T extends GW2RecordKey> = {
 export type HasStoreAttributes = {
   store: EmbedStore;
 }
+
+export type HasTooltipAttributes = {
+  disableTooltip: boolean;
+}
+
+export type HasWindowAttributes = {
+  window: Window;
+}

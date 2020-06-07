@@ -1,13 +1,17 @@
+import { random } from 'lodash/fp'
 import { mount } from 'mithril'
 
 import { apis } from './apis'
 import {
   forceClearCacheOnNextLoad,
   initializeLocalStorage,
-  makeAttributeName
+  makeAttributeName,
+  makeClassName
 } from './libs'
 import { getStore } from './store'
 import { EmbedStore } from './types'
+
+const tooltipContainerId = makeClassName(`tooltip-${random(1000)(9999)}`)
 
 async function bootstrapCache(): Promise<void> {
   const {
@@ -47,6 +51,35 @@ function bootstrapEmbeds(
     })
 }
 
+async function bootstrapTooltip(
+  window: Window,
+  store: EmbedStore
+): Promise<void> {
+  const {
+    document
+  } = window
+
+  let container = document.getElementById(tooltipContainerId)
+
+  const {
+    create
+  } = await import(/* webpackChunkName: 'tooltip' */ `./creators/tooltip`)
+
+  if (!document.body) {
+    throw new Error('Document body is not ready!')
+  }
+
+  if (!container) {
+    container = document.createElement('div')
+    container.id = tooltipContainerId
+    document.body.appendChild(container)
+  }
+
+  mount(container, create(store, window))
+
+  return Promise.resolve()
+}
+
 export async function bootstrap(window: Window): Promise<Array<void>> {
   const store = getStore(window)
 
@@ -59,7 +92,8 @@ export async function bootstrap(window: Window): Promise<Array<void>> {
   return Promise
     .all([
       bootstrapCache(),
-      ...bootstrapEmbeds(window, store)
+      ...bootstrapEmbeds(window, store),
+      bootstrapTooltip(window, store)
     ])
     .catch(error => {
       console.error(error)
