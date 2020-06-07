@@ -21,7 +21,7 @@ export class Link implements m.Component<LinkAttributes> {
     } = attrs
 
     return href ? <a
-      className={cx(styles.root, makeClassName('link'), className)}
+      className={cx(styles.root, className, makeClassName('link'))}
       href={href}
       rel="noopener noreferrer"
       target="_blank"

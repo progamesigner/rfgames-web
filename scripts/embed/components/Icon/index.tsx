@@ -30,8 +30,8 @@ export class Icon implements m.Component<IconAttributes> {
         styles.root,
         inline ? styles.inline : styles.block,
         classSize,
-        makeClassName('icon'),
-        className
+        className,
+        makeClassName('icon')
       )}
       {...attrs}
     >

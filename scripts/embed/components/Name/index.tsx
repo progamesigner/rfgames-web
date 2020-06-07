@@ -15,7 +15,7 @@ export class Name implements m.Component<NameAttributes> {
     children
   }: m.Vnode<NameAttributes>): m.Children {
     return <div
-      className={cx(styles.root, makeClassName('name'), className)}
+      className={cx(styles.root, className, makeClassName('name'))}
       {...attrs}
     >
       {children}
