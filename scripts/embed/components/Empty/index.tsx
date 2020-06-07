@@ -1,14 +1,23 @@
 import * as m from 'mithril'
 
+import { Container } from '../Container'
 import { Icon } from '../Icon'
 
-type EmptyAttributes = m.Attributes
+interface EmptyAttributes extends m.Attributes {
+  type: string;
+}
 
 export class Empty implements m.Component<EmptyAttributes> {
-  public view({ children }: m.Vnode<EmptyAttributes>): m.Children {
-    return m.fragment(
-      {},
-      Array.prototype.concat([], <Icon></Icon>, children)
-    )
+  public view({
+    attrs: {
+      type,
+      ...attrs
+    },
+    children
+  }: m.Vnode<EmptyAttributes>): m.Children {
+    return <Container inline={true} type={type} {...attrs}>
+      <Icon></Icon>
+      {children}
+    </Container>
   }
 }
