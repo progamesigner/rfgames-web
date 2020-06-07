@@ -37,6 +37,7 @@ export const head = style({
 
 export const body = style({
   paddingBottom: rem(0.25),
+  fontSize: rem(0.875),
   whiteSpace: 'pre-wrap'
 })
 
