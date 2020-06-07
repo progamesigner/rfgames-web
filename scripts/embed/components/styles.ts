@@ -1,25 +1,13 @@
-import { style, rem } from '../libs'
+export * from '../libs'
 
-export const root = style({
-  display: 'flex'
-})
+export const gapSize = 0.25
 
-export const name = style({
-  alignItems: 'center',
-  display: 'flex'
-})
+export const iconLargeSize = 4
+export const iconMediumSize = 4
+export const iconSmallSize = 3
+export const iconMiniSize = 2
+export const iconMicroSize = 1
 
-export const icon = style({
-})
-
-export const inline = style({
-  alignItems: 'baseline',
-  display: 'inline-flex',
-  $nest: {
-    '.gw2-embed-icon': {
-      display: 'inline',
-      height: rem(1.25),
-      width: rem(1.25)
-    }
-  }
-})
+export const iconApplyCountPadding = 0.25
+export const iconApplyCountFontSize = 0.75
+export const iconApplyCountTextShadow = 0.75

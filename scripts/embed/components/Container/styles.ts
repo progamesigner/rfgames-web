@@ -1,7 +1,12 @@
-import { style } from '../../libs'
+import { gapSize, rem, style } from '../styles'
 
 export const root = style({
-  display: 'block'
+  display: 'block',
+  $nest: {
+    ':not(:last-child)': {
+      marginRight: rem(gapSize)
+    }
+  }
 })
 
 export const inline = style({

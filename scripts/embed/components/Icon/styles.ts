@@ -1,4 +1,15 @@
-import { border, color, percent, px, rem, style, url } from '../../libs'
+import {
+  border,
+  color,
+  iconApplyCountFontSize,
+  iconApplyCountPadding,
+  iconMediumSize,
+  percent,
+  px,
+  rem,
+  style,
+  url
+} from '../styles'
 
 export const root = style({
   alignItems: 'center',
@@ -10,10 +21,10 @@ export const root = style({
     width: px(1)
   }),
   display: 'inline-flex',
-  height: rem(4),
+  height: rem(iconMediumSize),
   position: 'relative',
   verticalAlign: 'middle',
-  width: rem(4)
+  width: rem(iconMediumSize)
 })
 
 export const icon = style({
@@ -38,14 +49,14 @@ export const image = (src: string): string => style({
 })
 
 export const applyCount = style({
-  bottom: rem(0.25),
+  bottom: rem(iconApplyCountPadding),
   color: color('#fff4cf').toString(),
-  fontSize: rem(0.75),
+  fontSize: rem(iconApplyCountFontSize),
   margin: 0, // @note: force reset style for compatibility
   padding: 0, // @note: force reset style for compatibility
   pointerEvents: 'none',
   position: 'absolute',
-  right: rem(0.25),
-  textShadow: `0 0 ${px(5)} ${color('#151718').toString()}`,
+  right: rem(iconApplyCountPadding),
+  textShadow: `0 0 ${rem(iconApplyCountPadding)} ${color('#151718').toString()}`,
   zIndex: 100
 })
