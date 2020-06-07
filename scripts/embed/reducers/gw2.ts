@@ -23,8 +23,12 @@ import {
   GW2Trait
 } from '../types'
 
-type Reducers = {
+interface Reducers {
   [key: string]: Reducer<EmbedState>;
+}
+
+interface StoreItem<T> {
+  data: T;
 }
 
 const failureReducer = <
@@ -91,7 +95,7 @@ const responseReducer = <
     items
   } = action as GW2ResponseAction<T, R>
 
-  const data = Object.entries<R>(items).reduce((previous, [id, data]) => {
+  const data = Object.entries(items).reduce((previous, [id, data]) => {
     return {
       ...previous,
       [id]: {
@@ -105,12 +109,16 @@ const responseReducer = <
   if (state.useLocalStorageAsCache) {
     const localStorageKey = `${resource}_DATA`
 
-    const save = Object.entries<R>(items).reduce((previous, [id, data]) => {
+    const save = Object.entries(data).reduce((previous, [id, item]) => {
+      const {
+        data
+      } = item as StoreItem<R>
+
       return {
         ...previous,
         [id]: data
       }
-    }, state[resource] as S || {})
+    }, {} as Record<T, R>)
 
     set(localStorageKey, JSON.stringify(save))
   }
