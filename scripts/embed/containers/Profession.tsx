@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchProfession } from '../actions'
-import { Profession } from '../components'
+import { Empty, Profession } from '../components'
 import { HasIDAttributes, HasStoreAttributes } from '../types'
 
 import { wrapAsyncAction } from './helpers'
@@ -34,9 +34,13 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
     } = store.getState()
 
     if (id && professions && professions[id]) {
-      return <Profession text={name} {...attrs} {...professions[id].data}></Profession>
+      return <Profession
+        data={professions[id].data}
+        inline={true}
+        text={name}
+        {...attrs}
+      />
     }
-
-    return null
+    return <Empty type="profession" />
   }
 }

@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchItem } from '../actions'
-import { Item } from '../components'
+import { Empty, Item } from '../components'
 import { HasIDAttributes, HasStoreAttributes } from '../types'
 
 import { wrapAsyncAction } from './helpers'
@@ -30,9 +30,8 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
     } = store.getState()
 
     if (id && items && items[id]) {
-      return <Item {...attrs} {...items[id].data}></Item>
+      return <Item data={items[id].data} {...attrs} />
     }
-
-    return null
+    return <Empty type="item" />
   }
 }

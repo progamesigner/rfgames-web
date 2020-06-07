@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchSkill } from '../actions'
-import { Skill } from '../components'
+import { Empty, Skill } from '../components'
 import { HasIDAttributes, HasStoreAttributes } from '../types'
 
 import { wrapAsyncAction } from './helpers'
@@ -30,9 +30,8 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
     } = store.getState()
 
     if (id && skills && skills[id]) {
-      return <Skill {...attrs} {...skills[id].data}></Skill>
+      return <Skill data={skills[id].data} {...attrs} />
     }
-
-    return null
+    return <Empty type="skill" />
   }
 }
