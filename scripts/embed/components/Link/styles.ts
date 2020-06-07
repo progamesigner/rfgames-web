@@ -1,3 +1,3 @@
 import { style } from '../../libs'
 
-export const root = style({})
+export const root = style()
