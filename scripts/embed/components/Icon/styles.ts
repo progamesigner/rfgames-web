@@ -1,6 +1,7 @@
 import { border, color, percent, px, rem, style, url } from '../../libs'
 
 export const root = style({
+  alignItems: 'center',
   backgroundColor: color('#151718').toString(),
   backgroundImage: `radial-gradient(circle, ${color('#606468').toString()}, ${color('#333333').toString()})`,
   border: border({
@@ -8,9 +9,10 @@ export const root = style({
     style: 'solid',
     width: px(1)
   }),
-  display: 'inline-block',
+  display: 'inline-flex',
   height: rem(4),
   position: 'relative',
+  verticalAlign: 'middle',
   width: rem(4)
 })
 
@@ -28,8 +30,7 @@ export const icon = style({
 export const inline = style({
   backgroundColor: 'transparent',
   backgroundImage: 'none',
-  border: 'none',
-  verticalAlign: 'middle'
+  border: 'none'
 })
 
 export const image = (src: string): string => style({
