@@ -5,6 +5,12 @@ import { ExtractTooltipAttributeType, TooltipType } from '../../types'
 
 import * as styles from './styles'
 
+export { TooltipBody } from './Body'
+export { TooltipContent } from './Content'
+export { TooltipFact } from './Fact'
+export { TooltipFoot } from './Foot'
+export { TooltipHead } from './Head'
+
 interface TooltipAttributes extends m.Attributes {
   data: ExtractTooltipAttributeType<TooltipType>;
   type: TooltipType;
