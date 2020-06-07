@@ -27,6 +27,10 @@ module.exports = (env, argv) => {
           test: /\.tsx?$/,
           exclude: /node_modules/,
           use: 'ts-loader'
+        },
+        {
+          test: /\.png$/i,
+          use: 'url-loader'
         }
       ]
     },
@@ -47,7 +51,7 @@ module.exports = (env, argv) => {
       })
     ],
     resolve: {
-      extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss'],
+      extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss', '.png'],
     }
   }
 }
