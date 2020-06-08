@@ -2,6 +2,7 @@ import { debounce } from 'lodash/fp'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
 import { config } from '../config'
+import { GW2Resources } from '../types'
 
 const CACHE_VERSION_KEY = 'CACHE_VERSION'
 const FORCE_CLEAR_CACHE_KEY = 'FORCE_CLEAR_CACHE'
@@ -59,4 +60,8 @@ export function initializeLocalStorage(id: number): void {
     set(GW2_BUILD_KEY, currentBuildId)
     set(FORCE_CLEAR_CACHE_KEY, 'true')
   }
+}
+
+export function makeResourceKey(resource: GW2Resources): string {
+  return `${resource.replace('GW2_', '').replace('_', '')}S_DATA`
 }

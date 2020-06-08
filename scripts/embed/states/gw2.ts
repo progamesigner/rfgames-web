@@ -1,54 +1,48 @@
-import { clearCacheIfNewBuild, get } from '../libs'
+import { values } from 'lodash/fp'
+
+import { clearCacheIfNewBuild, get, makeResourceKey } from '../libs'
 import {
+  ExtractGW2ResourceType,
+  ExtractGW2State,
   GW2AsyncState,
-  GW2Item,
-  GW2ItemStat,
-  GW2Pet,
-  GW2Profession,
-  GW2Record,
-  GW2RecordKey,
-  GW2Resources,
-  GW2Skill,
-  GW2Specialization,
-  GW2State,
-  GW2Trait
+  GW2Resources
 } from '../types'
 
 const EMPTY = JSON.stringify({})
 
-function stateFactory<
-  T extends GW2RecordKey,
-  R extends GW2Record<T>,
-  E extends Error = Error
->(type: GW2Resources): Record<string, GW2State<T, R, E>> {
-  const initialState = {} as GW2State<T, R, E>
-  const localStorageKey = `${type}_DATA`
+function mapCacheToStore<T extends GW2Resources>(
+  items: Array<ExtractGW2ResourceType<T>>
+) {
+  return values(items).reduce((state, item) => ({
+    ...state,
+    [item.id]: {
+      data: item,
+      error: null,
+      state: GW2AsyncState.DONE
+    }
+  }), {} as ExtractGW2State<T>)
+}
+
+function stateFactory<T extends GW2Resources>(
+  resource: T
+): Record<string, ExtractGW2State<T>> {
+  const localStorageKey = makeResourceKey(resource)
 
   clearCacheIfNewBuild(localStorageKey)
 
   return {
-    [type]: {
-      ...Object.entries(JSON.parse(get(localStorageKey) || EMPTY)).reduce(
-        (state, [id, data]) => ({
-          ...state,
-          [id]: {
-            data,
-            error: null,
-            state: GW2AsyncState.DONE
-          }
-        }),
-        initialState
-      )
+    [resource]: {
+      ...mapCacheToStore(JSON.parse(get(localStorageKey) || EMPTY))
     }
   }
 }
 
 export const gw2InitialState = {
-  ...stateFactory<number, GW2Item>(GW2Resources.ITEM),
-  ...stateFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT),
-  ...stateFactory<number, GW2Pet>(GW2Resources.PET),
-  ...stateFactory<number, GW2Skill>(GW2Resources.SKILL),
-  ...stateFactory<number, GW2Specialization>(GW2Resources.SPECIALIZATION),
-  ...stateFactory<number, GW2Trait>(GW2Resources.TRAIT),
-  ...stateFactory<string, GW2Profession>(GW2Resources.PROFESSION)
+  ...stateFactory(GW2Resources.ITEM),
+  ...stateFactory(GW2Resources.ITEM_STAT),
+  ...stateFactory(GW2Resources.PET),
+  ...stateFactory(GW2Resources.SKILL),
+  ...stateFactory(GW2Resources.SPECIALIZATION),
+  ...stateFactory(GW2Resources.TRAIT),
+  ...stateFactory(GW2Resources.PROFESSION)
 }
