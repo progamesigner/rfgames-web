@@ -1,17 +1,26 @@
-import { border, color, percent, px, rem, style, stylesheet } from '../../libs'
+import { border, color, percent, px, rem, style, stylesheet, calc } from '../../libs'
 
 export const root = style({
   color: color('#9d9e9f').toString(),
   fontSize: rem(1),
+  left: rem(0.5),
+  maxWidth: rem(24),
   pointerEvents: 'none',
   position: 'fixed',
   textAlign: 'left',
-  maxWidth: rem(20),
   textShadow: `${px(1)} ${px(1)} ${px(1)} ${color('#151718').toString()}`,
+  top: rem(0.5),
   zIndex: 1000,
   $nest: {
     '& > :not(:last-child)': {
       marginBottom: rem(0.25)
+    },
+    [`@media screen and (max-width: ${rem(30)})`]: {
+      bottom: rem(0.5),
+      maxWidth: 'unset',
+      pointerEvents: 'inherit',
+      right: rem(0.5),
+      width: calc(`100vw - ${rem(2 * 0.5)}`)
     }
   }
 })

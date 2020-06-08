@@ -37,10 +37,6 @@ function calculateStyle(
   }
 }
 
-function isSmallScreen(window: Window): boolean {
-  return window.innerWidth < 480
-}
-
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
   protected container: Element | null = null;
   protected unbindEvent: UnbindEventListener | null= null;
@@ -52,39 +48,27 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
     } = attrs
 
     this.style = {
-      left: px(borderGap),
       opacity: 0, // @note: avoid wrong positioned tooltip shown
-      top: px(borderGap)
     }
 
-    if (isSmallScreen(window)) {
-      this.style = {
-        ...this.style,
-        bottom: px(borderGap),
-        opacity: 1,
-        pointerEvents: 'inherit',
-        right: px(borderGap)
-      }
-    } else {
-      this.unbindEvent = bindEventListener(window, 'mousemove', event => {
-        window.requestAnimationFrame(() => {
-          if (this.container) {
-            const style = calculateStyle(
-              window,
-              this.container as HTMLElement,
-              event as MouseEvent
-            )
+    this.unbindEvent = bindEventListener(window, 'mousemove', event => {
+      window.requestAnimationFrame(() => {
+        if (this.container) {
+          const style = calculateStyle(
+            window,
+            this.container as HTMLElement,
+            event as MouseEvent
+          )
 
-            this.style = {
-              ...this.style,
-              ...style,
-              opacity: 1
-            }
-            m.redraw()
+          this.style = {
+            ...this.style,
+            ...style,
+            opacity: 1
           }
-        })
+          m.redraw()
+        }
       })
-    }
+    })
   }
 
   public onremove(): void {
