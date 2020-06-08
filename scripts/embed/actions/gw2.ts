@@ -1,4 +1,4 @@
-import { chunk, uniq } from 'lodash/fp'
+import { chunk, isInteger, isString, uniq } from 'lodash/fp'
 
 import { Dispatch } from 'redux'
 
@@ -61,7 +61,7 @@ function actionFactory<T extends GW2Resources>(
     const item = data as ExtractGW2State<T> | undefined
 
     const idsToFetch = uniq(ids.filter(id => {
-      if (id && id > 0 && id !== '') {
+      if (!!id && (isInteger(id) && id > 0 || isString(id) && id !== '')) {
         return !item || !item[id] || !!item[id].error
       }
       return false
