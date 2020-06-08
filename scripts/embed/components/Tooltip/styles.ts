@@ -47,7 +47,7 @@ export const container = style({
   padding: rem(sizes.gap),
   width: percent(100),
   $nest: {
-    ':not(:last-child)': {
+    '> :not(:last-child)': {
       paddingBottom: rem(sizes.gap)
     }
   }
