@@ -14,8 +14,7 @@ import { EmbedOptions, EmbedState } from './types'
 
 const logger: Middleware = store => dispatch => action => {
   const next = dispatch(action)
-  console.debug('Action', action)
-  console.debug('Next State', store.getState())
+  console.debug('Redux', action, store.getState())
   return next
 }
 
