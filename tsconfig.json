@@ -7,6 +7,7 @@
     "jsxFactory": "m",
     "module": "ES2020",
     "moduleResolution": "node",
+    "noErrorTruncation": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
