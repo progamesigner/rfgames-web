@@ -17,6 +17,11 @@ export const tooltip = stylesheet({
   bonusInactive: {
     color: colors.bonusInactive.toString()
   },
+  consumable: {
+    alignItems: 'flex-start',
+    color: colors.statItem.toString(),
+    display: 'flex'
+  },
   head: {
     alignItems: 'center',
     display: 'flex'
@@ -33,6 +38,11 @@ export const tooltip = stylesheet({
     width: rem(sizes.tooltipItemIcon)
   },
   name: {
+  },
+  nestedIcon: {
+    height: rem(sizes.tooltipNestedIcon),
+    marginRight: rem(sizes.gap),
+    width: rem(sizes.tooltipNestedIcon)
   },
   statAttribute: {
     color: colors.statAttribute.toString()

@@ -149,9 +149,13 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         }
         {
           data.type === GW2ItemType.CONSUMABLE ?
-          <div>
-            <Icon src={data.details.icon} />
-            <span>{data.details.description}</span>
+          <div className={styles.tooltip.consumable}>
+            <Icon
+              className={styles.tooltip.nestedIcon}
+              inline={true}
+              src={data.details.icon}
+            />
+            <span>{m.trust(markup(data.details.description))}</span>
           </div> :
           null
         }

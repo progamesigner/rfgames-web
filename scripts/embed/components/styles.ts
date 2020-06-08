@@ -67,6 +67,7 @@ export const sizes = {
   inlineIcon: 1,
   rechargeIcon: 1.125,
   tooltipItemIcon: 2.5,
+  tooltipNestedIcon: 2,
   tooltipRadius: 0.125
 }
 
