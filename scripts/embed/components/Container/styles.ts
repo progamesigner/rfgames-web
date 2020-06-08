@@ -1,10 +1,10 @@
-import { gapSize, rem, style } from '../styles'
+import { rem, sizes, style } from '../styles'
 
 export const root = style({
   display: 'block',
   $nest: {
     ':not(:last-child)': {
-      marginRight: rem(gapSize)
+      marginRight: rem(sizes.gap)
     }
   }
 })

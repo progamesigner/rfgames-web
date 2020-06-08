@@ -35,7 +35,7 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
     } = data
 
     return <TooltipContent type="skill">
-      <TooltipHead>{name}</TooltipHead>
+      <TooltipHead className={styles.tooltip.head}>{name}</TooltipHead>
       <TooltipBody>{m.trust(markup(addSkillTypeTags(description), styles.flavors))}</TooltipBody>
       {facts.map((fact, index) => {
         return <TooltipFact key={index} data={fact} />
