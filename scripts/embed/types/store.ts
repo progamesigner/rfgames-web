@@ -5,6 +5,7 @@ import {
   GW2ItemStatsState,
   GW2PetsState,
   GW2ProfessionsState,
+  GW2Resources,
   GW2SkillsState,
   GW2SpecializationsState,
   GW2TraitsState
@@ -18,14 +19,14 @@ export interface EmbedOptions {
 }
 
 export interface EmbedState extends Partial<EmbedOptions> {
-  items?: GW2ItemsState;
-  itemstates?: GW2ItemStatsState;
-  pets?: GW2PetsState;
-  professions?: GW2ProfessionsState;
-  skills?: GW2SkillsState;
-  specializations?: GW2SpecializationsState;
+  [GW2Resources.ITEM_STAT]?: GW2ItemStatsState;
+  [GW2Resources.ITEM]?: GW2ItemsState;
+  [GW2Resources.PET]?: GW2PetsState;
+  [GW2Resources.PROFESSION]?: GW2ProfessionsState;
+  [GW2Resources.SKILL]?: GW2SkillsState;
+  [GW2Resources.SPECIALIZATION]?: GW2SpecializationsState;
+  [GW2Resources.TRAIT]?: GW2TraitsState;
   tooltip?: TooltipState;
-  traits?: GW2TraitsState;
   [key: string]: unknown;
 }
 

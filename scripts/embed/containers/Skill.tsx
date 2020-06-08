@@ -2,7 +2,12 @@ import * as m from 'mithril'
 
 import { fetchSkill } from '../actions'
 import { Empty, Skill } from '../components'
-import { HasIDAttributes, HasRenderAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasIDAttributes,
+  HasRenderAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { wrapAsyncAction } from './helpers'
 
@@ -31,7 +36,7 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
     }
   }: m.Vnode<SkillContainerAttributes>): m.Children {
     const {
-      skills
+      [GW2Resources.SKILL]: skills
     } = store.getState()
 
     if (id && skills && skills[id] && skills[id].data) {

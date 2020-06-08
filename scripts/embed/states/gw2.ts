@@ -7,6 +7,7 @@ import {
   GW2Profession,
   GW2Record,
   GW2RecordKey,
+  GW2Resources,
   GW2Skill,
   GW2Specialization,
   GW2State,
@@ -19,14 +20,14 @@ function stateFactory<
   T extends GW2RecordKey,
   R extends GW2Record<T>,
   E extends Error = Error
->(resource: string): Record<string, GW2State<T, R, E>> {
+>(type: GW2Resources): Record<string, GW2State<T, R, E>> {
   const initialState = {} as GW2State<T, R, E>
-  const localStorageKey = `${resource}_DATA`
+  const localStorageKey = `${type}_DATA`
 
   clearCacheIfNewBuild(localStorageKey)
 
   return {
-    [resource]: {
+    [type]: {
       ...Object.entries(JSON.parse(get(localStorageKey) || EMPTY)).reduce(
         (state, [id, data]) => ({
           ...state,
@@ -43,11 +44,11 @@ function stateFactory<
 }
 
 export const gw2InitialState = {
-  ...stateFactory<number, GW2Item>('items'),
-  ...stateFactory<number, GW2ItemStat>('itemstats'),
-  ...stateFactory<number, GW2Pet>('pets'),
-  ...stateFactory<number, GW2Skill>('skills'),
-  ...stateFactory<number, GW2Specialization>('specializations'),
-  ...stateFactory<number, GW2Trait>('traits'),
-  ...stateFactory<string, GW2Profession>('professions')
+  ...stateFactory<number, GW2Item>(GW2Resources.ITEM),
+  ...stateFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT),
+  ...stateFactory<number, GW2Pet>(GW2Resources.PET),
+  ...stateFactory<number, GW2Skill>(GW2Resources.SKILL),
+  ...stateFactory<number, GW2Specialization>(GW2Resources.SPECIALIZATION),
+  ...stateFactory<number, GW2Trait>(GW2Resources.TRAIT),
+  ...stateFactory<string, GW2Profession>(GW2Resources.PROFESSION)
 }

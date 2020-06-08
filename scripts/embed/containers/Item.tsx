@@ -2,7 +2,12 @@ import * as m from 'mithril'
 
 import { fetchItem } from '../actions'
 import { Empty, Item } from '../components'
-import { HasIDAttributes, HasRenderAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasIDAttributes,
+  HasRenderAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { wrapAsyncAction } from './helpers'
 
@@ -31,7 +36,7 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
     }
   }: m.Vnode<ItemContainerAttributes>): m.Children {
     const {
-      items
+      [GW2Resources.ITEM]: items
     } = store.getState()
 
     if (id && items && items[id] && items[id].data) {

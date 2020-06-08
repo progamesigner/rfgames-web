@@ -2,7 +2,12 @@ import * as m from 'mithril'
 
 import { fetchProfession } from '../actions'
 import { Empty, Profession } from '../components'
-import { HasIDAttributes, HasRenderAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasIDAttributes,
+  HasRenderAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { wrapAsyncAction } from './helpers'
 
@@ -36,7 +41,7 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
     }
   }: m.Vnode<ProfessionEmbedAttributes>): m.Children {
     const {
-      professions
+      [GW2Resources.PROFESSION]: professions
     } = store.getState()
 
     if (id && professions && professions[id] && professions[id].data) {

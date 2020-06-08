@@ -3,7 +3,6 @@ import { Reducer } from 'redux'
 import {
   GW2ErrorAction,
   GW2RequestAction,
-  GW2Resources,
   GW2ResponseAction,
   makeActionNames
 } from '../actions'
@@ -11,13 +10,13 @@ import { set } from '../libs'
 import {
   EmbedState,
   GW2AsyncState,
-  GW2State,
-  GW2Record,
   GW2Item,
   GW2ItemStat,
   GW2Pet,
   GW2Profession,
+  GW2Record,
   GW2RecordKey,
+  GW2Resources,
   GW2Skill,
   GW2Specialization,
   GW2Trait
@@ -27,16 +26,9 @@ interface Reducers {
   [key: string]: Reducer<EmbedState>;
 }
 
-interface StoreItem<T> {
-  data: T;
-}
-
-const failureReducer = <
-  T extends GW2RecordKey,
-  R extends GW2Record<T>,
-  E extends Error,
-  S = GW2State<T, R, E>
->(resource: string): Reducer<EmbedState> => (state = {}, action) => {
+const failureReducer = <T extends GW2RecordKey, E extends Error>(
+  type: GW2Resources
+): Reducer<EmbedState> => (state = {}, action) => {
   const {
     errors
   } = action as GW2ErrorAction<T, E>
@@ -50,20 +42,17 @@ const failureReducer = <
         state: GW2AsyncState.FAILED
       }
     }
-  }, state[resource] as S || {})
+  }, state[type] || {})
 
   return {
     ...state,
-    [resource]: data
+    [type]: data
   }
 }
 
-const requestReducer = <
-  T extends GW2RecordKey,
-  R extends GW2Record<T>,
-  E extends Error,
-  S = GW2State<T, R, E>
->(resource: string): Reducer<EmbedState> => (state = {}, action) => {
+const requestReducer = <T extends GW2RecordKey>(
+  type: GW2Resources
+): Reducer<EmbedState> => (state = {}, action) => {
   const {
     ids
   } = action as GW2RequestAction<T>
@@ -77,20 +66,17 @@ const requestReducer = <
         state: GW2AsyncState.PENDING
       }
     }
-  }, state[resource] as S || {})
+  }, state[type] || {})
 
   return {
     ...state,
-    [resource]: items
+    [type]: items
   }
 }
 
-const responseReducer = <
-  T extends GW2RecordKey,
-  R extends GW2Record<T>,
-  E extends Error,
-  S = GW2State<T, R, E>
->(resource: string): Reducer<EmbedState> => (state = {}, action) => {
+const responseReducer = <T extends GW2RecordKey, R extends GW2Record<T>>(
+  type: GW2Resources
+): Reducer<EmbedState> => (state = {}, action) => {
   const {
     items
   } = action as GW2ResponseAction<T, R>
@@ -104,28 +90,28 @@ const responseReducer = <
         state: GW2AsyncState.DONE
       }
     }
-  }, state[resource] as S || {})
+  }, state[type] || {})
 
   if (state.useLocalStorageAsCache) {
-    const localStorageKey = `${resource}_DATA`
+    const localStorageKey = `${type}_DATA`
 
     const save = Object.entries(data).reduce((previous, [id, item]) => {
       const {
         data
-      } = item as StoreItem<R>
+      } = item
 
       return {
         ...previous,
         [id]: data
       }
-    }, {} as Record<T, R>)
+    }, {})
 
     set(localStorageKey, JSON.stringify(save))
   }
 
   return {
     ...state,
-    [resource]: data
+    [type]: data
   }
 }
 
@@ -133,7 +119,7 @@ function reducerFactory<
   T extends GW2RecordKey,
   R extends GW2Record<T>,
   E extends Error = Error
->(type: GW2Resources, resource: string): Reducers {
+>(type: GW2Resources): Reducers {
   const {
     failure,
     request,
@@ -141,18 +127,18 @@ function reducerFactory<
   } = makeActionNames(type)
 
   return {
-    [failure]: failureReducer<T, R, E>(resource),
-    [request]: requestReducer<T, R, E>(resource),
-    [success]: responseReducer<T, R, E>(resource)
+    [failure]: failureReducer<T, E>(type),
+    [request]: requestReducer<T>(type),
+    [success]: responseReducer<T, R>(type)
   }
 }
 
 export const gw2Reducers = {
-  ...reducerFactory<number, GW2Item>(GW2Resources.ITEM, 'items'),
-  ...reducerFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, 'itemstats'),
-  ...reducerFactory<number, GW2Pet>(GW2Resources.PET, 'pets'),
-  ...reducerFactory<number, GW2Skill>(GW2Resources.SKILL, 'skills'),
-  ...reducerFactory<number, GW2Specialization>(GW2Resources.SPECIALIZATION, 'specializations'),
-  ...reducerFactory<number, GW2Trait>(GW2Resources.TRAIT, 'traits'),
-  ...reducerFactory<string, GW2Profession>(GW2Resources.PROFESSION, 'professions')
+  ...reducerFactory<number, GW2Item>(GW2Resources.ITEM),
+  ...reducerFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT),
+  ...reducerFactory<number, GW2Pet>(GW2Resources.PET),
+  ...reducerFactory<number, GW2Skill>(GW2Resources.SKILL),
+  ...reducerFactory<number, GW2Specialization>(GW2Resources.SPECIALIZATION),
+  ...reducerFactory<number, GW2Trait>(GW2Resources.TRAIT),
+  ...reducerFactory<string, GW2Profession>(GW2Resources.PROFESSION)
 }

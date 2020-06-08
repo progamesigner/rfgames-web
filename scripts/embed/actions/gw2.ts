@@ -1,4 +1,4 @@
-import { uniq } from 'lodash/fp'
+import { chunk, uniq } from 'lodash/fp'
 
 import { Dispatch } from 'redux'
 
@@ -14,9 +14,9 @@ import {
   GW2Profession,
   GW2Record,
   GW2RecordKey,
+  GW2Resources,
   GW2Skill,
   GW2Specialization,
-  GW2State,
   GW2Trait
 } from '../types'
 
@@ -60,7 +60,6 @@ function actionFactory<
 >(
   type: GW2Resources,
   fetch: GW2Fetcher<T, R>,
-  resource: string,
   postprocess?: (dispatch: Dispatch, items: Record<T, R>) => Record<T, R>
 ): GW2Action<T> {
   const {
@@ -69,20 +68,43 @@ function actionFactory<
     failure
   } = makeActionNames(type)
 
+  const makeChunks = chunk(config.gw2ApiRequestLimit)
+
   const debounced = batch<T, Promise<Record<T, R>>, [Dispatch, GetState]>(
     async (ids, dispatch, getState) => {
-      const state = getState()
-
       const idsToFetch = uniq(ids.filter(id => {
-        if (id && id !== -1 && id !== "") {
-          const item = state[resource] as GW2State<T, R, E>
-          return !item || !item[id] || !!item[id].error
+        if (id) {
+          switch (type) {
+            case GW2Resources.PROFESSION:
+              {
+                const {
+                  [type]: data
+                } = getState()
+
+                if (data) {
+                  const item = data[id as string]
+                  return !item || !!item.error
+                }
+              }
+              break
+            default:
+              {
+                const {
+                  [type]: data
+                } = getState()
+
+                if (data) {
+                  const item = data[id as number]
+                  return !item || !!item.error
+                }
+              }
+          }
         }
         return false
       }))
 
       if (idsToFetch.length > 0) {
-        const requests = []
+        const requests = new Array<Promise<Record<T, R>>>()
         const idsToSlice = Array.prototype.concat([], idsToFetch)
 
         dispatch({
@@ -90,10 +112,7 @@ function actionFactory<
           ids: idsToFetch
         } as GW2RequestAction<T>)
 
-        while (idsToSlice.length) {
-          const slicedIds = idsToSlice.splice(0, config.gw2ApiRequestLimit)
-          requests.push(fetch(slicedIds))
-        }
+        requests.push(...makeChunks(idsToSlice).map(fetch))
 
         try {
           const responses = await Promise.all(requests)
@@ -139,27 +158,17 @@ function actionFactory<
   return (dispatch, getState) => id => debounced(id, dispatch, getState)
 }
 
-export const enum GW2Resources {
-  ITEM = 'GW2_ITEM',
-  ITEM_STAT = 'GW2_ITEM_STAT',
-  PET = 'GW2_PET',
-  PROFESSION = 'GW2_PROFESSION',
-  SKILL = 'GW2_SKILL',
-  SPECIALIZATION = 'GW2_SPECIALIZATION',
-  TRAIT = 'GW2_TRAIT'
-}
-
 export type GW2RequestAction<T extends GW2RecordKey> = BaseAction<GW2RequestPayload<T>>
 export type GW2ResponseAction<T extends GW2RecordKey, R extends GW2Record<T>> = BaseAction<GW2ResponsePayload<T, R>>
 export type GW2ErrorAction<T extends GW2RecordKey, E extends Error> = BaseAction<GW2ErrorPayload<T, E>>
 
-export const fetchItem = actionFactory<number, GW2Item>(GW2Resources.ITEM, apis.fetchGW2Items, 'items')
-export const fetchItemStat = actionFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, apis.fetchGW2ItemStats, 'itemstats')
-export const fetchPet = actionFactory<number, GW2Pet>(GW2Resources.PET, apis.fetchGW2Pets, 'pets')
-export const fetchProfession = actionFactory<string, GW2Profession>(GW2Resources.PROFESSION, apis.fetchGW2Professions, 'professions')
-export const fetchSkill = actionFactory<number, GW2Skill>(GW2Resources.SKILL, apis.fetchGW2Skills, 'skills')
-export const fetchSpecialization = actionFactory<number, GW2Specialization>(GW2Resources.TRAIT, apis.fetchGW2Specializations, 'specializations')
-export const fetchTrait = actionFactory<number, GW2Trait>(GW2Resources.TRAIT, apis.fetchGW2Traits, 'traits')
+export const fetchItem = actionFactory<number, GW2Item>(GW2Resources.ITEM, apis.fetchGW2Items)
+export const fetchItemStat = actionFactory<number, GW2ItemStat>(GW2Resources.ITEM_STAT, apis.fetchGW2ItemStats)
+export const fetchPet = actionFactory<number, GW2Pet>(GW2Resources.PET, apis.fetchGW2Pets)
+export const fetchProfession = actionFactory<string, GW2Profession>(GW2Resources.PROFESSION, apis.fetchGW2Professions)
+export const fetchSkill = actionFactory<number, GW2Skill>(GW2Resources.SKILL, apis.fetchGW2Skills)
+export const fetchSpecialization = actionFactory<number, GW2Specialization>(GW2Resources.TRAIT, apis.fetchGW2Specializations)
+export const fetchTrait = actionFactory<number, GW2Trait>(GW2Resources.TRAIT, apis.fetchGW2Traits)
 
 export function makeActionNames(resource: GW2Resources): GW2ActionNames {
   const name = resource.toUpperCase()

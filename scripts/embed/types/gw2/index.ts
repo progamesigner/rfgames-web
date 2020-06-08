@@ -29,6 +29,16 @@ export const enum GW2AsyncState {
   FAILED
 }
 
+export const enum GW2Resources {
+  ITEM = 'GW2_ITEM',
+  ITEM_STAT = 'GW2_ITEM_STAT',
+  PET = 'GW2_PET',
+  PROFESSION = 'GW2_PROFESSION',
+  SKILL = 'GW2_SKILL',
+  SPECIALIZATION = 'GW2_SPECIALIZATION',
+  TRAIT = 'GW2_TRAIT'
+}
+
 export type GW2State<
   T extends GW2RecordKey,
   R extends GW2Record<T>,
