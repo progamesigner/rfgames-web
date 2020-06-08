@@ -145,6 +145,10 @@ export const enum GW2ItemGizmoType {
   UNLIMITED_CONSUMABLE = 'UnlimitedConsumable'
 }
 
+export const enum GW2ItemToolType {
+  SALVAGE = 'Salvage'
+}
+
 export const enum GW2ItemTrinketType {
   ACCESSORY = 'Accessory',
   AMULET = 'Amulet',
@@ -275,7 +279,7 @@ interface GW2ItemDetailArmor extends GW2ItemDetailWithType<GW2ItemArmorType> {
   weight_class: GW2ItemArmorWeightClass;
   defense: number;
   infusion_slots: Array<GW2ItemInfusionSlot>;
-  infix_upgrade: GW2ItemInfixUpgrade;
+  infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
   stat_choices: Array<number>;
@@ -283,7 +287,7 @@ interface GW2ItemDetailArmor extends GW2ItemDetailWithType<GW2ItemArmorType> {
 
 interface GW2ItemDetailBack {
   infusion_slots: Array<GW2ItemInfusionSlot>;
-  infix_upgrade: GW2ItemInfixUpgrade;
+  infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
   stat_choices: Array<number>;
@@ -317,13 +321,13 @@ interface GW2ItemDetailMiniPet {
   minipet_id: number;
 }
 
-interface GW2ItemDetailTool extends GW2ItemDetailWithType<'Salvage'> {
+interface GW2ItemDetailTool extends GW2ItemDetailWithType<GW2ItemToolType> {
   charges: number;
 }
 
 interface GW2ItemDetailTrinket extends GW2ItemDetailWithType<GW2ItemTrinketType> {
   infusion_slots: Array<GW2ItemInfusionSlot>;
-  infix_upgrade: GW2ItemInfixUpgrade;
+  infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
   stat_choices: Array<number>;
@@ -333,7 +337,7 @@ interface GW2ItemDetailUpgradeComponent extends GW2ItemDetailWithType<GW2ItemUpg
   flags: Array<GW2ItemUpgradeComponentFlag>;
   infusion_upgrade_flags: Array<GW2ItemUpgradeComponentInfusionFlag>;
   suffix: string;
-  infix_upgrade: GW2ItemInfixUpgrade;
+  infix_upgrade?: GW2ItemInfixUpgrade;
   bonuses?: Array<string>;
 }
 
@@ -343,7 +347,7 @@ interface GW2ItemDetailWeapon extends GW2ItemDetailWithType<GW2ItemWeaponType> {
   max_power: number;
   defense: number;
   infusion_slots: Array<GW2ItemInfusionSlot>;
-  infix_upgrade: GW2ItemInfixUpgrade;
+  infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
   stat_choices: Array<number>;
