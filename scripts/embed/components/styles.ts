@@ -1,9 +1,11 @@
-import { color, percent } from '../libs'
+import { borderColor, color, percent } from '../libs'
 
 export * from '../libs'
 
 export const colors = {
   applyCount: color('#fff4cf'),
+  bonusActive: color('#5599FF'),
+  bonusInactive: color('#AAAAAA'),
   coinCopper: color('#a0673a'),
   coinGold: color('#e5be45'),
   coinSilver: color('#cbcac8'),
@@ -13,21 +15,25 @@ export const colors = {
   formatFlavor: color('#94DCD2'),
   formatReminder: color('#4564A1'),
   formatSkill: color('#EFDF80'),
-  rarityJunk: color('#AAAAAA'),
+  rarityAscended: color('#FB3E8D'),
   rarityBasic: color('#EEEEEE'),
+  rarityExotic: color('#FFA405'),
   rarityFine: color('#62A4DA'),
+  rarityJunk: color('#AAAAAA'),
+  rarityLegendary: color('#9B6BDE'),
   rarityMasterwork: color('#1A9306'),
   rarityRare: color('#FCD00B'),
-  rarityExotic: color('#FFA405'),
-  rarityAscended: color('#FB3E8D'),
-  rarityLegendary: color('#9B6BDE'),
+  statAttribute: color('#5599ff'),
+  statBuff: color('#5599ff'),
+  statItem: color('#30ad37'),
   tooltipBackground: color('#151718'),
   tooltipBorder: color('#151718'),
   tooltipFact: color('rgba(255, 255, 255, 0.7)'),
+  tooltipItemBorder: borderColor(color('#9d9e9f').toString(), color('#333333').toString(), color('#333333').toString(), color('#9d9e9f').toString()),
   tooltipShadow: color('#151718'),
+  tooltipSkillTitle: color('#EFDF80'),
   tooltipText: color('#9D9E9F'),
   tooltipTextShadow: color('#151718'),
-  tooltipSkillTitle: color('#EFDF80'),
   tooltipTitle: color('#FFFFFF')
 }
 

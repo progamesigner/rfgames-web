@@ -1,34 +1,78 @@
 import * as m from 'mithril'
 
-import { cx } from '../../libs'
 import {
   GW2Item,
-  HasIDAttributes
+  HasIDAttributes,
+  HasRenderAttributes,
+  HasStoreAttributes,
+  HasTooltipAttributes,
+  TooltipType
 } from '../../types'
 
-import { buildWikiLink } from '../helpers'
+import { bindTooltipEvents, buildWikiLink } from '../helpers'
 
+import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Link } from '../Link'
+import { Name } from '../Name'
+
+import './Tooltip'
 
 import * as styles from './styles'
 
-type ItemAttributes = m.Attributes & HasIDAttributes<number> & GW2Item
+interface ItemAttributes extends
+  m.Attributes,
+  HasIDAttributes<number>,
+  HasRenderAttributes,
+  HasStoreAttributes,
+  HasTooltipAttributes
+{
+  data: GW2Item;
+}
 
 export class Item implements m.Component<ItemAttributes> {
   public view({
-    attrs: data
+    attrs: {
+      store,
+      disableIcon,
+      disableLink,
+      disableText,
+      disableTooltip,
+      inline,
+      data
+    }
   }: m.Vnode<ItemAttributes>): m.Children {
     const {
       icon,
       name
     } = data
 
-    return <div className={cx(styles.root)}>
-      <Icon className={cx(styles.icon, 'is-item')} src={icon} />
-      <span className={cx(styles.name)}>
-        <Link href={buildWikiLink(name)}>{name}</Link>
-      </span>
-    </div>
+    const tooltipEvents = !disableTooltip ?
+      bindTooltipEvents(store, TooltipType.GW2_ITEM, data) :
+      {}
+
+    return <Container inline={!disableText || inline} type="item">
+      {
+        !disableIcon ?
+        <Icon
+          className={styles.icon}
+          inline={!disableText || inline}
+          src={icon}
+          {...tooltipEvents}
+        /> :
+        null
+      }
+      {
+        !disableText ?
+        <Name className={styles.name} {...tooltipEvents}>
+          {
+            !disableLink ?
+            <Link className={styles.link} href={buildWikiLink(name)}>{name}</Link> :
+            name
+          }
+        </Name> :
+        null
+      }
+    </Container>
   }
 }
