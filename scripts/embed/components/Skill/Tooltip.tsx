@@ -12,6 +12,8 @@ import {
 
 import { addSkillTypeTags, markup } from '../parser'
 
+import * as styles from './styles'
+
 declare module '../../types/tooltip' {
   const enum TooltipType {
     GW2_SKILL = 'GW2Skill'
@@ -34,7 +36,7 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
 
     return <TooltipContent type="skill">
       <TooltipHead>{name}</TooltipHead>
-      <TooltipBody>{m.trust(markup(addSkillTypeTags(description)))}</TooltipBody>
+      <TooltipBody>{m.trust(markup(addSkillTypeTags(description), styles.flavors))}</TooltipBody>
       {facts.map((fact, index) => {
         return <TooltipFact key={index} data={fact} />
       })}

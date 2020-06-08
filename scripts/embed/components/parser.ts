@@ -2,8 +2,6 @@ import { round } from 'lodash/fp'
 
 import { makeClassName, cx } from '../libs'
 
-import * as styles from './styles'
-
 const CLOSE_TAG = '~~~CLOSE~TAG~~~'
 const OPEN_TAG = '~~~OPEN~TAG~~~'
 
@@ -26,8 +24,12 @@ const ATTRIBUTE_MAPPING = {
 
 const BASE_DAMAGE = 266.0
 
+interface MarkupFlavorMap {
+  [property: string]: string | null;
+}
+
 export function addSkillTypeTags(description: string): string {
-  return description.replace(SKILL_TYPE_REGEX, '<c=@skill>$1</c>')
+  return description.replace(SKILL_TYPE_REGEX, '<c=@skilltype>$1</c>')
 }
 
 export function attributeToName(attribute: string): string {
@@ -38,10 +40,14 @@ export function calculateDamage(hitCount: number, damageMultiplier = 1): number 
   return round(BASE_DAMAGE * damageMultiplier * hitCount)
 }
 
-export function markup(text: string): string {
+export function markup(text: string, flavors: MarkupFlavorMap = {}): string {
   return text
-    .replace(HEX_COLOR_REGEX, `${OPEN_TAG}span class="${cx(styles.format, makeClassName('color-format'))}" style="color:$1"${CLOSE_TAG}$2${OPEN_TAG}/span${CLOSE_TAG}`)
-    .replace(NAMED_COLOR_REGEX, `${OPEN_TAG}span class="${cx(styles.format, makeClassName('color-format'))} is-$1"${CLOSE_TAG}$2${OPEN_TAG}/span${CLOSE_TAG}`)
+    .replace(HEX_COLOR_REGEX, (_, color, text) => {
+      return `${OPEN_TAG}span class="${makeClassName('color-format')}" style="color:${color}"${CLOSE_TAG}${text}${OPEN_TAG}/span${CLOSE_TAG}`
+    })
+    .replace(NAMED_COLOR_REGEX, (_, flavor, text) => {
+      return `${OPEN_TAG}span class="${cx(flavors[flavor] || flavor, makeClassName('color-format'))} is-${flavor}"${CLOSE_TAG}${text}${OPEN_TAG}/span${CLOSE_TAG}`
+    })
     .replace(NEW_LINE_REGEX, `${OPEN_TAG}br${CLOSE_TAG}`)
     .replace(LT_SYMBOL_REGEX, '&lt;')
     .replace(GT_SYMBOL_REGEX, '&gt;')
