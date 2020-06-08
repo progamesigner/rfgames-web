@@ -5,7 +5,7 @@ export const root = style()
 export const size = style({
   height: rem(iconMicroSize),
   marginLeft: rem(gapSize),
-  marginRight: rem(gapSize),
+  marginRight: rem(2 * gapSize),
   width: rem(iconMicroSize)
 })
 
