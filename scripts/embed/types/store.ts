@@ -1,15 +1,6 @@
 import { Action, Store } from 'redux'
 
-import {
-  GW2ItemsState,
-  GW2ItemStatsState,
-  GW2PetsState,
-  GW2ProfessionsState,
-  GW2Resources,
-  GW2SkillsState,
-  GW2SpecializationsState,
-  GW2TraitsState
-} from './gw2'
+import { ExtractGW2State, GW2Resources } from './gw2'
 import { TooltipState } from './tooltip'
 
 export interface EmbedOptions {
@@ -19,13 +10,13 @@ export interface EmbedOptions {
 }
 
 export interface EmbedState extends Partial<EmbedOptions> {
-  [GW2Resources.ITEM_STAT]?: GW2ItemStatsState;
-  [GW2Resources.ITEM]?: GW2ItemsState;
-  [GW2Resources.PET]?: GW2PetsState;
-  [GW2Resources.PROFESSION]?: GW2ProfessionsState;
-  [GW2Resources.SKILL]?: GW2SkillsState;
-  [GW2Resources.SPECIALIZATION]?: GW2SpecializationsState;
-  [GW2Resources.TRAIT]?: GW2TraitsState;
+  [GW2Resources.ITEM_STAT]?: ExtractGW2State<GW2Resources.ITEM_STAT>;
+  [GW2Resources.ITEM]?: ExtractGW2State<GW2Resources.ITEM>;
+  [GW2Resources.PET]?: ExtractGW2State<GW2Resources.PET>;
+  [GW2Resources.PROFESSION]?: ExtractGW2State<GW2Resources.PROFESSION>;
+  [GW2Resources.SKILL]?: ExtractGW2State<GW2Resources.SKILL>;
+  [GW2Resources.SPECIALIZATION]?: ExtractGW2State<GW2Resources.SPECIALIZATION>;
+  [GW2Resources.TRAIT]?: ExtractGW2State<GW2Resources.TRAIT>;
   tooltip?: TooltipState;
   [key: string]: unknown;
 }
