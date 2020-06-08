@@ -13,11 +13,18 @@ const NAMED_COLOR_REGEX = /<c[=@][@=]?([^>]+)>([^]*?)(<\/?c>|$)/g
 const NEW_LINE_REGEX = /<br\/?>|\n/g
 const SKILL_TYPE_REGEX = /^([a-zA-Z\u00C0-\u017F]+ ?[a-zA-Z\u00C0-\u017F]*.?[:.])/gm
 
-const ATTRIBUTE_MAPPING = {
-  BoonDuration: 'concentration',
-  ConditionDuration: 'expertise',
-  CritDamage: 'ferocity',
-  CriticalDamage: 'ferocity'
+export const ATTRIBUTE_MAPPING = {
+  AgonyResistance: 'Agony Resistance',
+  BoonDuration: 'Concentration',
+  ConditionDamage: 'Condition Damage',
+  ConditionDuration: 'Expertise',
+  CritDamage: 'Ferocity',
+  CriticalDamage: 'Ferocity',
+  Healing: 'Healing Power',
+  Power: 'Power',
+  Precision: 'Precision',
+  Toughness: 'Toughness',
+  Vitality: 'Vitality'
 } as Record<string, string>
 
 interface MarkupFlavorMap {
