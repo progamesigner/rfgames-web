@@ -1,4 +1,4 @@
-import { toPairs } from 'lodash/fp'
+import { toPairs, values } from 'lodash/fp'
 import { Reducer } from 'redux'
 
 import {
@@ -11,6 +11,7 @@ import { set, makeResourceKey } from '../libs'
 import {
   EmbedState,
   ExtractGW2ErrorType,
+  ExtractGW2KeyType,
   ExtractGW2ResourceType,
   ExtractGW2State,
   GW2AsyncState,
@@ -38,7 +39,7 @@ const failureReducer = <T extends GW2Resources>(
         error: null,
         state: GW2AsyncState.DONE
       }
-    }), {})
+    }), state[resource])
 
   return {
     ...state,
@@ -85,20 +86,25 @@ const responseReducer = <T extends GW2Resources>(
         error: null,
         state: GW2AsyncState.DONE
       }
-    }), {})
+    }), state[resource])
 
   if (state.useLocalStorageAsCache) {
     const localStorageKey = makeResourceKey(resource)
+    const storedData = data as Record<ExtractGW2KeyType<T>, ExtractStoreRecord<T>> | undefined
 
-    const save = toPairs<ExtractStoreRecord<T>>(data)
-      .reduce((saved, [id, { data }]) => {
-        return {
-          ...saved,
-          [id]: data
-        }
-      }, {})
+    if (storedData) {
+      const save = values<ExtractStoreRecord<T>>(storedData)
+        .reduce((saved, { data }) => {
+          return {
+            ...saved,
+            ...data ? {
+              [data.id]: data
+            } : null
+          }
+        }, {})
 
-    set(localStorageKey, JSON.stringify(save))
+      set(localStorageKey, JSON.stringify(save))
+    }
   }
 
   return {
