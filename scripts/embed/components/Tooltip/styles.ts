@@ -45,19 +45,22 @@ export const container = style({
   boxShadow: `${px(1)} ${px(1)} ${px(2)} ${colors.tooltipShadow.toString()}`,
   borderRadius: rem(sizes.tooltipRadius),
   padding: rem(sizes.gap),
-  width: percent(100)
+  width: percent(100),
+  $nest: {
+    ':not(:last-child)': {
+      paddingBottom: rem(sizes.gap)
+    }
+  }
 })
 
 export const head = style({
   color: colors.tooltipTitle.toString(),
-  fontSize: rem(fonts.title.fontSize),
-  paddingBottom: rem(sizes.gap)
+  fontSize: rem(fonts.title.fontSize)
 })
 
 export const body = style({
   color: colors.tooltipText.toString(),
   fontSize: rem(fonts.text.fontSize),
-  paddingBottom: rem(sizes.gap),
   whiteSpace: 'pre-wrap'
 })
 
