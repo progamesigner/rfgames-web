@@ -1,7 +1,5 @@
 import * as m from 'mithril'
 
-import { floor } from 'lodash/fp'
-
 import {
   copper as copperImage,
   gold as goldImage,
@@ -25,8 +23,8 @@ export class Coin implements m.Component<CoinAttributes> {
       ...attrs
     }
   }: m.Vnode<CoinAttributes>): m.Children {
-    const gold = floor(value / 10000)
-    const silver = floor(value % 10000 / 100)
+    const gold = Math.floor(value / 10000)
+    const silver = Math.floor(value % 10000 / 100)
     const copper = value % 100
 
     return <div className={cx(styles.root, className)} {...attrs}>
