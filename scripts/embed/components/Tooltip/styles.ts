@@ -5,7 +5,8 @@ import {
   px,
   rem,
   style,
-  stylesheet
+  stylesheet,
+  viewWidth
 } from '../../libs'
 
 import { colors, fonts, sizes, zIndices } from '../styles'
@@ -30,7 +31,7 @@ export const root = style({
       maxWidth: 'unset',
       pointerEvents: 'inherit',
       right: rem(0.5),
-      width: calc(`100vw - ${rem(2 * 0.5)}`)
+      width: calc(`${viewWidth(100)} - ${rem(2 * 0.5)}`)
     }
   }
 })

@@ -39,35 +39,34 @@ function calculateStyle(
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
   protected container: Element | null = null;
+
+  protected style: CSSProperties | null = {
+    opacity: 0 // @note: avoid wrong positioned tooltip shown
+  };
+
   protected unbindEvent: UnbindEventListener | null= null;
-  protected style: CSSProperties | null = null;
 
   public oncreate({ attrs }: m.VnodeDOM<TooltipContainerAttributes>): void {
     const {
       window
     } = attrs
 
-    this.style = {
-      opacity: 0, // @note: avoid wrong positioned tooltip shown
-    }
-
     this.unbindEvent = bindEventListener(window, 'mousemove', event => {
-      window.requestAnimationFrame(() => {
-        if (this.container) {
-          const style = calculateStyle(
-            window,
-            this.container as HTMLElement,
-            event as MouseEvent
-          )
+      if (this.container) {
+        const style = calculateStyle(
+          window,
+          this.container as HTMLElement,
+          event as MouseEvent
+        )
 
-          this.style = {
-            ...this.style,
-            ...style,
-            opacity: 1
-          }
-          m.redraw()
+        this.style = {
+          ...this.style,
+          ...style,
+          opacity: 1
         }
-      })
+
+        window.requestAnimationFrame(() => m.redraw())
+      }
     })
   }
 
