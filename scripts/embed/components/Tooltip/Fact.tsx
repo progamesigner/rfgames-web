@@ -5,12 +5,18 @@ import { GW2Fact, GW2FactType } from '../../types'
 
 import { Icon } from '../Icon'
 
-import { attributeToName, calculateDamage, markup } from '../parser'
+import { attributeToName, markup } from '../parser'
 
 import * as styles from './styles'
 
+const BASE_DAMAGE = 266.0
+
 interface FactTooltipAttributes extends m.Attributes {
   data: GW2Fact;
+}
+
+function calculateDamage(hitCount: number, damageMultiplier = 1): number {
+  return Math.round(BASE_DAMAGE * damageMultiplier * hitCount)
 }
 
 class FactContainer implements m.Component<m.Attributes> {

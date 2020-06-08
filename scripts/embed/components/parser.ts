@@ -1,5 +1,3 @@
-import { round } from 'lodash/fp'
-
 import { makeClassName, cx } from '../libs'
 
 const CLOSE_TAG = '~~~CLOSE~TAG~~~'
@@ -22,8 +20,6 @@ const ATTRIBUTE_MAPPING = {
   CriticalDamage: 'ferocity'
 } as Record<string, string>
 
-const BASE_DAMAGE = 266.0
-
 interface MarkupFlavorMap {
   [property: string]: string | null;
 }
@@ -34,10 +30,6 @@ export function addSkillTypeTags(description: string): string {
 
 export function attributeToName(attribute: string): string {
   return ATTRIBUTE_MAPPING[attribute] || attribute
-}
-
-export function calculateDamage(hitCount: number, damageMultiplier = 1): number {
-  return round(BASE_DAMAGE * damageMultiplier * hitCount)
 }
 
 export function markup(text: string, flavors: MarkupFlavorMap = {}): string {
