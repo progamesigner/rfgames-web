@@ -64,10 +64,14 @@ export class Item implements m.Component<ItemAttributes> {
       }
       {
         !disableText ?
-        <Name className={styles.name} {...tooltipEvents}>
+        <Name className={styles.name} {...disableLink && tooltipEvents}>
           {
             !disableLink ?
-            <Link className={styles.link} href={buildWikiLink(name)}>{name}</Link> :
+            <Link
+              className={styles.link}
+              href={buildWikiLink(name)}
+              {...!disableLink && tooltipEvents}
+            >{name}</Link> :
             name
           }
         </Name> :
