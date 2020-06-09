@@ -23,9 +23,6 @@ export const root = style({
   top: rem(0.5),
   zIndex: zIndices.tooltip,
   $nest: {
-    '& > :not(:last-child)': {
-      marginBottom: rem(sizes.gap)
-    },
     [`@media screen and (max-width: ${rem(30)})`]: {
       bottom: rem(0.5),
       maxWidth: 'unset',
@@ -48,26 +45,41 @@ export const container = style({
   padding: rem(sizes.gap),
   width: percent(100),
   $nest: {
-    '> :not(:last-child)': {
-      paddingBottom: rem(sizes.gap)
+    '&:not(:last-child)': {
+      marginBottom: rem(sizes.gap)
     }
   }
 })
 
 export const head = style({
   color: colors.tooltipTitle.toString(),
-  fontSize: rem(fonts.title.fontSize)
+  fontSize: rem(fonts.title.fontSize),
+  $nest: {
+    '&:not(:last-child)': {
+      marginBottom: rem(sizes.gap)
+    }
+  }
 })
 
 export const body = style({
   color: colors.tooltipText.toString(),
   fontSize: rem(fonts.text.fontSize),
-  whiteSpace: 'pre-wrap'
+  whiteSpace: 'pre-wrap',
+  $nest: {
+    '&:not(:last-child)': {
+      marginBottom: rem(sizes.gap)
+    }
+  }
 })
 
 export const foot = style({
   color: colors.tooltipText.toString(),
-  fontSize: rem(fonts.text.fontSize)
+  fontSize: rem(fonts.text.fontSize),
+  $nest: {
+    '&:not(:last-child)': {
+      marginBottom: rem(sizes.gap)
+    }
+  }
 })
 
 export const fact = stylesheet({
