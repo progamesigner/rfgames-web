@@ -72,7 +72,8 @@ export const sizes = {
   skillIcon: 4,
   tooltipItemIcon: 2.5,
   tooltipNestedIcon: 2,
-  tooltipRadius: 0.125
+  tooltipRadius: 0.125,
+  traitIcon: 2.5
 }
 
 export const zIndices = {

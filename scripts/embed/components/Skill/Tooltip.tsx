@@ -30,8 +30,8 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
   public view({ attrs: data }: m.Vnode<SkillTooltipAttributes>): m.Children {
     const {
       description,
-      name,
-      facts
+      facts,
+      name
     } = data
 
     return <TooltipContent type="skill">

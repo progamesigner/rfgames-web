@@ -31,5 +31,5 @@ export interface GW2Trait extends GW2Record<number> {
   slot: GW2TraitSlot;
   facts: Array<GW2Fact>;
   traited_facts: Array<GW2TraitedFact>;
-  skills: Array<GW2TraitSkill>;
+  skills?: Array<GW2TraitSkill>;
 }
