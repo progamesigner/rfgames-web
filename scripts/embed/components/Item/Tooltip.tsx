@@ -56,6 +56,10 @@ function mapRarityToColor(rarity: GW2ItemRarity): string | null {
   }
 }
 
+function toMinutes(milliseconds: number) {
+  return `${Math.floor(milliseconds / 60000)} m`
+}
+
 function parseItemFlags(item: GW2Item): ItemFlags {
   return item.flags.reduce((flags, flag) => {
     switch (flag) {
@@ -155,7 +159,14 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
               inline={true}
               src={data.details.icon}
             />
-            <span>{m.trust(markup(data.details.description))}</span>
+            <span>
+              {
+                data.details.name ?
+                <div>{data.details.name} ({toMinutes(data.details.duration_ms)}):</div> :
+                null
+              }
+              {m.trust(markup(data.details.description))}
+            </span>
           </div> :
           null
         }
