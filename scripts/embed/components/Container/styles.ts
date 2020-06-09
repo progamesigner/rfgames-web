@@ -1,12 +1,6 @@
-import { rem, sizes, style } from '../styles'
+import { style } from '../styles'
 
-export const root = style({
-  $nest: {
-    ':not(:last-child)': {
-      marginRight: rem(sizes.gap)
-    }
-  }
-})
+export const root = style()
 
 export const block = style({
   display: 'block'
