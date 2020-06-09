@@ -38,7 +38,7 @@ export const container = style({
   border: border({
     color: colors.tooltipBorder.toString(),
     style: 'solid',
-    width: px(1)
+    width: px(2)
   }),
   boxShadow: `${px(1)} ${px(1)} ${px(2)} ${colors.tooltipShadow.toString()}`,
   borderRadius: rem(sizes.tooltipRadius),
