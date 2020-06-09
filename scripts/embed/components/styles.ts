@@ -61,6 +61,7 @@ export const images = {
 export const sizes = {
   applyCountPadding: 0.25,
   coinIcon: 1,
+  emptyIcon: 4,
   factIcon: 2,
   gap: 0.25,
   inlineIcon: 1,
