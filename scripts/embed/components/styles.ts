@@ -9,12 +9,12 @@ export const colors = {
   coinCopper: color('#a0673a'),
   coinGold: color('#e5be45'),
   coinSilver: color('#cbcac8'),
-  embedBackground: color('#151718'),
-  embedBorder: color('#151718').darken(percent(25)),
   formatAbilityType: color('#FFC90E'),
   formatFlavor: color('#94DCD2'),
   formatReminder: color('#4564A1'),
   formatSkill: color('#EFDF80'),
+  iconBackground: color('#151718'),
+  iconBorder: color('#151718').darken(percent(25)),
   loaderBorder: color('hsla(0, 0%, 0%, 0.25)'),
   loaderStrip: color('hsl(200, 0%, 75%)'),
   rarityAscended: color('#FB3E8D'),
@@ -57,7 +57,7 @@ export const fonts = {
 }
 
 export const images = {
-  embedBackground: `radial-gradient(circle, ${color('hsl(210, 0%, 50%)').toString()}, ${color('hsl(0, 0%, 20%)').toString()})`
+  iconBackground: `radial-gradient(circle, ${color('hsl(210, 0%, 50%)').toString()}, ${color('hsl(0, 0%, 20%)').toString()})`
 }
 
 export const sizes = {

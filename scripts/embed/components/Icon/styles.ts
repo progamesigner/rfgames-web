@@ -29,10 +29,10 @@ export const icon = style({
 })
 
 export const block = style({
-  backgroundColor: colors.embedBackground.toString(),
-  backgroundImage: images.embedBackground,
+  backgroundColor: colors.iconBackground.toString(),
+  backgroundImage: images.iconBackground,
   border: border({
-    color: colors.embedBorder.toString(),
+    color: colors.iconBorder.toString(),
     style: 'solid',
     width: px(1)
   })
