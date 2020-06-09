@@ -50,7 +50,6 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
         store={store}
         text={name}
         {...attrs}
-        inline={true}
       />
     }
     return <Empty type="profession" />
