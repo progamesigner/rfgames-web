@@ -2,7 +2,10 @@ import { border, px, rem, style, stylesheet } from '../../libs'
 
 import { colors, sizes } from '../styles'
 
-export const icon = style()
+export const icon = style({
+  height: rem(sizes.itemIcon),
+  width: rem(sizes.itemIcon)
+})
 
 export const link = style()
 

@@ -61,11 +61,12 @@ export const images = {
 export const sizes = {
   applyCountPadding: 0.25,
   coinIcon: 1,
-  defaultIcon: 4,
   factIcon: 2,
   gap: 0.25,
   inlineIcon: 1,
+  itemIcon: 4,
   rechargeIcon: 1.125,
+  skillIcon: 4,
   tooltipItemIcon: 2.5,
   tooltipNestedIcon: 2,
   tooltipRadius: 0.125

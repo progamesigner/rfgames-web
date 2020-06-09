@@ -14,10 +14,8 @@ import {
 export const root = style({
   alignItems: 'center',
   display: 'inline-flex',
-  height: rem(sizes.defaultIcon),
   position: 'relative',
-  verticalAlign: 'middle',
-  width: rem(sizes.defaultIcon)
+  verticalAlign: 'middle'
 })
 
 export const icon = style({

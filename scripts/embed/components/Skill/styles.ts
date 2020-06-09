@@ -1,8 +1,11 @@
-import { style, stylesheet } from '../../libs'
+import { rem, style, stylesheet } from '../../libs'
 
-import { colors } from '../styles'
+import { colors, sizes } from '../styles'
 
-export const icon = style()
+export const icon = style({
+  height: rem(sizes.skillIcon),
+  width: rem(sizes.skillIcon)
+})
 
 export const link = style()
 
