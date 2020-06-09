@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchItem } from '../actions'
-import { Empty, Item } from '../components'
+import { Empty, Item, Loader } from '../components'
 import {
   GW2Resources,
   HasIDAttributes,
@@ -9,7 +9,7 @@ import {
   HasStoreAttributes
 } from '../types'
 
-import { wrapAsyncAction } from './helpers'
+import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type ItemContainerAttributes =
   m.Attributes &
@@ -39,9 +39,14 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
       [GW2Resources.ITEM]: items
     } = store.getState()
 
-    if (id && items && items[id] && items[id].data) {
-      return <Item data={items[id].data} store={store} {...attrs} />
+    if (id && items && items[id]) {
+      if (isFetchFinished(items[id].state) && items[id].data) {
+        return <Item data={items[id].data} store={store} {...attrs} />
+      }
+
+      return <Loader {...attrs} />
     }
+
     return <Empty type="item" {...attrs} />
   }
 }

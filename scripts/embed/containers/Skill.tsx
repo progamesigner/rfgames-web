@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchSkill } from '../actions'
-import { Empty, Skill } from '../components'
+import { Empty, Loader, Skill } from '../components'
 import {
   GW2Resources,
   HasIDAttributes,
@@ -9,7 +9,7 @@ import {
   HasStoreAttributes
 } from '../types'
 
-import { wrapAsyncAction } from './helpers'
+import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type SkillContainerAttributes =
   m.Attributes &
@@ -39,9 +39,14 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
       [GW2Resources.SKILL]: skills
     } = store.getState()
 
-    if (id && skills && skills[id] && skills[id].data) {
-      return <Skill data={skills[id].data} store={store} {...attrs} />
+    if (id && skills && skills[id]) {
+      if (isFetchFinished(skills[id].state) && skills[id].data) {
+        return <Skill data={skills[id].data} store={store} {...attrs} />
+      }
+
+      return <Loader {...attrs} />
     }
+
     return <Empty type="skill" {...attrs} />
   }
 }

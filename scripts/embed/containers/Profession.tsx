@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchProfession } from '../actions'
-import { Empty, Profession } from '../components'
+import { Empty, Loader, Profession } from '../components'
 import {
   GW2Resources,
   HasIDAttributes,
@@ -9,7 +9,7 @@ import {
   HasStoreAttributes
 } from '../types'
 
-import { wrapAsyncAction } from './helpers'
+import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 interface ProfessionEmbedAttributes extends
   m.Attributes,
@@ -44,14 +44,19 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
       [GW2Resources.PROFESSION]: professions
     } = store.getState()
 
-    if (id && professions && professions[id] && professions[id].data) {
-      return <Profession
-        data={professions[id].data}
-        store={store}
-        text={name}
-        {...attrs}
-      />
+    if (id && professions && professions[id]) {
+      if (isFetchFinished(professions[id].state) && professions[id].data) {
+        return <Profession
+          data={professions[id].data}
+          store={store}
+          text={name}
+          {...attrs}
+        />
+      }
+
+      return <Loader {...attrs} />
     }
+
     return <Empty type="profession" {...attrs} />
   }
 }

@@ -15,6 +15,7 @@ export const colors = {
   formatFlavor: color('#94DCD2'),
   formatReminder: color('#4564A1'),
   formatSkill: color('#EFDF80'),
+  loaderBorder: color('hsla(0, 0%, 0%, 0.25)'),
   rarityAscended: color('#FB3E8D'),
   rarityBasic: color('#EEEEEE'),
   rarityExotic: color('#FFA405'),
