@@ -70,6 +70,7 @@ export const sizes = {
   itemIcon: 4,
   rechargeIcon: 1.125,
   skillIcon: 4,
+  specializationIcon: 4,
   tooltipItemIcon: 2.5,
   tooltipNestedIcon: 2,
   tooltipRadius: 0.125,

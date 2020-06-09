@@ -1,5 +1,8 @@
 export { Empty } from './Empty'
 export { Item } from './Item'
+export { Loader } from './Loader'
 export { Profession } from './Profession'
 export { Skill } from './Skill'
+export { Specialization } from './Specialization'
 export { Tooltip } from './Tooltip'
+export { Trait } from './Trait'
