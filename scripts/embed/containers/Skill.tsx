@@ -42,6 +42,6 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
     if (id && skills && skills[id] && skills[id].data) {
       return <Skill data={skills[id].data} store={store} {...attrs} />
     }
-    return <Empty type="skill" />
+    return <Empty type="skill" {...attrs} />
   }
 }

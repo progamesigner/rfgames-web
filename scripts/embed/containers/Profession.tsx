@@ -52,6 +52,6 @@ export class ProfessionContainer implements m.Component<ProfessionEmbedAttribute
         {...attrs}
       />
     }
-    return <Empty type="profession" />
+    return <Empty type="profession" {...attrs} />
   }
 }

@@ -42,6 +42,6 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
     if (id && items && items[id] && items[id].data) {
       return <Item data={items[id].data} store={store} {...attrs} />
     }
-    return <Empty type="item" />
+    return <Empty type="item" {...attrs} />
   }
 }
