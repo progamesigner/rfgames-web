@@ -303,7 +303,7 @@ interface GW2ItemDetailConsumable extends GW2ItemDetailWithType<GW2ItemConsumabl
   icon: string;
   description: string;
   duration_ms: number;
-  unlock_type: GW2ItemConsumableUnlockType;
+  unlock_type?: GW2ItemConsumableUnlockType;
   color_id?: number;
   recipe_id?: number;
   extra_recipe_ids?: Array<number>;
