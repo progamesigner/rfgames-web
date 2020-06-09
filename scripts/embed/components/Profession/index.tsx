@@ -33,7 +33,8 @@ export class Profession implements m.Component<ProfessionAttributes> {
       disableLink,
       disableText,
       inline,
-      text
+      text,
+      ...attrs
     }
   }: m.Vnode<ProfessionAttributes>): m.Children {
     const {
@@ -42,7 +43,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
       name
     } = data
 
-    return <Container inline={!disableText || inline} type="profession">
+    return <Container inline={!disableText || inline} type="profession" {...attrs}>
       {
         !disableIcon ?
         <Icon

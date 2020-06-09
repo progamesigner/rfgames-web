@@ -39,7 +39,8 @@ export class Item implements m.Component<ItemAttributes> {
       disableText,
       disableTooltip,
       inline,
-      data
+      data,
+      ...attrs
     }
   }: m.Vnode<ItemAttributes>): m.Children {
     const {
@@ -51,7 +52,7 @@ export class Item implements m.Component<ItemAttributes> {
       bindTooltipEvents(store, TooltipType.GW2_ITEM, data) :
       {}
 
-    return <Container inline={!disableText || inline} type="item">
+    return <Container inline={!disableText || inline} type="item" {...attrs}>
       {
         !disableIcon ?
         <Icon

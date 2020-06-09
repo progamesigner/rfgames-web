@@ -39,7 +39,8 @@ export class Skill implements m.Component<SkillAttributes> {
       disableText,
       disableTooltip,
       inline,
-      store
+      store,
+      ...attrs
     }
   }: m.Vnode<SkillAttributes>): m.Children {
     const {
@@ -51,7 +52,7 @@ export class Skill implements m.Component<SkillAttributes> {
       bindTooltipEvents(store, TooltipType.GW2_SKILL, data) :
       {}
 
-    return <Container inline={!disableText || inline} type="skill">
+    return <Container inline={!disableText || inline} type="skill" {...attrs}>
       {
         !disableIcon ?
         <Icon
