@@ -26,15 +26,15 @@ export const colors = {
   statAttribute: color('#5599ff'),
   statBuff: color('#5599ff'),
   statItem: color('#30ad37'),
-  tooltipBackground: color('#151718'),
-  tooltipBorder: color('#151718'),
-  tooltipFact: color('rgba(255, 255, 255, 0.7)'),
-  tooltipItemBorder: borderColor(color('#9d9e9f').toString(), color('#333333').toString(), color('#333333').toString(), color('#9d9e9f').toString()),
-  tooltipShadow: color('#151718'),
-  tooltipSkillTitle: color('#EFDF80'),
-  tooltipText: color('#9D9E9F'),
-  tooltipTextShadow: color('#151718'),
-  tooltipTitle: color('#FFFFFF')
+  tooltipBackground: color('hsla(0, 0%, 5%, 0.95)'),
+  tooltipBorder: color('hsl(0, 0%, 14%)'),
+  tooltipFact: color('hsla(0, 0%, 95%, 0.75)'),
+  tooltipItemBorder: borderColor(color('hsl(200, 0%, 80%)').toString(), color('hsl(0, 0%, 20%)').toString(), color('hsl(0, 0%, 20%)').toString(), color('hsl(200, 0%, 80%)').toString()),
+  tooltipShadow: color('hsl(0, 0%, 14%)'),
+  tooltipSkillTitle: color('hsl(50, 75%, 75%)'),
+  tooltipText: color('hsla(0, 0%, 95%, 0.95)'),
+  tooltipTextShadow: color('hsl(0, 0%, 5%, 0.15)'),
+  tooltipTitle: color('hsl(0, 0%, 95%)')
 }
 
 export const fonts = {
@@ -55,7 +55,7 @@ export const fonts = {
 }
 
 export const images = {
-  embedBackground: `radial-gradient(circle, ${color('#606468').toString()}, ${color('#333333').toString()})`
+  embedBackground: `radial-gradient(circle, ${color('hsl(210, 0%, 50%)').toString()}, ${color('hsl(0, 0%, 20%)').toString()})`
 }
 
 export const sizes = {
