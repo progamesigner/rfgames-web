@@ -12,10 +12,8 @@ import {
 } from '../styles'
 
 export const root = style({
-  alignItems: 'center',
-  display: 'inline-flex',
-  position: 'relative',
-  verticalAlign: 'middle'
+  display: 'inline-block',
+  position: 'relative'
 })
 
 export const icon = style({
@@ -39,7 +37,9 @@ export const block = style({
   })
 })
 
-export const inline = style()
+export const inline = style({
+  verticalAlign: 'middle'
+})
 
 export const image = (src: string): string => style({
   backgroundImage: url(src)

@@ -22,7 +22,7 @@ export class Container implements m.Component<ContainerAttributes> {
     return <div
       className={cx(
         styles.root,
-        inline && styles.inline,
+        inline ? styles.inline : styles.block,
         makeClassName(type),
         className
       )}
