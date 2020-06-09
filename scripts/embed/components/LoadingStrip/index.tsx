@@ -4,11 +4,11 @@ import { cx } from '../../libs'
 
 import * as styles from './styles'
 
-interface StripAttributes extends m.Attributes {
+interface LoadingStripAttributes extends m.Attributes {
   long?: boolean;
 }
 
-export class Strip implements m.Component<StripAttributes> {
+export class LoadingStrip implements m.Component<LoadingStripAttributes> {
   public view({
     attrs: {
       className,
@@ -16,7 +16,7 @@ export class Strip implements m.Component<StripAttributes> {
       ...attrs
     },
     children
-  }: m.Vnode<StripAttributes>): m.Children {
+  }: m.Vnode<LoadingStripAttributes>): m.Children {
     if (Array.isArray(children) && children.length > 0) {
       return <span className={className} {...attrs}>{children}</span>
     }
