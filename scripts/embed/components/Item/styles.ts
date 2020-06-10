@@ -25,6 +25,7 @@ export const tooltip = stylesheet({
   },
   consumable: {
     alignItems: 'flex-start',
+    color: colors.consumable.toString(),
     display: 'flex'
   },
   head: {
@@ -61,8 +62,14 @@ export const tooltip = stylesheet({
 })
 
 export const flavors = stylesheet({
+  abilitytype: {
+    color: colors.formatAbilityType.toString()
+  },
   flavor: {
     color: colors.formatFlavor.toString()
+  },
+  reminder: {
+    color: colors.formatReminder.toString()
   }
 })
 

@@ -135,7 +135,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
             </div>
           )) :
           data.details.infix_upgrade && data.details.infix_upgrade.buff ?
-          <div className={styles.tooltip.statBuff}>{data.details.infix_upgrade.buff.description}</div> :
+          <div className={styles.tooltip.statBuff}>{m.trust(markup(data.details.infix_upgrade.buff.description, styles.flavors))}</div> :
           null :
           null
         }
@@ -165,7 +165,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
                 <div>{data.details.name} ({toMinutes(data.details.duration_ms)}):</div> :
                 null
               }
-              {m.trust(markup(data.details.description))}
+              {m.trust(markup(data.details.description, styles.flavors))}
             </span>
           </div> :
           null
@@ -191,11 +191,18 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           null
         }
         {
+          data.type === GW2ItemType.UPGRADE_COMPONENT ?
+          <div>{m.trust(markup(data.description, styles.flavors))}</div> :
+          null
+        }
+        {
           data.level > 0 ?
           <div>Required Level: {data.level}</div> :
           null
         }
         {
+          data.type === GW2ItemType.UPGRADE_COMPONENT ?
+          null :
           data.description ?
           <div>{m.trust(markup(data.description, styles.flavors))}</div> :
           null
