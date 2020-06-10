@@ -180,5 +180,14 @@ export const traits = stylesheet({
   },
   majorIcon: {
     clipPath: `inset(${px(2)} ${px(2)} ${px(2)} ${px(2)})`
+  },
+  inactive: {
+    opacity: 0.5,
+    transition: `opacity ${animations.speed} ${animations.easing}`,
+    $nest: {
+      '&:hover': {
+        opacity: 0.75
+      }
+    }
   }
 })

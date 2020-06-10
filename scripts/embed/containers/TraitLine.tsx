@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchSpecialization } from '../actions'
-import { Empty, Loader, TraitLine } from '../components'
+import { Empty, Loader, TraitLine, TraitSelection } from '../components'
 import {
   GW2Resources,
   HasIDAttributes,
@@ -10,10 +10,11 @@ import {
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
-type TraitLineContainerAttributes =
-  m.Attributes &
-  HasIDAttributes<number> &
-  HasStoreAttributes
+export { TraitMode, TraitPosition, TraitSelection } from '../components'
+
+interface TraitLineContainerAttributes extends m.Attributes, HasIDAttributes<number>, HasStoreAttributes {
+  selectedTraits: Array<TraitSelection>;
+}
 
 const fetch = wrapAsyncAction(fetchSpecialization)
 
@@ -28,8 +29,9 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
 
   public view({
     attrs: {
-      store,
       id,
+      selectedTraits,
+      store,
       ...attrs
     }
   }: m.Vnode<TraitLineContainerAttributes>): m.Children {
@@ -41,7 +43,9 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
       if (isFetchFinished(specializations[id].state) && specializations[id].data) {
         return <TraitLine
           data={specializations[id].data}
-          store={store} {...attrs}
+          selectedTraits={selectedTraits}
+          store={store}
+          {...attrs}
         />
       }
 

@@ -25,6 +25,40 @@ interface TraitLineAttributes extends
   HasTooltipAttributes
 {
   data: GW2Specialization;
+  selectedTraits: Array<TraitSelection>;
+}
+
+export const enum TraitMode {
+  ID = 0,
+  POSITION = 1
+}
+
+export const enum TraitPosition {
+  NONE = 0,
+  TOP = 1,
+  MIDDLE = 2,
+  BOTTOM = 3
+}
+
+export type TraitSelection = [TraitMode, TraitPosition | number]
+
+function mapSelectionToIds(
+  data: GW2Specialization,
+  selectedTraits: Array<TraitSelection>
+): Array<number> {
+  return selectedTraits.map(([mode, value], tier) => {
+    switch (mode) {
+      case TraitMode.POSITION:
+        return (
+          value !== TraitPosition.NONE ?
+          data.major_traits[value + 3 * tier - 1] :
+          0
+        )
+      case TraitMode.ID:
+      default:
+        return value
+    }
+  })
 }
 
 export class TraitLine implements m.Component<TraitLineAttributes> {
@@ -33,6 +67,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
       className,
       data,
       disableTooltip,
+      selectedTraits,
       store,
       ...attrs
     }
@@ -45,6 +80,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
     } = data
 
     const majorTraitChunks = chunk(3)(major_traits)
+    const selectedTraitIds = mapSelectionToIds(data, selectedTraits)
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, data) :
@@ -79,7 +115,10 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
             {majorTraitChunks[tier].map(majorTrait => <Trait
               key={`major-${tier}-${majorTrait}`}
               id={majorTrait}
-              className={styles.traits.majorIcon}
+              className={cx(
+                styles.traits.majorIcon,
+                { [styles.traits.inactive]: !selectedTraitIds.includes(majorTrait) }
+              )}
               disableText={true}
               inline={true}
               store={store}
