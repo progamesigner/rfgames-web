@@ -8,9 +8,12 @@ import {
   GW2Item,
   GW2ItemFlag,
   GW2ItemRarity,
+  GW2ItemStat,
   GW2ItemType,
+  GW2ItemWeaponType,
   TooltipType,
-  GW2ItemWeaponType
+  GW2ItemArmorType,
+  GW2ItemTrinketType
 } from '../../types'
 
 import { Coin } from '../Coin'
@@ -34,6 +37,7 @@ declare module '../../types/tooltip' {
 interface ItemTooltipAttributes extends m.Attributes {
   infusions: Array<number>;
   item: GW2Item;
+  stat?: GW2ItemStat;
   upgradeCount: number;
   upgrades: Array<number>;
 }
@@ -44,8 +48,117 @@ interface ItemFlags {
   unique: boolean;
 }
 
+function buildName(item: GW2Item, stat?: GW2ItemStat): string {
+  if (stat && parseItemStat(item, stat)) {
+    return `${stat.name} ${item.name}`
+  }
+  return item.name
+}
+
+function getHiddenItemNumber(item: GW2Item): number {
+  return [
+    extractHiddenItemNumberFromArmor,
+    extractHiddenItemNumberFromBack,
+    extractHiddenItemNumberFromTrinket,
+    extractHiddenItemNumberFromWeapon
+  ].reduce((number, func) => func(item) + number, 0)
+}
+
+function calculateStatAttribute(
+  item: GW2Item,
+  multiplier: number,
+  value: number
+): number {
+  console.log(item, getHiddenItemNumber(item))
+  return Math.floor(getHiddenItemNumber(item) * multiplier + value)
+}
+
 function createTakeFlow(items: Array<number>, slots: number) {
   return flow(constant(slots), times(constant(0)), concat(items), take(slots))
+}
+
+function extractHiddenItemNumberByRarity(
+  item: GW2Item,
+  ascended: number,
+  exotic: number
+): number {
+  switch (item.rarity) {
+    case GW2ItemRarity.LEGENDARY:
+    case GW2ItemRarity.ASCENDED:
+      return ascended
+    case GW2ItemRarity.EXOTIC:
+      return exotic
+  }
+  return 0
+}
+
+function extractHiddenItemNumberFromArmor(item: GW2Item): number {
+  if (item.type === GW2ItemType.ARMOR) {
+    switch (item.details.type) {
+      case GW2ItemArmorType.SHOULDERS:
+      case GW2ItemArmorType.GLOVES:
+      case GW2ItemArmorType.BOOTS:
+        return extractHiddenItemNumberByRarity(item, 134.78, 128.04)
+      case GW2ItemArmorType.HELM:
+      case GW2ItemArmorType.AQUATIC_HELM:
+        return extractHiddenItemNumberByRarity(item, 180.67, 170.72)
+      case GW2ItemArmorType.LEGGINGS:
+        return extractHiddenItemNumberByRarity(item, 269.57, 256.08)
+      case GW2ItemArmorType.COAT:
+        return extractHiddenItemNumberByRarity(item, 404.00, 383.00)
+    }
+  }
+  return 0
+}
+
+function extractHiddenItemNumberFromBack(item: GW2Item): number {
+  if (item.type === GW2ItemType.BACK) {
+    return extractHiddenItemNumberByRarity(item, 89.10, 85.50)
+  }
+  return 0
+}
+
+function extractHiddenItemNumberFromTrinket(item: GW2Item): number {
+  if (item.type === GW2ItemType.TRINKET) {
+    switch (item.details.type) {
+      case GW2ItemTrinketType.ACCESSORY:
+        return extractHiddenItemNumberByRarity(item, 224.05, 213.40)
+      case GW2ItemTrinketType.AMULET:
+        return extractHiddenItemNumberByRarity(item, 358.47, 341.44)
+      case GW2ItemTrinketType.RING:
+        return extractHiddenItemNumberByRarity(item, 268.85, 256.08)
+    }
+  }
+  return 0
+}
+
+function extractHiddenItemNumberFromWeapon(item: GW2Item): number {
+  if (item.type === GW2ItemType.WEAPON) {
+    switch (item.details.type) {
+      case GW2ItemWeaponType.AXE:
+      case GW2ItemWeaponType.DAGGER:
+      case GW2ItemWeaponType.MACE:
+      case GW2ItemWeaponType.PISTOL:
+      case GW2ItemWeaponType.SCEPTER:
+      case GW2ItemWeaponType.SWORD:
+      case GW2ItemWeaponType.FOCUS:
+      case GW2ItemWeaponType.SHIELD:
+      case GW2ItemWeaponType.TORCH:
+      case GW2ItemWeaponType.WARHORN:
+        return extractHiddenItemNumberByRarity(item, 358.47, 341.44)
+      case GW2ItemWeaponType.GREATSWORD:
+      case GW2ItemWeaponType.HAMMER:
+      case GW2ItemWeaponType.LONGBOW:
+      case GW2ItemWeaponType.RIFLE:
+      case GW2ItemWeaponType.SHORTBOW:
+      case GW2ItemWeaponType.STAFF:
+      case GW2ItemWeaponType.SPEAR:
+      case GW2ItemWeaponType.SPEARGUN:
+      case GW2ItemWeaponType.TRIDENT:
+        return extractHiddenItemNumberByRarity(item, 716.94, 682.88)
+    }
+  }
+  return 0
 }
 
 function mapRarityToColor(rarity: GW2ItemRarity): string | null {
@@ -141,6 +254,25 @@ function parseItemFlags(item: GW2Item): ItemFlags {
   } as ItemFlags)
 }
 
+function parseItemStat(item: GW2Item, stat?: GW2ItemStat): GW2ItemStat | null {
+  if (stat) {
+    if (
+      item.type === GW2ItemType.ARMOR ||
+      item.type === GW2ItemType.BACK ||
+      item.type === GW2ItemType.TRINKET ||
+      item.type === GW2ItemType.WEAPON
+    ) {
+      if (
+        item.details.stat_choices &&
+        item.details.stat_choices.includes(stat.id)
+      ) {
+        return stat
+      }
+    }
+  }
+  return null
+}
+
 function toMinutes(milliseconds: number) {
   return `${Math.floor(milliseconds / 60000)} m`
 }
@@ -151,11 +283,13 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
     {
       infusions,
       item,
+      stat,
       store,
       upgradeCount,
       upgrades
     }
   }: m.Vnode<ItemTooltipAttributes>): m.Children {
+    const currentStat = parseItemStat(item, stat)
     const flags = parseItemFlags(item)
 
     const takeUpgrades = createTakeFlow(upgrades, parseAvailableUpgradeSlots(item))
@@ -166,7 +300,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         <Icon className={styles.tooltip.icon} src={item.icon}></Icon>
         <span
           className={cx(styles.tooltip.name, mapRarityToColor(item.rarity))}
-        >{item.name}</span>
+      >{buildName(item, stat)}</span>
       </TooltipHead>
       <TooltipBody>
         {
@@ -186,14 +320,23 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         {
           item.type === GW2ItemType.ARMOR || item.type === GW2ItemType.BACK || item.type === GW2ItemType.TRINKET || item.type === GW2ItemType.UPGRADE_COMPONENT || item.type === GW2ItemType.WEAPON ?
           item.details.infix_upgrade && item.details.infix_upgrade.attributes.length > 0 ?
-          item.details.infix_upgrade.attributes.map(({ attribute, modifier }) => (
-            <div
-              key={`${attribute}-${modifier}`}
-              className={styles.tooltip.attribute}
-            >
-              <span className={item.type === GW2ItemType.UPGRADE_COMPONENT ? styles.tooltip.statBuff : styles.tooltip.statAttribute}>+{modifier} {attributeToName(attribute)}</span>
-            </div>
-          )) :
+          item.details.infix_upgrade.attributes.map(({ attribute, modifier }) => <div
+            key={`${attribute}-${modifier}`}
+            className={styles.tooltip.attribute}
+          >
+            <span
+              className={item.type === GW2ItemType.UPGRADE_COMPONENT ? styles.tooltip.statBuff : styles.tooltip.statAttribute}
+            >+{modifier} {attributeToName(attribute)}</span>
+          </div>) :
+          currentStat ?
+          currentStat.attributes.map(({ attribute, multiplier, value }) => <div
+            key={`${attribute}-${multiplier}-${value}`}
+            className={styles.tooltip.attribute}
+          >
+            <span
+              className={styles.tooltip.statAttribute}
+            >+{calculateStatAttribute(item, multiplier, value)} {attributeToName(attribute)}</span>
+          </div>) :
           item.details.infix_upgrade && item.details.infix_upgrade.buff ?
           <div
             className={styles.tooltip.statBuff}

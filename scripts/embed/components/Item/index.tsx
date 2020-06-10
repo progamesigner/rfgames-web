@@ -2,6 +2,7 @@ import * as m from 'mithril'
 
 import {
   GW2Item,
+  GW2ItemStat,
   HasIDAttributes,
   HasRenderAttributes,
   HasStoreAttributes,
@@ -31,6 +32,7 @@ interface ItemAttributes extends
 {
   data: GW2Item;
   infusions?: Array<number>;
+  stat?: GW2ItemStat;
   upgradeCount?: number;
   upgrades?: Array<number>;
 }
@@ -45,6 +47,7 @@ export class Item implements m.Component<ItemAttributes> {
       disableTooltip,
       infusions,
       inline,
+      stat,
       store,
       upgradeCount,
       upgrades,
@@ -60,6 +63,7 @@ export class Item implements m.Component<ItemAttributes> {
       bindTooltipEvents(store, TooltipType.GW2_ITEM, {
         infusions: infusions || [],
         item: data,
+        stat,
         upgradeCount: upgradeCount || 1,
         upgrades: upgrades || []
       }) :

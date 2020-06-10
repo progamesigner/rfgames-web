@@ -7,6 +7,7 @@ import { extractBoolean, extractNumber, extractNumberList } from './helpers'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {
+    stat: extractNumber(element, 'stat', -1),
     disableIcon: extractBoolean(element, 'disable-icon', false),
     disableLink: extractBoolean(element, 'disable-link', false),
     disableText: extractBoolean(element, 'disable-text', false),
