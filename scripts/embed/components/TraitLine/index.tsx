@@ -117,7 +117,9 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
     const selectedTraitIds = mapSelectionToIds(data, selectedTraits)
 
     const tooltipEvents = !disableTooltip ?
-      bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, data) :
+      bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {
+        specialization: data
+      }) :
       {}
 
     return <Container
