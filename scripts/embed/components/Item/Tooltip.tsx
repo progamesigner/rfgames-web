@@ -56,10 +56,6 @@ function mapRarityToColor(rarity: GW2ItemRarity): string | null {
   }
 }
 
-function toMinutes(milliseconds: number) {
-  return `${Math.floor(milliseconds / 60000)} m`
-}
-
 function parseItemFlags(item: GW2Item): ItemFlags {
   return item.flags.reduce((flags, flag) => {
     switch (flag) {
@@ -87,6 +83,10 @@ function parseItemFlags(item: GW2Item): ItemFlags {
     soulbound: false,
     unique: false
   } as ItemFlags)
+}
+
+function toMinutes(milliseconds: number) {
+  return `${Math.floor(milliseconds / 60000)} m`
 }
 
 export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
@@ -211,7 +211,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         }
         {
           data.rarity !== GW2ItemRarity.LEGENDARY && data.vendor_value > 0 ?
-          <Coin value={data.vendor_value} /> :
+          <Coin className={styles.tooltip.coin} value={data.vendor_value} /> :
           null
         }
       </TooltipBody>
