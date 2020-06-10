@@ -49,7 +49,9 @@ export class Specialization implements m.Component<SpecializationAttributes> {
     } = data
 
     const tooltipEvents = !disableTooltip ?
-      bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, data) :
+      bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {
+        specialization: data
+      }) :
       {}
 
     return <Container inline={!disableText || inline} type="trait" {...attrs}>

@@ -49,7 +49,9 @@ export class Skill implements m.Component<SkillAttributes> {
     } = data
 
     const tooltipEvents = !disableTooltip ?
-      bindTooltipEvents(store, TooltipType.GW2_SKILL, data) :
+      bindTooltipEvents(store, TooltipType.GW2_SKILL, {
+        skill: data
+      }) :
       {}
 
     return <Container inline={!disableText || inline} type="skill" {...attrs}>

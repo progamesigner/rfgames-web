@@ -25,23 +25,30 @@ declare module '../../types/tooltip' {
   }
 }
 
-type TraitTooltipAttributes = GW2Trait
+interface TraitTooltipAttributes extends m.Attributes {
+  trait: GW2Trait;
+}
 
 export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
-  public view({ attrs: data }: m.Vnode<TraitTooltipAttributes>): m.Children {
-    const {
-      description,
-      facts,
-      name,
-      skills
-    } = data
-
+  public view({
+    attrs: {
+      trait
+    }
+  }: m.Vnode<TraitTooltipAttributes>): m.Children {
     return m.fragment({}, [
-      ...(skills ? skills.slice(0, 1).map(skill => <SkillTooltip key={skill.id} {...skill} />) : []),
+      ...(
+        trait.skills ?
+        trait.skills.slice(0, 1).map(skill =>
+          <SkillTooltip key={skill.id} {...skill} />
+        ) :
+        []
+      ),
       <TooltipContent key="trait" type="trait">
-        <TooltipHead className={styles.tooltip.head}>{name}</TooltipHead>
-        <TooltipBody>{m.trust(markup(description, styles.flavors))}</TooltipBody>
-        {facts.map((fact, index) => {
+        <TooltipHead className={styles.tooltip.head}>{trait.name}</TooltipHead>
+        <TooltipBody>
+          {m.trust(markup(trait.description, styles.flavors))}
+        </TooltipBody>
+        {trait.facts.map((fact, index) => {
           return <TooltipFact key={index} data={fact} />
         })}
       </TooltipContent>

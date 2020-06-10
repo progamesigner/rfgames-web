@@ -49,7 +49,9 @@ export class Trait implements m.Component<TraitAttributes> {
     } = data
 
     const tooltipEvents = !disableTooltip ?
-      bindTooltipEvents(store, TooltipType.GW2_TRAIT, data) :
+      bindTooltipEvents(store, TooltipType.GW2_TRAIT, {
+        trait: data
+      }) :
       {}
 
     return <Container inline={!disableText || inline} type="trait" {...attrs}>

@@ -16,16 +16,20 @@ declare module '../../types/tooltip' {
   }
 }
 
-type SpecializationTooltipAttributes = GW2Specialization
+interface SpecializationTooltipAttributes extends m.Attributes {
+  specialization: GW2Specialization;
+}
 
 export class SpecializationTooltip implements m.Component<SpecializationTooltipAttributes> {
-  public view({ attrs: data }: m.Vnode<SpecializationTooltipAttributes>): m.Children {
-    const {
-      name
-    } = data
-
+  public view({
+    attrs: {
+      specialization
+    }
+  }: m.Vnode<SpecializationTooltipAttributes>): m.Children {
     return<TooltipContent type="specialization">
-      <TooltipHead className={styles.tooltip.head}>{name}</TooltipHead>
+      <TooltipHead className={styles.tooltip.head}>
+        {specialization.name}
+      </TooltipHead>
     </TooltipContent>
   }
 }
