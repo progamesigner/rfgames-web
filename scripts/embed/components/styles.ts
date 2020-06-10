@@ -2,6 +2,11 @@ import { borderColor, color, percent } from '../libs'
 
 export * from '../libs'
 
+export const animations = {
+  easing: 'ease-out',
+  speed: '86ms'
+}
+
 export const colors = {
   applyCount: color('#fff4cf'),
   bonusActive: color('#5599FF'),
@@ -36,7 +41,8 @@ export const colors = {
   tooltipSkillTitle: color('hsl(50, 75%, 75%)'),
   tooltipText: color('hsla(0, 0%, 95%, 0.95)'),
   tooltipTextShadow: color('hsl(0, 0%, 5%, 0.15)'),
-  tooltipTitle: color('hsl(0, 0%, 95%)')
+  tooltipTitle: color('hsl(0, 0%, 95%)'),
+  traitlineShadow: color('hsl(0, 0%, 14%)')
 }
 
 export const fonts = {
