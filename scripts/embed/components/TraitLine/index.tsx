@@ -18,15 +18,17 @@ import { bindTooltipEvents } from '../helpers'
 
 import * as styles from './styles'
 
-interface TraitLineAttributes extends
-  m.Attributes,
-  HasIDAttributes<number>,
-  HasStoreAttributes,
-  HasTooltipAttributes
-{
-  data: GW2Specialization;
-  selectedTraits: Array<TraitSelection>;
-}
+const CONNECTOR_FROM_STYLES = {
+  0: styles.connector.fromTop,
+  1: styles.connector.fromMiddle,
+  2: styles.connector.fromBottom
+} as { [index: number]: string; }
+
+const CONNECTOR_TO_STYLES = {
+  0: styles.connector.toTop,
+  1: styles.connector.toMiddle,
+  2: styles.connector.toBottom
+} as { [index: number]: string; }
 
 export const enum TraitMode {
   ID = 0,
@@ -38,6 +40,16 @@ export const enum TraitPosition {
   TOP = 1,
   MIDDLE = 2,
   BOTTOM = 3
+}
+
+interface TraitLineAttributes extends
+  m.Attributes,
+  HasIDAttributes<number>,
+  HasStoreAttributes,
+  HasTooltipAttributes
+{
+  data: GW2Specialization;
+  selectedTraits: Array<TraitSelection>;
 }
 
 export type TraitSelection = [TraitMode, TraitPosition | number]
@@ -111,6 +123,13 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
               store={store}
             />
           </div>,
+          <div
+            key={`connector-to-${tier}`}
+            className={cx(
+              styles.connector.root,
+              CONNECTOR_TO_STYLES[majorTraitChunks[tier].findIndex(id => selectedTraitIds.includes(id))]
+            )}
+          ></div>,
           <div key={`major-${tier}`} className={styles.traits.major}>
             {majorTraitChunks[tier].map(majorTrait => <Trait
               key={`major-${tier}-${majorTrait}`}
@@ -123,7 +142,15 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
               inline={true}
               store={store}
             />)}
-          </div>
+          </div>,
+          <div
+            key={`connector-from-${tier}`}
+            className={cx(
+              styles.connector.root,
+              CONNECTOR_FROM_STYLES[majorTraitChunks[tier].findIndex(id => selectedTraitIds.includes(id))],
+              { [styles.connector.disabled]: tier === 2}
+            )}
+          ></div>
         ]))}
       </div>
     </Container>

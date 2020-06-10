@@ -15,7 +15,7 @@ export const root = style({
   color: colors.tooltipText.toString(),
   fontFamily: fonts.text.fontFamily,
   left: rem(0.5),
-  maxWidth: rem(24),
+  maxWidth: px(360),
   pointerEvents: 'none',
   position: 'fixed',
   textAlign: 'left',
@@ -23,7 +23,7 @@ export const root = style({
   top: rem(0.5),
   zIndex: zIndices.tooltip,
   $nest: {
-    [`@media screen and (max-width: ${rem(30)})`]: {
+    [`@media screen and (max-width: ${px(480)})`]: {
       bottom: rem(0.5),
       maxWidth: 'unset',
       pointerEvents: 'inherit',
@@ -109,3 +109,36 @@ export const fact = stylesheet({
     width: rem(sizes.rechargeIcon)
   }
 })
+
+
+// // ============================================================================
+// // * Menomonia
+// // ----------------------------------------------------------------------------
+// //   These fonts are used in showing Guild Wars 2 tooltips
+// // ============================================================================
+
+// @font-face {
+//   font-family: 'Menomonia';
+//   src: url('../../../assets/fonts/menomonia.eot');
+//   src: url('../../../assets/fonts/menomonia.eot?#iefix') format('embedded-opentype'),
+//        url('../../../assets/fonts/menomonia.woff') format('woff'),
+//        url('../../../assets/fonts/menomonia.ttf') format('truetype'),
+//        url('../../../assets/fonts/menomonia.svg#MenomoniaRegular') format('svg');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: "Menomonia Italic";
+//   src: url('../../../assets/fonts/menomonia-italic.eot');
+//   src: url('../../../assets/fonts/menomonia-italic.eot?#iefix') format('embedded-opentype'),
+//        url('../../../assets/fonts/menomonia-italic.woff') format('woff'),
+//        url('../../../assets/fonts/menomonia-italic.ttf') format('truetype'),
+//        url('../../../assets/fonts/menomonia-italic.svg#MenomoniaRegular') format('svg');
+//   font-weight: normal;
+//   font-style: italic;
+// }
+
+
+// @import 'menomonia';
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans:400');

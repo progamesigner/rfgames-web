@@ -36,12 +36,13 @@ export const colors = {
   tooltipBackground: color('hsla(0, 0%, 5%, 0.95)'),
   tooltipBorder: color('hsl(0, 0%, 14%)'),
   tooltipFact: color('hsla(0, 0%, 95%, 0.75)'),
-  tooltipItemBorder: borderColor(color('hsl(200, 0%, 80%)').toString(), color('hsl(0, 0%, 20%)').toString(), color('hsl(0, 0%, 20%)').toString(), color('hsl(200, 0%, 80%)').toString()),
+  tooltipItemBorder: borderColor(color('hsl(0, 0%, 80%)').toString(), color('hsl(0, 0%, 20%)').toString(), color('hsl(0, 0%, 20%)').toString(), color('hsl(0, 0%, 80%)').toString()),
   tooltipShadow: color('hsl(0, 0%, 14%)'),
   tooltipSkillTitle: color('hsl(50, 75%, 75%)'),
   tooltipText: color('hsla(0, 0%, 95%, 0.95)'),
   tooltipTextShadow: color('hsl(0, 0%, 5%, 0.15)'),
   tooltipTitle: color('hsl(0, 0%, 95%)'),
+  traitlineConnector: color('hsla(0, 0%, 95%, 0.25)'),
   traitlineShadow: color('hsl(0, 0%, 14%)')
 }
 
@@ -63,7 +64,8 @@ export const fonts = {
 }
 
 export const images = {
-  iconBackground: `radial-gradient(circle, ${color('hsl(210, 0%, 50%)').toString()}, ${color('hsl(0, 0%, 20%)').toString()})`
+  iconBackground: `radial-gradient(circle, ${color('hsl(0, 0%, 50%)').toString()}, ${color('hsl(0, 0%, 20%)').toString()})`,
+  traitlineConnector: `radial-gradient(circle, ${color('hsla(200, 10%, 95%, 0.75)').toString()}, ${color('hsla(50, 15%, 75%, 0.25)').toString()})`
 }
 
 export const sizes = {

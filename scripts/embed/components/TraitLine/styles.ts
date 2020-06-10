@@ -1,6 +1,9 @@
 import {
   border,
   deg,
+  keyframes,
+  percent,
+  polygon,
   px,
   quote,
   rem,
@@ -9,56 +12,65 @@ import {
   url
 } from '../../libs'
 
-import { animations, colors, sizes } from '../styles'
+import { animations, colors, images, sizes } from '../styles'
 
-const ROOT_HEIGHT = 140
+const SQRT2 = Math.sqrt(2)
+const SQRT3 = Math.sqrt(3)
+const SQRT1_2 = 1 / SQRT2
+const SQRT1_3 = 1 / SQRT3
 
-const HEXAGON_WIDTH = 88
-const HEXAGON_CAP_HEIGHT = HEXAGON_WIDTH / Math.sqrt(3)
-const HEXAGON_BORDER_WIDTH = 2
-const HEXAGON_CAP_LENGTH = HEXAGON_WIDTH * Math.SQRT1_2
-const HEXAGON_SCALE_FACTOR = Math.tan(30 * Math.PI / 180)
-const HEXAGON_MARGIN_LEFT = 64
+const connectorAngle = 55
+const hexagonApothem = 36
+const hexagonBorderWidth = 2
+const traitlineHeight = 140
 
-const HEXAGON_POINTS2 = [
-  [
-    HEXAGON_MARGIN_LEFT + HEXAGON_WIDTH / 2,
-    (ROOT_HEIGHT - HEXAGON_CAP_HEIGHT * 2) / 2
-  ],
-  [
-    HEXAGON_MARGIN_LEFT + HEXAGON_WIDTH,
-    (ROOT_HEIGHT - HEXAGON_CAP_HEIGHT * 2) * 0.5 + HEXAGON_CAP_HEIGHT * 0.5
-  ],
-  [
-    HEXAGON_MARGIN_LEFT + HEXAGON_WIDTH,
-    ROOT_HEIGHT * 0.5 + HEXAGON_CAP_HEIGHT - HEXAGON_CAP_HEIGHT * 0.5
-  ],
-  [
-    HEXAGON_MARGIN_LEFT + HEXAGON_WIDTH / 2,
-    ROOT_HEIGHT * 0.5 + HEXAGON_CAP_HEIGHT
-  ],
-  [
-    HEXAGON_MARGIN_LEFT,
-    ROOT_HEIGHT * 0.5 + HEXAGON_CAP_HEIGHT - HEXAGON_CAP_HEIGHT * 0.5
-  ],
-  [
-    HEXAGON_MARGIN_LEFT,
-    (ROOT_HEIGHT - HEXAGON_CAP_HEIGHT * 2) * 0.5 + HEXAGON_CAP_HEIGHT * 0.5
-  ],
-  [
-    HEXAGON_MARGIN_LEFT + HEXAGON_WIDTH / 2,
-    (ROOT_HEIGHT - HEXAGON_CAP_HEIGHT * 2) * 0.5
-  ]
-]
+const hexagonCapHeight = 2 * hexagonApothem * SQRT1_2
+const hexagonDiameter = hexagonApothem * 2 * SQRT1_3
 
-const HEXAGON_POINTS = [
-  '0 0',
-  ...HEXAGON_POINTS2.map(([x, y]) => `${px(x)} ${px(y)}`),
-  '0 0',
-  '0 100%',
-  '100% 100%',
-  '100% 0'
-]
+const connectorScaleFactor = 1 / Math.cos(connectorAngle * Math.PI / 180)
+const hexagonScaleFactor = Math.tan(30 * Math.PI / 180)
+
+const traitHexagonPoints = [
+  [50, 0],
+  [93, 25],
+  [93, 75],
+  [50, 100],
+  [7, 75],
+  [7, 25]
+].map(([x, y]) => `${percent(x)} ${percent(y)}`)
+
+const vividness = keyframes({
+  [`${percent(0)}`]: {
+    backgroundPositionX: 0,
+    opacity: 1
+  },
+  [`${percent(50)}`]: {
+    opacity: 0.75
+  },
+  [`${percent(100)}`]: {
+    backgroundPositionX: 100,
+    opacity: 0.95
+  }
+})
+
+function calculateHexagonPoints(
+  a: number, // hexagon apothem (px)
+  d: number, // hexagon diameter (px)
+  x: number, // margin left of hexagon container (px)
+  h: number // container height (px)
+): Array<string> {
+  const y = (h - d * 2) / 2
+
+  return [
+    [a, 0],
+    [a * 2.0, d * 0.5],
+    [a * 2.0, d * 1.5],
+    [a, d * 2.0],
+    [0, d * 1.5],
+    [0, d * 0.5],
+    [a, 0]
+  ].map(([dx, dy]) => `${px(x + dx)} ${px(y + dy)}`)
+}
 
 export const root = style({
   alignItems: 'center',
@@ -70,7 +82,7 @@ export const root = style({
   }),
   boxShadow: `${px(1)} ${px(1)} ${px(3)} ${colors.traitlineShadow.toString()}`,
   display: 'flex',
-  height: px(ROOT_HEIGHT),
+  height: px(traitlineHeight),
   maxWidth: px(650),
   $nest: {
     '&:hover': {
@@ -97,7 +109,14 @@ export const background = style({
     '&::after': {
       backgroundColor: 'rgb(0, 0, 0)',
       bottom: 0,
-      clipPath: `polygon(${HEXAGON_POINTS.join(', ')})`,
+      clipPath: polygon([
+        '0 0',
+        ...calculateHexagonPoints(hexagonApothem,  hexagonDiameter, 8, traitlineHeight),
+        '0 0',
+        `0 ${percent(100)}`,
+        `${percent(100)} ${percent(100)}`,
+        `${percent(100)} 0`
+      ]),
       content: quote(''),
       display: 'block',
       left: 0,
@@ -106,6 +125,34 @@ export const background = style({
       right: 0,
       top: 0,
       transition: `opacity ${animations.speed} ${animations.easing}`
+    },
+    [`@media screen and (min-width: ${px(640)})`]: {
+      $nest: {
+        '&::after': {
+          clipPath: polygon([
+            '0 0',
+            ...calculateHexagonPoints(hexagonApothem,  hexagonDiameter, 24, traitlineHeight),
+            '0 0',
+            `0 ${percent(100)}`,
+            `${percent(100)} ${percent(100)}`,
+            `${percent(100)} 0`
+          ])
+        }
+      }
+    },
+    [`@media screen and (min-width: ${px(640)})`]: {
+      $nest: {
+        '&::after': {
+          clipPath: polygon([
+            '0 0',
+            ...calculateHexagonPoints(hexagonApothem,  hexagonDiameter, 64, traitlineHeight),
+            '0 0',
+            `0 ${percent(100)}`,
+            `${percent(100)} ${percent(100)}`,
+            `${percent(100)} 0`
+          ])
+        }
+      }
     }
   }
 })
@@ -116,12 +163,20 @@ export const backgroundImage = (src: string): string => style({
 
 export const specialization = stylesheet({
   root: {
-    marginLeft: px(HEXAGON_MARGIN_LEFT)
+    marginLeft: px(8),
+    $nest: {
+      [`@media screen and (min-width: ${px(480)})`]: {
+        marginLeft: px(24)
+      },
+      [`@media screen and (min-width: ${px(640)})`]: {
+        marginLeft: px(64)
+      }
+    }
   },
   hexagon: {
     position: 'relative',
-    width: px(HEXAGON_WIDTH),
-    height: px(HEXAGON_CAP_HEIGHT),
+    width: px(2 * hexagonApothem),
+    height: px(hexagonDiameter),
     $nest: {
       '&, &::before, &::after': {
         border: border({
@@ -131,26 +186,26 @@ export const specialization = stylesheet({
         })
       },
       '&': {
-        borderLeftWidth: px(HEXAGON_BORDER_WIDTH),
-        borderRightWidth: px(HEXAGON_BORDER_WIDTH)
+        borderLeftWidth: px(hexagonBorderWidth),
+        borderRightWidth: px(hexagonBorderWidth)
       },
       '&::before, &::after': {
         content: quote(''),
         position: 'absolute',
-        width: px(HEXAGON_CAP_LENGTH),
-        height: px(HEXAGON_CAP_LENGTH),
-        transform: `scaleY(${HEXAGON_SCALE_FACTOR}) rotate(${deg(-45)})`,
-        left: px((HEXAGON_WIDTH - HEXAGON_CAP_LENGTH) / 2 - HEXAGON_BORDER_WIDTH)
+        width: px(hexagonCapHeight),
+        height: px(hexagonCapHeight),
+        transform: `scaleY(${hexagonScaleFactor}) rotate(${deg(-45)})`,
+        left: px((2 * hexagonApothem - hexagonCapHeight) / 2 - hexagonBorderWidth)
       },
       '&::before': {
-        borderTopWidth: px(HEXAGON_BORDER_WIDTH),
-        borderRightWidth: px(HEXAGON_BORDER_WIDTH),
-        top: px(-HEXAGON_CAP_LENGTH / 2)
+        borderTopWidth: px(hexagonBorderWidth),
+        borderRightWidth: px(hexagonBorderWidth),
+        top: px(-hexagonCapHeight / 2)
       },
       '&::after': {
-        borderBottomWidth: px(HEXAGON_BORDER_WIDTH),
-        borderLeftWidth: px(HEXAGON_BORDER_WIDTH),
-        bottom: px(-HEXAGON_CAP_LENGTH / 2)
+        borderBottomWidth: px(hexagonBorderWidth),
+        borderLeftWidth: px(hexagonBorderWidth),
+        bottom: px(-hexagonCapHeight / 2)
       }
     }
   }
@@ -162,15 +217,21 @@ export const traits = stylesheet({
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    marginLeft: rem(2 * sizes.gap),
     maxWidth: px(425),
-    padding: `${rem(sizes.gap)} 0`,
-    position: 'relative'
+    padding: `${rem(sizes.gap)} ${rem(2 * sizes.gap)}`,
+    position: 'relative',
+    $nest: {
+      [`@media screen and (min-width: ${px(720)})`]: {
+        marginLeft: rem(4 * sizes.gap),
+      }
+    }
   },
   minor: {
   },
   minorIcon: {
-    clipPath: 'polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)'
+    clipPath: polygon(traitHexagonPoints)
   },
   major: {
     alignItems: 'center',
@@ -187,6 +248,77 @@ export const traits = stylesheet({
     $nest: {
       '&:hover': {
         opacity: 0.75
+      }
+    }
+  }
+})
+
+export const connector = stylesheet({
+  root: {
+    position: 'relative',
+    width: 0,
+    $nest: {
+      '&::after': {
+        animation: vividness,
+        animationDuration: '3s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear',
+        backgroundColor: colors.traitlineConnector.toString(),
+        backgroundImage: images.traitlineConnector.toString(),
+        backgroundRepeat: 'repeat-x',
+        borderRadius: rem(0.0625),
+        content: quote(''),
+        display: 'block',
+        height: rem(0.25),
+        left: rem(-0.75),
+        position: 'absolute',
+        width: rem(1.5)
+      },
+      [`@media screen and (max-width: ${px(480)})`]: {
+        display: 'none'
+      }
+    }
+  },
+  toTop: {
+    $nest: {
+      '&::after': {
+        top: rem(-sizes.traitIcon / 2),
+        transform: `rotate(${deg(-connectorAngle)}) scaleX(${connectorScaleFactor})`
+      }
+    }
+  },
+  toMiddle: {
+  },
+  toBottom: {
+    $nest: {
+      '&::after': {
+        bottom: rem(-sizes.traitIcon / 2),
+        transform: `rotate(${deg(connectorAngle)}) scaleX(${connectorScaleFactor})`
+      }
+    }
+  },
+  fromTop: {
+    $nest: {
+      '&::after': {
+        top: rem(-sizes.traitIcon / 2),
+        transform: `rotate(${deg(connectorAngle)}) scaleX(${connectorScaleFactor})`
+      }
+    }
+  },
+  fromMiddle: {
+  },
+  fromBottom: {
+    $nest: {
+      '&::after': {
+        bottom: rem(-sizes.traitIcon / 2),
+        transform: `rotate(${deg(-connectorAngle)}) scaleX(${connectorScaleFactor})`
+      }
+    }
+  },
+  disabled: {
+    $nest: {
+      '&::after': {
+        display: 'none'
       }
     }
   }
