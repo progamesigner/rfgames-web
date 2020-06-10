@@ -80,9 +80,10 @@ export const sizes = {
   rechargeIcon: 1.125,
   skillIcon: 4,
   specializationIcon: 4,
+  tooltipEffectIcon: 2,
   tooltipItemIcon: 2.5,
-  tooltipNestedIcon: 2,
   tooltipRadius: 0.125,
+  tooltipUpgradeIcon: 1.5,
   traitIcon: 2.5
 }
 

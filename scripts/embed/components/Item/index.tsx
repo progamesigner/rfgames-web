@@ -20,6 +20,8 @@ import './Tooltip'
 
 import * as styles from './styles'
 
+export { UpgradeContent } from './UpgradeContent'
+
 interface ItemAttributes extends
   m.Attributes,
   HasIDAttributes<number>,
@@ -28,18 +30,24 @@ interface ItemAttributes extends
   HasTooltipAttributes
 {
   data: GW2Item;
+  infusions?: Array<number>;
+  upgradeCount?: number;
+  upgrades?: Array<number>;
 }
 
 export class Item implements m.Component<ItemAttributes> {
   public view({
     attrs: {
-      store,
+      data,
       disableIcon,
       disableLink,
       disableText,
       disableTooltip,
+      infusions,
       inline,
-      data,
+      store,
+      upgradeCount,
+      upgrades,
       ...attrs
     }
   }: m.Vnode<ItemAttributes>): m.Children {
@@ -49,7 +57,12 @@ export class Item implements m.Component<ItemAttributes> {
     } = data
 
     const tooltipEvents = !disableTooltip ?
-      bindTooltipEvents(store, TooltipType.GW2_ITEM, data) :
+      bindTooltipEvents(store, TooltipType.GW2_ITEM, {
+        infusions: infusions || [],
+        item: data,
+        upgradeCount: upgradeCount || 1,
+        upgrades: upgrades || []
+      }) :
       {}
 
     return <Container inline={!disableText || inline} type="item" {...attrs}>

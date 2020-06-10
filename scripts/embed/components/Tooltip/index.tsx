@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { cx, makeClassName } from '../../libs'
-import { ExtractTooltipDataType, TooltipType } from '../../types'
+import { ExtractTooltipDataType, HasStoreAttributes, TooltipType } from '../../types'
 
 import * as styles from './styles'
 
@@ -11,7 +11,7 @@ export { TooltipFact } from './Fact'
 export { TooltipFoot } from './Foot'
 export { TooltipHead } from './Head'
 
-interface TooltipAttributes extends m.Attributes {
+interface TooltipAttributes extends m.Attributes, HasStoreAttributes {
   data: ExtractTooltipDataType<TooltipType>;
   type: TooltipType;
   show: boolean;
@@ -32,6 +32,7 @@ export class Tooltip implements m.Component<TooltipAttributes> {
       className,
       data,
       show,
+      store,
       type,
       ...attrs
     }
@@ -42,7 +43,10 @@ export class Tooltip implements m.Component<TooltipAttributes> {
       return <div
         className={cx(styles.root, makeClassName('tooltip'), className)}
         {...attrs}
-      >{renderer(data)}</div>
+      >{renderer({
+        ...data,
+        store
+      })}</div>
     }
 
     return null

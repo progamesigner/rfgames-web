@@ -1,4 +1,4 @@
-import { border, px, rem, style, stylesheet } from '../../libs'
+import { border, margin, px, rem, style, stylesheet } from '../../libs'
 
 import { colors, sizes } from '../styles'
 
@@ -28,6 +28,11 @@ export const tooltip = stylesheet({
     color: colors.consumable.toString(),
     display: 'flex'
   },
+  effectIcon: {
+    height: rem(sizes.tooltipEffectIcon),
+    marginRight: rem(sizes.gap),
+    width: rem(sizes.tooltipEffectIcon)
+  },
   head: {
     alignItems: 'center',
     display: 'flex'
@@ -45,10 +50,9 @@ export const tooltip = stylesheet({
   },
   name: {
   },
-  nestedIcon: {
-    height: rem(sizes.tooltipNestedIcon),
-    marginRight: rem(sizes.gap),
-    width: rem(sizes.tooltipNestedIcon)
+  spacing: {
+    display: 'block',
+    marginTop: rem(2 * sizes.gap)
   },
   statAttribute: {
     color: colors.statAttribute.toString()
@@ -58,6 +62,17 @@ export const tooltip = stylesheet({
   },
   statItem: {
     color: colors.statItem.toString()
+  },
+  upgrade: {
+    margin: margin(rem(2 * sizes.gap), 0)
+  },
+  upgradeIcon: {
+    height: rem(sizes.tooltipUpgradeIcon),
+    marginRight: rem(sizes.gap),
+    width: rem(sizes.tooltipUpgradeIcon)
+  },
+  upgradeName: {
+    color: colors.bonusActive.toString()
   }
 })
 

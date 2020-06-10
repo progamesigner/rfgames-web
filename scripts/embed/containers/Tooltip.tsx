@@ -97,6 +97,7 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
     return <Tooltip
       className={className}
       ontouchend={hide}
+      store={store}
       style={this.style}
       {...tooltip}
     ></Tooltip>

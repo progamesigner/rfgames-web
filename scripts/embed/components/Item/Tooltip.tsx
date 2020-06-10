@@ -1,12 +1,16 @@
 import * as m from 'mithril'
 
+import { concat, constant, flow, take, times } from 'lodash/fp'
+
+import { UpgradeContent } from '../../containers'
 import { cx } from '../../libs'
 import {
   GW2Item,
   GW2ItemFlag,
   GW2ItemRarity,
   GW2ItemType,
-  TooltipType
+  TooltipType,
+  GW2ItemWeaponType
 } from '../../types'
 
 import { Coin } from '../Coin'
@@ -27,12 +31,21 @@ declare module '../../types/tooltip' {
   }
 }
 
-type ItemTooltipAttributes = GW2Item
+interface ItemTooltipAttributes extends m.Attributes {
+  infusions: Array<number>;
+  item: GW2Item;
+  upgradeCount: number;
+  upgrades: Array<number>;
+}
 
 interface ItemFlags {
   accountbound: boolean;
   soulbound: boolean;
   unique: boolean;
+}
+
+function createTakeFlow(items: Array<number>, slots: number) {
+  return flow(constant(slots), times(constant(0)), concat(items), take(slots))
 }
 
 function mapRarityToColor(rarity: GW2ItemRarity): string | null {
@@ -54,6 +67,49 @@ function mapRarityToColor(rarity: GW2ItemRarity): string | null {
     case GW2ItemRarity.RARE:
       return styles.rarities.rare
   }
+}
+
+function parseAvailableUpgradeSlots(item: GW2Item): number {
+  switch (item.type) {
+    case GW2ItemType.ARMOR:
+      return 1
+    case GW2ItemType.WEAPON:
+      if (
+        item.details.type === GW2ItemWeaponType.GREATSWORD ||
+        item.details.type === GW2ItemWeaponType.HAMMER ||
+        item.details.type === GW2ItemWeaponType.LONGBOW ||
+        item.details.type === GW2ItemWeaponType.RIFLE ||
+        item.details.type === GW2ItemWeaponType.SHORTBOW ||
+        item.details.type === GW2ItemWeaponType.SPEAR ||
+        item.details.type === GW2ItemWeaponType.SPEARGUN ||
+        item.details.type === GW2ItemWeaponType.STAFF ||
+        item.details.type === GW2ItemWeaponType.TRIDENT
+      ) {
+        return 2
+      }
+      return 1
+    case GW2ItemType.BACK:
+    case GW2ItemType.TRINKET:
+        if (
+          item.rarity === GW2ItemRarity.ASCENDED ||
+          item.rarity === GW2ItemRarity.LEGENDARY
+        ) {
+          return 0
+        }
+        return 1
+  }
+  return 0
+}
+
+function parseAvailableInfusionSlots(item: GW2Item): number {
+  switch (item.type) {
+    case GW2ItemType.ARMOR:
+    case GW2ItemType.WEAPON:
+    case GW2ItemType.BACK:
+    case GW2ItemType.TRINKET:
+      return item.details.infusion_slots.length
+  }
+  return 0
 }
 
 function parseItemFlags(item: GW2Item): ItemFlags {
@@ -91,10 +147,19 @@ function toMinutes(milliseconds: number) {
 
 export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
   public view({
-    attrs: item
+    attrs:
+    {
+      infusions,
+      item,
+      store,
+      upgradeCount,
+      upgrades
+    }
   }: m.Vnode<ItemTooltipAttributes>): m.Children {
-    const bonusCount = 0
     const flags = parseItemFlags(item)
+
+    const takeUpgrades = createTakeFlow(upgrades, parseAvailableUpgradeSlots(item))
+    const takeInfusions = createTakeFlow(infusions, parseAvailableInfusionSlots(item))
 
     return <TooltipContent type="item">
       <TooltipHead className={styles.tooltip.head}>
@@ -130,7 +195,11 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
             </div>
           )) :
           item.details.infix_upgrade && item.details.infix_upgrade.buff ?
-          <div className={styles.tooltip.statBuff}>{m.trust(markup(item.details.infix_upgrade.buff.description, styles.flavors))}</div> :
+          <div
+            className={styles.tooltip.statBuff}
+          >
+            {m.trust(markup(item.details.infix_upgrade.buff.description, styles.flavors))}
+          </div> :
           null :
           null
         }
@@ -139,7 +208,10 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           item.details.bonuses.map((bonus, index) => (
             <div
               key={bonus}
-              className={cx(styles.tooltip.bonusInactive, { [styles.tooltip.bonusActive]: bonusCount > index })}
+              className={cx(
+                { [styles.tooltip.bonusActive]: upgradeCount > index },
+                { [styles.tooltip.bonusInactive]: upgradeCount <= index }
+              )}
             >
               <span>({index + 1}): {bonus}</span>
             </div>
@@ -150,7 +222,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           item.type === GW2ItemType.CONSUMABLE ?
           <div className={styles.tooltip.consumable}>
             <Icon
-              className={styles.tooltip.nestedIcon}
+              className={styles.tooltip.effectIcon}
               inline={true}
               src={item.details.icon}
             />
@@ -166,7 +238,26 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           null
         }
 
-        <br />
+        {takeUpgrades().map((id, index) =>
+          <UpgradeContent
+            key={index}
+            store={store}
+            id={id}
+            unusedText="Unused Upgrade Slot"
+            upgradeCount={upgradeCount}
+          />
+        )}
+
+        {takeInfusions().map((id, index) =>
+          <UpgradeContent
+            key={index}
+            store={store}
+            id={id}
+            unusedText="Unused Infusion Slot"
+          />
+        )}
+
+        <span className={styles.tooltip.spacing}></span>
 
         {
           item.type === GW2ItemType.ARMOR ||item.type === GW2ItemType.BACK || item.type === GW2ItemType.TRINKET || item.type === GW2ItemType.WEAPON ?

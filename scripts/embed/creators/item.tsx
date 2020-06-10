@@ -3,7 +3,7 @@ import * as m from 'mithril'
 import { Item } from '../containers'
 import { EmbedStore } from '../types'
 
-import { extractBoolean, extractNumber } from './helpers'
+import { extractBoolean, extractNumber, extractNumberList } from './helpers'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {
@@ -11,7 +11,10 @@ export function create(store: EmbedStore, element: Element): m.Component {
     disableLink: extractBoolean(element, 'disable-link', false),
     disableText: extractBoolean(element, 'disable-text', false),
     id: extractNumber(element, 'id', -1),
-    inline: extractBoolean(element, 'inline', false)
+    infusions: extractNumberList(element, 'infusions'),
+    inline: extractBoolean(element, 'inline', false),
+    upgradeCount: extractNumber(element, 'upgrade-count', 1),
+    upgrades: extractNumberList(element, 'upgrades'),
   }
 
   return {
