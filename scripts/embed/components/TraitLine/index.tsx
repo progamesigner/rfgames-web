@@ -18,18 +18,6 @@ import { bindTooltipEvents } from '../helpers'
 
 import * as styles from './styles'
 
-const CONNECTOR_FROM_STYLES = {
-  0: styles.connector.fromTop,
-  1: styles.connector.fromMiddle,
-  2: styles.connector.fromBottom
-} as { [index: number]: string; }
-
-const CONNECTOR_TO_STYLES = {
-  0: styles.connector.toTop,
-  1: styles.connector.toMiddle,
-  2: styles.connector.toBottom
-} as { [index: number]: string; }
-
 export const enum TraitMode {
   ID = 0,
   POSITION = 1
@@ -54,6 +42,10 @@ interface TraitLineAttributes extends
 
 export type TraitSelection = [TraitMode, TraitPosition | number]
 
+function isTraitActive(trait: number, selectedTraits: Array<number>): boolean {
+  return !selectedTraits.includes(trait)
+}
+
 function mapSelectionToIds(
   data: GW2Specialization,
   selectedTraits: Array<TraitSelection>
@@ -71,6 +63,36 @@ function mapSelectionToIds(
         return value
     }
   })
+}
+
+function mapTraitToFromMajor(
+  traitsInTier: Array<number>,
+  selectedTraits: Array<number>
+): string | null {
+  switch (traitsInTier.findIndex(id => selectedTraits.includes(id))) {
+    case 0:
+      return styles.connector.fromTop
+    case 1:
+      return styles.connector.fromMiddle
+    case 2:
+      return styles.connector.fromBottom
+  }
+  return null
+}
+
+function mapTraitToFromMinor(
+  traitsInTier: Array<number>,
+  selectedTraits: Array<number>
+): string | null {
+  switch (traitsInTier.findIndex(id => selectedTraits.includes(id))) {
+    case 0:
+      return styles.connector.toTop
+    case 1:
+      return styles.connector.toMiddle
+    case 2:
+      return styles.connector.toBottom
+  }
+  return null
 }
 
 export class TraitLine implements m.Component<TraitLineAttributes> {
@@ -127,7 +149,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
             key={`connector-to-${tier}`}
             className={cx(
               styles.connector.root,
-              CONNECTOR_TO_STYLES[majorTraitChunks[tier].findIndex(id => selectedTraitIds.includes(id))]
+              mapTraitToFromMinor(majorTraitChunks[tier], selectedTraitIds)
             )}
           ></div>,
           <div key={`major-${tier}`} className={styles.traits.major}>
@@ -136,7 +158,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
               id={majorTrait}
               className={cx(
                 styles.traits.majorIcon,
-                { [styles.traits.inactive]: !selectedTraitIds.includes(majorTrait) }
+                { [styles.traits.inactive]: !isTraitActive(majorTrait, selectedTraitIds) }
               )}
               disableText={true}
               inline={true}
@@ -147,7 +169,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
             key={`connector-from-${tier}`}
             className={cx(
               styles.connector.root,
-              CONNECTOR_FROM_STYLES[majorTraitChunks[tier].findIndex(id => selectedTraitIds.includes(id))],
+              mapTraitToFromMajor(majorTraitChunks[tier], selectedTraitIds),
               { [styles.connector.disabled]: tier === 2}
             )}
           ></div>
