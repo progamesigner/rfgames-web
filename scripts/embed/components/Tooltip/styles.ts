@@ -40,7 +40,7 @@ export const container = style({
     style: 'solid',
     width: px(2)
   }),
-  boxShadow: `${px(1)} ${px(1)} ${px(2)} ${colors.tooltipShadow.toString()}`,
+  boxShadow: `${px(1)} ${px(1)} ${px(3)} ${colors.tooltipShadow.toString()}`,
   borderRadius: rem(sizes.tooltipRadius),
   padding: rem(sizes.gap),
   width: percent(100),
