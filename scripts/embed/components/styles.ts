@@ -30,7 +30,7 @@ export const colors = {
   rarityLegendary: color('#9B6BDE'),
   rarityMasterwork: color('#1A9306'),
   rarityRare: color('#FCD00B'),
-  statAttribute: color('#5599ff'),
+  statAttribute: color('#30ad37'),
   statBuff: color('#5599ff'),
   statItem: color('#30ad37'),
   tooltipBackground: color('hsla(0, 0%, 5%, 0.95)'),

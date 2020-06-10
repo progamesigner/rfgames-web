@@ -131,7 +131,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
               key={`${attribute}-${modifier}`}
               className={styles.tooltip.attribute}
             >
-              <span className={styles.tooltip.statAttribute}>+{modifier} {attributeToName(attribute)}</span>
+              <span className={data.type === GW2ItemType.UPGRADE_COMPONENT ? styles.tooltip.statBuff : styles.tooltip.statAttribute}>+{modifier} {attributeToName(attribute)}</span>
             </div>
           )) :
           data.details.infix_upgrade && data.details.infix_upgrade.buff ?
@@ -173,16 +173,22 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
 
         <br />
 
-        <div>{rarity}</div>
+        {
+          data.type === GW2ItemType.ARMOR ||data.type === GW2ItemType.BACK || data.type === GW2ItemType.TRINKET || data.type === GW2ItemType.WEAPON ?
+          <div>{rarity}</div> :
+          null
+        }
         {
           data.type === GW2ItemType.ARMOR ?
           <div>{data.details.weight_class}</div> :
           null
         }
         {
-          data.type === GW2ItemType.ARMOR || data.type === GW2ItemType.CONSUMABLE || data.type === GW2ItemType.CONTAINER || data.type === GW2ItemType.GATHERING || data.type === GW2ItemType.GIZMO || data.type === GW2ItemType.TOOL || data.type === GW2ItemType.TRINKET || data.type === GW2ItemType.UPGRADE_COMPONENT || data.type === GW2ItemType.WEAPON ?
+          data.type === GW2ItemType.ARMOR || data.type === GW2ItemType.CONTAINER || data.type === GW2ItemType.GATHERING || data.type === GW2ItemType.GIZMO || data.type === GW2ItemType.TOOL || data.type === GW2ItemType.TRINKET || data.type === GW2ItemType.WEAPON ?
           <div>{data.details.type}</div> :
-          <div>{type}</div>
+          data.type === GW2ItemType.BACK || data.type == GW2ItemType.CONSUMABLE ?
+          <div>{type}</div> :
+          null
         }
         {
           data.level > 0 ?

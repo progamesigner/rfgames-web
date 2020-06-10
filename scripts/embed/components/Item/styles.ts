@@ -20,6 +20,9 @@ export const tooltip = stylesheet({
   bonusInactive: {
     color: colors.bonusInactive.toString()
   },
+  coin: {
+    marginLeft: rem(2 * sizes.gap)
+  },
   consumable: {
     alignItems: 'flex-start',
     display: 'flex'
@@ -54,9 +57,6 @@ export const tooltip = stylesheet({
   },
   statItem: {
     color: colors.statItem.toString()
-  },
-  coin: {
-    marginLeft: rem(2 * sizes.gap)
   }
 })
 
