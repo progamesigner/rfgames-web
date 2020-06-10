@@ -20,8 +20,5 @@ export function extractNumberList(element: Element, name: string): Array<number>
 
 export function extractStringList(element: Element, name: string): Array<string> {
   const value = element.getAttribute(makeAttributeName(name))
-  if (value) {
-    return value.split(',')
-  }
-  return []
+  return value ? value.split(',').map(value => value.trim()) : []
 }
