@@ -66,6 +66,9 @@ export const tooltip = stylesheet({
   upgrade: {
     margin: margin(rem(2 * sizes.gap), 0)
   },
+  upgradeCount: {
+    marginLeft: rem(sizes.gap)
+  },
   upgradeIcon: {
     height: rem(sizes.tooltipUpgradeIcon),
     marginRight: rem(sizes.gap),

@@ -29,7 +29,16 @@ export class UpgradeContent implements m.Component<UpgradeContentAttributes> {
       if (item.type === GW2ItemType.UPGRADE_COMPONENT) {
         return <div className={styles.tooltip.upgrade} {...attrs}>
           <Icon className={styles.tooltip.upgradeIcon} src={item.icon} />
-          <span className={styles.tooltip.upgradeName}>{item.name}</span>
+          <span className={styles.tooltip.upgradeName}>
+            {item.name}
+            {
+              item.details.bonuses ?
+              <span
+                className={styles.tooltip.upgradeCount}
+              >({upgradeCount}/{item.details.bonuses.length})</span> :
+              null
+            }
+          </span>
           {
             item.details.bonuses ?
             item.details.bonuses.map((bonus, index) => (
