@@ -20,7 +20,7 @@ declare module '../../types/tooltip' {
   }
 
   interface TooltipTypeMapping {
-    [TooltipType.GW2_SKILL]: [SkillTooltipAttributes, GW2Skill];
+    [TooltipType.GW2_SKILL]: SkillTooltipAttributes;
   }
 }
 

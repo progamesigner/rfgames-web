@@ -23,7 +23,7 @@ declare module '../../types/tooltip' {
   }
 
   interface TooltipTypeMapping {
-    [TooltipType.GW2_ITEM]: [ItemTooltipAttributes, GW2Item];
+    [TooltipType.GW2_ITEM]: ItemTooltipAttributes;
   }
 }
 
@@ -90,58 +90,53 @@ function toMinutes(milliseconds: number) {
 }
 
 export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
-  public view({ attrs: data }: m.Vnode<ItemTooltipAttributes>): m.Children {
-    const {
-      icon,
-      name,
-      rarity,
-      type
-    } = data
-
+  public view({
+    attrs: item
+  }: m.Vnode<ItemTooltipAttributes>): m.Children {
     const bonusCount = 0
-    const flags = parseItemFlags(data)
+    const flags = parseItemFlags(item)
 
     return <TooltipContent type="item">
       <TooltipHead className={styles.tooltip.head}>
-        <Icon className={styles.tooltip.icon} src={icon}></Icon>
+        <Icon className={styles.tooltip.icon} src={item.icon}></Icon>
         <span
-          className={cx(styles.tooltip.name, mapRarityToColor(rarity))}
-        >{name}</span>
+          className={cx(styles.tooltip.name, mapRarityToColor(item.rarity))}
+        >{item.name}</span>
       </TooltipHead>
       <TooltipBody>
         {
-          data.type === GW2ItemType.WEAPON ?
+          item.type === GW2ItemType.WEAPON ?
           <div className={styles.tooltip.attribute}>
-            Weapon Strength: <span className={styles.tooltip.statItem}>{data.details.min_power} - {data.details.max_power}</span>
+            Weapon Strength: <span className={styles.tooltip.statItem}>{item.details.min_power} - {item.details.max_power}</span>
           </div> :
           null
         }
         {
-          data.type === GW2ItemType.ARMOR || data.type === GW2ItemType.WEAPON ?
+          item.type === GW2ItemType.ARMOR || item.type === GW2ItemType.WEAPON ?
           <div className={styles.tooltip.attribute}>
-            Defense: <span className={styles.tooltip.statItem}>{data.details.defense}</span>
+            Defense: <span className={styles.tooltip.statItem}>{item.details.defense}</span>
           </div> :
           null
         }
         {
-          data.type === GW2ItemType.ARMOR || data.type === GW2ItemType.BACK || data.type === GW2ItemType.TRINKET || data.type === GW2ItemType.UPGRADE_COMPONENT || data.type === GW2ItemType.WEAPON ?
-          data.details.infix_upgrade && data.details.infix_upgrade.attributes.length > 0 ?
-          data.details.infix_upgrade.attributes.map(({ attribute, modifier }) => (
+          item.type === GW2ItemType.ARMOR || item.type === GW2ItemType.BACK || item.type === GW2ItemType.TRINKET || item.type === GW2ItemType.UPGRADE_COMPONENT || item.type === GW2ItemType.WEAPON ?
+          item.details.infix_upgrade && item.details.infix_upgrade.attributes.length > 0 ?
+          item.details.infix_upgrade.attributes.map(({ attribute, modifier }) => (
             <div
               key={`${attribute}-${modifier}`}
               className={styles.tooltip.attribute}
             >
-              <span className={data.type === GW2ItemType.UPGRADE_COMPONENT ? styles.tooltip.statBuff : styles.tooltip.statAttribute}>+{modifier} {attributeToName(attribute)}</span>
+              <span className={item.type === GW2ItemType.UPGRADE_COMPONENT ? styles.tooltip.statBuff : styles.tooltip.statAttribute}>+{modifier} {attributeToName(attribute)}</span>
             </div>
           )) :
-          data.details.infix_upgrade && data.details.infix_upgrade.buff ?
-          <div className={styles.tooltip.statBuff}>{m.trust(markup(data.details.infix_upgrade.buff.description, styles.flavors))}</div> :
+          item.details.infix_upgrade && item.details.infix_upgrade.buff ?
+          <div className={styles.tooltip.statBuff}>{m.trust(markup(item.details.infix_upgrade.buff.description, styles.flavors))}</div> :
           null :
           null
         }
         {
-          data.type === GW2ItemType.UPGRADE_COMPONENT && data.details.bonuses ?
-          data.details.bonuses.map((bonus, index) => (
+          item.type === GW2ItemType.UPGRADE_COMPONENT && item.details.bonuses ?
+          item.details.bonuses.map((bonus, index) => (
             <div
               key={bonus}
               className={cx(styles.tooltip.bonusInactive, { [styles.tooltip.bonusActive]: bonusCount > index })}
@@ -152,20 +147,20 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           null
         }
         {
-          data.type === GW2ItemType.CONSUMABLE ?
+          item.type === GW2ItemType.CONSUMABLE ?
           <div className={styles.tooltip.consumable}>
             <Icon
               className={styles.tooltip.nestedIcon}
               inline={true}
-              src={data.details.icon}
+              src={item.details.icon}
             />
             <span>
               {
-                data.details.name ?
-                <div>{data.details.name} ({toMinutes(data.details.duration_ms)}):</div> :
+                item.details.name ?
+                <div>{item.details.name} ({toMinutes(item.details.duration_ms)}):</div> :
                 null
               }
-              {m.trust(markup(data.details.description, styles.flavors))}
+              {m.trust(markup(item.details.description, styles.flavors))}
             </span>
           </div> :
           null
@@ -174,37 +169,37 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         <br />
 
         {
-          data.type === GW2ItemType.ARMOR ||data.type === GW2ItemType.BACK || data.type === GW2ItemType.TRINKET || data.type === GW2ItemType.WEAPON ?
-          <div>{rarity}</div> :
+          item.type === GW2ItemType.ARMOR ||item.type === GW2ItemType.BACK || item.type === GW2ItemType.TRINKET || item.type === GW2ItemType.WEAPON ?
+          <div>{item.rarity}</div> :
           null
         }
         {
-          data.type === GW2ItemType.ARMOR ?
-          <div>{data.details.weight_class}</div> :
+          item.type === GW2ItemType.ARMOR ?
+          <div>{item.details.weight_class}</div> :
           null
         }
         {
-          data.type === GW2ItemType.ARMOR || data.type === GW2ItemType.CONTAINER || data.type === GW2ItemType.GATHERING || data.type === GW2ItemType.GIZMO || data.type === GW2ItemType.TOOL || data.type === GW2ItemType.TRINKET || data.type === GW2ItemType.WEAPON ?
-          <div>{data.details.type}</div> :
-          data.type === GW2ItemType.BACK || data.type == GW2ItemType.CONSUMABLE ?
-          <div>{type}</div> :
+          item.type === GW2ItemType.ARMOR || item.type === GW2ItemType.CONTAINER || item.type === GW2ItemType.GATHERING || item.type === GW2ItemType.GIZMO || item.type === GW2ItemType.TOOL || item.type === GW2ItemType.TRINKET || item.type === GW2ItemType.WEAPON ?
+          <div>{item.details.type}</div> :
+          item.type === GW2ItemType.BACK || item.type == GW2ItemType.CONSUMABLE ?
+          <div>{item.type}</div> :
           null
         }
         {
-          data.type === GW2ItemType.UPGRADE_COMPONENT ?
-          <div>{m.trust(markup(data.description, styles.flavors))}</div> :
+          item.type === GW2ItemType.UPGRADE_COMPONENT ?
+          <div>{m.trust(markup(item.description, styles.flavors))}</div> :
           null
         }
         {
-          data.level > 0 ?
-          <div>Required Level: {data.level}</div> :
+          item.level > 0 ?
+          <div>Required Level: {item.level}</div> :
           null
         }
         {
-          data.type === GW2ItemType.UPGRADE_COMPONENT ?
+          item.type === GW2ItemType.UPGRADE_COMPONENT ?
           null :
-          data.description ?
-          <div>{m.trust(markup(data.description, styles.flavors))}</div> :
+          item.description ?
+          <div>{m.trust(markup(item.description, styles.flavors))}</div> :
           null
         }
         {
@@ -223,8 +218,8 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           null
         }
         {
-          data.rarity !== GW2ItemRarity.LEGENDARY && data.vendor_value > 0 ?
-          <Coin className={styles.tooltip.coin} value={data.vendor_value} /> :
+          item.rarity !== GW2ItemRarity.LEGENDARY && item.vendor_value > 0 ?
+          <Coin className={styles.tooltip.coin} value={item.vendor_value} /> :
           null
         }
       </TooltipBody>

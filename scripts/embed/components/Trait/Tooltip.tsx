@@ -21,7 +21,7 @@ declare module '../../types/tooltip' {
   }
 
   interface TooltipTypeMapping {
-    [TooltipType.GW2_TRAIT]: [TraitTooltipAttributes, GW2Trait];
+    [TooltipType.GW2_TRAIT]: TraitTooltipAttributes;
   }
 }
 

@@ -12,7 +12,7 @@ declare module '../../types/tooltip' {
   }
 
   interface TooltipTypeMapping {
-    [TooltipType.GW2_SPECIALIZATION]: [SpecializationTooltipAttributes, GW2Specialization];
+    [TooltipType.GW2_SPECIALIZATION]: SpecializationTooltipAttributes;
   }
 }
 

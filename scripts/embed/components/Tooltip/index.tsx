@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { cx, makeClassName } from '../../libs'
-import { ExtractTooltipAttributeType, TooltipType } from '../../types'
+import { ExtractTooltipDataType, TooltipType } from '../../types'
 
 import * as styles from './styles'
 
@@ -12,7 +12,7 @@ export { TooltipFoot } from './Foot'
 export { TooltipHead } from './Head'
 
 interface TooltipAttributes extends m.Attributes {
-  data: ExtractTooltipAttributeType<TooltipType>;
+  data: ExtractTooltipDataType<TooltipType>;
   type: TooltipType;
   show: boolean;
 }
@@ -22,8 +22,8 @@ export class Tooltip implements m.Component<TooltipAttributes> {
 
   public static bindTooltipRenderer<
     T extends TooltipType,
-    A extends ExtractTooltipAttributeType<T>
-  >(type: T, component: m.ComponentTypes<A>): void {
+    D extends ExtractTooltipDataType<T>
+  >(type: T, component: m.ComponentTypes<D>): void {
     Tooltip.renderers[type] = (attrs: m.Attributes) => m(component, attrs)
   }
 
