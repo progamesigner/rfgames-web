@@ -2,12 +2,13 @@ import * as m from 'mithril'
 
 import { cx } from '../../libs'
 import {
-  HasTooltipTextAttributes,
   HasIconAttributes,
   HasIconPlaceholderAttributes,
+  HasInlineAttributes,
   HasStoreAttributes,
   HasTextAttributes,
   HasTooltipAttributes,
+  HasTooltipTextAttributes,
   TooltipType
 } from '../../types'
 
@@ -21,12 +22,13 @@ import * as styles from './styles'
 
 interface EmptyAttributes extends
   m.Attributes,
-  HasTooltipTextAttributes,
   HasIconAttributes,
   HasIconPlaceholderAttributes,
+  HasInlineAttributes,
   HasStoreAttributes,
   HasTextAttributes,
-  HasTooltipAttributes
+  HasTooltipAttributes,
+  HasTooltipTextAttributes
 {
   classIcon?: string;
   classSize?: string;
@@ -43,6 +45,7 @@ export class Empty implements m.Component<EmptyAttributes> {
       disableIconPlaceholder,
       disableText,
       disableTooltip,
+      inline,
       overrideText,
       overrideTooltipText,
       store
@@ -60,9 +63,9 @@ export class Empty implements m.Component<EmptyAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, classIcon, 'is-empty')}
-          classSize={cx(styles.iconSize, classSize)}
-          disablePlaceholder={disableIconPlaceholder}
+          className={cx(styles.icon.root, classIcon, 'is-empty')}
+          classSize={cx(inline ? styles.icon.inline : styles.icon.size, classSize)}
+          disablePlaceholder={disableIconPlaceholder || inline}
           {...tooltipEvents}
         /> :
         null

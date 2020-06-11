@@ -6,6 +6,7 @@ import {
   HasIconAttributes,
   HasIconLinkAttributes,
   HasIDAttributes,
+  HasInlineAttributes,
   HasTextAttributes,
   HasTextLinkAttributes
 } from '../../types'
@@ -24,6 +25,7 @@ interface ProfessionAttributes extends
   HasIconAttributes,
   HasIconLinkAttributes,
   HasIDAttributes<string>,
+  HasInlineAttributes,
   HasTextAttributes,
   HasTextLinkAttributes
 {
@@ -37,6 +39,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
       disableIconLink,
       disableText,
       disableTextLink,
+      inline,
       link,
       overrideText,
       profession
@@ -49,8 +52,8 @@ export class Profession implements m.Component<ProfessionAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, classes)}
-          classSize={styles.iconSize}
+          className={cx(styles.icon.root, classes)}
+          classSize={inline ? styles.icon.inline : styles.icon.size}
           disablePlaceholder={true}
           src={profession.icon_big}
         >

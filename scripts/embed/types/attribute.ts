@@ -18,6 +18,10 @@ export interface HasIDAttributes<T extends ID> {
   id: T;
 }
 
+export interface HasInlineAttributes {
+  inline: boolean;
+}
+
 export interface HasLinkAttributes {
   link?: string;
 }

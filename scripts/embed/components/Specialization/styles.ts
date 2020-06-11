@@ -11,8 +11,18 @@ const hexagonPoints = [
   [7, 25]
 ].map(([x, y]) => `${percent(x)} ${percent(y)}`)
 
-export const icon = style({
-  clipPath: polygon(hexagonPoints)
+export const icon = stylesheet({
+  root: {
+    clipPath: polygon(hexagonPoints)
+  },
+  size: {
+    height: rem(sizes.specializationIcon),
+    width: rem(sizes.specializationIcon)
+  },
+  inline: {
+    height: rem(sizes.inlineIcon),
+    width: rem(sizes.inlineIcon)
+  }
 })
 
 export const iconSize = style({

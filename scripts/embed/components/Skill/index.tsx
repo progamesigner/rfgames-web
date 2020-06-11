@@ -6,6 +6,7 @@ import {
   HasIconLinkAttributes,
   HasIconPlaceholderAttributes,
   HasIDAttributes,
+  HasInlineAttributes,
   HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes,
@@ -31,6 +32,7 @@ interface SkillAttributes extends
   HasIconLinkAttributes,
   HasIconPlaceholderAttributes,
   HasIDAttributes<number>,
+  HasInlineAttributes,
   HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes,
@@ -48,6 +50,7 @@ export class Skill implements m.Component<SkillAttributes> {
       disableText,
       disableTextLink,
       disableTooltip,
+      inline,
       link,
       overrideText,
       skill,
@@ -67,9 +70,9 @@ export class Skill implements m.Component<SkillAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, classes)}
-          classSize={styles.iconSize}
-          disablePlaceholder={disableIconPlaceholder}
+          className={cx(styles.icon.root, classes)}
+          classSize={inline ? styles.icon.inline : styles.icon.size}
+          disablePlaceholder={disableIconPlaceholder || inline}
           src={skill.icon}
           {...tooltipEvents}
         >

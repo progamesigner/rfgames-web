@@ -2,11 +2,17 @@ import { rem, style, stylesheet } from '../../libs'
 
 import { colors, sizes } from '../styles'
 
-export const icon = style()
-
-export const iconSize = style({
-  height: rem(sizes.skillIcon),
-  width: rem(sizes.skillIcon)
+export const icon = stylesheet({
+  root: {
+  },
+  size: {
+    height: rem(sizes.skillIcon),
+    width: rem(sizes.skillIcon)
+  },
+  inline: {
+    height: rem(sizes.inlineIcon),
+    width: rem(sizes.inlineIcon)
+  }
 })
 
 export const name = style()

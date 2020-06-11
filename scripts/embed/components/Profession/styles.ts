@@ -1,10 +1,16 @@
-import { rem, sizes, style } from '../styles'
+import { rem, sizes, style, stylesheet } from '../styles'
 
-export const icon = style()
-
-export const iconSize = style({
-  height: rem(sizes.professionIcon),
-  width: rem(sizes.professionIcon)
+export const icon = stylesheet({
+  root: {
+  },
+  size: {
+    height: rem(sizes.professionIcon),
+    width: rem(sizes.professionIcon)
+  },
+  inline: {
+    height: rem(sizes.inlineIcon),
+    width: rem(sizes.inlineIcon)
+  }
 })
 
 export const link = style()

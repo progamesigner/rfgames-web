@@ -7,6 +7,7 @@ import {
   HasIconLinkAttributes,
   HasIconPlaceholderAttributes,
   HasIDAttributes,
+  HasInlineAttributes,
   HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes,
@@ -35,6 +36,7 @@ interface SpecializationAttributes extends
   HasIconLinkAttributes,
   HasIconPlaceholderAttributes,
   HasIDAttributes<number>,
+  HasInlineAttributes,
   HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes,
@@ -52,6 +54,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       disableText,
       disableTextLink,
       disableTooltip,
+      inline,
       link,
       overrideText,
       specialization,
@@ -71,9 +74,9 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, classes)}
-          classSize={styles.iconSize}
-          disablePlaceholder={disableIconPlaceholder}
+          className={cx(styles.icon.root, classes)}
+          classSize={inline ? styles.icon.inline : styles.icon.size}
+          disablePlaceholder={disableIconPlaceholder || inline}
           src={specialization.icon}
           {...tooltipEvents}
         >

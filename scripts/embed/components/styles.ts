@@ -75,6 +75,7 @@ export const sizes = {
   emptyIcon: 4,
   factIcon: 2,
   gap: 0.25,
+  inlineIcon: 1,
   itemIcon: 4,
   professionIcon: 4,
   rechargeIcon: 1.125,
