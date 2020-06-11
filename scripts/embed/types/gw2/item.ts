@@ -378,20 +378,37 @@ interface GW2ItemUpgradeInfo {
   upgrade: GW2ItemUpgradeInfoUpgradeType;
 }
 
+export type GW2ItemArmor = GW2ItemBase<GW2ItemType.ARMOR, GW2ItemDetailArmor>
+export type GW2ItemBack = GW2ItemBase<GW2ItemType.BACK, GW2ItemDetailBack>
+export type GW2ItemBag = GW2ItemBase<GW2ItemType.BAG, GW2ItemDetailBag>
+export type GW2ItemConsumable = GW2ItemBase<GW2ItemType.CONSUMABLE, GW2ItemDetailConsumable>
+export type GW2ItemContainer = GW2ItemBase<GW2ItemType.CONTAINER, GW2ItemDetailWithType<GW2ItemContainerType>>
+export type GW2ItemCraftingMaterial = GW2ItemBase<GW2ItemType.CRAFTING_MATERIAL>
+export type GW2ItemGathering = GW2ItemBase<GW2ItemType.GATHERING, GW2ItemDetailWithType<GW2ItemGatheringType>>
+export type GW2ItemGizmo = GW2ItemBase<GW2ItemType.GIZMO, GW2ItemDetailGizmo>
+export type GW2ItemKey = GW2ItemBase<GW2ItemType.KEY>
+export type GW2ItemMiniPet = GW2ItemBase<GW2ItemType.MINI_PET, GW2ItemDetailMiniPet>
+export type GW2ItemTool = GW2ItemBase<GW2ItemType.TOOL, GW2ItemDetailTool>
+export type GW2ItemTrait = GW2ItemBase<GW2ItemType.TRAIT>
+export type GW2ItemTrinket = GW2ItemBase<GW2ItemType.TRINKET, GW2ItemDetailTrinket>
+export type GW2ItemTrophy = GW2ItemBase<GW2ItemType.TROPHY>
+export type GW2ItemUpgradeComponent = GW2ItemBase<GW2ItemType.UPGRADE_COMPONENT, GW2ItemDetailUpgradeComponent>
+export type GW2ItemWeapon = GW2ItemBase<GW2ItemType.WEAPON, GW2ItemDetailWeapon>
+
 export type GW2Item =
-  GW2ItemBase<GW2ItemType.ARMOR, GW2ItemDetailArmor> |
-  GW2ItemBase<GW2ItemType.BACK, GW2ItemDetailBack> |
-  GW2ItemBase<GW2ItemType.BAG, GW2ItemDetailBag> |
-  GW2ItemBase<GW2ItemType.CONSUMABLE, GW2ItemDetailConsumable> |
-  GW2ItemBase<GW2ItemType.CONTAINER, GW2ItemDetailWithType<GW2ItemContainerType>> |
-  GW2ItemBase<GW2ItemType.CRAFTING_MATERIAL> |
-  GW2ItemBase<GW2ItemType.GATHERING, GW2ItemDetailWithType<GW2ItemGatheringType>> |
-  GW2ItemBase<GW2ItemType.GIZMO, GW2ItemDetailGizmo> |
-  GW2ItemBase<GW2ItemType.KEY> |
-  GW2ItemBase<GW2ItemType.MINI_PET, GW2ItemDetailMiniPet> |
-  GW2ItemBase<GW2ItemType.TOOL, GW2ItemDetailTool> |
-  GW2ItemBase<GW2ItemType.TRAIT> |
-  GW2ItemBase<GW2ItemType.TRINKET, GW2ItemDetailTrinket> |
-  GW2ItemBase<GW2ItemType.TROPHY> |
-  GW2ItemBase<GW2ItemType.UPGRADE_COMPONENT, GW2ItemDetailUpgradeComponent> |
-  GW2ItemBase<GW2ItemType.WEAPON, GW2ItemDetailWeapon>
+  GW2ItemArmor |
+  GW2ItemBack |
+  GW2ItemBag |
+  GW2ItemConsumable |
+  GW2ItemContainer |
+  GW2ItemCraftingMaterial |
+  GW2ItemGathering |
+  GW2ItemGizmo |
+  GW2ItemKey |
+  GW2ItemMiniPet |
+  GW2ItemTool |
+  GW2ItemTrait |
+  GW2ItemTrinket |
+  GW2ItemTrophy |
+  GW2ItemUpgradeComponent |
+  GW2ItemWeapon
