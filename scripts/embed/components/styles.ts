@@ -2,8 +2,6 @@ import { borderColor, color, cssRaw, px, url, em } from '../libs'
 
 export * from '../libs'
 
-cssRaw(`@import ${url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap')};`)
-
 export const animations = {
   easing: 'ease-out',
   speed: '86ms'
@@ -126,3 +124,5 @@ export const zIndices = {
   traitlineOverlay: 50,
   traitlineTrait: 125
 }
+
+cssRaw(`@import ${url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap')};`)

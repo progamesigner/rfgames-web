@@ -1,6 +1,14 @@
-import { border, em, margin, px, style, stylesheet } from '../../libs'
-
-import { colors, layouts, sizes } from '../styles'
+import {
+  border,
+  colors,
+  em,
+  layouts,
+  margin,
+  px,
+  sizes,
+  style,
+  stylesheet
+} from '../styles'
 
 export const icon = stylesheet({
   root: {

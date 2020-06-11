@@ -1,15 +1,17 @@
 import {
   border,
+  colors,
   deg,
   em,
   keyframes,
+  layouts,
   percent,
   rotate,
+  sizes,
   style,
-  stylesheet
-} from '../../libs'
-
-import { colors, layouts, sizes, zIndices } from '../styles'
+  stylesheet,
+  zIndices
+} from '../styles'
 
 const spin = keyframes({
   from: {

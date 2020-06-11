@@ -1,6 +1,4 @@
-import { em, style } from '../../libs'
-
-import { layouts } from '../styles'
+import { em, layouts, style } from '../styles'
 
 export const root = style({
   alignItems: 'center',

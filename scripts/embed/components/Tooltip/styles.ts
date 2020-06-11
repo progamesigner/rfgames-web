@@ -1,15 +1,19 @@
 import {
+  animations,
   border,
   calc,
+  colors,
   em,
+  fonts,
+  layouts,
   percent,
   px,
+  sizes,
   style,
   stylesheet,
-  viewWidth
-} from '../../libs'
-
-import { animations, colors, fonts, layouts, sizes, zIndices } from '../styles'
+  viewWidth,
+  zIndices
+} from '../styles'
 
 export const root = style({
   ...fonts.tooltip,

@@ -1,6 +1,4 @@
-import { keyframes, px, style } from '../../libs'
-
-import { colors } from '../styles'
+import { colors, keyframes, px, style } from '../styles'
 
 const loading = keyframes({
   from: {

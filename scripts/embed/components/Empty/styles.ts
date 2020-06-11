@@ -1,6 +1,4 @@
-import { em, style, stylesheet } from '../../libs'
-
-import { sizes } from '../styles'
+import { em, sizes, style, stylesheet } from '../styles'
 
 export const icon = stylesheet({
   root: {

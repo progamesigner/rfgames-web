@@ -1,6 +1,12 @@
-import { em, percent, polygon, style, stylesheet } from '../../libs'
-
-import { colors, sizes } from '../styles'
+import {
+  colors,
+  em,
+  percent,
+  polygon,
+  sizes,
+  style,
+  stylesheet
+} from '../styles'
 
 const hexagonPoints = [
   [50, 0],

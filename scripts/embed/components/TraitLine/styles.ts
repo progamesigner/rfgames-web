@@ -1,18 +1,22 @@
 import {
+  animations,
   border,
+  colors,
   deg,
   em,
+  images,
   keyframes,
+  layouts,
   percent,
   polygon,
   px,
   quote,
+  sizes,
   style,
   stylesheet,
-  url
-} from '../../libs'
-
-import { animations, colors, images, layouts, sizes, zIndices } from '../styles'
+  url,
+  zIndices
+} from '../styles'
 
 const SQRT2 = Math.sqrt(2)
 const SQRT3 = Math.sqrt(3)
