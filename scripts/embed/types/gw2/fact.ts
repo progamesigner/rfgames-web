@@ -27,6 +27,7 @@ export const enum GW2FactType {
   RADIUS = 'Radius',
   RANGE = 'Range',
   RECHARGE = 'Recharge',
+  STUN_BREAK = 'StunBreak',
   TIME = 'Time',
   UNBLOCKABLE = 'Unblockable'
 }
@@ -114,6 +115,10 @@ export interface GW2FactRecharge extends GW2FactBase<GW2FactType.RECHARGE> {
   value: number;
 }
 
+export interface GW2FactStunBreak extends GW2FactBase<GW2FactType.STUN_BREAK> {
+  value: true;
+}
+
 export interface GW2FactTime extends GW2FactBase<GW2FactType.TIME> {
   duration: number;
 }
@@ -142,6 +147,7 @@ export type GW2Fact =
   GW2FactRadius |
   GW2FactRange |
   GW2FactRecharge |
+  GW2FactStunBreak |
   GW2FactTime |
   GW2FactUnblockable
 

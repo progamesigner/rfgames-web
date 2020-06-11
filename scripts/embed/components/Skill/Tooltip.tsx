@@ -47,7 +47,7 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
 
       {
         skill.facts ? skill.facts.map((fact, index) => {
-          return <TooltipFact key={index} data={fact} />
+          return <TooltipFact key={index} fact={fact} />
         }) :
         null
       }

@@ -53,7 +53,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
           {m.trust(markup(trait.description, styles.flavors))}
         </TooltipBody>
         {trait.facts.map((fact, index) => {
-          return <TooltipFact key={index} data={fact} />
+          return <TooltipFact key={index} fact={fact} />
         })}
       </TooltipContent>
     ])

@@ -10,7 +10,7 @@ import { attributeToName, calculateFactDamage, markup } from './lib'
 import * as styles from './styles'
 
 interface FactTooltipAttributes extends m.Attributes {
-  data: GW2Fact;
+  fact: GW2Fact;
 }
 
 class FactContainer implements m.Component<m.Attributes> {
@@ -65,7 +65,7 @@ class FactText implements m.Component<m.Attributes> {
 export class TooltipFact implements m.Component<FactTooltipAttributes> {
   public view({
     attrs: {
-      data: fact
+      fact
     }
   }: m.Vnode<FactTooltipAttributes>): m.Children {
     switch (fact.type) {
@@ -170,6 +170,11 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
         return <FactContainer className={styles.fact.recharge}>
           <FactText>{fact.value}</FactText>
           <FactIcon className={styles.fact.rechargeIcon} src={fact.icon} />
+        </FactContainer>
+      case GW2FactType.STUN_BREAK:
+        return <FactContainer>
+          <FactIcon src={fact.icon} />
+          <FactText>{markup(fact.text)}</FactText>
         </FactContainer>
       case GW2FactType.TIME:
         return <FactContainer>
