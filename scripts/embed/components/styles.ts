@@ -87,10 +87,14 @@ export const images = {
 export const layouts = {
   applyCount: 0.0125,
   gap: 0.25,
+  loaderWidth: 0.25,
   rechargeOffset: 0.5,
   tooltipBorder: 0.125,
   tooltipOffset: 0.5,
-  tooltipRadius: 0.125
+  tooltipRadius: 0.125,
+  traitlineConnectorHeight: 0.25,
+  traitlineConnectorRadius: 0.0625,
+  traitlineConnectorWidth: 1.5
 }
 
 export const sizes = {

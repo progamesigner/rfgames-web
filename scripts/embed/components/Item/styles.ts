@@ -1,4 +1,4 @@
-import { border, em, margin, px, rem, style, stylesheet } from '../../libs'
+import { border, em, margin, px, style, stylesheet } from '../../libs'
 
 import { colors, layouts, sizes } from '../styles'
 
@@ -51,7 +51,6 @@ export const tooltip = stylesheet({
       width: px(1)
     }),
     borderColor: colors.tooltipItemBorder,
-    borderRadius: rem(0.0625),
     flexGrow: 0,
     flexShrink: 0,
     height: em(sizes.tooltipItemIcon),
@@ -83,8 +82,8 @@ export const tooltip = stylesheet({
     marginRight: em(layouts.gap)
   },
   upgradeIconSize: {
-    height: rem(sizes.tooltipUpgradeIcon),
-    width: rem(sizes.tooltipUpgradeIcon)
+    height: em(sizes.tooltipUpgradeIcon),
+    width: em(sizes.tooltipUpgradeIcon)
   },
   upgradeName: {
     color: colors.bonusActive.toString()

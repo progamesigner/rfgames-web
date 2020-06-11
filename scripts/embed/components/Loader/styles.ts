@@ -4,7 +4,6 @@ import {
   em,
   keyframes,
   percent,
-  rem,
   rotate,
   style,
   stylesheet
@@ -44,7 +43,7 @@ export const loader = style({
   border: border({
     color: colors.loaderBorder.toString(),
     style: 'solid',
-    width: rem(0.25)
+    width: em(layouts.loaderWidth)
   }),
   borderRadius: percent(50),
   borderTopColor: 'currentColor',

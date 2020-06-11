@@ -7,7 +7,6 @@ import {
   polygon,
   px,
   quote,
-  rem,
   style,
   stylesheet,
   url
@@ -274,13 +273,13 @@ export const connector = stylesheet({
         backgroundColor: colors.traitlineConnector.toString(),
         backgroundImage: images.traitlineConnector.toString(),
         backgroundRepeat: 'repeat-x',
-        borderRadius: rem(0.0625),
+        borderRadius: em(layouts.traitlineConnectorRadius),
         content: quote(''),
         display: 'block',
-        height: rem(0.25),
-        left: rem(-0.75),
+        height: em(layouts.traitlineConnectorHeight),
+        left: em(-layouts.traitlineConnectorWidth / 2),
         position: 'absolute',
-        width: rem(1.5),
+        width: em(layouts.traitlineConnectorWidth),
         zIndex: zIndices.traitlineConnector
       },
       [`@media screen and (max-width: ${px(480)})`]: {
@@ -291,7 +290,7 @@ export const connector = stylesheet({
   toTop: {
     $nest: {
       '&::after': {
-        top: rem(-sizes.traitIcon / 2),
+        top: em(-sizes.traitIcon / 2),
         transform: `rotate(${deg(-connectorAngle)}) scaleX(${connectorScaleFactor})`
       }
     }
@@ -301,7 +300,7 @@ export const connector = stylesheet({
   toBottom: {
     $nest: {
       '&::after': {
-        bottom: rem(-sizes.traitIcon / 2),
+        bottom: em(-sizes.traitIcon / 2),
         transform: `rotate(${deg(connectorAngle)}) scaleX(${connectorScaleFactor})`
       }
     }
@@ -309,7 +308,7 @@ export const connector = stylesheet({
   fromTop: {
     $nest: {
       '&::after': {
-        top: rem(-sizes.traitIcon / 2),
+        top: em(-sizes.traitIcon / 2),
         transform: `rotate(${deg(connectorAngle)}) scaleX(${connectorScaleFactor})`
       }
     }
@@ -319,7 +318,7 @@ export const connector = stylesheet({
   fromBottom: {
     $nest: {
       '&::after': {
-        bottom: rem(-sizes.traitIcon / 2),
+        bottom: em(-sizes.traitIcon / 2),
         transform: `rotate(${deg(-connectorAngle)}) scaleX(${connectorScaleFactor})`
       }
     }
