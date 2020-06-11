@@ -52,6 +52,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       disableText,
       disableTextLink,
       disableTooltip,
+      link,
       overrideText,
       specialization,
       store
@@ -78,7 +79,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={buildWikiLink(specialization.name)} />:
+            <Link href={link || buildWikiLink(specialization.name)} />:
             null
           }
         </Icon> :
@@ -91,7 +92,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(specialization.name)}
+              href={link || buildWikiLink(specialization.name)}
               {...!disableTextLink && tooltipEvents}
             >{name}</Link> :
             name

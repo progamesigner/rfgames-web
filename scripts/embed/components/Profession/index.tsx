@@ -37,6 +37,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
       disableIconLink,
       disableText,
       disableTextLink,
+      link,
       overrideText,
       profession
     }
@@ -55,7 +56,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={buildWikiLink(profession.name)} /> :
+            <Link href={link || buildWikiLink(profession.name)} /> :
             null
           }
         </Icon> :
@@ -68,7 +69,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(profession.name)}
+              href={link || buildWikiLink(profession.name)}
             >{name}</Link> :
             name
           }</Text> :

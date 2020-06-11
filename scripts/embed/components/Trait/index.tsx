@@ -53,6 +53,7 @@ export class Trait implements m.Component<TraitAttributes> {
       disableText,
       disableTextLink,
       disableTooltip,
+      link,
       overrideText,
       store,
       trait
@@ -79,7 +80,7 @@ export class Trait implements m.Component<TraitAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={buildWikiLink(trait.name)} /> :
+            <Link href={link || buildWikiLink(trait.name)} /> :
             null
           }
         </Icon> :
@@ -95,7 +96,7 @@ export class Trait implements m.Component<TraitAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(trait.name)}
+              href={link || buildWikiLink(trait.name)}
               {...!disableTextLink && tooltipEvents}
             >{name}</Link> :
             name

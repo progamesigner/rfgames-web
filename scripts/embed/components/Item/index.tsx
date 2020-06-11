@@ -49,15 +49,16 @@ interface ItemAttributes extends
 export class Item implements m.Component<ItemAttributes> {
   public view({
     attrs: {
-      item,
       disableIcon,
       disableIconLink,
       disableIconPlaceholder,
       disableText,
       disableTextLink,
       disableTooltip,
-      overrideText,
       infusions,
+      item,
+      link,
+      overrideText,
       stat,
       store,
       upgradeCount,
@@ -89,7 +90,7 @@ export class Item implements m.Component<ItemAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={buildWikiLink(item.name)} /> :
+            <Link href={link || buildWikiLink(item.name)} /> :
             null
           }
         </Icon> :
@@ -105,7 +106,7 @@ export class Item implements m.Component<ItemAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(item.name)}
+              href={link || buildWikiLink(item.name)}
               {...!disableTextLink && tooltipEvents}
             >{name}</Link> :
             name
