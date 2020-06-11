@@ -10,7 +10,7 @@ import {
   TooltipHead
 } from '../Tooltip'
 
-import { addSkillTypeTags, markup } from './lib'
+import { addSkillTypeTags, markup, sortFacts } from './lib'
 
 import * as styles from './styles'
 
@@ -46,7 +46,7 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
       }
 
       {
-        skill.facts ? skill.facts.map((fact, index) => {
+        skill.facts ? sortFacts(skill.facts).map((fact, index) => {
           return <TooltipFact key={index} fact={fact} />
         }) :
         null

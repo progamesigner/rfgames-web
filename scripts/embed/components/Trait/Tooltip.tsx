@@ -13,7 +13,7 @@ import {
   TooltipHead
 } from '../Tooltip'
 
-import { markup } from './lib'
+import { markup, sortFacts } from './lib'
 
 import * as styles from './styles'
 
@@ -52,7 +52,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
         <TooltipBody>
           {m.trust(markup(trait.description, styles.flavors))}
         </TooltipBody>
-        {trait.facts.map((fact, index) => {
+        {sortFacts(trait.facts).map((fact, index) => {
           return <TooltipFact key={index} fact={fact} />
         })}
       </TooltipContent>
