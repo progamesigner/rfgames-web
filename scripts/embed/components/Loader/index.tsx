@@ -4,6 +4,7 @@ import { cx } from '../../libs'
 import {
   HasIconAttributes,
   HasIconPlaceholderAttributes,
+  HasInlineAttributes,
   HasTextAttributes
 } from '../../types'
 
@@ -17,6 +18,7 @@ interface LoaderAttributes extends
   m.Attributes,
   HasIconAttributes,
   HasIconPlaceholderAttributes,
+  HasInlineAttributes,
   HasTextAttributes
 {
   classLoader?: string;
@@ -32,6 +34,7 @@ export class Loader implements m.Component<LoaderAttributes> {
       disableIcon,
       disableIconPlaceholder,
       disableText,
+      inline,
       overrideText
     }
   }: m.Vnode<LoaderAttributes>): m.Children {
@@ -40,8 +43,12 @@ export class Loader implements m.Component<LoaderAttributes> {
         !disableIcon ?
         <Icon
           className={cx(styles.icon.root, classIcon, 'is-loader')}
-          classSize={cx(styles.icon.size, classSize)}
-          disablePlaceholder={disableIconPlaceholder}
+          classSize={cx(
+            { [styles.icon.block] : !inline },
+            { [styles.icon.inline] : inline },
+            classSize
+          )}
+          disablePlaceholder={disableIconPlaceholder || inline}
         ><span className={cx(styles.loader, classLoader)}></span></Icon> :
         null
       }

@@ -3,13 +3,14 @@ import {
   deg,
   keyframes,
   percent,
+  px,
   rem,
   rotate,
   style,
   stylesheet
 } from '../../libs'
 
-import { colors, sizes } from '../styles'
+import { colors, layouts, sizes } from '../styles'
 
 const spin = keyframes({
   from: {
@@ -23,7 +24,11 @@ const spin = keyframes({
 export const icon = stylesheet({
   root:{
   },
-  size: {
+  block: {
+    height: rem(sizes.emptyIcon),
+    width: rem(sizes.emptyIcon)
+  },
+  inline: {
     height: rem(sizes.emptyIcon),
     width: rem(sizes.emptyIcon)
   }
@@ -43,10 +48,10 @@ export const loader = style({
   }),
   borderRadius: percent(50),
   borderTopColor: 'currentColor',
-  bottom: rem(2 * sizes.gap),
+  bottom: px(layouts.gap * 2),
   display: 'block',
-  left: rem(2 * sizes.gap),
+  left: px(layouts.gap * 2),
   position: 'absolute',
-  right: rem(2 * sizes.gap),
-  top: rem(2 * sizes.gap)
+  right: px(layouts.gap * 2),
+  top: px(layouts.gap * 2)
 })
