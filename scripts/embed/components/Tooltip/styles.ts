@@ -90,7 +90,9 @@ export const fact = stylesheet({
     fontSize: rem(fonts.fact.fontSize)
   },
   icon: {
-    flexShrink: 0,
+    flexShrink: 0
+  },
+  iconSize: {
     height: rem(sizes.factIcon),
     width: rem(sizes.factIcon)
   },

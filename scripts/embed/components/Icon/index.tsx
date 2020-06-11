@@ -9,7 +9,7 @@ const COUNT_THRESHOLD = 1
 interface IconAttributes extends m.Attributes {
   applyCount?: number;
   classSize?: string;
-  inline?: boolean;
+  placeholder?: boolean;
   src?: string;
 }
 
@@ -19,7 +19,7 @@ export class Icon implements m.Component<IconAttributes> {
       applyCount,
       className,
       classSize,
-      inline,
+      placeholder,
       src,
       ...attrs
     },
@@ -28,9 +28,9 @@ export class Icon implements m.Component<IconAttributes> {
     return <div
       className={cx(
         styles.root,
-        inline ? styles.inline : styles.block,
-        classSize,
+        placeholder && styles.placeholder,
         className,
+        classSize,
         makeClassName('icon')
       )}
       {...attrs}

@@ -12,7 +12,7 @@ import { Icon } from '../Icon'
 import { Link } from '../Link'
 import { Name } from '../Name'
 
-import { buildWikiLink } from '../helpers'
+import { buildWikiLink, parseProfessionClassNames } from './lib'
 
 import * as styles from './styles'
 
@@ -32,35 +32,33 @@ export class Profession implements m.Component<ProfessionAttributes> {
       disableIcon,
       disableLink,
       disableText,
-      inline,
       text,
       ...attrs
     }
   }: m.Vnode<ProfessionAttributes>): m.Children {
-    const {
-      icon_big,
-      id,
-      name
-    } = data
+    const classes = parseProfessionClassNames(data)
 
-    return <Container inline={!disableText || inline} type="profession" {...attrs}>
+    return <Container inline={true} type="profession" {...attrs}>
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, 'is-profession', `is-${id.toLowerCase()}`)}
-          classSize={styles.size}
-          inline={!disableText || inline}
-          src={icon_big}
+          className={cx(styles.icon, classes)}
+          classSize={styles.iconSize}
+          placeholder={true}
+          src={data.icon_big}
         /> :
         null
       }
       {
         !disableText ?
-        <Name className={styles.name}>
+        <Name className={cx(styles.name, classes)}>
           {
             !disableLink ?
-            <Link className={styles.link} href={buildWikiLink(name)}>{text || name}</Link> :
-            text || name
+            <Link
+              className={styles.link}
+              href={buildWikiLink(data.name)}
+            >{text || data.name}</Link> :
+            text || data.name
           }</Name> :
         null
       }

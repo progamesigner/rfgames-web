@@ -2,14 +2,16 @@ import { rem, style, stylesheet } from '../../libs'
 
 import { colors, sizes } from '../styles'
 
-export const icon = style({
+export const icon = style()
+
+export const iconSize = style({
   height: rem(sizes.traitIcon),
   width: rem(sizes.traitIcon)
 })
 
-export const link = style()
-
 export const name = style()
+
+export const link = style()
 
 export const tooltip = stylesheet({
   head: {

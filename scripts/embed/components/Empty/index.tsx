@@ -20,20 +20,20 @@ export class Empty implements m.Component<EmptyAttributes> {
       disableLink,
       disableText,
       disableTooltip,
-      inline,
       type,
       ...attrs
     },
     children
   }: m.Vnode<EmptyAttributes>): m.Children {
-    noop(disableLink, disableTooltip)
+    noop(disableLink, disableText, disableTooltip)
 
-    return <Container inline={!disableText || inline} type={type} {...attrs}>
+    return <Container inline={true} type={type} {...attrs}>
       {
         !disableIcon ?
         <Icon
-          inline={false}
           className={styles.icon}
+          classSize={styles.iconSize}
+          placeholder={true}
         /> :
         null
       }

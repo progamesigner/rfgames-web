@@ -47,16 +47,16 @@ export const enum GW2SkillType {
 
 export interface GW2Skill extends GW2Record<number> {
   name: string;
-  description: string;
+  description?: string;
   icon: string;
   chat_link: string;
-  type: GW2SkillType;
-  weapon_type: string;
+  type?: GW2SkillType;
+  weapon_type?: string;
   professions: Array<string>;
-  slot: GW2SkillSlot;
-  facts: Array<GW2Fact>;
-  traited_facts: Array<GW2TraitedFact>;
-  categories: Array<GW2SkillCategory | string>;
+  slot?: GW2SkillSlot;
+  facts?: Array<GW2Fact>;
+  traited_facts?: Array<GW2TraitedFact>;
+  categories?: Array<GW2SkillCategory | string>;
   attunement?: GW2SkillAttunement;
   cost?: number;
   dual_wield?: string;

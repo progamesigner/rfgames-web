@@ -1,5 +1,6 @@
 import * as m from 'mithril'
 
+import { cx } from '../../libs'
 import {
   GW2Item,
   GW2ItemStat,
@@ -10,14 +11,14 @@ import {
   TooltipType
 } from '../../types'
 
-import { bindTooltipEvents, buildWikiLink } from '../helpers'
-
 import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Link } from '../Link'
 import { Name } from '../Name'
 
 import './Tooltip'
+
+import { bindTooltipEvents, buildWikiLink, parseItemClassNames } from './lib'
 
 import * as styles from './styles'
 
@@ -46,7 +47,6 @@ export class Item implements m.Component<ItemAttributes> {
       disableText,
       disableTooltip,
       infusions,
-      inline,
       stat,
       store,
       upgradeCount,
@@ -54,10 +54,7 @@ export class Item implements m.Component<ItemAttributes> {
       ...attrs
     }
   }: m.Vnode<ItemAttributes>): m.Children {
-    const {
-      icon,
-      name
-    } = data
+    const classes = parseItemClassNames(data)
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_ITEM, {
@@ -69,28 +66,29 @@ export class Item implements m.Component<ItemAttributes> {
       }) :
       {}
 
-    return <Container inline={!disableText || inline} type="item" {...attrs}>
+    return <Container inline={true} type="item" {...attrs}>
       {
         !disableIcon ?
         <Icon
-          className={styles.icon}
-          inline={!disableText || inline}
-          src={icon}
+          className={cx(styles.icon, classes)}
+          classSize={styles.iconSize}
+          placeholder={true}
+          src={data.icon}
           {...tooltipEvents}
         /> :
         null
       }
       {
         !disableText ?
-        <Name className={styles.name} {...disableLink && tooltipEvents}>
+        <Name className={cx(styles.name, classes)} {...disableLink && tooltipEvents}>
           {
             !disableLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(name)}
+              href={buildWikiLink(data.name)}
               {...!disableLink && tooltipEvents}
-            >{name}</Link> :
-            name
+            >{data.name}</Link> :
+            data.name
           }
         </Name> :
         null

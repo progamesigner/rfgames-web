@@ -28,7 +28,11 @@ export const icon = style({
   top: 0
 })
 
-export const block = style({
+export const image = (src: string): string => style({
+  backgroundImage: url(src)
+})
+
+export const placeholder = style({
   backgroundColor: colors.iconBackground.toString(),
   backgroundImage: images.iconBackground,
   border: border({
@@ -36,12 +40,6 @@ export const block = style({
     style: 'solid',
     width: px(1)
   })
-})
-
-export const inline = style()
-
-export const image = (src: string): string => style({
-  backgroundImage: url(src)
 })
 
 export const applyCount = style({

@@ -39,14 +39,11 @@ export class Tooltip implements m.Component<TooltipAttributes> {
   }: m.Vnode<TooltipAttributes>): m.Children {
     const renderer = Tooltip.renderers[type]
 
-    if (show && data && renderer) {
+    if (show && renderer) {
       return <div
         className={cx(styles.root, makeClassName('tooltip'), className)}
         {...attrs}
-      >{renderer({
-        ...data,
-        store
-      })}</div>
+      >{renderer({ ...data, store })}</div>
     }
 
     return null

@@ -14,11 +14,12 @@ import { Icon } from '../Icon'
 import { Link } from '../Link'
 import { Name } from '../Name'
 
-import { bindTooltipEvents, buildWikiLink } from '../helpers'
-
 import './Tooltip'
 
+import { bindTooltipEvents, buildWikiLink, parseSkillClassNames } from './lib'
+
 import * as styles from './styles'
+import { cx } from '../../libs'
 
 interface SkillAttributes extends
   m.Attributes,
@@ -38,15 +39,11 @@ export class Skill implements m.Component<SkillAttributes> {
       disableLink,
       disableText,
       disableTooltip,
-      inline,
       store,
       ...attrs
     }
   }: m.Vnode<SkillAttributes>): m.Children {
-    const {
-      icon,
-      name
-    } = data
+    const classes = parseSkillClassNames(data)
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SKILL, {
@@ -54,28 +51,32 @@ export class Skill implements m.Component<SkillAttributes> {
       }) :
       {}
 
-    return <Container inline={!disableText || inline} type="skill" {...attrs}>
+    return <Container inline={true} type="skill" {...attrs}>
       {
         !disableIcon ?
         <Icon
-          src={icon}
-          inline={!disableText || inline}
-          className={styles.icon}
+          className={cx(styles.icon, classes)}
+          classSize={styles.iconSize}
+          placeholder={true}
+          src={data.icon}
           {...tooltipEvents}
         /> :
         null
       }
       {
         !disableText ?
-        <Name className={styles.name} {...disableLink && tooltipEvents}>
+        <Name
+          className={cx(styles.name, classes)}
+          {...disableLink && tooltipEvents}
+        >
           {
             !disableLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(name)}
+              href={buildWikiLink(data.name)}
               {...!disableLink && tooltipEvents}
-            >{name}</Link> :
-            name
+            >{data.name}</Link> :
+            data.name
           }
         </Name> :
         null

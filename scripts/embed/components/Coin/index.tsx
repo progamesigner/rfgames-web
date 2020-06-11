@@ -15,6 +15,21 @@ interface CoinAttributes extends m.Attributes {
   value: number
 }
 
+function renderIcon(
+  value: number,
+  className: string,
+  image: string
+): m.Children {
+  return <span className={className}>
+    <span>{value}</span>
+    <Icon
+      className={styles.icon}
+      classSize={styles.iconSize}
+      src={image}
+    />
+  </span>
+}
+
 export class Coin implements m.Component<CoinAttributes> {
   public view({
     attrs: {
@@ -28,26 +43,9 @@ export class Coin implements m.Component<CoinAttributes> {
     const copper = value % 100
 
     return <div className={cx(styles.root, className)} {...attrs}>
-      {
-        gold > 0 ?
-        <span className={styles.gold}>
-          <span>{gold}</span>
-          <Icon classSize={styles.size} inline={true} src={goldImage} />
-        </span> :
-        null
-      }
-      {
-        gold > 0 || silver > 0 ?
-        <span className={styles.silver}>
-          <span>{silver}</span>
-          <Icon classSize={styles.size} inline={true} src={silverImage} />
-        </span> :
-        null
-      }
-      <span className={styles.copper}>
-        <span>{copper}</span>
-        <Icon classSize={styles.size} inline={true} src={copperImage} />
-      </span>
+      {gold > 0 ? renderIcon(gold, styles.gold, goldImage) : null}
+      {gold > 0 || silver > 0 ? renderIcon(silver, styles.silver, silverImage) : null}
+      {renderIcon(copper, styles.copper, copperImage)}
     </div>
   }
 }

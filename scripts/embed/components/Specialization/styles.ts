@@ -2,7 +2,7 @@ import { percent, polygon, rem, style, stylesheet } from '../../libs'
 
 import { colors, sizes } from '../styles'
 
-const HEXAGON_POINTS = [
+const hexagonPoints = [
   [50, 0],
   [93, 25],
   [93, 75],
@@ -12,14 +12,17 @@ const HEXAGON_POINTS = [
 ].map(([x, y]) => `${percent(x)} ${percent(y)}`)
 
 export const icon = style({
-  clipPath: polygon(HEXAGON_POINTS),
+  clipPath: polygon(hexagonPoints)
+})
+
+export const iconSize = style({
   height: rem(sizes.specializationIcon),
   width: rem(sizes.specializationIcon)
 })
 
-export const link = style()
-
 export const name = style()
+
+export const link = style()
 
 export const tooltip = stylesheet({
   head: {

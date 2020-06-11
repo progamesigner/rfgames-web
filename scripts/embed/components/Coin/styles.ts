@@ -2,10 +2,13 @@ import { colors, rem, sizes, style } from '../styles'
 
 export const root = style()
 
-export const size = style({
-  height: rem(sizes.coinIcon),
+export const icon = style({
   marginLeft: rem(sizes.gap),
-  marginRight: rem(2 * sizes.gap),
+  marginRight: rem(2 * sizes.gap)
+})
+
+export const iconSize = style({
+  height: rem(sizes.coinIcon),
   width: rem(sizes.coinIcon)
 })
 

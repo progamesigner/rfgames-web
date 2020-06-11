@@ -5,7 +5,7 @@ import { GW2Item, GW2ItemType } from '../../types'
 
 import { Icon } from '../Icon'
 
-import { markup } from '../parser'
+import { markup } from './lib'
 
 import * as styles from './styles'
 
@@ -28,7 +28,12 @@ export class UpgradeContent implements m.Component<UpgradeContentAttributes> {
     if (item) {
       if (item.type === GW2ItemType.UPGRADE_COMPONENT) {
         return <div className={styles.tooltip.upgrade} {...attrs}>
-          <Icon className={styles.tooltip.upgradeIcon} src={item.icon} />
+          <Icon
+            className={styles.tooltip.upgradeIcon}
+            classSize={styles.tooltip.upgradeIconSize}
+            placeholder={true}
+            src={item.icon}
+          />
           <span className={styles.tooltip.upgradeName}>
             {item.name}
             {
@@ -70,7 +75,11 @@ export class UpgradeContent implements m.Component<UpgradeContentAttributes> {
     }
 
     return <div className={styles.tooltip.upgrade} {...attrs}>
-      <Icon className={styles.tooltip.upgradeIcon} />
+      <Icon
+        className={styles.tooltip.upgradeIcon}
+        classSize={styles.tooltip.upgradeIconSize}
+        placeholder={true}
+      />
       <span>{unusedText}</span>
     </div>
   }

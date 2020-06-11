@@ -23,7 +23,6 @@ export const enum GW2TraitSlot {
 
 export interface GW2Trait extends GW2Record<number> {
   name: string;
-  profession: string;
   icon: string;
   description: string;
   specialization: number;

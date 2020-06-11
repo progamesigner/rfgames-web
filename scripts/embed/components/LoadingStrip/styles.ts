@@ -7,7 +7,7 @@ const loading = keyframes({
     opacity: 0.5
   },
   to: {
-    opacity: 0.8
+    opacity: 0.75
   }
 })
 

@@ -1,5 +1,7 @@
 import * as m from 'mithril'
 
+import { slice } from 'lodash/fp'
+
 import { GW2Trait, TooltipType } from '../../types'
 
 import { SkillTooltip } from '../Skill/Tooltip'
@@ -11,7 +13,7 @@ import {
   TooltipHead
 } from '../Tooltip'
 
-import { markup } from '../parser'
+import { markup } from './lib'
 
 import * as styles from './styles'
 
@@ -27,19 +29,21 @@ declare module '../../types/tooltip' {
 
 interface TraitTooltipAttributes extends m.Attributes {
   trait: GW2Trait;
+  index?: number;
 }
 
 export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
   public view({
     attrs: {
+      index,
       trait
     }
   }: m.Vnode<TraitTooltipAttributes>): m.Children {
     return m.fragment({}, [
       ...(
         trait.skills ?
-        trait.skills.slice(0, 1).map(skill =>
-          <SkillTooltip key={skill.id} {...skill} />
+        slice(index || 0, 1)(trait.skills).map(skill =>
+          <SkillTooltip key={skill.id} skill={skill} />
         ) :
         []
       ),

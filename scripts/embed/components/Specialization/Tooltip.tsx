@@ -27,9 +27,9 @@ export class SpecializationTooltip implements m.Component<SpecializationTooltipA
     }
   }: m.Vnode<SpecializationTooltipAttributes>): m.Children {
     return<TooltipContent type="specialization">
-      <TooltipHead className={styles.tooltip.head}>
-        {specialization.name}
-      </TooltipHead>
+      <TooltipHead
+        className={styles.tooltip.head}
+      >{specialization.name}</TooltipHead>
     </TooltipContent>
   }
 }

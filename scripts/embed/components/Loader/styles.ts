@@ -21,7 +21,7 @@ const spin = keyframes({
 
 export const icon = style()
 
-export const size = style({
+export const iconSize = style({
   height: rem(sizes.emptyIcon),
   width: rem(sizes.emptyIcon)
 })

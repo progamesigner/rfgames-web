@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { cx } from '../../libs'
+import { cx, makeClassName } from '../../libs'
 
 import * as styles from './styles'
 
@@ -21,8 +21,11 @@ export class LoadingStrip implements m.Component<LoadingStripAttributes> {
       return <span className={className} {...attrs}>{children}</span>
     }
 
-    return <span className={cx(styles.root, className)} {...attrs}>
-      {long ? 'Loading just a sec...' : 'Loading...'}
+    return <span
+      className={cx(styles.root, className, makeClassName('loading'))}
+      {...attrs}
+    >
+      {long ? 'Wait just a second ...' : 'Loading ...'}
     </span>
   }
 }

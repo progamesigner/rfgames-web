@@ -2,7 +2,9 @@ import { border, margin, px, rem, style, stylesheet } from '../../libs'
 
 import { colors, sizes } from '../styles'
 
-export const icon = style({
+export const icon = style()
+
+export const iconSize = style({
   height: rem(sizes.itemIcon),
   width: rem(sizes.itemIcon)
 })
@@ -70,8 +72,10 @@ export const tooltip = stylesheet({
     marginLeft: rem(sizes.gap)
   },
   upgradeIcon: {
+    marginRight: rem(sizes.gap)
+  },
+  upgradeIconSize: {
     height: rem(sizes.tooltipUpgradeIcon),
-    marginRight: rem(sizes.gap),
     width: rem(sizes.tooltipUpgradeIcon)
   },
   upgradeName: {

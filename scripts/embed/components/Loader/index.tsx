@@ -21,20 +21,18 @@ export class Loader implements m.Component<LoaderAttributes> {
       classSize,
       disableIcon,
       disableLink,
-      disableText,
-      inline,
       ...attrs
     }
   }: m.Vnode<LoaderAttributes>): m.Children {
     noop(disableLink)
 
-    return <Container inline={!disableText || inline} type="loader" {...attrs}>
+    return <Container inline={false} type="loader" {...attrs}>
       {
         !disableIcon ?
         <Icon
           className={cx(styles.icon, 'is-loader')}
-          classSize={cx(styles.size, classSize)}
-          inline={!disableText || inline}
+          classSize={cx(styles.iconSize, classSize)}
+          placeholder={true}
         ><span className={cx(styles.loader, className)}></span></Icon> :
         null
       }

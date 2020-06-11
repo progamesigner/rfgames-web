@@ -5,18 +5,12 @@ import { GW2Fact, GW2FactType } from '../../types'
 
 import { Icon } from '../Icon'
 
-import { attributeToName, markup } from '../parser'
+import { attributeToName, calculateFactDamage, markup } from './lib'
 
 import * as styles from './styles'
 
-const BASE_DAMAGE = 266.0
-
 interface FactTooltipAttributes extends m.Attributes {
   data: GW2Fact;
-}
-
-function calculateDamage(hitCount: number, damageMultiplier = 1): number {
-  return Math.round(BASE_DAMAGE * damageMultiplier * hitCount)
 }
 
 class FactContainer implements m.Component<m.Attributes> {
@@ -45,7 +39,8 @@ class FactIcon implements m.Component<m.Attributes> {
   }: m.Vnode<m.Attributes>) {
     return <Icon
       className={cx(styles.fact.icon, className)}
-      inline={true}
+      classSize={styles.fact.iconSize}
+      placeholder={true}
       src={src}
       {...attrs}
     >{children}</Icon>
@@ -68,11 +63,11 @@ class FactText implements m.Component<m.Attributes> {
 }
 
 export class TooltipFact implements m.Component<FactTooltipAttributes> {
-  public view({ attrs }: m.Vnode<FactTooltipAttributes>): m.Children {
-    const {
+  public view({
+    attrs: {
       data: fact
-    } = attrs
-
+    }
+  }: m.Vnode<FactTooltipAttributes>): m.Children {
     switch (fact.type) {
       case GW2FactType.ATTRIBUTE_ADJUST:
         return <FactContainer>
@@ -112,8 +107,8 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
           <FactIcon src={fact.icon} />
           {
             fact.hit_count > 1 ?
-            <FactText>{markup(fact.text)}<FactText>({fact.hit_count}x)</FactText>: {calculateDamage(fact.hit_count, fact.dmg_multiplier)}</FactText> :
-            <FactText>{markup(fact.text)}: {calculateDamage(fact.hit_count)}</FactText>
+            <FactText>{markup(fact.text)}<FactText>({fact.hit_count}x)</FactText>: {calculateFactDamage(fact.hit_count, fact.dmg_multiplier)}</FactText> :
+            <FactText>{markup(fact.text)}: {calculateFactDamage(fact.hit_count)}</FactText>
           }
         </FactContainer>
       case GW2FactType.DISTANCE:
