@@ -81,16 +81,30 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
     this.container = null
   }
 
-  public onupdate({ dom }: m.VnodeDOM<TooltipContainerAttributes>): void {
+  public onupdate({
+    attrs: {
+      store
+    },
+    dom
+  }: m.VnodeDOM<TooltipContainerAttributes>): void {
+    const {
+      tooltip
+    } = store.getState()
+
     this.container = dom || null
+
+    if (!tooltip || !tooltip.show) {
+      this.style = {
+        ...this.style,
+        opacity: 0 // @note: reset opacity to void blinks
+      }
+    }
   }
 
-  public view({ attrs }: m.Vnode<TooltipContainerAttributes>): m.Children {
-    const {
-      className,
-      store
-    } = attrs
-
+  public view({ attrs: {
+    className,
+    store
+  } }: m.Vnode<TooltipContainerAttributes>): m.Children {
     const {
       tooltip
     } = store.getState()
