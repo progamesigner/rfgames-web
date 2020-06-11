@@ -39,10 +39,12 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
       [GW2Resources.SPECIALIZATION]: specializations
     } = store.getState()
 
-    if (id && specializations && specializations[id]) {
-      if (isFetchFinished(specializations[id].state) && specializations[id].data) {
+    if (id > 0 && specializations) {
+      const specialization = specializations[id]
+
+      if (specialization && isFetchFinished(specialization.state)) {
         return <TraitLine
-          data={specializations[id].data}
+          data={specialization.data}
           selectedTraits={selectedTraits}
           store={store}
           {...attrs}
@@ -52,6 +54,6 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
       return <Loader {...attrs} />
     }
 
-    return <Empty type="traitline" {...attrs} />
+    return <Empty store={store} {...attrs} />
   }
 }

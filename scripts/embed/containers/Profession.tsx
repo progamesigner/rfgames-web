@@ -34,7 +34,7 @@ export class ProfessionContainer implements m.Component<ProfessionContainerAttri
       [GW2Resources.PROFESSION]: professions
     } = store.getState()
 
-    if (id.length > 0 && professions) {
+    if (id && professions) {
       const profession = professions[id]
 
       if (profession && isFetchFinished(profession.state)) {

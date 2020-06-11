@@ -1,4 +1,7 @@
 export { create as createItem } from './item'
 export { create as createProfession } from './profession'
 export { create as createSkill } from './skill'
+export { create as createSpecialization } from './specialization'
 export { create as createTooltip } from './tooltip'
+export { create as createTrait } from './trait'
+export { create as createTraitline } from './traitline'

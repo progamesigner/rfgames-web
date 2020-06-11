@@ -127,6 +127,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
             <TraitIcon
               id={data.minor_traits[tier]}
               className={styles.traits.minorIcon}
+              disableTooltip={disableTooltip}
               store={store}
             />
           </div>,
@@ -144,6 +145,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
                 styles.traits.majorIcon,
                 { [styles.traits.inactive]: !isTraitActive(majorTrait, selectedTraitIds) }
               )}
+              disableTooltip={disableTooltip}
               store={store}
             />)}
           </div>,

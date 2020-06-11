@@ -1,10 +1,14 @@
 import * as m from 'mithril'
 
-import { TraitLine } from '../containers'
+import {
+  TraitLine,
+  TraitMode,
+  TraitPosition,
+  TraitSelection
+} from '../containers'
 import { EmbedStore } from '../types'
 
-import { extractNumber, extractStringList } from './helpers'
-import { TraitMode, TraitPosition, TraitSelection } from '../containers/TraitLine'
+import { extractBoolean, extractNumber, extractStringList } from './extractor'
 
 function parseSelectedTrait(trait: string): TraitSelection {
   const traitId = parseInt(trait)
@@ -39,6 +43,9 @@ function parseSelectedTrait(trait: string): TraitSelection {
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {
     id: extractNumber(element, 'id', -1),
+
+    disableTooltip: extractBoolean(element, 'disable-tooltip', false),
+
     selectedTraits: extractStringList(element, 'traits').map(parseSelectedTrait)
   }
 
