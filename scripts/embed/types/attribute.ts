@@ -2,10 +2,6 @@ import { EmbedStore } from './store'
 
 type ID = number | string | symbol
 
-export interface HasEmptyAttributes {
-  overrideTooltipText?: string;
-}
-
 export interface HasIconAttributes {
   disableIcon: boolean;
 }
@@ -41,6 +37,10 @@ export interface HasTextLinkAttributes extends HasLinkAttributes {
 
 export interface HasTooltipAttributes {
   disableTooltip: boolean;
+}
+
+export interface HasTooltipTextAttributes {
+  overrideTooltipText?: string;
 }
 
 export interface HasWindowAttributes {

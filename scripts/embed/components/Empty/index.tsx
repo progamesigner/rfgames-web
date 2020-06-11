@@ -2,7 +2,7 @@ import * as m from 'mithril'
 
 import { cx } from '../../libs'
 import {
-  HasEmptyAttributes,
+  HasTooltipTextAttributes,
   HasIconAttributes,
   HasIconPlaceholderAttributes,
   HasStoreAttributes,
@@ -21,7 +21,7 @@ import * as styles from './styles'
 
 interface EmptyAttributes extends
   m.Attributes,
-  HasEmptyAttributes,
+  HasTooltipTextAttributes,
   HasIconAttributes,
   HasIconPlaceholderAttributes,
   HasStoreAttributes,
