@@ -2,6 +2,10 @@ import { EmbedStore } from './store'
 
 type ID = number | string | symbol
 
+export interface HasEmptyTextAttributes {
+  overrideEmptyText?: string;
+}
+
 export interface HasIconAttributes {
   classIcon?: string;
   classSize?: string;

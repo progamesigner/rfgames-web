@@ -2,12 +2,18 @@ import * as m from 'mithril'
 
 import { fetchItem, fetchItemStat } from '../actions'
 import { Empty, Item, Loader } from '../components'
-import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasEmptyTextAttributes,
+  HasIDAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type ItemContainerAttributes =
   m.Attributes &
+  HasEmptyTextAttributes &
   HasIDAttributes<number> &
   HasStoreAttributes
 
@@ -31,6 +37,7 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
   public view({
     attrs: {
       id,
+      overrideEmptyText,
       stat,
       store,
       ...attrs
@@ -56,6 +63,10 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
       return <Loader {...attrs} />
     }
 
-    return <Empty store={store} {...attrs} />
+    return <Empty
+      overrideEmptyText={overrideEmptyText}
+      store={store}
+      {...attrs}
+    />
   }
 }

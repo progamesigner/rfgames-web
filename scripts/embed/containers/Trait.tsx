@@ -2,12 +2,18 @@ import * as m from 'mithril'
 
 import { fetchTrait } from '../actions'
 import { Empty, Loader, Trait } from '../components'
-import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasEmptyTextAttributes,
+  HasIDAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type TraitContainerAttributes =
   m.Attributes &
+  HasEmptyTextAttributes &
   HasIDAttributes<number> &
   HasStoreAttributes
 
@@ -25,6 +31,7 @@ export class TraitContainer implements m.Component<TraitContainerAttributes> {
   public view({
     attrs: {
       id,
+      overrideEmptyText,
       store,
       ...attrs
     }
@@ -47,6 +54,10 @@ export class TraitContainer implements m.Component<TraitContainerAttributes> {
       return <Loader {...attrs} />
     }
 
-    return <Empty store={store} {...attrs} />
+    return <Empty
+      overrideEmptyText={overrideEmptyText}
+      store={store}
+      {...attrs}
+    />
   }
 }

@@ -2,6 +2,7 @@ import * as m from 'mithril'
 
 import { cx } from '../../libs'
 import {
+  HasEmptyTextAttributes,
   HasIconAttributes,
   HasIconPlaceholderAttributes,
   HasInlineAttributes,
@@ -26,6 +27,7 @@ interface EmptyAttributes extends
   HasIconPlaceholderAttributes,
   HasInlineAttributes,
   HasStoreAttributes,
+  HasEmptyTextAttributes,
   HasTextAttributes,
   HasTooltipAttributes,
   HasTooltipTextAttributes
@@ -43,12 +45,13 @@ export class Empty implements m.Component<EmptyAttributes> {
       disableText,
       disableTooltip,
       inline,
+      overrideEmptyText,
       overrideText,
       overrideTooltipText,
       store
     }
   }: m.Vnode<EmptyAttributes>): m.Children {
-    const text = overrideText || 'Empty'
+    const text = overrideEmptyText || overrideText || 'Not Found'
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.TEXT, {

@@ -2,12 +2,18 @@ import * as m from 'mithril'
 
 import { fetchProfession } from '../actions'
 import { Empty, Loader, Profession } from '../components'
-import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasEmptyTextAttributes,
+  HasIDAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type ProfessionContainerAttributes =
   m.Attributes &
+  HasEmptyTextAttributes &
   HasIDAttributes<string> &
   HasStoreAttributes
 
@@ -26,6 +32,7 @@ export class ProfessionContainer implements m.Component<ProfessionContainerAttri
   public view({
     attrs: {
       id,
+      overrideEmptyText,
       store,
       ...attrs
     }
@@ -48,6 +55,10 @@ export class ProfessionContainer implements m.Component<ProfessionContainerAttri
       return <Loader {...attrs} />
     }
 
-    return <Empty store={store} {...attrs} />
+    return <Empty
+      overrideEmptyText={overrideEmptyText}
+      store={store}
+      {...attrs}
+    />
   }
 }

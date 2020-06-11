@@ -17,6 +17,7 @@ export function create(store: EmbedStore, element: Element): m.Component {
     disableTooltip: extractBoolean(element, 'disable-tooltip', false),
     inline: extractBoolean(element, 'inline', false),
     link: extractString(element, 'link', ''),
+    overrideEmptyText: extractString(element, 'empty-text', ''),
     overrideText: extractString(element, 'text', '')
   }
 

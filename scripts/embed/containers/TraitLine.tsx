@@ -2,7 +2,12 @@ import * as m from 'mithril'
 
 import { fetchSpecialization } from '../actions'
 import { Empty, Loader, TraitLine, TraitSelection } from '../components'
-import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasEmptyTextAttributes,
+  HasIDAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
@@ -10,6 +15,7 @@ export { TraitMode, TraitPosition, TraitSelection } from '../components'
 
 interface TraitLineContainerAttributes extends
   m.Attributes,
+  HasEmptyTextAttributes,
   HasIDAttributes<number>,
   HasStoreAttributes
 {
@@ -30,6 +36,7 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
   public view({
     attrs: {
       id,
+      overrideEmptyText,
       selectedTraits,
       store,
       ...attrs
@@ -54,6 +61,10 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
       return <Loader {...attrs} />
     }
 
-    return <Empty store={store} {...attrs} />
+    return <Empty
+      overrideEmptyText={overrideEmptyText}
+      store={store}
+      {...attrs}
+    />
   }
 }

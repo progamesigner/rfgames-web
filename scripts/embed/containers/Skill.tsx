@@ -2,12 +2,18 @@ import * as m from 'mithril'
 
 import { fetchSkill } from '../actions'
 import { Empty, Loader, Skill } from '../components'
-import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasEmptyTextAttributes,
+  HasIDAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type SkillContainerAttributes =
   m.Attributes &
+  HasEmptyTextAttributes &
   HasIDAttributes<number> &
   HasStoreAttributes
 
@@ -24,8 +30,9 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
 
   public view({
     attrs: {
-      store,
       id,
+      overrideEmptyText,
+      store,
       ...attrs
     }
   }: m.Vnode<SkillContainerAttributes>): m.Children {
@@ -47,6 +54,10 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
       return <Loader {...attrs} />
     }
 
-    return <Empty store={store} {...attrs} />
+    return <Empty
+      overrideEmptyText={overrideEmptyText}
+      store={store}
+      {...attrs}
+    />
   }
 }

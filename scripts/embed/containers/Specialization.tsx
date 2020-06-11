@@ -2,12 +2,18 @@ import * as m from 'mithril'
 
 import { fetchSpecialization } from '../actions'
 import { Empty, Loader, Specialization } from '../components'
-import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
+import {
+  GW2Resources,
+  HasEmptyTextAttributes,
+  HasIDAttributes,
+  HasStoreAttributes
+} from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type SpecializationContainerAttributes =
   m.Attributes &
+  HasEmptyTextAttributes &
   HasIDAttributes<number> &
   HasStoreAttributes
 
@@ -24,8 +30,9 @@ export class SpecializationContainer implements m.Component<SpecializationContai
 
   public view({
     attrs: {
-      store,
       id,
+      overrideEmptyText,
+      store,
       ...attrs
     }
   }: m.Vnode<SpecializationContainerAttributes>): m.Children {
@@ -47,6 +54,10 @@ export class SpecializationContainer implements m.Component<SpecializationContai
       return <Loader {...attrs} />
     }
 
-    return <Empty store={store} {...attrs} />
+    return <Empty
+      overrideEmptyText={overrideEmptyText}
+      store={store}
+      {...attrs}
+    />
   }
 }

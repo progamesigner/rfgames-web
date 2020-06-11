@@ -8,7 +8,12 @@ import {
 } from '../containers'
 import { EmbedStore } from '../types'
 
-import { extractBoolean, extractNumber, extractStringList } from './extractor'
+import {
+  extractBoolean,
+  extractNumber,
+  extractStringList,
+  extractString
+} from './extractor'
 
 function parseSelectedTrait(trait: string): TraitSelection {
   const traitId = parseInt(trait)
@@ -44,6 +49,7 @@ export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {
     id: extractNumber(element, 'id', -1),
 
+    overrideEmptyText: extractString(element, 'empty-text', ''),
     disableTooltip: extractBoolean(element, 'disable-tooltip', false),
 
     selectedTraits: extractStringList(element, 'traits').map(parseSelectedTrait)
