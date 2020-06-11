@@ -25,11 +25,6 @@ export const icon = stylesheet({
   }
 })
 
-export const iconSize = style({
-  height: rem(sizes.specializationIcon),
-  width: rem(sizes.specializationIcon)
-})
-
 export const name = style()
 
 export const link = style()

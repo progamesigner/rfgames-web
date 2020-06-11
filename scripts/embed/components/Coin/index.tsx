@@ -23,8 +23,8 @@ function renderIcon(
   return <span className={className}>
     <span>{value}</span>
     <Icon
-      className={styles.icon}
-      classSize={styles.iconSize}
+      className={styles.icon.root}
+      classSize={styles.icon.size}
       src={image}
     />
   </span>

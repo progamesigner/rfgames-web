@@ -42,8 +42,8 @@ export class Loader implements m.Component<LoaderAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, classIcon, 'is-loader')}
-          classSize={cx(styles.iconSize, classSize)}
+          className={cx(styles.icon.root, classIcon, 'is-loader')}
+          classSize={cx(styles.icon.size, classSize)}
           disablePlaceholder={disableIconPlaceholder}
         ><span className={cx(styles.loader, classLoader)}></span></Icon> :
         null

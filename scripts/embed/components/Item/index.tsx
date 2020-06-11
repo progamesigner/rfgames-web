@@ -5,9 +5,10 @@ import {
   GW2Item,
   GW2ItemStat,
   HasIconAttributes,
-  HasIconPlaceholderAttributes,
   HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
   HasIDAttributes,
+  HasInlineAttributes,
   HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes,
@@ -33,10 +34,11 @@ interface ItemAttributes extends
   HasIconAttributes,
   HasIconLinkAttributes,
   HasIconPlaceholderAttributes,
+  HasIDAttributes<number>,
+  HasInlineAttributes,
+  HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes,
-  HasIDAttributes<number>,
-  HasStoreAttributes,
   HasTooltipAttributes
 {
   item: GW2Item;
@@ -56,6 +58,7 @@ export class Item implements m.Component<ItemAttributes> {
       disableTextLink,
       disableTooltip,
       infusions,
+      inline,
       item,
       link,
       overrideText,
@@ -82,9 +85,9 @@ export class Item implements m.Component<ItemAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, classes)}
-          classSize={styles.iconSize}
-          disablePlaceholder={disableIconPlaceholder}
+          className={cx(styles.icon.root, classes)}
+          classSize={inline ? styles.icon.inline : styles.icon.size}
+          disablePlaceholder={disableIconPlaceholder || inline}
           src={item.icon}
           {...tooltipEvents}
         >
