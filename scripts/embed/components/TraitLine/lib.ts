@@ -32,7 +32,7 @@ export function mapSelectionToIds(
       case TraitMode.POSITION:
         return (
           value !== TraitPosition.NONE ?
-          specialization.major_traits[value + 3 * tier - 1] :
+          specialization.major_traits[value + tier * 3 - 1] :
           0
         )
       case TraitMode.ID:

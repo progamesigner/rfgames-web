@@ -85,9 +85,12 @@ export const images = {
 export const layouts = {
   applyCount: 0.0125,
   gap: 0.25,
+  iconBorder: 0.0625,
   loaderWidth: 0.25,
+  loadingStripRadius: 0.125,
   rechargeOffset: 0.5,
   tooltipBorder: 0.125,
+  tooltipMaximumWidth: 22.5,
   tooltipOffset: 0.5,
   tooltipRadius: 0.125,
   traitlineConnectorHeight: 0.25,
@@ -123,6 +126,14 @@ export const zIndices = {
   traitlineHexagon: 75,
   traitlineOverlay: 50,
   traitlineTrait: 125
+}
+
+export function boxShadow(color: string): string {
+  return `${em(0.0625)} ${em(0.0625)} ${em(0.1875)} ${color}`
+}
+
+export function textShadow(color: string): string {
+  return `${em(0.0625)} ${em(0.0625)} ${em(0.0625)} ${color}`
 }
 
 cssRaw(`@import ${url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap')};`)

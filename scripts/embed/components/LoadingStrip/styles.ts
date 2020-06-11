@@ -1,4 +1,4 @@
-import { colors, keyframes, px, style } from '../styles'
+import { colors, em, layouts, keyframes, style } from '../styles'
 
 const loading = keyframes({
   from: {
@@ -15,7 +15,7 @@ export const root = style({
   animationIterationCount: 'infinite',
   animationName: loading,
   backgroundColor: colors.loaderStrip.toString(),
-  borderRadius: px(2),
+  borderRadius: em(layouts.loadingStripRadius),
   color: colors.loaderStrip.toString(),
   opacity: 0.5,
   textShadow: 'none'

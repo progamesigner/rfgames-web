@@ -5,8 +5,8 @@ import {
   fonts,
   images,
   layouts,
-  px,
   style,
+  textShadow,
   url,
   zIndices
 } from '../styles'
@@ -49,7 +49,7 @@ export const placeholder = style({
   border: border({
     color: colors.iconBorder.toString(),
     style: 'solid',
-    width: px(1)
+    width: em(layouts.iconBorder)
   })
 })
 
@@ -61,7 +61,7 @@ export const applyCount = style({
   padding: 0, // @note: force reset style for compatibility
   pointerEvents: 'none',
   position: 'absolute',
-  textShadow: `0 0 ${px(2)} ${colors.applyCountShadow.toString()}`,
+  textShadow: textShadow(colors.applyCountShadow.toString()),
   right: em(layouts.applyCount),
   zIndex: zIndices.applyCount
 })

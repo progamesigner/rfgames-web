@@ -4,7 +4,6 @@ import {
   em,
   layouts,
   margin,
-  px,
   sizes,
   style,
   stylesheet
@@ -56,7 +55,7 @@ export const tooltip = stylesheet({
   icon: {
     border: border({
       style: 'solid',
-      width: px(1)
+      width: em(layouts.iconBorder)
     }),
     borderColor: colors.tooltipItemBorder,
     flexGrow: 0,

@@ -1,6 +1,7 @@
 import {
   animations,
   border,
+  boxShadow,
   calc,
   colors,
   em,
@@ -11,6 +12,7 @@ import {
   sizes,
   style,
   stylesheet,
+  textShadow,
   viewWidth,
   zIndices
 } from '../styles'
@@ -19,12 +21,12 @@ export const root = style({
   ...fonts.tooltip,
   color: colors.tooltipText.toString(),
   left: em(layouts.tooltipOffset),
-  maxWidth: px(360),
+  maxWidth: em(layouts.tooltipMaximumWidth),
   opacity: 0,
   pointerEvents: 'none',
   position: 'fixed',
   textAlign: 'left',
-  textShadow: `${px(1)} ${px(1)} ${px(1)} ${colors.tooltipTextShadow.toString()}`,
+  textShadow: textShadow(colors.tooltipTextShadow.toString()),
   top: em(layouts.tooltipOffset),
   transition: `opacity ${animations.speed} ${animations.easing}`,
   zIndex: zIndices.tooltip,
@@ -45,7 +47,7 @@ export const container = style({
     style: 'solid',
     width: em(layouts.tooltipBorder)
   }),
-  boxShadow: `${px(1)} ${px(1)} ${px(3)} ${colors.tooltipShadow.toString()}`,
+  boxShadow: boxShadow(colors.tooltipShadow.toString()),
   borderRadius: em(layouts.tooltipRadius),
   padding: em(layouts.gap),
   width: percent(100),
