@@ -4,18 +4,18 @@ import { CSSProperties } from 'typestyle/lib/types'
 
 import { bindEventListener, UnbindEventListener } from '../../libs'
 
-import { hideTooltip } from '../actions'
+import { destroyTooltip, hideTooltip } from '../actions'
 import { Tooltip } from '../components'
-import { HasStoreAttributes, HasWindowAttributes } from '../types'
+import { EmbedStore, HasStoreAttributes, HasWindowAttributes } from '../types'
 import { px, transform, translate3d } from '../libs'
 
-const borderWidth = 1
-const borderGap = 8
+const tooltipOffset = 8
 
-type TooltipContainerAttributes =
-  m.Attributes &
-  HasStoreAttributes &
-  HasWindowAttributes
+interface TooltipContainerAttributes extends
+  m.Attributes,
+  HasStoreAttributes,
+  HasWindowAttributes {
+}
 
 function calculateStyle(
   window: Window,
@@ -29,11 +29,11 @@ function calculateStyle(
     transform: transform(translate3d(
       px(Math.min(
         x,
-        window.innerWidth - container.offsetWidth - (2 * borderGap) - borderWidth
+        window.innerWidth - container.offsetWidth - tooltipOffset
       )),
       px(Math.min(
         y,
-        window.innerHeight - container.offsetHeight - (2 * borderGap) - borderWidth
+        window.innerHeight - container.offsetHeight - tooltipOffset
       )),
       0
     ))
@@ -42,63 +42,41 @@ function calculateStyle(
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
   protected container: Element | null = null;
-
   protected style: CSSProperties | null = {
     opacity: 0 // @note: avoid wrong positioned tooltip shown
   };
+  protected unbindMouseMoveEvent: UnbindEventListener | null = null;
+  protected unbindTransitionEndEvent: UnbindEventListener | null = null;
 
-  protected unbindEvent: UnbindEventListener | null= null;
-
-  public oncreate({ attrs }: m.VnodeDOM<TooltipContainerAttributes>): void {
-    const {
+  public oncreate({
+    attrs: {
+      store,
       window
-    } = attrs
-
-    this.unbindEvent = bindEventListener(window, 'mousemove', event => {
-      if (this.container) {
-        const style = calculateStyle(
-          window,
-          this.container as HTMLElement,
-          event as MouseEvent
-        )
-
-        this.style = {
-          ...this.style,
-          ...style,
-          opacity: 1
-        }
-
-        window.requestAnimationFrame(() => m.redraw())
-      }
-    })
+    }
+  }: m.VnodeDOM<TooltipContainerAttributes>): void {
+    this.unbindMouseMoveEvent = bindEventListener(
+      window,
+      'mousemove',
+      this.handleMouseMove.bind(this, window, store)
+    )
   }
 
   public onremove(): void {
-    if (this.unbindEvent) {
-      this.unbindEvent()
-      this.unbindEvent = null
+    if (this.unbindMouseMoveEvent) {
+      this.unbindMouseMoveEvent()
+      this.unbindMouseMoveEvent = null
     }
+
+    if (this.unbindTransitionEndEvent) {
+      this.unbindTransitionEndEvent()
+      this.unbindTransitionEndEvent = null
+    }
+
     this.container = null
   }
 
-  public onupdate({
-    attrs: {
-      store
-    },
-    dom
-  }: m.VnodeDOM<TooltipContainerAttributes>): void {
-    const {
-      tooltip
-    } = store.getState()
-
+  public onupdate({ dom }: m.VnodeDOM<TooltipContainerAttributes>): void {
     this.container = dom || null
-
-    if (!tooltip || !tooltip.show) {
-      this.style = {
-        ...this.style,
-        opacity: 0 // @note: reset opacity to void blinks
-      }
-    }
   }
 
   public view({ attrs: {
@@ -113,10 +91,55 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
 
     return <Tooltip
       className={className}
+      data={tooltip && tooltip.data}
       ontouchend={hide}
       store={store}
       style={this.style}
-      {...tooltip}
+      type={tooltip && tooltip.type}
     ></Tooltip>
+  }
+
+  protected handleMouseMove(
+    window: Window,
+    store: EmbedStore,
+    event: Event
+  ): void {
+    const {
+      tooltip
+    } = store.getState()
+
+    this.style = {
+      ...this.style,
+      opacity: 0 // @note: reset opacity to avoid blinks
+    }
+
+    if (this.container) {
+      if (tooltip && tooltip.show) {
+        const style = calculateStyle(
+          window,
+          this.container as HTMLElement,
+          event as MouseEvent
+        )
+
+        this.style = {
+          ...this.style,
+          ...style,
+          opacity: 1
+        }
+
+        if (this.unbindTransitionEndEvent) {
+          this.unbindTransitionEndEvent()
+          this.unbindTransitionEndEvent = null
+        }
+
+        window.requestAnimationFrame(() => m.redraw())
+      } else if (!this.unbindTransitionEndEvent) {
+        this.unbindTransitionEndEvent = bindEventListener(
+          this.container,
+          'transitionend',
+          () => store.dispatch(destroyTooltip())
+        )
+      }
+    }
   }
 }

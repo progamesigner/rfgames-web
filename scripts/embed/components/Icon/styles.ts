@@ -56,7 +56,8 @@ export const placeholder = style({
 export const applyCount = style({
   bottom: rem(sizes.applyCountPadding),
   color: colors.applyCount.toString(),
-  fontSize: rem(fonts.applyCount.fontSize),
+  fontFamily: fonts.applyCount.fontFamily,
+  fontSize: px(fonts.applyCount.fontSize),
   margin: 0, // @note: force reset style for compatibility
   padding: 0, // @note: force reset style for compatibility
   pointerEvents: 'none',

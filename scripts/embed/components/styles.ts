@@ -49,18 +49,20 @@ export const colors = {
 
 export const fonts = {
   applyCount: {
-    fontSize: 0.75
+    fontFamily: 'Open Sans, sans-serif',
+    fontSize: 12
   },
   fact: {
-    fontSize: 0.85
+    fontFamily: 'Open Sans, sans-serif',
+    fontSize: 14
   },
   text: {
     fontFamily: 'Open Sans, sans-serif',
-    fontSize: 0.875
+    fontSize: 14
   },
   title: {
     fontFamily: 'Menomonia, serif',
-    fontSize: 1
+    fontSize: 16
   }
 }
 
@@ -81,8 +83,10 @@ export const sizes = {
   rechargeIcon: 1.125,
   skillIcon: 4,
   specializationIcon: 4,
+  tooltipBorder: 2,
   tooltipEffectIcon: 2,
   tooltipItemIcon: 2.5,
+  tooltipOffset: 8,
   tooltipRadius: 0.125,
   tooltipUpgradeIcon: 1.5,
   traitIcon: 2.5

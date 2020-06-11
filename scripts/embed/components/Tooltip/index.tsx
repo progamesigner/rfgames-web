@@ -14,7 +14,6 @@ export { TooltipHead } from './Head'
 interface TooltipAttributes extends m.Attributes, HasStoreAttributes {
   data: ExtractTooltipDataType<TooltipType>;
   type: TooltipType;
-  show: boolean;
 }
 
 export class Tooltip implements m.Component<TooltipAttributes> {
@@ -31,7 +30,6 @@ export class Tooltip implements m.Component<TooltipAttributes> {
     attrs: {
       className,
       data,
-      show,
       store,
       type,
       ...attrs
@@ -39,7 +37,7 @@ export class Tooltip implements m.Component<TooltipAttributes> {
   }: m.Vnode<TooltipAttributes>): m.Children {
     const renderer = Tooltip.renderers[type]
 
-    if (show && renderer) {
+    if (renderer) {
       return <div
         className={cx(styles.root, makeClassName('tooltip'), className)}
         {...attrs}

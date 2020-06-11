@@ -1,11 +1,38 @@
 import { Reducer } from 'redux'
 
-import { TOGGLE_TOOLTIP, ToggleTooltipAction } from '../actions'
+import {
+  TOGGLE_TOOLTIP,
+  ToggleTooltipAction,
+  UPDATE_TOOLTIP,
+  UpdateTooltipAction
+} from '../actions'
 import { EmbedState } from '../types'
 
-function tooltipReducer(
+function toggleTooltip(
   state: EmbedState = {},
   action: ToggleTooltipAction
+): EmbedState {
+  const {
+    payload: {
+      show
+    }
+  } = action
+
+  if (state.tooltip) {
+    return {
+      ...state,
+      tooltip: {
+        ...state.tooltip,
+        show
+      }
+    }
+  }
+  return state
+}
+
+function updateTooltip(
+  state: EmbedState = {},
+  action: UpdateTooltipAction
 ): EmbedState {
   const {
     payload: tooltip
@@ -18,5 +45,6 @@ function tooltipReducer(
 }
 
 export const tooltipReducers = {
-  [TOGGLE_TOOLTIP]: tooltipReducer as Reducer<EmbedState>
+  [UPDATE_TOOLTIP]: updateTooltip as Reducer<EmbedState>,
+  [TOGGLE_TOOLTIP]: toggleTooltip as Reducer<EmbedState>
 }
