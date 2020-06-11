@@ -9,7 +9,7 @@ import {
   viewWidth
 } from '../../libs'
 
-import { colors, fonts, sizes, zIndices } from '../styles'
+import { animations, colors, fonts, sizes, zIndices } from '../styles'
 
 export const root = style({
   color: colors.tooltipText.toString(),
@@ -22,6 +22,7 @@ export const root = style({
   textShadow: `${px(1)} ${px(1)} ${px(1)} ${colors.tooltipTextShadow.toString()}`,
   top: rem(0.5),
   zIndex: zIndices.tooltip,
+  transition: `opacity ${animations.speed} ${animations.easing}`,
   $nest: {
     [`@media screen and (max-width: ${px(480)})`]: {
       bottom: rem(0.5),
