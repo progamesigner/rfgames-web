@@ -25,6 +25,7 @@ function renderIcon(
     <Icon
       className={styles.icon.root}
       classSize={styles.icon.size}
+      disablePlaceholder={true}
       src={image}
     />
   </span>
