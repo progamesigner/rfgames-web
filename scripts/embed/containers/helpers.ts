@@ -7,7 +7,7 @@ type AsyncAction<A extends Array<unknown>> = (dispatch: Dispatch, getState: GetS
 type WrappedAsyncAction<S, A extends Array<unknown>> = (store: S, ...args: A) => void
 
 export function isFetchFinished(state: GW2AsyncState): boolean {
-  return state !== GW2AsyncState.PENDING
+  return state === GW2AsyncState.DONE
 }
 
 export function wrapAsyncAction<A extends Array<unknown>>(

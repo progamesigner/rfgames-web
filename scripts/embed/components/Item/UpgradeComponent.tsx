@@ -9,29 +9,28 @@ import { markup } from './lib'
 
 import * as styles from './styles'
 
-interface UpgradeContentAttributes {
-  data?: GW2Item;
-  upgradeCount: number;
+interface UpgradeComponentAttributes {
+  item?: GW2Item;
   unusedText: string;
+  upgradeCount: number;
 }
 
-export class UpgradeContent implements m.Component<UpgradeContentAttributes> {
+export class UpgradeComponent implements m.Component<UpgradeComponentAttributes> {
   public view({
     attrs:
     {
-      data: item,
-      upgradeCount,
+      item,
       unusedText,
-      ...attrs
+      upgradeCount
     }
-  }: m.Vnode<UpgradeContentAttributes>): m.Children {
+  }: m.Vnode<UpgradeComponentAttributes>): m.Children {
     if (item) {
       if (item.type === GW2ItemType.UPGRADE_COMPONENT) {
-        return <div className={styles.tooltip.upgrade} {...attrs}>
+        return <div className={styles.tooltip.upgrade}>
           <Icon
             className={styles.tooltip.upgradeIcon}
             classSize={styles.tooltip.upgradeIconSize}
-            placeholder={true}
+            disablePlaceholder={true}
             src={item.icon}
           />
           <span className={styles.tooltip.upgradeName}>
@@ -74,11 +73,11 @@ export class UpgradeContent implements m.Component<UpgradeContentAttributes> {
       return null
     }
 
-    return <div className={styles.tooltip.upgrade} {...attrs}>
+    return <div className={styles.tooltip.upgrade}>
       <Icon
         className={styles.tooltip.upgradeIcon}
         classSize={styles.tooltip.upgradeIconSize}
-        placeholder={true}
+        disablePlaceholder={false}
       />
       <span>{unusedText}</span>
     </div>

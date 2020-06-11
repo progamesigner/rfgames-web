@@ -2,19 +2,13 @@ import * as m from 'mithril'
 
 import { fetchSpecialization } from '../actions'
 import { Empty, Loader, Specialization } from '../components'
-import {
-  GW2Resources,
-  HasIDAttributes,
-  HasRenderAttributes,
-  HasStoreAttributes
-} from '../types'
+import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 type SpecializationContainerAttributes =
   m.Attributes &
   HasIDAttributes<number> &
-  HasRenderAttributes &
   HasStoreAttributes
 
 const fetch = wrapAsyncAction(fetchSpecialization)
@@ -39,17 +33,20 @@ export class SpecializationContainer implements m.Component<SpecializationContai
       [GW2Resources.SPECIALIZATION]: specializations
     } = store.getState()
 
-    if (id && specializations && specializations[id]) {
-      if (isFetchFinished(specializations[id].state) && specializations[id].data) {
+    if (id > 0 && specializations) {
+      const specialization = specializations[id]
+
+      if (specialization && isFetchFinished(specialization.state)) {
         return <Specialization
-          data={specializations[id].data}
-          store={store} {...attrs}
+          specialization={specialization.data}
+          store={store}
+          {...attrs}
         />
       }
 
       return <Loader {...attrs} />
     }
 
-    return <Empty type="specialization" {...attrs} />
+    return <Empty store={store} {...attrs} />
   }
 }

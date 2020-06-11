@@ -3,9 +3,13 @@ import * as m from 'mithril'
 import { cx } from '../../libs'
 import {
   GW2Specialization,
+  HasIconAttributes,
+  HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
   HasIDAttributes,
-  HasRenderAttributes,
   HasStoreAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasTooltipAttributes,
   TooltipType
 } from '../../types'
@@ -13,7 +17,7 @@ import {
 import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Link } from '../Link'
-import { Name } from '../Name'
+import { Text } from '../Text'
 
 import './Tooltip'
 
@@ -27,59 +31,72 @@ import * as styles from './styles'
 
 interface SpecializationAttributes extends
   m.Attributes,
+  HasIconAttributes,
+  HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
   HasIDAttributes<number>,
-  HasRenderAttributes,
   HasStoreAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasTooltipAttributes
 {
-  data: GW2Specialization;
+  specialization: GW2Specialization;
 }
 
 export class Specialization implements m.Component<SpecializationAttributes> {
   public view({
     attrs: {
-      data,
       disableIcon,
-      disableLink,
+      disableIconLink,
+      disableIconPlaceholder,
       disableText,
+      disableTextLink,
       disableTooltip,
-      store,
-      ...attrs
+      overrideText,
+      specialization,
+      store
     }
   }: m.Vnode<SpecializationAttributes>): m.Children {
-    const classes = parseSpecializationClassNames(data)
+    const classes = parseSpecializationClassNames(specialization)
+    const name = overrideText || specialization
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {
-        specialization: data
+        specialization
       }) :
       {}
 
-    return <Container inline={true} type="trait" {...attrs}>
+    return <Container type="specialization">
       {
         !disableIcon ?
         <Icon
           className={cx(styles.icon, classes)}
           classSize={styles.iconSize}
-          placeholder={true}
-          src={data.icon}
+          disablePlaceholder={disableIconPlaceholder}
+          src={specialization.icon}
           {...tooltipEvents}
-        /> :
+        >
+          {
+            !disableIconLink ?
+            <Link href={buildWikiLink(specialization.name)} />:
+            null
+          }
+        </Icon> :
         null
       }
       {
         !disableText ?
-        <Name className={cx(styles.name, classes)} {...disableLink && tooltipEvents}>
+        <Text className={cx(styles.name, classes)} {...disableTextLink && tooltipEvents}>
           {
-            !disableLink ?
+            !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(data.name)}
-              {...!disableLink && tooltipEvents}
-            >{data.name}</Link> :
-            data.name
+              href={buildWikiLink(specialization.name)}
+              {...!disableTextLink && tooltipEvents}
+            >{name}</Link> :
+            name
           }
-        </Name> :
+        </Text> :
         null
       }
     </Container>

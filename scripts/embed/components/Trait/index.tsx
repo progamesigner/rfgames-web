@@ -3,80 +3,104 @@ import * as m from 'mithril'
 import { cx } from '../../libs'
 
 import {
-  GW2Trait,
+  HasIconAttributes,
+  HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
   HasIDAttributes,
-  HasRenderAttributes,
   HasStoreAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasTooltipAttributes,
   TooltipType,
+  GW2Trait,
 } from '../../types'
 
 import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Link } from '../Link'
-import { Name } from '../Name'
+import { Text } from '../Text'
 
 import './Tooltip'
 
-import { bindTooltipEvents, buildWikiLink, parseTraitClassNames } from './lib'
+import {
+  bindTooltipEvents,
+  buildWikiLink,
+  parseTraitClassNames
+} from './lib'
 
 import * as styles from './styles'
 
 interface TraitAttributes extends
   m.Attributes,
+  HasIconAttributes,
+  HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasIDAttributes<number>,
-  HasRenderAttributes,
   HasStoreAttributes,
   HasTooltipAttributes
 {
-  data: GW2Trait;
+  trait: GW2Trait;
 }
 
 export class Trait implements m.Component<TraitAttributes> {
   public view({
     attrs: {
-      data,
       disableIcon,
-      disableLink,
+      disableIconLink,
+      disableIconPlaceholder,
       disableText,
+      disableTextLink,
       disableTooltip,
+      overrideText,
       store,
-      ...attrs
+      trait
     }
   }: m.Vnode<TraitAttributes>): m.Children {
-    const classes = parseTraitClassNames(data)
+    const classes = parseTraitClassNames(trait)
+    const name = overrideText || trait.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_TRAIT, {
-        trait: data
+        trait
       }) :
       {}
 
-    return <Container inline={true} type="trait" {...attrs}>
+    return <Container type="trait">
       {
         !disableIcon ?
         <Icon
           className={cx(styles.icon, classes)}
           classSize={styles.iconSize}
-          placeholder={true}
-          src={data.icon}
+          disablePlaceholder={disableIconPlaceholder}
+          src={trait.icon}
           {...tooltipEvents}
-        /> :
+        >
+          {
+            !disableIconLink ?
+            <Link href={buildWikiLink(trait.name)} /> :
+            null
+          }
+        </Icon> :
         null
       }
       {
         !disableText ?
-        <Name className={cx(styles.name, classes)} {...disableLink && tooltipEvents}>
+        <Text
+          className={cx(styles.name, classes)}
+          {...disableTextLink && tooltipEvents}
+        >
           {
-            !disableLink ?
+            !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(data.name)}
-              {...!disableLink && tooltipEvents}
-            >{data.name}</Link> :
-            data.name
+              href={buildWikiLink(trait.name)}
+              {...!disableTextLink && tooltipEvents}
+            >{name}</Link> :
+            name
           }
-        </Name> :
+        </Text> :
         null
       }
     </Container>

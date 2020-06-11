@@ -1,18 +1,11 @@
 import { style } from '../styles'
 
 export const root = style({
+  display: 'inline-block',
   position: 'relative',
   $nest: {
     '&, &::before, &::after, *': {
       boxSizing: 'border-box'
     }
   }
-})
-
-export const block = style({
-  display: 'block'
-})
-
-export const inline = style({
-  display: 'inline-block'
 })

@@ -34,15 +34,14 @@ export class Coin implements m.Component<CoinAttributes> {
   public view({
     attrs: {
       className,
-      value,
-      ...attrs
+      value
     }
   }: m.Vnode<CoinAttributes>): m.Children {
     const gold = Math.floor(value / 10000)
     const silver = Math.floor(value % 10000 / 100)
     const copper = value % 100
 
-    return <div className={cx(styles.root, className)} {...attrs}>
+    return <div className={cx(styles.root, className)}>
       {gold > 0 ? renderIcon(gold, styles.gold, goldImage) : null}
       {gold > 0 || silver > 0 ? renderIcon(silver, styles.silver, silverImage) : null}
       {renderIcon(copper, styles.copper, copperImage)}

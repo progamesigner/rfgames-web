@@ -1,12 +1,12 @@
 import * as m from 'mithril'
 
 import { fetchItem } from '../actions'
-import { LoadingStrip, UpgradeContent } from '../components'
+import { LoadingStrip, UpgradeComponent } from '../components'
 import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
-interface UpgradeContentContainerAttributes extends
+interface UpgradeComponentContainerAttributes extends
   m.Attributes,
   HasIDAttributes<number>,
   HasStoreAttributes
@@ -17,8 +17,8 @@ interface UpgradeContentContainerAttributes extends
 
 const fetch = wrapAsyncAction(fetchItem)
 
-export class UpgradeContentContainer implements m.Component<UpgradeContentContainerAttributes> {
-  public oninit({ attrs }: m.Vnode<UpgradeContentContainerAttributes>): void {
+export class UpgradeComponentContainer implements m.Component<UpgradeComponentContainerAttributes> {
+  public oninit({ attrs }: m.Vnode<UpgradeComponentContainerAttributes>): void {
     const {
       store,
       id
@@ -34,15 +34,17 @@ export class UpgradeContentContainer implements m.Component<UpgradeContentContai
       upgradeCount,
       ...attrs
     }
-  }: m.Vnode<UpgradeContentContainerAttributes>): m.Children {
+  }: m.Vnode<UpgradeComponentContainerAttributes>): m.Children {
     const {
       [GW2Resources.ITEM]: items
     } = store.getState()
 
-    if (id && items && items[id]) {
-      if (isFetchFinished(items[id].state) && items[id].data) {
-        return <UpgradeContent
-          data={items[id].data}
+    if (id > 0 && items) {
+      const item = items[id]
+
+      if (item && isFetchFinished(item.state)) {
+        return <UpgradeComponent
+          item={item.data}
           store={store}
           upgradeCount={upgradeCount}
           {...attrs}
@@ -52,6 +54,6 @@ export class UpgradeContentContainer implements m.Component<UpgradeContentContai
       return <LoadingStrip {...attrs} />
     }
 
-    return <UpgradeContent unusedText={unusedText} {...attrs} />
+    return <UpgradeComponent unusedText={unusedText} {...attrs} />
   }
 }

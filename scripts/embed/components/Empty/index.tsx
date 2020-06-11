@@ -1,43 +1,80 @@
 import * as m from 'mithril'
 
-import { noop } from 'lodash/fp'
-
-import { HasRenderAttributes } from '../../types'
+import { cx } from '../../libs'
+import {
+  HasEmptyAttributes,
+  HasIconAttributes,
+  HasIconPlaceholderAttributes,
+  HasStoreAttributes,
+  HasTextAttributes,
+  HasTooltipAttributes,
+  TooltipType
+} from '../../types'
 
 import { Container } from '../Container'
 import { Icon } from '../Icon'
+import { Text } from '../Text'
+
+import { bindTooltipEvents } from '../helpers'
 
 import * as styles from './styles'
 
-interface EmptyAttributes extends m.Attributes, HasRenderAttributes {
-  type: string;
+interface EmptyAttributes extends
+  m.Attributes,
+  HasEmptyAttributes,
+  HasIconAttributes,
+  HasIconPlaceholderAttributes,
+  HasStoreAttributes,
+  HasTextAttributes,
+  HasTooltipAttributes
+{
+  classIcon?: string;
+  classSize?: string;
+  classText?: string;
 }
 
 export class Empty implements m.Component<EmptyAttributes> {
   public view({
     attrs: {
+      classIcon,
+      classSize,
+      classText,
       disableIcon,
-      disableLink,
+      disableIconPlaceholder,
       disableText,
       disableTooltip,
-      type,
-      ...attrs
-    },
-    children
+      overrideText,
+      overrideTooltipText,
+      store
+    }
   }: m.Vnode<EmptyAttributes>): m.Children {
-    noop(disableLink, disableText, disableTooltip)
+    const text = overrideText || 'Empty'
 
-    return <Container inline={true} type={type} {...attrs}>
+    const tooltipEvents = !disableTooltip ?
+      bindTooltipEvents(store, TooltipType.TEXT, {
+        text: overrideTooltipText || text
+      }) :
+      {}
+
+    return <Container type="empty">
       {
         !disableIcon ?
         <Icon
-          className={styles.icon}
-          classSize={styles.iconSize}
-          placeholder={true}
+          className={cx(styles.icon, classIcon, 'is-empty')}
+          classSize={cx(styles.iconSize, classSize)}
+          disablePlaceholder={disableIconPlaceholder}
+          {...tooltipEvents}
         /> :
         null
       }
-      {children}
+      {
+        !disableText ?
+        <Text
+          className={cx(styles.text, classText, 'is-empty')}
+          {...tooltipEvents}
+        >{text}</Text> :
+        null
+      }
     </Container>
   }
 }

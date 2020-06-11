@@ -3,14 +3,17 @@ import * as m from 'mithril'
 import { cx } from '../../libs'
 import {
   GW2Profession,
+  HasIconAttributes,
+  HasIconLinkAttributes,
   HasIDAttributes,
-  HasRenderAttributes
+  HasTextAttributes,
+  HasTextLinkAttributes
 } from '../../types'
 
 import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Link } from '../Link'
-import { Name } from '../Name'
+import { Text } from '../Text'
 
 import { buildWikiLink, parseProfessionClassNames } from './lib'
 
@@ -18,48 +21,57 @@ import * as styles from './styles'
 
 interface ProfessionAttributes extends
   m.Attributes,
+  HasIconAttributes,
+  HasIconLinkAttributes,
   HasIDAttributes<string>,
-  HasRenderAttributes
+  HasTextAttributes,
+  HasTextLinkAttributes
 {
-  data: GW2Profession;
-  text?: string;
+  profession: GW2Profession;
 }
 
 export class Profession implements m.Component<ProfessionAttributes> {
   public view({
     attrs: {
-      data,
       disableIcon,
-      disableLink,
+      disableIconLink,
       disableText,
-      text,
-      ...attrs
+      disableTextLink,
+      overrideText,
+      profession
     }
   }: m.Vnode<ProfessionAttributes>): m.Children {
-    const classes = parseProfessionClassNames(data)
+    const classes = parseProfessionClassNames(profession)
+    const name = overrideText || profession.name
 
-    return <Container inline={true} type="profession" {...attrs}>
+    return <Container type="profession">
       {
         !disableIcon ?
         <Icon
           className={cx(styles.icon, classes)}
           classSize={styles.iconSize}
-          placeholder={true}
-          src={data.icon_big}
-        /> :
+          disablePlaceholder={true}
+          src={profession.icon_big}
+        >
+          {
+            !disableIconLink ?
+            <Link href={buildWikiLink(profession.name)} /> :
+            null
+          }
+        </Icon> :
         null
       }
       {
         !disableText ?
-        <Name className={cx(styles.name, classes)}>
+        <Text className={cx(styles.name, classes)}>
           {
-            !disableLink ?
+            !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(data.name)}
-            >{text || data.name}</Link> :
-            text || data.name
-          }</Name> :
+              href={buildWikiLink(profession.name)}
+            >{name}</Link> :
+            name
+          }</Text> :
         null
       }
     </Container>

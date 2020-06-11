@@ -8,13 +8,23 @@ import {
   sizes,
   style,
   url,
-  zIndices,
+  zIndices
 } from '../styles'
 
 export const root = style({
   display: 'inline-block',
   position: 'relative',
-  verticalAlign: 'middle'
+  verticalAlign: 'middle',
+  $nest: {
+    '& > a[href]': {
+      bottom: 0,
+      left: 0,
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      zIndex: zIndices.iconLink
+    }
+  }
 })
 
 export const icon = style({
@@ -25,7 +35,8 @@ export const icon = style({
   left: 0,
   position: 'absolute',
   right: 0,
-  top: 0
+  top: 0,
+  zIndex: zIndices.iconImage
 })
 
 export const image = (src: string): string => style({

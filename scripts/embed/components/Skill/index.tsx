@@ -2,9 +2,13 @@ import * as m from 'mithril'
 
 import {
   GW2Skill,
+  HasIconAttributes,
+  HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
   HasIDAttributes,
-  HasRenderAttributes,
   HasStoreAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasTooltipAttributes,
   TooltipType
 } from '../../types'
@@ -12,7 +16,7 @@ import {
 import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Link } from '../Link'
-import { Name } from '../Name'
+import { Text } from '../Text'
 
 import './Tooltip'
 
@@ -23,62 +27,75 @@ import { cx } from '../../libs'
 
 interface SkillAttributes extends
   m.Attributes,
+  HasIconAttributes,
+  HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
   HasIDAttributes<number>,
-  HasRenderAttributes,
   HasStoreAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasTooltipAttributes
 {
-  data: GW2Skill;
+  skill: GW2Skill;
 }
 
 export class Skill implements m.Component<SkillAttributes> {
   public view({
     attrs: {
-      data,
       disableIcon,
-      disableLink,
+      disableIconLink,
+      disableIconPlaceholder,
       disableText,
+      disableTextLink,
       disableTooltip,
-      store,
-      ...attrs
+      overrideText,
+      skill,
+      store
     }
   }: m.Vnode<SkillAttributes>): m.Children {
-    const classes = parseSkillClassNames(data)
+    const classes = parseSkillClassNames(skill)
+    const name = overrideText || skill.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SKILL, {
-        skill: data
+        skill
       }) :
       {}
 
-    return <Container inline={true} type="skill" {...attrs}>
+    return <Container type="skill">
       {
         !disableIcon ?
         <Icon
           className={cx(styles.icon, classes)}
           classSize={styles.iconSize}
-          placeholder={true}
-          src={data.icon}
+          disablePlaceholder={disableIconPlaceholder}
+          src={skill.icon}
           {...tooltipEvents}
-        /> :
+        >
+          {
+            !disableIconLink ?
+            <Link href={buildWikiLink(skill.name)} /> :
+            null
+          }
+        </Icon> :
         null
       }
       {
         !disableText ?
-        <Name
+        <Text
           className={cx(styles.name, classes)}
-          {...disableLink && tooltipEvents}
+          {...disableTextLink && tooltipEvents}
         >
           {
-            !disableLink ?
+            !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(data.name)}
-              {...!disableLink && tooltipEvents}
-            >{data.name}</Link> :
-            data.name
+              href={buildWikiLink(skill.name)}
+              {...!disableTextLink && tooltipEvents}
+            >{name}</Link> :
+            name
           }
-        </Name> :
+        </Text> :
         null
       }
     </Container>

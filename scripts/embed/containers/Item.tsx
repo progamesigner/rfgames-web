@@ -2,26 +2,14 @@ import * as m from 'mithril'
 
 import { fetchItem, fetchItemStat } from '../actions'
 import { Empty, Item, Loader } from '../components'
-import {
-  GW2Resources,
-  HasIDAttributes,
-  HasRenderAttributes,
-  HasStoreAttributes
-} from '../types'
+import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
-interface ItemContainerAttributes extends
-  m.Attributes,
-  HasIDAttributes<number>,
-  HasRenderAttributes,
+type ItemContainerAttributes =
+  m.Attributes &
+  HasIDAttributes<number> &
   HasStoreAttributes
-{
-  infusions?: Array<number>;
-  stat?: number;
-  upgradeCount?: number;
-  upgrades?: Array<number>;
-}
 
 const fetch = wrapAsyncAction(fetchItem)
 const fetchStat = wrapAsyncAction(fetchItemStat)
@@ -53,10 +41,12 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
       [GW2Resources.ITEM]: items
     } = store.getState()
 
-    if (id && items && items[id]) {
-      if (isFetchFinished(items[id].state) && items[id].data) {
+    if (id > 0 && items) {
+      const item = items[id]
+
+      if (item && isFetchFinished(item.state)) {
         return <Item
-          data={items[id].data}
+          item={item.data}
           stat={stat && stat > 0 && itemStats && itemStats[stat] && itemStats[stat].data}
           store={store}
           {...attrs}
@@ -66,6 +56,6 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
       return <Loader {...attrs} />
     }
 
-    return <Empty type="item" {...attrs} />
+    return <Empty store={store} {...attrs} />
   }
 }

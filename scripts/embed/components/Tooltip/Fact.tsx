@@ -40,7 +40,7 @@ class FactIcon implements m.Component<m.Attributes> {
     return <Icon
       className={cx(styles.fact.icon, className)}
       classSize={styles.fact.iconSize}
-      placeholder={true}
+      disablePlaceholder={true}
       src={src}
       {...attrs}
     >{children}</Icon>

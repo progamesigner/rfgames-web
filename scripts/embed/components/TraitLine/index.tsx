@@ -65,6 +65,31 @@ function mapFromMinorClassName(
   return null
 }
 
+class TraitConnector implements m.Component<m.Attributes> {
+  public view({
+    attrs: {
+      className,
+      ...attrs
+    }
+  }: m.Vnode<m.Attributes>) {
+    return <div
+      className={cx(styles.connector.root, className)}
+      {...attrs}
+    ></div>
+  }
+}
+
+class TraitIcon implements m.Component<m.Attributes> {
+  public view({ attrs }: m.Vnode<m.Attributes>) {
+    return <Trait
+      disableIconLink={true}
+      disableIconPlaceholder={true}
+      disableText={true}
+      {...attrs}
+    />
+  }
+}
+
 export class TraitLine implements m.Component<TraitLineAttributes> {
   public view({
     attrs: {
@@ -72,8 +97,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
       data,
       disableTooltip,
       selectedTraits,
-      store,
-      ...attrs
+      store
     }
   }: m.Vnode<TraitLineAttributes>): m.Children {
     const majorTraitChunks = chunk(3)(data.major_traits)
@@ -87,9 +111,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
 
     return <Container
       className={cx(styles.root, { [styles.elite]: data.elite }, className)}
-      inline={false}
       type="traitline"
-      {...attrs}
     >
       <div
         className={cx(styles.background, styles.backgroundImage(data.background))}
@@ -102,42 +124,36 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
       <div className={styles.traits.root}>
         {range(0, 3).map(tier => m.fragment({}, [
           <div key={`minor-${tier}`} className={styles.traits.minor}>
-            <Trait
+            <TraitIcon
               id={data.minor_traits[tier]}
               className={styles.traits.minorIcon}
-              disableText={true}
-              inline={true}
               store={store}
             />
           </div>,
-          <div
+          <TraitConnector
             key={`connector-to-${tier}`}
             className={cx(
-              styles.connector.root,
               mapFromMinorClassName(majorTraitChunks[tier], selectedTraitIds)
             )}
-          ></div>,
+          />,
           <div key={`major-${tier}`} className={styles.traits.major}>
-            {majorTraitChunks[tier].map(majorTrait => <Trait
+            {majorTraitChunks[tier].map(majorTrait => <TraitIcon
               key={`major-${tier}-${majorTrait}`}
               id={majorTrait}
               className={cx(
                 styles.traits.majorIcon,
                 { [styles.traits.inactive]: !isTraitActive(majorTrait, selectedTraitIds) }
               )}
-              disableText={true}
-              inline={true}
               store={store}
             />)}
           </div>,
-          <div
+          <TraitConnector
             key={`connector-from-${tier}`}
             className={cx(
-              styles.connector.root,
               mapFromMajorClassName(majorTraitChunks[tier], selectedTraitIds),
               { [styles.connector.disabled]: tier === 2}
             )}
-          ></div>
+          />
         ]))}
       </div>
     </Container>

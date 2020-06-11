@@ -5,14 +5,14 @@ import { cx, makeClassName } from '../../libs'
 import * as styles from './styles'
 
 interface LoadingStripAttributes extends m.Attributes {
-  long?: boolean;
+  text?: string
 }
 
 export class LoadingStrip implements m.Component<LoadingStripAttributes> {
   public view({
     attrs: {
       className,
-      long,
+      text,
       ...attrs
     },
     children
@@ -24,8 +24,6 @@ export class LoadingStrip implements m.Component<LoadingStripAttributes> {
     return <span
       className={cx(styles.root, className, makeClassName('loading'))}
       {...attrs}
-    >
-      {long ? 'Wait just a second ...' : 'Loading ...'}
-    </span>
+    >{text || 'Loading ...'}</span>
   }
 }

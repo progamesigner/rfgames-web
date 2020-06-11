@@ -8,3 +8,5 @@ export const iconSize = style({
   height: rem(sizes.emptyIcon),
   width: rem(sizes.emptyIcon)
 })
+
+export const text = style()

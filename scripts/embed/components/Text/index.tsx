@@ -2,11 +2,13 @@ import * as m from 'mithril'
 
 import { cx, makeClassName } from '../../libs'
 
+import './Tooltip'
+
 import * as styles from './styles'
 
 type NameAttributes = m.Attributes
 
-export class Name implements m.Component<NameAttributes> {
+export class Text implements m.Component<NameAttributes> {
   public view({
     attrs: {
       className,
@@ -15,7 +17,7 @@ export class Name implements m.Component<NameAttributes> {
     children
   }: m.Vnode<NameAttributes>): m.Children {
     return <div
-      className={cx(styles.root, className, makeClassName('name'))}
+      className={cx(styles.root, className, makeClassName('text'))}
       {...attrs}
     >
       {children}

@@ -1,39 +1,58 @@
 import * as m from 'mithril'
 
-import { noop } from 'lodash/fp'
-
 import { cx } from '../../libs'
-import { HasRenderAttributes } from '../../types'
+import {
+  HasIconAttributes,
+  HasIconPlaceholderAttributes,
+  HasTextAttributes
+} from '../../types'
 
 import { Container } from '../Container'
 import { Icon } from '../Icon'
+import { Text } from '../Text'
 
 import * as styles from './styles'
 
-interface LoaderAttributes extends m.Attributes, HasRenderAttributes {
+interface LoaderAttributes extends
+  m.Attributes,
+  HasIconAttributes,
+  HasIconPlaceholderAttributes,
+  HasTextAttributes
+{
+  classIcon?: string;
+  classLoader?: string;
   classSize?: string;
+  classText?: string;
 }
 
 export class Loader implements m.Component<LoaderAttributes> {
   public view({
     attrs: {
-      className,
+      classIcon,
+      classLoader,
       classSize,
+      classText,
       disableIcon,
-      disableLink,
-      ...attrs
+      disableIconPlaceholder,
+      disableText,
+      overrideText
     }
   }: m.Vnode<LoaderAttributes>): m.Children {
-    noop(disableLink)
-
-    return <Container inline={false} type="loader" {...attrs}>
+    return <Container type="loader">
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon, 'is-loader')}
+          className={cx(styles.icon, classIcon, 'is-loader')}
           classSize={cx(styles.iconSize, classSize)}
-          placeholder={true}
-        ><span className={cx(styles.loader, className)}></span></Icon> :
+          disablePlaceholder={disableIconPlaceholder}
+        ><span className={cx(styles.loader, classLoader)}></span></Icon> :
+        null
+      }
+      {
+        !disableText ?
+        <Text className={cx(styles.text, classText, 'is-loader')}>
+          {overrideText || ''}
+        </Text> :
         null
       }
     </Container>

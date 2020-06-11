@@ -12,7 +12,10 @@ import { px, transform, translate3d } from '../libs'
 const borderWidth = 1
 const borderGap = 8
 
-type TooltipContainerAttributes = m.Attributes & HasStoreAttributes & HasWindowAttributes
+type TooltipContainerAttributes =
+  m.Attributes &
+  HasStoreAttributes &
+  HasWindowAttributes
 
 function calculateStyle(
   window: Window,

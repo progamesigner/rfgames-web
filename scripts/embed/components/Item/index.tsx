@@ -4,9 +4,13 @@ import { cx } from '../../libs'
 import {
   GW2Item,
   GW2ItemStat,
+  HasIconAttributes,
+  HasIconPlaceholderAttributes,
+  HasIconLinkAttributes,
   HasIDAttributes,
-  HasRenderAttributes,
   HasStoreAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasTooltipAttributes,
   TooltipType
 } from '../../types'
@@ -14,7 +18,7 @@ import {
 import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Link } from '../Link'
-import { Name } from '../Name'
+import { Text } from '../Text'
 
 import './Tooltip'
 
@@ -22,16 +26,20 @@ import { bindTooltipEvents, buildWikiLink, parseItemClassNames } from './lib'
 
 import * as styles from './styles'
 
-export { UpgradeContent } from './UpgradeContent'
+export { UpgradeComponent } from './UpgradeComponent'
 
 interface ItemAttributes extends
   m.Attributes,
+  HasIconAttributes,
+  HasIconLinkAttributes,
+  HasIconPlaceholderAttributes,
+  HasTextAttributes,
+  HasTextLinkAttributes,
   HasIDAttributes<number>,
-  HasRenderAttributes,
   HasStoreAttributes,
   HasTooltipAttributes
 {
-  data: GW2Item;
+  item: GW2Item;
   infusions?: Array<number>;
   stat?: GW2ItemStat;
   upgradeCount?: number;
@@ -41,56 +49,68 @@ interface ItemAttributes extends
 export class Item implements m.Component<ItemAttributes> {
   public view({
     attrs: {
-      data,
+      item,
       disableIcon,
-      disableLink,
+      disableIconLink,
+      disableIconPlaceholder,
       disableText,
+      disableTextLink,
       disableTooltip,
+      overrideText,
       infusions,
       stat,
       store,
       upgradeCount,
-      upgrades,
-      ...attrs
+      upgrades
     }
   }: m.Vnode<ItemAttributes>): m.Children {
-    const classes = parseItemClassNames(data)
+    const classes = parseItemClassNames(item)
+    const name = overrideText || item.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_ITEM, {
         infusions: infusions || [],
-        item: data,
+        item,
         stat,
         upgradeCount: upgradeCount || 1,
         upgrades: upgrades || []
       }) :
       {}
 
-    return <Container inline={true} type="item" {...attrs}>
+    return <Container type="item">
       {
         !disableIcon ?
         <Icon
           className={cx(styles.icon, classes)}
           classSize={styles.iconSize}
-          placeholder={true}
-          src={data.icon}
+          disablePlaceholder={disableIconPlaceholder}
+          src={item.icon}
           {...tooltipEvents}
-        /> :
+        >
+          {
+            !disableIconLink ?
+            <Link href={buildWikiLink(item.name)} /> :
+            null
+          }
+        </Icon> :
         null
       }
       {
         !disableText ?
-        <Name className={cx(styles.name, classes)} {...disableLink && tooltipEvents}>
+        <Text
+          className={cx(styles.name, classes)}
+          {...disableTextLink && tooltipEvents}
+        >
           {
-            !disableLink ?
+            !disableTextLink ?
             <Link
               className={styles.link}
-              href={buildWikiLink(data.name)}
-              {...!disableLink && tooltipEvents}
-            >{data.name}</Link> :
-            data.name
+              href={buildWikiLink(item.name)}
+              {...!disableTextLink && tooltipEvents}
+            >{name}</Link> :
+            name
           }
-        </Name> :
+        </Text> :
         null
       }
     </Container>

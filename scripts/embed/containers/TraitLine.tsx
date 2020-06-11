@@ -2,17 +2,17 @@ import * as m from 'mithril'
 
 import { fetchSpecialization } from '../actions'
 import { Empty, Loader, TraitLine, TraitSelection } from '../components'
-import {
-  GW2Resources,
-  HasIDAttributes,
-  HasStoreAttributes
-} from '../types'
+import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
 export { TraitMode, TraitPosition, TraitSelection } from '../components'
 
-interface TraitLineContainerAttributes extends m.Attributes, HasIDAttributes<number>, HasStoreAttributes {
+interface TraitLineContainerAttributes extends
+  m.Attributes,
+  HasIDAttributes<number>,
+  HasStoreAttributes
+{
   selectedTraits: Array<TraitSelection>;
 }
 

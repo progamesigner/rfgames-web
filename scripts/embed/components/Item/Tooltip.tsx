@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { UpgradeContent } from '../../containers'
+import { UpgradeComponent } from '../../containers'
 import { cx } from '../../libs'
 import {
   GW2Item,
@@ -157,7 +157,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           <div className={styles.tooltip.consumable}>
             <Icon
               className={styles.tooltip.effectIcon}
-              inline={true}
+              disablePlaceholder={true}
               src={item.details.icon}
             />
             <span>
@@ -173,7 +173,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         }
 
         {takeUpgrades().map((id, index) =>
-          <UpgradeContent
+          <UpgradeComponent
             key={index}
             store={store}
             id={id}
@@ -183,7 +183,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         )}
 
         {takeInfusions().map((id, index) =>
-          <UpgradeContent
+          <UpgradeComponent
             key={index}
             store={store}
             id={id}

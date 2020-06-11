@@ -1,25 +1,48 @@
-import { GW2RecordKey } from './gw2'
 import { EmbedStore } from './store'
 
-export type HasIDAttributes<T extends GW2RecordKey> = {
+type ID = number | string | symbol
+
+export interface HasEmptyAttributes {
+  overrideTooltipText?: string;
+}
+
+export interface HasIconAttributes {
+  disableIcon: boolean;
+}
+
+export interface HasIconLinkAttributes extends HasLinkAttributes {
+  disableIconLink: boolean;
+}
+
+export interface HasIconPlaceholderAttributes {
+  disableIconPlaceholder: boolean;
+}
+
+export interface HasIDAttributes<T extends ID> {
   id: T;
 }
 
-export type HasRenderAttributes = {
-  disableIcon: boolean;
-  disableText: boolean;
-  disableLink: boolean;
-  inline: boolean;
+export interface HasLinkAttributes {
+  link?: string;
 }
 
-export type HasStoreAttributes = {
+export interface HasStoreAttributes {
   store: EmbedStore;
 }
 
-export type HasTooltipAttributes = {
+export interface HasTextAttributes {
+  disableText: boolean;
+  overrideText?: string;
+}
+
+export interface HasTextLinkAttributes extends HasLinkAttributes {
+  disableTextLink: boolean;
+}
+
+export interface HasTooltipAttributes {
   disableTooltip: boolean;
 }
 
-export type HasWindowAttributes = {
+export interface HasWindowAttributes {
   window: Window;
 }

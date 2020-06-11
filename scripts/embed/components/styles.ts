@@ -89,5 +89,7 @@ export const sizes = {
 
 export const zIndices = {
   applyCount: 100,
+  iconImage: 10,
+  iconLink: 50,
   tooltip: 1000
 }

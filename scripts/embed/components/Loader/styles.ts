@@ -26,6 +26,8 @@ export const iconSize = style({
   width: rem(sizes.emptyIcon)
 })
 
+export const text = style()
+
 export const loader = style({
   animationDuration: '0.7s',
   animationIterationCount: 'infinite',
