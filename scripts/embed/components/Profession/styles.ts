@@ -3,7 +3,7 @@ import { rem, sizes, style, stylesheet } from '../styles'
 export const icon = stylesheet({
   root: {
   },
-  size: {
+  block: {
     height: rem(sizes.professionIcon),
     width: rem(sizes.professionIcon)
   },

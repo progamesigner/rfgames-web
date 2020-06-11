@@ -48,6 +48,9 @@ interface SpecializationAttributes extends
 export class Specialization implements m.Component<SpecializationAttributes> {
   public view({
     attrs: {
+      classIcon,
+      classSize,
+      classText,
       disableIcon,
       disableIconLink,
       disableIconPlaceholder,
@@ -74,8 +77,12 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classes)}
-          classSize={inline ? styles.icon.inline : styles.icon.size}
+          className={cx(styles.icon.root, classIcon, classes)}
+          classSize={cx(
+            { [styles.icon.block] : !inline },
+            { [styles.icon.inline] : inline },
+            classSize
+          )}
           disablePlaceholder={disableIconPlaceholder || inline}
           src={specialization.icon}
           {...tooltipEvents}
@@ -90,7 +97,8 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       }
       {
         !disableText ?
-        <Text className={cx(styles.name, classes)} {...disableTextLink && tooltipEvents}>
+        <Text className={cx(styles.name, classText, classes)}
+        {...disableTextLink && tooltipEvents}>
           {
             !disableTextLink ?
             <Link

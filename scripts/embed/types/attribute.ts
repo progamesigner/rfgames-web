@@ -3,6 +3,8 @@ import { EmbedStore } from './store'
 type ID = number | string | symbol
 
 export interface HasIconAttributes {
+  classIcon?: string;
+  classSize?: string;
   disableIcon: boolean;
 }
 
@@ -31,6 +33,7 @@ export interface HasStoreAttributes {
 }
 
 export interface HasTextAttributes {
+  classText?: string;
   disableText: boolean;
   overrideText?: string;
 }

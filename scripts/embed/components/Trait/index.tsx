@@ -49,6 +49,9 @@ interface TraitAttributes extends
 export class Trait implements m.Component<TraitAttributes> {
   public view({
     attrs: {
+      classIcon,
+      classSize,
+      classText,
       disableIcon,
       disableIconLink,
       disableIconPlaceholder,
@@ -75,8 +78,12 @@ export class Trait implements m.Component<TraitAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classes)}
-          classSize={inline ? styles.icon.inline : styles.icon.size}
+          className={cx(styles.icon.root, classIcon, classes)}
+          classSize={cx(
+            { [styles.icon.block] : !inline },
+            { [styles.icon.inline] : inline },
+            classSize
+          )}
           disablePlaceholder={disableIconPlaceholder || inline}
           src={trait.icon}
           {...tooltipEvents}
@@ -92,7 +99,7 @@ export class Trait implements m.Component<TraitAttributes> {
       {
         !disableText ?
         <Text
-          className={cx(styles.name, classes)}
+          className={cx(styles.name, classText, classes)}
           {...disableTextLink && tooltipEvents}
         >
           {

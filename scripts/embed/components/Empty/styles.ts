@@ -5,7 +5,7 @@ import { sizes } from '../styles'
 export const icon = stylesheet({
   root: {
   },
-  size: {
+  block: {
     height: rem(sizes.emptyIcon),
     width: rem(sizes.emptyIcon)
   },

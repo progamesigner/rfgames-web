@@ -80,8 +80,12 @@ class TraitConnector implements m.Component<m.Attributes> {
 }
 
 class TraitIcon implements m.Component<m.Attributes> {
-  public view({ attrs }: m.Vnode<m.Attributes>) {
+  public view({ attrs: {
+    className,
+    ...attrs
+  } }: m.Vnode<m.Attributes>) {
     return <Trait
+      classIcon={className}
       disableIconLink={true}
       disableIconPlaceholder={true}
       disableText={true}

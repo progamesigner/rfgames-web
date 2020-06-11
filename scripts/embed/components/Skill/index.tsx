@@ -44,6 +44,9 @@ interface SkillAttributes extends
 export class Skill implements m.Component<SkillAttributes> {
   public view({
     attrs: {
+      classIcon,
+      classSize,
+      classText,
       disableIcon,
       disableIconLink,
       disableIconPlaceholder,
@@ -70,8 +73,12 @@ export class Skill implements m.Component<SkillAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classes)}
-          classSize={inline ? styles.icon.inline : styles.icon.size}
+          className={cx(styles.icon.root, classIcon, classes)}
+          classSize={cx(
+            { [styles.icon.block] : !inline },
+            { [styles.icon.inline] : inline },
+            classSize
+          )}
           disablePlaceholder={disableIconPlaceholder || inline}
           src={skill.icon}
           {...tooltipEvents}
@@ -87,7 +94,7 @@ export class Skill implements m.Component<SkillAttributes> {
       {
         !disableText ?
         <Text
-          className={cx(styles.name, classes)}
+          className={cx(styles.name, classText, classes)}
           {...disableTextLink && tooltipEvents}
         >
           {

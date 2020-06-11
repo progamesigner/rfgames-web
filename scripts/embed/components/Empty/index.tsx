@@ -30,9 +30,6 @@ interface EmptyAttributes extends
   HasTooltipAttributes,
   HasTooltipTextAttributes
 {
-  classIcon?: string;
-  classSize?: string;
-  classText?: string;
 }
 
 export class Empty implements m.Component<EmptyAttributes> {
@@ -64,7 +61,11 @@ export class Empty implements m.Component<EmptyAttributes> {
         !disableIcon ?
         <Icon
           className={cx(styles.icon.root, classIcon, 'is-empty')}
-          classSize={cx(inline ? styles.icon.inline : styles.icon.size, classSize)}
+          classSize={cx(
+            { [styles.icon.block] : !inline },
+            { [styles.icon.inline] : inline },
+            classSize
+          )}
           disablePlaceholder={disableIconPlaceholder || inline}
           {...tooltipEvents}
         /> :

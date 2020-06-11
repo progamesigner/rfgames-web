@@ -15,7 +15,7 @@ export const icon = stylesheet({
   root: {
     clipPath: polygon(hexagonPoints)
   },
-  size: {
+  block: {
     height: rem(sizes.specializationIcon),
     width: rem(sizes.specializationIcon)
   },

@@ -19,10 +19,7 @@ interface LoaderAttributes extends
   HasIconPlaceholderAttributes,
   HasTextAttributes
 {
-  classIcon?: string;
   classLoader?: string;
-  classSize?: string;
-  classText?: string;
 }
 
 export class Loader implements m.Component<LoaderAttributes> {

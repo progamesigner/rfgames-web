@@ -35,6 +35,9 @@ interface ProfessionAttributes extends
 export class Profession implements m.Component<ProfessionAttributes> {
   public view({
     attrs: {
+      classIcon,
+      classSize,
+      classText,
       disableIcon,
       disableIconLink,
       disableText,
@@ -52,8 +55,12 @@ export class Profession implements m.Component<ProfessionAttributes> {
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classes)}
-          classSize={inline ? styles.icon.inline : styles.icon.size}
+          className={cx(styles.icon.root, classIcon, classes)}
+          classSize={cx(
+            { [styles.icon.block] : !inline },
+            { [styles.icon.inline] : inline },
+            classSize
+          )}
           disablePlaceholder={true}
           src={profession.icon_big}
         >
@@ -67,7 +74,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
       }
       {
         !disableText ?
-        <Text className={cx(styles.name, classes)}>
+        <Text className={cx(styles.name, classText, classes)}>
           {
             !disableTextLink ?
             <Link
