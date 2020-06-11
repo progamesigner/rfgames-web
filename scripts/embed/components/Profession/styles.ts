@@ -1,15 +1,15 @@
-import { rem, sizes, style, stylesheet } from '../styles'
+import { em, sizes, style, stylesheet } from '../styles'
 
 export const icon = stylesheet({
   root: {
   },
   block: {
-    height: rem(sizes.professionIcon),
-    width: rem(sizes.professionIcon)
+    height: em(sizes.professionIcon),
+    width: em(sizes.professionIcon)
   },
   inline: {
-    height: rem(sizes.inlineIcon),
-    width: rem(sizes.inlineIcon)
+    height: em(sizes.inlineIcon),
+    width: em(sizes.inlineIcon)
   }
 })
 

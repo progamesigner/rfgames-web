@@ -1,13 +1,13 @@
-import { rem, style } from '../../libs'
+import { em, style } from '../../libs'
 
-import { sizes } from '../styles'
+import { layouts } from '../styles'
 
 export const root = style({
   alignItems: 'center',
   display: 'inline-flex',
   $nest: {
     '&:not(:first-child)': {
-      marginLeft: rem(sizes.gap)
+      marginLeft: em(layouts.gap)
     }
   }
 })

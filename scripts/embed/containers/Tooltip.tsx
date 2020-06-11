@@ -1,15 +1,16 @@
 import * as m from 'mithril'
 
-import { CSSProperties } from 'typestyle/lib/types'
-
 import { bindEventListener, UnbindEventListener } from '../../libs'
 
 import { destroyTooltip, hideTooltip } from '../actions'
 import { Tooltip } from '../components'
 import { EmbedStore, HasStoreAttributes, HasWindowAttributes } from '../types'
-import { px, transform, translate3d } from '../libs'
+import { px, transform, translate3d, types } from '../libs'
 
-const tooltipOffset = 8
+import * as styles from '../components/styles'
+
+// @note: we assume default base is 16px
+const tooltipOffset = styles.layouts.tooltipOffset * 16
 
 interface TooltipContainerAttributes extends
   m.Attributes,
@@ -24,16 +25,16 @@ function calculateStyle(
     clientX: x,
     clientY: y
   }: MouseEvent
-): CSSProperties {
+): types.CSSProperties {
   return {
     transform: transform(translate3d(
       px(Math.min(
         x,
-        window.innerWidth - container.offsetWidth - tooltipOffset
+        window.innerWidth - container.offsetWidth - tooltipOffset * 2
       )),
       px(Math.min(
         y,
-        window.innerHeight - container.offsetHeight - tooltipOffset
+        window.innerHeight - container.offsetHeight - tooltipOffset * 2
       )),
       0
     ))
@@ -42,7 +43,7 @@ function calculateStyle(
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
   protected container: Element | null = null;
-  protected style: CSSProperties | null = {
+  protected style: types.CSSProperties | null = {
     opacity: 0 // @note: avoid wrong positioned tooltip shown
   };
   protected unbindMouseMoveEvent: UnbindEventListener | null = null;

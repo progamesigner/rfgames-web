@@ -1,4 +1,4 @@
-import { rem, style, stylesheet } from '../../libs'
+import { em, style, stylesheet } from '../../libs'
 
 import { sizes } from '../styles'
 
@@ -6,12 +6,12 @@ export const icon = stylesheet({
   root: {
   },
   block: {
-    height: rem(sizes.emptyIcon),
-    width: rem(sizes.emptyIcon)
+    height: em(sizes.emptyIcon),
+    width: em(sizes.emptyIcon)
   },
   inline: {
-    height: rem(sizes.inlineIcon),
-    width: rem(sizes.inlineIcon)
+    height: em(sizes.inlineIcon),
+    width: em(sizes.inlineIcon)
   }
 })
 

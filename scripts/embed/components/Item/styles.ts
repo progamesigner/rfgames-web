@@ -1,17 +1,17 @@
-import { border, margin, px, rem, style, stylesheet } from '../../libs'
+import { border, em, margin, px, rem, style, stylesheet } from '../../libs'
 
-import { colors, sizes } from '../styles'
+import { colors, layouts, sizes } from '../styles'
 
 export const icon = stylesheet({
   root: {
   },
   block: {
-    height: rem(sizes.itemIcon),
-    width: rem(sizes.itemIcon)
+    height: em(sizes.itemIcon),
+    width: em(sizes.itemIcon)
   },
   inline: {
-    height: rem(sizes.inlineIcon),
-    width: rem(sizes.inlineIcon)
+    height: em(sizes.inlineIcon),
+    width: em(sizes.inlineIcon)
   }
 })
 
@@ -29,7 +29,7 @@ export const tooltip = stylesheet({
     color: colors.bonusInactive.toString()
   },
   coin: {
-    marginLeft: rem(2 * sizes.gap)
+    marginLeft: em(layouts.gap * 2)
   },
   consumable: {
     alignItems: 'flex-start',
@@ -37,9 +37,9 @@ export const tooltip = stylesheet({
     display: 'flex'
   },
   effectIcon: {
-    height: rem(sizes.tooltipEffectIcon),
-    marginRight: rem(sizes.gap),
-    width: rem(sizes.tooltipEffectIcon)
+    height: em(sizes.tooltipEffectIcon),
+    marginRight: em(layouts.gap),
+    width: em(sizes.tooltipEffectIcon)
   },
   head: {
     alignItems: 'center',
@@ -52,15 +52,17 @@ export const tooltip = stylesheet({
     }),
     borderColor: colors.tooltipItemBorder,
     borderRadius: rem(0.0625),
-    height: rem(sizes.tooltipItemIcon),
-    marginRight: rem(sizes.gap),
-    width: rem(sizes.tooltipItemIcon)
+    flexGrow: 0,
+    flexShrink: 0,
+    height: em(sizes.tooltipItemIcon),
+    marginRight: em(layouts.gap),
+    width: em(sizes.tooltipItemIcon)
   },
   name: {
   },
   spacing: {
     display: 'block',
-    marginTop: rem(2 * sizes.gap)
+    marginTop: em(layouts.gap * 2)
   },
   statAttribute: {
     color: colors.statAttribute.toString()
@@ -72,13 +74,13 @@ export const tooltip = stylesheet({
     color: colors.statItem.toString()
   },
   upgrade: {
-    margin: margin(rem(2 * sizes.gap), 0)
+    margin: margin(em(layouts.gap * 2), 0)
   },
   upgradeCount: {
-    marginLeft: rem(sizes.gap)
+    marginLeft: em(layouts.gap)
   },
   upgradeIcon: {
-    marginRight: rem(sizes.gap)
+    marginRight: em(layouts.gap)
   },
   upgradeIconSize: {
     height: rem(sizes.tooltipUpgradeIcon),

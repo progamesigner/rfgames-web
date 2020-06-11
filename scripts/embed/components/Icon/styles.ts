@@ -1,11 +1,11 @@
 import {
   border,
   colors,
+  em,
   fonts,
   images,
+  layouts,
   px,
-  rem,
-  sizes,
   style,
   url,
   zIndices
@@ -54,14 +54,14 @@ export const placeholder = style({
 })
 
 export const applyCount = style({
-  bottom: rem(sizes.applyCountPadding),
+  ...fonts.iconApplyCount,
+  bottom: em(layouts.applyCount),
   color: colors.applyCount.toString(),
-  fontFamily: fonts.applyCount.fontFamily,
-  fontSize: px(fonts.applyCount.fontSize),
   margin: 0, // @note: force reset style for compatibility
   padding: 0, // @note: force reset style for compatibility
   pointerEvents: 'none',
   position: 'absolute',
-  right: rem(sizes.applyCountPadding),
+  textShadow: `0 0 ${px(2)} ${colors.applyCountShadow.toString()}`,
+  right: em(layouts.applyCount),
   zIndex: zIndices.applyCount
 })

@@ -1,8 +1,8 @@
-import { style } from '../styles'
+import { style, fonts } from '../styles'
 
 export const root = style({
+  ...fonts.embedContainer,
   display: 'inline-block',
-  position: 'relative',
   $nest: {
     '&, &::before, &::after, *': {
       boxSizing: 'border-box'

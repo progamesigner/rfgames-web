@@ -1,4 +1,4 @@
-import { percent, polygon, rem, style, stylesheet } from '../../libs'
+import { em, percent, polygon, style, stylesheet } from '../../libs'
 
 import { colors, sizes } from '../styles'
 
@@ -16,12 +16,12 @@ export const icon = stylesheet({
     clipPath: polygon(hexagonPoints)
   },
   block: {
-    height: rem(sizes.specializationIcon),
-    width: rem(sizes.specializationIcon)
+    height: em(sizes.specializationIcon),
+    width: em(sizes.specializationIcon)
   },
   inline: {
-    height: rem(sizes.inlineIcon),
-    width: rem(sizes.inlineIcon)
+    height: em(sizes.inlineIcon),
+    width: em(sizes.inlineIcon)
   }
 })
 

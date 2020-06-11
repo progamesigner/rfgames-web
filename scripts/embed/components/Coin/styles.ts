@@ -1,15 +1,15 @@
-import { colors, rem, sizes, style, stylesheet } from '../styles'
+import { colors, em, layouts, sizes, style, stylesheet } from '../styles'
 
 export const root = style()
 
 export const icon = stylesheet({
   root: {
-    marginLeft: rem(sizes.gap),
-    marginRight: rem(2 * sizes.gap)
+    marginLeft: em(layouts.gap),
+    marginRight: em(layouts.gap * 2)
   },
   size: {
-    height: rem(sizes.coinIcon),
-    width: rem(sizes.coinIcon)
+    height: em(sizes.coinIcon),
+    width: em(sizes.coinIcon)
   }
 })
 

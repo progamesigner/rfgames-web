@@ -1,6 +1,7 @@
 import {
   border,
   deg,
+  em,
   keyframes,
   percent,
   polygon,
@@ -12,7 +13,7 @@ import {
   url
 } from '../../libs'
 
-import { animations, colors, images, sizes } from '../styles'
+import { animations, colors, images, layouts, sizes, zIndices } from '../styles'
 
 const SQRT2 = Math.sqrt(2)
 const SQRT3 = Math.sqrt(3)
@@ -84,6 +85,7 @@ export const root = style({
   display: 'flex',
   height: px(traitlineHeight),
   maxWidth: px(650),
+  position: 'relative',
   $nest: {
     '&:hover': {
       $nest: {
@@ -105,6 +107,7 @@ export const background = style({
   position: 'absolute',
   right: 0,
   top: 0,
+  zIndex: zIndices.traitlineBackground,
   $nest: {
     '&::after': {
       backgroundColor: 'rgb(0, 0, 0)',
@@ -124,7 +127,8 @@ export const background = style({
       position: 'absolute',
       right: 0,
       top: 0,
-      transition: `opacity ${animations.speed} ${animations.easing}`
+      transition: `opacity ${animations.speed} ${animations.easing}`,
+      zIndex: zIndices.traitlineOverlay
     },
     [`@media screen and (min-width: ${px(640)})`]: {
       $nest: {
@@ -177,6 +181,7 @@ export const specialization = stylesheet({
     position: 'relative',
     width: px(2 * hexagonApothem),
     height: px(hexagonDiameter),
+    zIndex: zIndices.traitlineHexagon,
     $nest: {
       '&, &::before, &::after': {
         border: border({
@@ -195,7 +200,8 @@ export const specialization = stylesheet({
         width: px(hexagonCapHeight),
         height: px(hexagonCapHeight),
         transform: `scaleY(${hexagonScaleFactor}) rotate(${deg(-45)})`,
-        left: px((2 * hexagonApothem - hexagonCapHeight) / 2 - hexagonBorderWidth)
+        left: px((2 * hexagonApothem - hexagonCapHeight) / 2 - hexagonBorderWidth),
+        zIndex: zIndices.traitlineHexagon
       },
       '&::before': {
         borderTopWidth: px(hexagonBorderWidth),
@@ -218,13 +224,14 @@ export const traits = stylesheet({
     flexDirection: 'row',
     flexGrow: 1,
     justifyContent: 'space-between',
-    marginLeft: rem(2 * sizes.gap),
+    marginLeft: em(layouts.gap * 2),
     maxWidth: px(425),
-    padding: `${rem(sizes.gap)} ${rem(2 * sizes.gap)}`,
+    padding: `${em(layouts.gap)} ${em(layouts.gap * 2)}`,
     position: 'relative',
+    zIndex: zIndices.traitlineTrait,
     $nest: {
       [`@media screen and (min-width: ${px(720)})`]: {
-        marginLeft: rem(4 * sizes.gap),
+        marginLeft: em(layouts.gap * 4),
       }
     }
   },
@@ -257,6 +264,7 @@ export const connector = stylesheet({
   root: {
     position: 'relative',
     width: 0,
+    zIndex: zIndices.traitlineConnector,
     $nest: {
       '&::after': {
         animation: vividness,
@@ -272,7 +280,8 @@ export const connector = stylesheet({
         height: rem(0.25),
         left: rem(-0.75),
         position: 'absolute',
-        width: rem(1.5)
+        width: rem(1.5),
+        zIndex: zIndices.traitlineConnector
       },
       [`@media screen and (max-width: ${px(480)})`]: {
         display: 'none'
