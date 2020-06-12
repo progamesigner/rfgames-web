@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-const CONSENT_KEY = 'rfgames_consent_store'
+const CONSENT_KEY = 'RFGAMES:CONSENT'
 
 const EVENT_NAME = 'tw.rfgames.consent.accept'
 
