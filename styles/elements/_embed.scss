@@ -1,4 +1,10 @@
 .gw2-embed {
+    display: block;
+
+    &.is-inline {
+        display: inline-block;
+    }
+
     &.is-item {
         --gw2-embed-icon-size: var(--gw2-embed-item-size);
 
@@ -12,6 +18,14 @@
 
         &.is-inline {
             --gw2-embed-icon-size: var(--gw2-embed-skill-inline-size);
+        }
+    }
+
+    &.is-profession {
+        --gw2-embed-icon-size: var(--gw2-embed-profession-size);
+
+        &.is-inline {
+            --gw2-embed-icon-size: var(--gw2-embed-profession-inline-size);
         }
     }
 
