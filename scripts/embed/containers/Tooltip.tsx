@@ -102,31 +102,27 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       tooltip
     } = store.getState()
 
-    window.requestAnimationFrame(() => {
-      this.style = {
-        ...this.style,
-        opacity: 0 // @note: reset opacity to avoid blinks
-      }
-    })
-
-    if (tooltip && tooltip.show) {
-      window.requestAnimationFrame(() => {
-        if (this.container) {
-          const style = calculateStyle(
-            window,
-            this.container as HTMLElement,
-            event as MouseEvent
-          )
-
-          this.style = {
-            ...this.style,
-            ...style,
-            opacity: 1
-          }
-        }
-      })
+    this.style = {
+      ...this.style,
+      opacity: 0 // @note: reset opacity to avoid blinks
     }
 
-    window.requestAnimationFrame(() => m.redraw())
+    if (this.container) {
+      if (tooltip && tooltip.show) {
+        const style = calculateStyle(
+          window,
+          this.container as HTMLElement,
+          event as MouseEvent
+        )
+
+        this.style = {
+          ...this.style,
+          ...style,
+          opacity: 1
+        }
+      }
+
+      m.redraw()
+    }
   }
 }

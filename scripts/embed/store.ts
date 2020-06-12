@@ -1,5 +1,5 @@
-import * as m from 'mithril'
-
+import { tap } from 'lodash/fp'
+import { redraw } from 'mithril'
 import {
   Action,
   applyMiddleware,
@@ -12,16 +12,8 @@ import { reducer } from './reducers'
 import { initializeState } from './states'
 import { EmbedOptions, EmbedState } from './types'
 
-const logger: Middleware = store => dispatch => action => {
-  const next = dispatch(action)
-  console.debug('Redux', action, store.getState())
-  return next
-}
-
 const mithril: Middleware = () => dispatch => action => {
-  const next = dispatch(action)
-  m.redraw()
-  return next
+  return tap<EmbedState>(() => redraw())(dispatch(action))
 }
 
 function parseOptions(window: Window): EmbedOptions {
@@ -37,6 +29,6 @@ export function getStore(window: Window): Store<EmbedState, Action> {
   return createStore(
     reducer,
     initializeState(parseOptions(window)),
-    applyMiddleware(mithril, logger)
+    applyMiddleware(mithril)
   )
 }
