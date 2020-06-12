@@ -233,7 +233,7 @@ $speed: 86ms !default;
     --consent-background-color: #{rgba($background-color, 0.75)};
     --consent-border-color: #{$background-alternative-color};
     --consent-padding: 1.25rem 3.5rem;
-    --consent-z-index: 30;
+    --consent-z-index: 150;
 
     --container-offset: #{$gap * 2};
 
@@ -287,7 +287,7 @@ $speed: 86ms !default;
     --modal-content-margin: 0 1.25rem;
     --modal-content-spacing: 2.5rem;
     --modal-content-width: 40rem;
-    --modal-z-index: 50;
+    --modal-z-index: 300;
 
     --nav-dropdown-arrow-color: #{$link-color};
     --nav-dropdown-arrow-hover-color: #{$link-hover-color};
