@@ -5,8 +5,6 @@
 
 {{- $consumables := $build.consumables -}}
 {{- $equipments := $build.equipments -}}
-{{- $skills := $build.skills -}}
-{{- $specializations := $build.specializations -}}
 {{- $template := $build.template -}}
 
 {{- $chatcode := slice "build" $template | partial "functions/gw2-chat-link.string" -}}
@@ -19,239 +17,87 @@
     {{- end -}}
 {{- end -}}
 
-{{- define "__rfgames_shortcode_includes__build_item_embed__" -}}
-    {{- $ids := slice -}}
-    {{- $items := dict -}}
+{{- define "__rfgames_shortcode_includes__build_embed__" -}}
+    {{- $type := 0 | index . -}}
+    {{- $classes := 1 | index . -}}
+    {{- $item := 2 | index . -}}
+    {{- $upgrade := 3 | index . -}}
+    {{- $showText := 4 | index . | default true -}}
 
-    {{- range . -}}
-        {{- $id := "id" | index . | string -}}
-        {{- $infusions := "infusions" | index . -}}
-        {{- $skin := "skin" | index . | string -}}
-        {{- $stat := "stat" | index . | string -}}
-        {{- $upgrades := "upgrades" | index . -}}
-        {{- $upgradeCount := "upgradeCount" | index . -}}
-
-        {{- $ids = $ids | append $id -}}
-        {{- $items = slice $id $infusions $skin $stat $upgrades $upgradeCount | dict $id | merge $items -}}
-    {{- end -}}
-
-    {{- $data := dict -}}
-    {{- $data = delimit $ids "," | dict "ids" | merge $data -}}
-    {{- range $items -}}
-        {{- $infusionIds := slice -}}
-        {{- $upgradeIds := slice -}}
-
-        {{- $id := 0 | index . -}}
-        {{- $infusions := 1 | index . -}}
-        {{- $skin := 2 | index . -}}
-        {{- $stat := 3 | index . -}}
-        {{- $upgrades := 4 | index . -}}
-        {{- $upgradeCount := 5 | index . -}}
-
-        {{- with $infusions -}}
-            {{- range . -}}
-                {{- with . -}}
-                    {{- $infusionId := "id" | index . -}}
-
-                    {{- if $infusionId | int | ne -1 -}}
-                        {{- $infusionIds = $infusionIds | append $infusionId -}}
-                    {{- end -}}
-                {{- end -}}
-            {{- end -}}
-
-            {{- $data = delimit $infusionIds "," | dict (printf "%s-infusions" $id) | merge $data -}}
-        {{- end -}}
-        {{- with $skin -}}
-            {{- $data = . | dict (printf "%s-skin" $id) | merge $data -}}
-        {{- end -}}
-        {{- with $stat -}}
-            {{- $data = . | dict (printf "%s-stat" $id) | merge $data -}}
-        {{- end -}}
-        {{- with $upgrades -}}
-            {{- range . -}}
-                {{- with . -}}
-                    {{- $upgradeId := "id" | index . -}}
-
-                    {{- if $upgradeId | int | ne -1 -}}
-                        {{- $upgradeIds = $upgradeIds | append $upgradeId -}}
-                    {{- end -}}
-                {{- end -}}
-            {{- end -}}
-
-            {{- $data = delimit $upgradeIds "," | dict (printf "%s-upgrades" $id) | merge $data -}}
-        {{- end -}}
-        {{- with $upgradeCount -}}
-            {{- $data = replace ($upgradeCount | jsonify) "\"" "" | dict (printf "%s-upgrade-count" $id) | merge $data -}}
-        {{- end -}}
-        {{ if $id | int | eq -1 }}
-            {{- $data = dict "blank-text" "" | merge $data -}}
-        {{ end }}
-    {{- end -}}
-
-    {{- $data | slice "item" false | partial "elements/embed.html" -}}
-{{- end -}}
-
-{{- define "__rfgames_shortcode_includes__build_skills_embed__" -}}
-    {{- $ids := slice -}}
-    {{- $skills := dict -}}
-
-    {{- range . -}}
-        {{- $id := "id" | index . | string -}}
-        {{- $ids = $ids | append $id -}}
-    {{- end -}}
-
-    {{- $data := delimit $ids "," | dict "ids" -}}
-
-    {{- $data | slice "skill" false | partial "elements/embed.html" -}}
-{{- end -}}
-
-{{- define "__rfgames_shortcode_includes__build_specializations_embed__" -}}
-    {{- $ids := slice -}}
-    {{- $specializations := dict -}}
-
-    {{- range . -}}
-        {{- $id := "id" | index . | string -}}
-        {{- $traits := "traits" | index . -}}
-
-        {{- $ids = $ids | append $id -}}
-        {{- $specializations = slice $id $traits | dict $id | merge $specializations -}}
-    {{- end -}}
-
-    {{- $data := dict -}}
-    {{- $data = delimit $ids "," | dict "ids" | merge $data -}}
-    {{- range $specializations -}}
-        {{- $id := 0 | index . -}}
-        {{- $traits := 1 | index . -}}
-
-        {{- $data = delimit $traits "," | dict (printf "%s-traits" $id) | merge $data -}}
-    {{- end -}}
-
-    {{ $data | slice "specialization" false | partial "elements/embed.html" }}
-{{- end -}}
-
-{{- define "__rfgames_shortcode_includes__build_item_item__" -}}
-    {{- $styles := 0 | index . -}}
-    {{- $item := 1 | index . -}}
-    {{- $upgrade := 2 | index . -}}
-    {{- $infusion := 3 | index . -}}
-
-    {{- $classes := slice -}}
-    {{- $classes = $classes | append "build-card-item" -}}
-    {{- $classes = $classes | append "is-item" -}}
-    {{- $classes = $classes | append $styles -}}
-    {{- $classes = $classes | append "has-name" -}}
-    {{- if $upgrade -}}
-        {{- $classes = $classes | append "has-upgrade" -}}
-    {{- end -}}
-    {{- if $infusion -}}
-        {{- $classes = $classes | append "has-infusion" -}}
-    {{- end -}}
-
-    <div class="{{ delimit $classes " " }}">
+    <div class="build-card-embed {{ delimit $classes " " }}">
         {{- with $item -}}
-            {{- $itemId := "id" | index . -}}
-            {{- $itemName := "name" | index . -}}
+            {{- $data := $item -}}
+            {{- $data = true | dict "disable-text" | merge $data -}}
 
-            <a
-                href="{{ slice "item" $itemId | partial "functions/gw2-wiki-link.string" }}"
-            >
-                {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
-            </a>
-            <span class="build-card-name">
-                <a
-                    href="{{ slice "item" $itemId | partial "functions/gw2-wiki-link.string" }}"
-                >{{ $itemName }}</a>
-            </span>
+            {{- if "id" | index $data | gt 0 -}}
+                {{- $data = true | dict "disable-tooltip" | merge $data -}}
+            {{- end -}}
+
+            {{- slice "build-card-icon" | slice $type false $data | partial "elements/embed.html" -}}
         {{- end -}}
+
+        {{- if $showText -}}
+            {{- with $item -}}
+                {{- $data := $item -}}
+                {{- $data = true | dict "disable-icon" | merge $data -}}
+
+                {{- if "id" | index $data | gt 0 -}}
+                    {{- $data = true | dict "disable-text" | merge $data -}}
+                {{- end -}}
+
+                {{- slice "build-card-text" | slice $type false $data | partial "elements/embed.html" -}}
+            {{- end -}}
+        {{- end -}}
+
         {{- with $upgrade -}}
-            {{- $upgradeId := "id" | index . -}}
-            {{- $upgradeName := "name" | index . -}}
-
-            <div class="build-card-upgrade">
-                <a
-                    href="{{ slice "item" $upgradeId | partial "functions/gw2-wiki-link.string" }}"
-                >
-                    {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
-                </a>
-                <span class="build-card-upgrade-name">
-                    <a
-                        href="{{ slice "item" $upgradeId | partial "functions/gw2-wiki-link.string" }}"
-                    >{{ $upgradeName }}</a>
-                </span>
-            </div>
-        {{- end -}}
-        {{- with $infusion -}}
-            {{- $infusionId := "id" | index . -}}
-            {{- $infusionName := "name" | index . -}}
-
-            <div class="build-card-infusion">
-                <a
-                    href="{{ slice "item" $infusionId | partial "functions/gw2-wiki-link.string" }}"
-                >
-                    {{ template "__rfgames_shortcode_includes__build_item_embed__" slice . }}
-                </a>
-                <span class="build-card-infusion-name">
-                    <a
-                        href="{{ slice "item" $infusionId | partial "functions/gw2-wiki-link.string" }}"
-                    >{{ $infusionName }}</a>
-                </span>
-            </div>
-        {{- end -}}
-    </div>
-{{- end -}}
-
-{{- define "__rfgames_shortcode_includes__build_skill_item__" -}}
-    {{- $styles := 0 | index . -}}
-    {{- $skill := 1 | index . -}}
-
-    {{- $classes := slice -}}
-    {{- $classes = $classes | append "build-card-item" -}}
-    {{- $classes = $classes | append $styles -}}
-    {{- $classes = $classes | append "has-name" -}}
-
-    <div class="{{ delimit $classes " " }}">
-        {{- with $skill -}}
-            {{- $skillId := "id" | index . -}}
-            {{- $skillName := "name" | index . -}}
-
-            <a
-                href="{{ slice "skill" $skillId | partial "functions/gw2-wiki-link.string" }}"
-            >
-                {{ template "__rfgames_shortcode_includes__build_skills_embed__" slice . }}
-            </a>
-            <span class="build-card-name">
-                <a
-                    href="{{ slice "skill" $skillId | partial "functions/gw2-wiki-link.string" }}"
-                >{{ $skillName }}</a>
-            </span>
+            {{- $classes := slice "build-card-upgrade" -}}
+            {{- template "__rfgames_shortcode_includes__build_embed__" slice $type $classes . -}}
         {{- end -}}
     </div>
 {{- end -}}
 
 {{- define "__rfgames_shortcode_includes__build_equipment_armor__" -}}
-    {{- $block := 0 | index . -}}
-    {{- $data := 1 | index . -}}
+    {{- $classes := 0 | index . | printf "is-%s" | slice "is-armor" -}}
     {{- $armorRuneCounts := 2 | index . -}}
 
-    {{- with $data -}}
-        {{- $rune := "rune" | index . -}}
+    {{- with 1 | index . -}}
+        {{- $id := "id" | index . -}}
+        {{- $name := "name" | index . -}}
+        {{- $stat := "stat" | index . | default -1 -}}
         {{- $infusion := "infusion" | index . -}}
+        {{- $rune := "rune" | index . -}}
+        {{- $upgradeCount := 0 -}}
 
-        {{- $item := . -}}
-        {{- $item = slice $infusion | dict "infusions" | merge $item -}}
-        {{- $item = slice $rune | dict "upgrades" | merge $item -}}
+        {{- $runeId := "id" | index $rune -}}
+        {{- $runeName := "name" | index $rune -}}
 
-        {{- $classes := printf "is-%s" $block | slice "is-armor" -}}
+        {{- with $runeId -}}
+            {{- $upgradeCount = . | string | index $armorRuneCounts -}}
+        {{- end -}}
 
-        {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $rune -}}
+        {{- $item := dict -}}
+        {{- $item = $id | dict "id" | merge $item -}}
+        {{- $item = $name | dict "text" | merge $item -}}
+        {{- $item = $stat | dict "stat" | merge $item -}}
+        {{- $item = $infusion | dict "infusions" | merge $item -}}
+        {{- $item = $runeId | dict "upgrades" | merge $item -}}
+        {{- $item = $upgradeCount | dict "upgrade-count" | merge $item -}}
+
+        {{- $upgrade := dict -}}
+        {{- $upgrade = $runeId | dict "id" | merge $upgrade -}}
+        {{- $upgrade = $runeName | dict "text" | merge $upgrade -}}
+        {{- $upgrade = $upgradeCount | dict "upgrade-count" | merge $upgrade -}}
+
+        {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item $upgrade -}}
     {{- end -}}
 {{- end -}}
 
 {{- define "__rfgames_shortcode_includes__build_equipment_weapon__" -}}
-    {{- $block := 0 | index . -}}
-    {{- $data := 1 | index . -}}
+    {{- $classes := 0 | index . | printf "is-%s" | slice "is-weapon" -}}
 
-    {{- with $data -}}
+    {{- $block := "TEST" -}}
+
+    {{- with 1 | index . -}}
         {{- $type := "type" | index . -}}
 
         {{- $weapon := "weapon" | index . -}}
@@ -264,202 +110,286 @@
 
         {{- if $type | eq "DualWield" -}}
             {{- with $weapon1 -}}
-                {{- $item := . -}}
-                {{- $item = slice $infusion1 | dict "infusions" | merge $item -}}
-                {{- $item = slice $sigil1 | dict "upgrades" | merge $item -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+                {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-dual-wield" "is-main-hand-slot" -}}
+                {{- $sigilId := "id" | index $sigil1 -}}
+                {{- $sigilName := "name" | index $sigil1 -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil1 -}}
+                {{- $upgrade := dict -}}
+                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+
+                {{- $item := dict -}}
+                {{- $item = $id | dict "id" | merge $item -}}
+                {{- $item = $name | dict "text" | merge $item -}}
+                {{- $item = $stat | dict "stat" | merge $item -}}
+                {{- $item = $infusion1 | dict "infusions" | merge $item -}}
+                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+
+                {{- $classes = $classes | append "is-dual-wield" -}}
+                {{- $classes = $classes | append "is-main-hand-slot" -}}
+
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item $upgrade -}}
             {{- end -}}
 
             {{- with $weapon2 -}}
-                {{- $item := . -}}
-                {{- $item = slice $infusion2 | dict "infusions" | merge $item -}}
-                {{- $item = slice $sigil2 | dict "upgrades" | merge $item -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+                {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-dual-wield" "is-off-hand-slot" -}}
+                {{- $sigilId := "id" | index $sigil2 -}}
+                {{- $sigilName := "name" | index $sigil2 -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil2 -}}
+                {{- $upgrade := dict -}}
+                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+
+                {{- $item := dict -}}
+                {{- $item = $id | dict "id" | merge $item -}}
+                {{- $item = $name | dict "text" | merge $item -}}
+                {{- $item = $stat | dict "stat" | merge $item -}}
+                {{- $item = $infusion2 | dict "infusions" | merge $item -}}
+                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+
+                {{- $classes = $classes | append "is-dual-wield" -}}
+                {{- $classes = $classes | append "is-off-hand-slot" -}}
+
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item $upgrade -}}
             {{- end -}}
         {{- end -}}
         {{- if $type | eq "MainHandOnly" -}}
             {{- with $weapon1 -}}
-                {{- $item := . -}}
-                {{- $item = slice $infusion1 | dict "infusions" | merge $item -}}
-                {{- $item = slice $sigil1 | dict "upgrades" | merge $item -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+                {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-main-hand-only" "is-main-hand-slot" -}}
+                {{- $sigilId := "id" | index $sigil1 -}}
+                {{- $sigilName := "name" | index $sigil1 -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil1 -}}
+                {{- $upgrade := dict -}}
+                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+
+                {{- $item := dict -}}
+                {{- $item = $id | dict "id" | merge $item -}}
+                {{- $item = $name | dict "text" | merge $item -}}
+                {{- $item = $stat | dict "stat" | merge $item -}}
+                {{- $item = $infusion1 | dict "infusions" | merge $item -}}
+                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+
+                {{- $classes = $classes | append "is-main-hand-only" -}}
+                {{- $classes = $classes | append "is-main-hand-slot" -}}
+
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item $upgrade -}}
             {{- end -}}
 
             {{- with . -}}
                 {{- $item := dict "id" -1 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-main-hand-only" "is-off-hand-slot" -}}
+                {{- $classes = $classes | append "is-main-hand-only" -}}
+                {{- $classes = $classes | append "is-off-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item -}}
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item -}}
             {{- end -}}
         {{- end -}}
         {{- if $type | eq "OffHandOnly" -}}
             {{- with . -}}
                 {{- $item := dict "id" -1 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-off-hand-only" "is-main-hand-slot" -}}
+                {{- $classes = $classes | append "is-off-hand-only" -}}
+                {{- $classes = $classes | append "is-main-hand-slot" -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item -}}
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item -}}
             {{- end -}}
 
             {{- with $weapon2 -}}
-                {{- $item := . -}}
-                {{- $item = slice $infusion2 | dict "infusions" | merge $item -}}
-                {{- $item = slice $sigil2 | dict "upgrades" | merge $item -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+                {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-off-hand-only" "is-off-hand-slot" -}}
+                {{- $sigilId := "id" | index $sigil2 -}}
+                {{- $sigilName := "name" | index $sigil2 -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil2 -}}
+                {{- $upgrade := dict -}}
+                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+
+                {{- $item := dict -}}
+                {{- $item = $id | dict "id" | merge $item -}}
+                {{- $item = $name | dict "text" | merge $item -}}
+                {{- $item = $stat | dict "stat" | merge $item -}}
+                {{- $item = $infusion2 | dict "infusions" | merge $item -}}
+                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+
+                {{- $classes = $classes | append "is-off-hand-only" -}}
+                {{- $classes = $classes | append "is-off-hand-slot" -}}
+
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item $upgrade -}}
             {{- end -}}
         {{- end -}}
         {{- if $type | eq "TwoHand" -}}
             {{- with $weapon -}}
-                {{- $item := . -}}
-                {{- $item = slice $infusion1 $infusion2 | dict "infusions" | merge $item -}}
-                {{- $item = slice $sigil1 $sigil2 | dict "upgrades" | merge $item -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+                {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-two-hand" "is-main-hand-slot" -}}
+                {{- $sigilId := "id" | index $sigil1 -}}
+                {{- $sigilName := "name" | index $sigil1 -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil1 -}}
+                {{- $upgrade := dict -}}
+                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+
+                {{- $sigils := "id" | index $sigil2 | slice $sigilId -}}
+                {{- $infusions := slice $infusion1 $infusion2 -}}
+
+                {{- $item := dict -}}
+                {{- $item = $id | dict "id" | merge $item -}}
+                {{- $item = $name | dict "text" | merge $item -}}
+                {{- $item = $stat | dict "stat" | merge $item -}}
+                {{- $item = delimit $infusions "," | dict "infusions" | merge $item -}}
+                {{- $item = delimit $sigils "," | dict "upgrades" | merge $item -}}
+
+                {{- $classes = $classes | append "is-two-hand" -}}
+                {{- $classes = $classes | append "is-main-hand-slot" -}}
+
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item $upgrade -}}
             {{- end -}}
 
             {{- with . -}}
-                {{- $item := dict "id" -1 -}}
+                {{- $sigilId := "id" | index $sigil2 -}}
+                {{- $sigilName := "name" | index $sigil2 -}}
 
-                {{- $classes := printf "is-%s" $block | slice "is-weapon" "is-two-hand" "is-off-hand-slot" -}}
+                {{- $upgrade := dict -}}
+                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
 
-                {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $sigil2 -}}
+                {{- $sigils := "id" | index $sigil1 | slice $sigilId -}}
+                {{- $infusions := slice $infusion1 $infusion2 -}}
+
+                {{- $item := dict -}}
+                {{- $item = -1 | dict "id" | merge $item -}}
+                {{- $item = delimit $infusions "," | dict "infusions" | merge $item -}}
+                {{- $item = delimit $sigils "," | dict "upgrades" | merge $item -}}
+
+                {{- $classes = $classes | append "is-two-hand" -}}
+                {{- $classes = $classes | append "is-off-hand-slot" -}}
+
+                {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item $upgrade -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
 
 {{- define "__rfgames_shortcode_includes__build_equipment_trinket__" -}}
-    {{- $block := 0 | index . -}}
-    {{- $data := 1 | index . -}}
+    {{- $classes := 0 | index . | printf "is-%s" | slice "is-trinket" -}}
 
-    {{- with $data -}}
+    {{- with 1 | index . -}}
+        {{- $id := "id" | index . -}}
+        {{- $name := "name" | index . -}}
+        {{- $stat := "stat" | index . | default -1 -}}
         {{- $infusion := "infusion" | index . -}}
+        {{- $infusions := "infusions" | index . | default slice -}}
         {{- $upgrade := "upgrade" | index . -}}
-
-        {{- $infusions := "infusions" | index . -}}
+        {{- $upgrades := "upgrades" | index . | default slice -}}
 
         {{- with $infusion -}}
             {{- $infusions = $infusions | append . -}}
         {{- end -}}
 
-        {{- $item := . -}}
-        {{- $item = $infusions | dict "infusions" | merge $item -}}
-        {{- $item = slice $upgrade | dict "upgrades" | merge $item -}}
+        {{- with $upgrade -}}
+            {{- $upgrades = $upgrades | append . -}}
+        {{- end -}}
 
-        {{- $classes := printf "is-%s" $block | slice "is-trinket" -}}
+        {{- $item := dict -}}
+        {{- $item = $id | dict "id" | merge $item -}}
+        {{- $item = $name | dict "text" | merge $item -}}
+        {{- $item = $stat | dict "stat" | merge $item -}}
+        {{- $item = delimit $infusions "," | dict "infusions" | merge $item -}}
+        {{- $item = delimit $upgrades "," | dict "upgrades" | merge $item -}}
 
-        {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item $upgrade -}}
+        {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item -}}
     {{- end -}}
 {{- end -}}
 
 {{- define "__rfgames_shortcode_includes__build_consumable__" -}}
-    {{- $block := 0 | index . -}}
-    {{- $data := 1 | index . -}}
+    {{- $classes := 0 | index . | printf "is-%s" | slice "is-consumable" -}}
 
-    {{- with $data -}}
-        {{- $item := . -}}
+    {{- with 1 | index . -}}
+        {{- $id := "id" | index . -}}
+        {{- $name := "name" | index . -}}
 
-        {{- $classes := printf "is-%s" $block | slice "is-consumable" -}}
+        {{- $item := dict -}}
+        {{- $item = $id | dict "id" | merge $item -}}
+        {{- $item = $name | dict "text" | merge $item -}}
 
-        {{- template "__rfgames_shortcode_includes__build_item_item__" slice $classes $item -}}
+        {{- template "__rfgames_shortcode_includes__build_embed__" slice "item" $classes $item -}}
     {{- end -}}
 {{- end -}}
 
 {{- define "__rfgames_shortcode_includes__build_skill__" -}}
-    {{- $block := 0 | index . -}}
-    {{- $data := 1 | index . -}}
+    {{- $classes := 0 | index . | printf "is-%s" | slice "is-skill" -}}
+    {{- $showText := 2 | index . | default true -}}
 
-    {{- with $data -}}
-        {{- $id := "id" | index . -}}
-        {{- $name := "name" | index . -}}
+    {{- with 1 | index . -}}
+        {{- $skill := dict -}}
+        {{- $skill = . | dict "id" | merge $skill -}}
 
-        {{- $data := dict -}}
-        {{- $data = $id | dict "id" | merge $data -}}
-        {{- $data = $name | dict "name" | merge $data -}}
-
-        {{- $classes := printf "is-%s" $block | slice "is-skill" -}}
-
-        {{- template "__rfgames_shortcode_includes__build_skill_item__" slice $classes $data -}}
+        {{- template "__rfgames_shortcode_includes__build_embed__" slice "skill" $classes $skill false $showText -}}
     {{- end -}}
 {{- end -}}
 
-{{- define "__rfgames_shortcode_includes__build_specialization__" -}}
-    {{- $block := 0 | index . -}}
-    {{- $data := 1 | index . -}}
+{{- define "__rfgames_shortcode_includes__build_traitline__" -}}
+    {{- $id := 0 | index . -}}
+    {{- $traits := . | after 1 -}}
 
-    {{- with $data -}}
-        {{- $id := "id" | index . -}}
-        {{- $traits := "traits" | index . -}}
+    {{- $data := dict -}}
+    {{- $data = $id | dict "id" | merge $data -}}
+    {{- $data = delimit $traits "," | dict "traits" | merge $data -}}
 
-        {{- $data := dict "id" $id "traits" $traits -}}
-
-        {{- template "__rfgames_shortcode_includes__build_specializations_embed__" slice $data -}}
-    {{- end -}}
+    {{- slice "traitline" false $data | partial "elements/embed.html" -}}
 {{- end -}}
 
 <div class="build-card is-template">
     <div class="build-card-content">
-        <div
-            class="build-card-template-code-container"
-        >
-            <span class="template-addon">Template</span>
-            <span class="template-code" data-auto-selection>{{ $chatcode }}</span>
-            <button
-                class="template-copy"
-                data-clipboard-text="{{ $chatcode }}"
-                data-clipboard-message="Copied {{ .Page.Title }} template code to clipboard"
-            >Copy</button>
-        </div>
+        <span class="template-addon">Template</span>
+        <span class="template-code" data-auto-selection>{{ $chatcode }}</span>
+        <button
+            class="template-copy"
+            data-clipboard-text="{{ $chatcode }}"
+            data-clipboard-message="Copied {{ .Page.Title }} template code to clipboard"
+        >Copy</button>
     </div>
 </div>
 
 <div class="build-card is-armors">
     <h5 class="title">Armors</h5>
     <div class="build-card-content">
-        <div class="build-card-armor-container">
-            {{ template "__rfgames_shortcode_includes__build_equipment_armor__" (slice "head" $equipments.head $armorRuneCounts) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_armor__" (slice "shoulders" $equipments.shoulders $armorRuneCounts) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_armor__" (slice "coat" $equipments.coat $armorRuneCounts) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_armor__" (slice "gloves" $equipments.gloves $armorRuneCounts) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_armor__" (slice "leggings" $equipments.leggings $armorRuneCounts) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_armor__" (slice "boots" $equipments.boots $armorRuneCounts) }}
-        </div>
+        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "head" $equipments.head $armorRuneCounts }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "shoulders" $equipments.shoulders $armorRuneCounts }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "coat" $equipments.coat $armorRuneCounts }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "gloves" $equipments.gloves $armorRuneCounts }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "leggings" $equipments.leggings $armorRuneCounts }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "boots" $equipments.boots $armorRuneCounts }}
     </div>
 </div>
 
 <div class="build-card is-weapons">
     <h5 class="title">Weapons</h5>
     <div class="build-card-content">
-        <div class="build-card-weapon-container">
-            {{ template "__rfgames_shortcode_includes__build_equipment_weapon__" (slice "weapon1" $equipments.weapon1) }}
-            <div class="gw2-embed-container">
-                {{ range $equipments.weapon1.skills }}
-                    {{ template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . }}
-                {{ end }}
-            </div>
+        {{ template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon1" $equipments.weapon1 }}
+        <div class="gw2-embed-container">
+            {{- range $equipments.weapon1.skills -}}
+                {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . false -}}
+            {{- end -}}
         </div>
-        <div class="build-card-weapon-container">
-            {{ template "__rfgames_shortcode_includes__build_equipment_weapon__" (slice "weapon2" $equipments.weapon2) }}
-            <div class="gw2-embed-container">
-                {{ range $equipments.weapon2.skills }}
-                    {{ template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . }}
-                {{ end }}
-            </div>
+        {{ template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon2" $equipments.weapon2 }}
+        <div class="gw2-embed-container">
+            {{- range $equipments.weapon2.skills -}}
+                {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . false -}}
+            {{- end -}}
         </div>
     </div>
 </div>
@@ -467,38 +397,42 @@
 <div class="build-card is-trinkets">
     <h5 class="title">Trinkets</h5>
     <div class="build-card-content">
-        <div class="build-card-trinket-container">
-            {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" (slice "back" $equipments.back) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" (slice "accessory1" $equipments.accessory1) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" (slice "accessory2" $equipments.accessory2) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" (slice "amulet" $equipments.amulet) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" (slice "ring1" $equipments.ring1) }}
-            {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" (slice "ring2" $equipments.ring2) }}
-        </div>
+        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "back" $equipments.back }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "accessory1" $equipments.accessory1 }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "accessory2" $equipments.accessory2 }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "amulet" $equipments.amulet }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "ring1" $equipments.ring1 }}
+        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "ring2" $equipments.ring2 }}
     </div>
 </div>
 
 <div class="build-card is-consumables">
     <h5 class="title">Consumables</h5>
     <div class="build-card-content">
-        <div class="build-card-consumable-container">
-            {{ template "__rfgames_shortcode_includes__build_consumable__" (slice "food" $consumables.food) }}
-            {{ template "__rfgames_shortcode_includes__build_consumable__" (slice "utility" $consumables.utility) }}
-        </div>
+        {{ template "__rfgames_shortcode_includes__build_consumable__" slice "food" $consumables.food }}
+        {{ template "__rfgames_shortcode_includes__build_consumable__" slice "utility" $consumables.utility }}
     </div>
 </div>
 
 <div class="build-card is-skills">
     <h5 class="title">Skills</h5>
     <div class="build-card-content">
-        <div class="build-card-skill-container">
-            <div class="gw2-embed-container">
-                {{ template "__rfgames_shortcode_includes__build_skill__" slice "healing" $skills.healing }}
-                {{ range $skills.utilities }}
-                    {{ template "__rfgames_shortcode_includes__build_skill__" slice "utility" . }}
-                {{ end }}
-                {{ template "__rfgames_shortcode_includes__build_skill__" slice "elite" $skills.elite }}
-            </div>
+        <div class="gw2-embed-container">
+            {{- range $template.skills | first 1 -}}
+                {{- range . | first 1 -}}
+                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "healing" . -}}
+                {{- end -}}
+            {{- end -}}
+            {{- range $template.skills | after 1 | first 3 -}}
+                {{- range . | first 1 -}}
+                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "utility" . -}}
+                {{- end -}}
+            {{- end -}}
+            {{- range $template.skills | after 4 -}}
+                {{- range . | first 1 -}}
+                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "elite" . -}}
+                {{- end -}}
+            {{- end -}}
         </div>
     </div>
 </div>
@@ -506,10 +440,8 @@
 <div class="build-card is-specializations">
     <h5 class="title">Specializations</h5>
     <div class="build-card-content">
-        <div class="build-card-specialization-container">
-            {{ range $specializations }}
-                {{ template "__rfgames_shortcode_includes__build_specialization__" slice "specialization" . }}
-            {{ end }}
-        </div>
+        {{- range $template.traits -}}
+            {{- template "__rfgames_shortcode_includes__build_traitline__" . -}}
+        {{- end -}}
     </div>
 </div>

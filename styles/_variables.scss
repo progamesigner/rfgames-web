@@ -300,15 +300,13 @@ $speed: 86ms !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     // Layouts
-    --build-section-attachment-item-size: 2rem;
     --build-section-card-background-color: #{rgba($background-color, 0.25)};
+    --build-section-card-item-spacing: 0.25rem;
     --build-section-card-radius: #{$radius};
-    --build-section-item-name-font-size: #{$font-size-6};
-    --build-section-item-name-text-color: #{$foreground-color};
-    --build-section-item-size: 4rem;
-    --build-section-item-spacing: 0.25rem;
-    --build-section-item-upgrade-name-font-size: #{$font-size-6};
-    --build-section-item-upgrade-name-text-color: #{rgba($foreground-color, 0.75)};
+    --build-section-embed-name-font-size: #{$font-size-6};
+    --build-section-embed-name-text-color: #{$foreground-color};
+    --build-section-embed-upgrade-name-font-size: #{$font-size-6};
+    --build-section-embed-upgrade-name-text-color: #{rgba($foreground-color, 0.75)};
     --build-section-spacing: 0.5rem;
     --build-section-template-addon-alternative-background-color: #{rgba($background-color, 0.5)};
     --build-section-template-addon-background-color: #{rgba($background-color, 0.75)};
@@ -328,16 +326,14 @@ $speed: 86ms !default;
     --form-modal-content-padding: 1.5rem;
     --form-modal-content-text-color: #{$background-color};
 
-    --gw2-embed-item-size-large: 4rem;
-    --gw2-embed-item-size-medium: 2rem;
-    --gw2-embed-item-size-small: 1.25rem;
-    --gw2-embed-skill-size-large: 4rem;
-    --gw2-embed-skill-size-medium: 2rem;
-    --gw2-embed-skill-size-small: 1.25rem;
-    --gw2-embed-trait-size-large: 4rem;
-    --gw2-embed-trait-size-medium: 2rem;
-    --gw2-embed-trait-size-small: 1.25rem;
-    --gw2-embed-specialization-min-height: 140px;
+    --gw2-embed-item-inline-size: 1rem;
+    --gw2-embed-item-size: 4rem;
+    --gw2-embed-item-size-small: 2rem;
+    --gw2-embed-skill-inline-size: 1rem;
+    --gw2-embed-skill-size: 4rem;
+    --gw2-embed-trait-inline-size: 1rem;
+    --gw2-embed-trait-size: 2.5rem;
+    --gw2-embed-traitline-min-height: 8.75rem;
 
     --header-background-color: #{$background-color};
 

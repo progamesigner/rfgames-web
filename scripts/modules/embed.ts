@@ -1,12 +1,19 @@
-import { loadScript } from '../libs'
+import { EmbedOptions } from '../embed/types'
 
 declare global {
-  interface Document {
-    GW2A_EMBED_OPTIONS: {
-      forceCacheClearOnNextRun: string;
-      lang: string;
-      persistToLocalStorage: boolean;
-    }
+  interface Window {
+    GW2_EMBED_OPTIONS?: Partial<EmbedOptions>;
+  }
+}
+
+async function initialize(window: Window): Promise<void> {
+  try {
+    const {
+      bootstrap
+    } = await import(/* webpackChunkName: 'embed-bootstrap' */ `../embed/bootstrap`)
+    bootstrap(window)
+  } catch (error) {
+    console.error(error.message)
   }
 }
 
@@ -15,11 +22,7 @@ export function bootstrap(window: Window): void {
     document
   } = window
 
-  document.GW2A_EMBED_OPTIONS = {
-    forceCacheClearOnNextRun: '1',
-    lang: 'en',
-    persistToLocalStorage: true
+  if (document.querySelectorAll('[data-embed-type]')) {
+    initialize(window)
   }
-
-  loadScript(window, 'https://unpkg.com/armory-embeds@0.4.3/armory-embeds.js')
 }

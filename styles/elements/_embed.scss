@@ -1,81 +1,41 @@
 .gw2-embed {
-    &.is-item,
-    &.is-skill,
-    &.is-trait {
-        height: var(--gw2-item-embed-size);
-        width: var(--gw2-item-embed-size);
-    }
+    &.is-item {
+        --gw2-embed-icon-size: var(--gw2-embed-item-size);
 
-    &[data-armory-embed="specializations"] {
-        min-height: var(--gw2-embed-specialization-min-height);
-    }
-
-    &.is-small {
-        --gw2-item-embed-size: var(--gw2-embed-item-size-small);
-        --gw2-skill-embed-size: var(--gw2-embed-skill-size-small);
-        --gw2-trait-embed-size: var(--gw2-embed-trait-size-small);
-    }
-
-    &.is-medium {
-        --gw2-item-embed-size: var(--gw2-embed-item-size-medium);
-        --gw2-skill-embed-size: var(--gw2-embed-skill-size-medium);
-        --gw2-trait-embed-size: var(--gw2-embed-trait-size-medium);
-    }
-
-    &,
-    &.is-large {
-        --gw2-item-embed-size: var(--gw2-embed-item-size-large);
-        --gw2-skill-embed-size: var(--gw2-embed-skill-size-large);
-        --gw2-trait-embed-size: var(--gw2-embed-trait-size-large);
-    }
-
-    &.is-inline {
-        display: inline-block;
-    }
-
-    .gw2a-items-embed {
-        height: var(--gw2-item-embed-size);
-        width: var(--gw2-item-embed-size);
-
-        & > div {
-            height: var(--gw2-item-embed-size);
-            width: var(--gw2-item-embed-size);
+        &.is-inline {
+            --gw2-embed-icon-size: var(--gw2-embed-item-inline-size);
         }
     }
 
-    .gw2a-skills-embed {
-        height: var(--gw2-skill-embed-size);
-        width: var(--gw2-skill-embed-size);
+    &.is-skill {
+        --gw2-embed-icon-size: var(--gw2-embed-skill-size);
 
-        & > div {
-            height: var(--gw2-skill-embed-size);
-            width: var(--gw2-skill-embed-size);
+        &.is-inline {
+            --gw2-embed-icon-size: var(--gw2-embed-skill-inline-size);
         }
     }
 
-    .gw2a-specializations-embed {
-        align-items: center;
-        display: flex;
-        justify-content: center;
+    &.is-trait,
+    &.is-traitline {
+        --gw2-embed-icon-size: var(--gw2-embed-trait-size);
 
-        & > div {
-            width: 100%;
+        &.is-inline {
+            --gw2-embed-icon-size: var(--gw2-embed-trait-inline-size);
         }
     }
 
-    .gw2a-traits-embed {
-        height: var(--gw2-trait-embed-size);
-        width: var(--gw2-skill-embed-size);
+    .gw2-embed-icon {
+        height: var(--gw2-embed-icon-size);
+        width: var(--gw2-embed-icon-size);
+    }
 
-        & > div {
-            height: var(--gw2-trait-embed-size);
-            width: var(--gw2-trait-embed-size);
-        }
+    .gw2-embed-traitline {
+        min-height: var(--gw2-embed-traitline-min-height);
     }
 }
 
 .gw2-embed-container {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
