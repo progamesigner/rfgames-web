@@ -56,7 +56,7 @@ export class Loader implements m.Component<LoaderAttributes> {
       {
         !disableText ?
         <Text className={cx(styles.text, classText)}>
-          {overrideText || ''}
+          {overrideText || 'Loading ...'}
         </Text> :
         null
       }
