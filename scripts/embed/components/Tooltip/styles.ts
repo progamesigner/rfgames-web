@@ -1,5 +1,4 @@
 import {
-  animations,
   border,
   boxShadow,
   calc,
@@ -22,13 +21,11 @@ export const root = style({
   color: colors.tooltipText.toString(),
   left: em(layouts.tooltipOffset),
   maxWidth: em(layouts.tooltipMaximumWidth),
-  opacity: 0,
   pointerEvents: 'none',
   position: 'fixed',
   textAlign: 'left',
   textShadow: textShadow(colors.tooltipTextShadow.toString()),
   top: em(layouts.tooltipOffset),
-  transition: `opacity ${animations.speed} ${animations.easing}`,
   zIndex: zIndices.tooltip,
   $nest: {
     [`@media screen and (max-width: ${px(480)})`]: {
