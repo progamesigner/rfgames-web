@@ -86,6 +86,14 @@ $warrior-palette: (
     --build-section-template-addon-alternative-background-color: #{rgba(map-get($palette, 'darker'), 0.5)};
     --build-section-template-addon-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
     --build-section-title-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
+
+    & ~ [id^="gw2-embed-tooltip"] {
+        & > .gw2-embed-tooltip {
+            .gw2-embed-tooltip-content {
+                border-color: #{rgba(map-get($palette, 'darker'), 0.5)};
+            }
+        }
+    }
 }
 
 .main {
