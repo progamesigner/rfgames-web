@@ -21,6 +21,7 @@ export const root = style({
   color: colors.tooltipText.toString(),
   left: em(layouts.tooltipOffset),
   maxWidth: em(layouts.tooltipMaximumWidth),
+  opacity: 0,
   pointerEvents: 'none',
   position: 'fixed',
   textAlign: 'left',
