@@ -28,21 +28,6 @@ export function buildItemName(item: GW2Item, stat?: GW2ItemStat): string {
   return item.name
 }
 
-export function calculateStatAttribute(
-  item: GW2Item,
-  multiplier: number,
-  value: number
-): number {
-  return Math.floor(getHiddenItemNumber(item) * multiplier + value)
-}
-
-export function createTakeFlow(
-  items: Array<number>,
-  slots: number
-): () => Array<number> {
-  return flow(constant(slots), times(constant(0)), concat(items), take(slots))
-}
-
 function extractHiddenItemNumberByRarity(
   item: GW2Item,
   ascended: number,
@@ -127,6 +112,20 @@ function extractHiddenItemNumberFromWeapon(item: GW2Item): number {
   return 0
 }
 
+function getDetailType(item: GW2Item): string | null {
+  switch (item.type) {
+    case GW2ItemType.ARMOR:
+    case GW2ItemType.CONSUMABLE:
+    case GW2ItemType.GIZMO:
+    case GW2ItemType.TOOL:
+    case GW2ItemType.TRINKET:
+    case GW2ItemType.UPGRADE_COMPONENT:
+    case GW2ItemType.WEAPON:
+      return item.details.type
+  }
+  return null
+}
+
 function getHiddenItemNumber(item: GW2Item): number {
   return [
     extractHiddenItemNumberFromArmor,
@@ -136,10 +135,27 @@ function getHiddenItemNumber(item: GW2Item): number {
   ].reduce((number, func) => func(item) + number, 0)
 }
 
+export function calculateStatAttribute(
+  item: GW2Item,
+  multiplier: number,
+  value: number
+): number {
+  return Math.floor(getHiddenItemNumber(item) * multiplier + value)
+}
+
+export function createTakeFlow(
+  items: Array<number>,
+  slots: number
+): () => Array<number> {
+  return flow(constant(slots), times(constant(0)), concat(items), take(slots))
+}
+
 export function parseItemClassNames(item: GW2Item): string {
+  const kind = getDetailType(item)
   return cx(
     'is-item',
     `is-type-${item.type.toLowerCase()}`,
+    kind ? `is-kind-${kind.toLowerCase()}` : null,
     `is-rarity-${item.rarity.toLowerCase()}`
   )
 }
