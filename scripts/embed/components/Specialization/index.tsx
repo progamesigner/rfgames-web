@@ -49,6 +49,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
   public view({
     attrs: {
       classIcon,
+      className,
       classSize,
       classText,
       disableIcon,
@@ -64,7 +65,6 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       store
     }
   }: m.Vnode<SpecializationAttributes>): m.Children {
-    const classes = parseSpecializationClassNames(specialization)
     const name = overrideText || specialization
 
     const tooltipEvents = !disableTooltip ?
@@ -73,11 +73,14 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       }) :
       {}
 
-    return <Container type="specialization">
+    return <Container
+      className={cx(parseSpecializationClassNames(specialization), className)}
+      type="specialization"
+    >
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classIcon, classes)}
+          className={cx(styles.icon.root, classIcon)}
           classSize={cx(
             { [styles.icon.block] : !inline },
             { [styles.icon.inline] : inline },
@@ -97,7 +100,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       }
       {
         !disableText ?
-        <Text className={cx(styles.name, classText, classes)}
+        <Text className={cx(styles.name, classText)}
         {...disableTextLink && tooltipEvents}>
           {
             !disableTextLink ?

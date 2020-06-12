@@ -18,6 +18,7 @@ import {
   bindTooltipEvents,
   isTraitActive,
   mapSelectionToIds,
+  parseTraitlineClassNames,
   TraitSelection
 } from './lib'
 
@@ -114,7 +115,11 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
       {}
 
     return <Container
-      className={cx(styles.root, { [styles.elite]: data.elite }, className)}
+      className={cx(
+        styles.root,
+        { [styles.elite]: data.elite },
+        parseTraitlineClassNames(data),
+        className)}
       type="traitline"
     >
       <div

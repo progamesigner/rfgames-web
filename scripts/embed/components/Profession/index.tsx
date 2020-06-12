@@ -36,6 +36,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
   public view({
     attrs: {
       classIcon,
+      className,
       classSize,
       classText,
       disableIcon,
@@ -48,14 +49,16 @@ export class Profession implements m.Component<ProfessionAttributes> {
       profession
     }
   }: m.Vnode<ProfessionAttributes>): m.Children {
-    const classes = parseProfessionClassNames(profession)
     const name = overrideText || profession.name
 
-    return <Container type="profession">
+    return <Container
+      className={cx(parseProfessionClassNames(profession), className)}
+      type="profession"
+    >
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classIcon, classes)}
+          className={cx(styles.icon.root, classIcon)}
           classSize={cx(
             { [styles.icon.block] : !inline },
             { [styles.icon.inline] : inline },
@@ -74,7 +77,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
       }
       {
         !disableText ?
-        <Text className={cx(styles.name, classText, classes)}>
+        <Text className={cx(styles.name, classText)}>
           {
             !disableTextLink ?
             <Link

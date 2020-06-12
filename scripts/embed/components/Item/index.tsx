@@ -52,6 +52,7 @@ export class Item implements m.Component<ItemAttributes> {
   public view({
     attrs: {
       classIcon,
+      className,
       classSize,
       classText,
       disableIcon,
@@ -71,7 +72,6 @@ export class Item implements m.Component<ItemAttributes> {
       upgrades
     }
   }: m.Vnode<ItemAttributes>): m.Children {
-    const classes = parseItemClassNames(item)
     const name = overrideText || item.name
 
     const tooltipEvents = !disableTooltip ?
@@ -84,11 +84,14 @@ export class Item implements m.Component<ItemAttributes> {
       }) :
       {}
 
-    return <Container type="item">
+    return <Container
+      className={cx(parseItemClassNames(item), className)}
+      type="item"
+    >
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classIcon, classes)}
+          className={cx(styles.icon.root, classIcon)}
           classSize={cx(
             { [styles.icon.block] : !inline },
             { [styles.icon.inline] : inline },
@@ -109,7 +112,7 @@ export class Item implements m.Component<ItemAttributes> {
       {
         !disableText ?
         <Text
-          className={cx(styles.name, classText, classes)}
+          className={cx(styles.name, classText)}
           {...disableTextLink && tooltipEvents}
         >
           {

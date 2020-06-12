@@ -45,6 +45,7 @@ export class Skill implements m.Component<SkillAttributes> {
   public view({
     attrs: {
       classIcon,
+      className,
       classSize,
       classText,
       disableIcon,
@@ -60,7 +61,6 @@ export class Skill implements m.Component<SkillAttributes> {
       store
     }
   }: m.Vnode<SkillAttributes>): m.Children {
-    const classes = parseSkillClassNames(skill)
     const name = overrideText || skill.name
 
     const tooltipEvents = !disableTooltip ?
@@ -69,11 +69,14 @@ export class Skill implements m.Component<SkillAttributes> {
       }) :
       {}
 
-    return <Container type="skill">
+    return <Container
+      className={cx(parseSkillClassNames(skill), className)}
+      type="skill"
+    >
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classIcon, classes)}
+          className={cx(styles.icon.root, classIcon)}
           classSize={cx(
             { [styles.icon.block] : !inline },
             { [styles.icon.inline] : inline },
@@ -94,7 +97,7 @@ export class Skill implements m.Component<SkillAttributes> {
       {
         !disableText ?
         <Text
-          className={cx(styles.name, classText, classes)}
+          className={cx(styles.name, classText)}
           {...disableTextLink && tooltipEvents}
         >
           {

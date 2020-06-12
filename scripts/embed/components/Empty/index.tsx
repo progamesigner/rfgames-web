@@ -38,6 +38,7 @@ export class Empty implements m.Component<EmptyAttributes> {
   public view({
     attrs: {
       classIcon,
+      className,
       classSize,
       classText,
       disableIcon,
@@ -59,11 +60,11 @@ export class Empty implements m.Component<EmptyAttributes> {
       }) :
       {}
 
-    return <Container type="empty">
+    return <Container className={cx('is-empty', className)} type="empty">
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classIcon, 'is-empty')}
+          className={cx(styles.icon.root, classIcon)}
           classSize={cx(
             { [styles.icon.block] : !inline },
             { [styles.icon.inline] : inline },
@@ -77,7 +78,7 @@ export class Empty implements m.Component<EmptyAttributes> {
       {
         !disableText ?
         <Text
-          className={cx(styles.text, classText, 'is-empty')}
+          className={cx(styles.text, classText)}
           {...tooltipEvents}
         >{text}</Text> :
         null

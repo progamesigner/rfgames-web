@@ -29,6 +29,7 @@ export class Loader implements m.Component<LoaderAttributes> {
     attrs: {
       classIcon,
       classLoader,
+      className,
       classSize,
       classText,
       disableIcon,
@@ -38,11 +39,11 @@ export class Loader implements m.Component<LoaderAttributes> {
       overrideText
     }
   }: m.Vnode<LoaderAttributes>): m.Children {
-    return <Container type="loader">
+    return <Container className={cx('is-loader', className)} type="loader">
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classIcon, 'is-loader')}
+          className={cx(styles.icon.root, classIcon)}
           classSize={cx(
             { [styles.icon.block] : !inline },
             { [styles.icon.inline] : inline },
@@ -54,7 +55,7 @@ export class Loader implements m.Component<LoaderAttributes> {
       }
       {
         !disableText ?
-        <Text className={cx(styles.text, classText, 'is-loader')}>
+        <Text className={cx(styles.text, classText)}>
           {overrideText || ''}
         </Text> :
         null

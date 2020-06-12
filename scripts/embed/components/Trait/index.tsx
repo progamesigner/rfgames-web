@@ -50,6 +50,7 @@ export class Trait implements m.Component<TraitAttributes> {
   public view({
     attrs: {
       classIcon,
+      className,
       classSize,
       classText,
       disableIcon,
@@ -65,7 +66,6 @@ export class Trait implements m.Component<TraitAttributes> {
       trait
     }
   }: m.Vnode<TraitAttributes>): m.Children {
-    const classes = parseTraitClassNames(trait)
     const name = overrideText || trait.name
 
     const tooltipEvents = !disableTooltip ?
@@ -74,11 +74,14 @@ export class Trait implements m.Component<TraitAttributes> {
       }) :
       {}
 
-    return <Container type="trait">
+    return <Container
+      className={cx(parseTraitClassNames(trait), className)}
+      type="trait"
+    >
       {
         !disableIcon ?
         <Icon
-          className={cx(styles.icon.root, classIcon, classes)}
+          className={cx(styles.icon.root, classIcon)}
           classSize={cx(
             { [styles.icon.block] : !inline },
             { [styles.icon.inline] : inline },
@@ -99,7 +102,7 @@ export class Trait implements m.Component<TraitAttributes> {
       {
         !disableText ?
         <Text
-          className={cx(styles.name, classText, classes)}
+          className={cx(styles.name, classText)}
           {...disableTextLink && tooltipEvents}
         >
           {
