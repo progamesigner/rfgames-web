@@ -38,13 +38,20 @@
         }
     }
 
+    &.is-traitline {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        min-height: var(--gw2-embed-traitline-min-height);
+    }
+
     .gw2-embed-icon {
         height: var(--gw2-embed-icon-size);
         width: var(--gw2-embed-icon-size);
     }
 
     .gw2-embed-traitline {
-        min-height: var(--gw2-embed-traitline-min-height);
+        width: 100%;
     }
 }
 
