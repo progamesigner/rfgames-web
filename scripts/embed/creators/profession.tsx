@@ -10,7 +10,7 @@ export function create(store: EmbedStore, element: Element): m.Component {
     id: extractString(element, 'id', ''),
 
     disableIcon: extractBoolean(element, 'disable-icon', false),
-    disableIconLink: extractBoolean(element, 'disable-icon-link', false),
+    disableIconLink: extractBoolean(element, 'disable-icon-link', true),
     disableText: extractBoolean(element, 'disable-text', false),
     disableTextLink: extractBoolean(element, 'disable-text-link', false),
     disableTooltip: extractBoolean(element, 'disable-tooltip', false),
