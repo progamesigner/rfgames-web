@@ -72,7 +72,7 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.ATTRIBUTE_ADJUST:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText>{fact.text || attributeToName(fact.target)}: +{fact.value}</FactText>
+          <FactText>{fact.text || attributeToName(fact.target)}: +{fact.value.toLocaleString()}</FactText>
         </FactContainer>
       case GW2FactType.BUFF:
         return <FactContainer>
@@ -114,7 +114,7 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.DISTANCE:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText>{markup(fact.text)}: {fact.distance}</FactText>
+          <FactText>{markup(fact.text)}: {fact.distance.toLocaleString()}</FactText>
         </FactContainer>
       case GW2FactType.DURATION:
         return <FactContainer>
@@ -139,7 +139,7 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.NUMBER:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText>{markup(fact.text)}: {fact.value}</FactText>
+          <FactText>{markup(fact.text)}: {fact.value.toLocaleString()}</FactText>
         </FactContainer>
       case GW2FactType.PERCENT:
         return <FactContainer>
@@ -159,12 +159,12 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.RADIUS:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText>{markup(fact.text)}: {fact.distance}</FactText>
+          <FactText>{markup(fact.text)}: {fact.distance.toLocaleString()}</FactText>
         </FactContainer>
       case GW2FactType.RANGE:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText>{markup(fact.text)}: {fact.value}</FactText>
+          <FactText>{markup(fact.text)}: {fact.value.toLocaleString()}</FactText>
         </FactContainer>
       case GW2FactType.RECHARGE:
         return <FactContainer className={styles.fact.recharge}>
