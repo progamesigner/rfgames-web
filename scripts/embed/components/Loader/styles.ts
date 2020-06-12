@@ -30,8 +30,8 @@ export const icon = stylesheet({
     width: em(sizes.emptyIcon)
   },
   inline: {
-    height: em(sizes.emptyIcon),
-    width: em(sizes.emptyIcon)
+    height: em(sizes.inlineIcon),
+    width: em(sizes.inlineIcon)
   }
 })
 
