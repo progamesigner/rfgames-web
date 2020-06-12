@@ -60,3 +60,10 @@
     display: flex;
     justify-content: center;
 }
+
+.gw2-embed-inline-placeholder {
+    display: inline-block;
+    height: var(--gw2-embed-icon-size);
+    width: var(--gw2-embed-icon-size);
+    margin-right: 0.25rem;
+}

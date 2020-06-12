@@ -22,4 +22,10 @@
     {{ range $key, $value := $data }}
         {{ $value | string | printf "data-embed-%s=%q" $key | safeHTMLAttr }}
     {{ end }}
-></div>
+>
+    {{- if $inline -}}
+        {{- with "text" | index $data -}}
+            <span class="gw2-embed-inline-placeholder"></span>{{- . -}}
+        {{- end -}}
+    {{- end -}}
+</div>
