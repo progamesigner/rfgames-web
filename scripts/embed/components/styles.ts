@@ -115,17 +115,17 @@ export const sizes = {
 }
 
 export const zIndices = {
-  applyCount: 100,
+  applyCount: 50,
   iconImage: 10,
-  iconLink: 50,
-  loader: 300,
-  rechargeIcon: 150,
-  tooltip: 1000,
-  traitlineBackground: 25,
-  traitlineConnector: 100,
-  traitlineHexagon: 75,
-  traitlineOverlay: 50,
-  traitlineTrait: 125
+  iconLink: 30,
+  loader: 50,
+  rechargeIcon: 100,
+  tooltip: 100,
+  traitlineBackground: 10,
+  traitlineConnector: 40,
+  traitlineHexagon: 30,
+  traitlineOverlay: 20,
+  traitlineTrait: 50
 }
 
 export function boxShadow(color: string): string {
