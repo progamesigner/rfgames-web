@@ -305,6 +305,7 @@ $speed: 86ms !default;
     --build-section-card-radius: #{$radius};
     --build-section-embed-name-font-size: #{$font-size-6};
     --build-section-embed-name-text-color: #{$foreground-color};
+    --build-section-embed-traitline-min-height: 8.75rem;
     --build-section-embed-upgrade-name-font-size: #{$font-size-6};
     --build-section-embed-upgrade-name-text-color: #{rgba($foreground-color, 0.75)};
     --build-section-spacing: 0.5rem;

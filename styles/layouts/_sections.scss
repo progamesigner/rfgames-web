@@ -116,15 +116,24 @@
         &.is-consumable {
             grid-template-areas: "icon text";
             grid-template-columns: var(--gw2-embed-item-size) auto;
+            grid-template-rows: var(--gw2-embed-item-size);
         }
 
         &.is-skill {
             grid-template-areas: "icon text";
             grid-template-columns: var(--gw2-embed-skill-size) auto;
+            grid-template-rows: var(--gw2-embed-item-size);
+        }
+
+        &.is-traitline {
+            display: block;
+            min-height: var(--build-section-embed-traitline-min-height);
         }
 
         &.is-trinket {
             grid-template-areas: "icon" "text";
+            grid-template-columns: auto auto;
+            grid-template-rows: repeat(2, var(--gw2-embed-item-size));
 
             .build-card-text {
                 justify-content: center;
@@ -134,12 +143,14 @@
         &.is-weapon-skill {
             grid-template-areas: "icon";
             grid-template-columns: var(--gw2-embed-skill-size);
+            grid-template-rows: var(--gw2-embed-item-size);
         }
 
         @include tablet() {
             &.is-trinket {
                 grid-template-areas: "icon text";
                 grid-template-columns: var(--gw2-embed-item-size) auto;
+                grid-template-rows: var(--gw2-embed-item-size);
 
                 .build-card-text {
                     justify-content: flex-start;
@@ -152,6 +163,7 @@
             &.is-trinket {
                 grid-template-areas: "icon" "text";
                 grid-template-columns: auto;
+                grid-template-rows: var(--gw2-embed-item-size) auto;
 
                 .build-card-text {
                     justify-content: center;

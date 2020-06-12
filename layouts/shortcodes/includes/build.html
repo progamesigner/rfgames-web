@@ -345,11 +345,13 @@
     {{- $id := 0 | index . -}}
     {{- $traits := . | after 1 -}}
 
-    {{- $data := dict -}}
-    {{- $data = $id | dict "id" | merge $data -}}
-    {{- $data = delimit $traits "," | dict "traits" | merge $data -}}
+    {{- $classes := slice "is-traitline" -}}
 
-    {{- slice "traitline" false $data | partial "elements/embed.html" -}}
+    {{- $traitline := dict -}}
+    {{- $traitline = $id | dict "id" | merge $traitline -}}
+    {{- $traitline = delimit $traits "," | dict "traits" | merge $traitline -}}
+
+    {{- template "__rfgames_shortcode_includes__build_embed__" slice "traitline" $classes $traitline false false -}}
 {{- end -}}
 
 <div class="build-card is-template">
