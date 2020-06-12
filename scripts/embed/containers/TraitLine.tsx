@@ -58,7 +58,7 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
         />
       }
 
-      return <Loader {...attrs} />
+      return <Loader disableIconPlaceholder={true} {...attrs} />
     }
 
     return <Empty
