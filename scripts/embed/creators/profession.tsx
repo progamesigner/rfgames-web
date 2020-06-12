@@ -3,11 +3,13 @@ import * as m from 'mithril'
 import { Profession } from '../containers'
 import { EmbedStore } from '../types'
 
-import { extractBoolean, extractString } from './extractor'
+import { extractBoolean, extractNumber, extractString } from './extractor'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {
     id: extractString(element, 'id', ''),
+
+    eliteId: extractNumber(element, 'elite', -1),
 
     disableIcon: extractBoolean(element, 'disable-icon', false),
     disableIconLink: extractBoolean(element, 'disable-icon-link', true),

@@ -3,6 +3,7 @@ import * as m from 'mithril'
 import { cx } from '../../libs'
 import {
   GW2Profession,
+  GW2Specialization,
   HasIconAttributes,
   HasIconLinkAttributes,
   HasIDAttributes,
@@ -29,6 +30,7 @@ interface ProfessionAttributes extends
   HasTextAttributes,
   HasTextLinkAttributes
 {
+  elite?: GW2Specialization;
   profession: GW2Profession;
 }
 
@@ -43,13 +45,22 @@ export class Profession implements m.Component<ProfessionAttributes> {
       disableIconLink,
       disableText,
       disableTextLink,
+      elite,
       inline,
       link,
       overrideText,
       profession
     }
   }: m.Vnode<ProfessionAttributes>): m.Children {
-    const name = overrideText || profession.name
+    const icon = elite && elite.elite && elite.profession === profession.id ?
+      elite.profession_icon_big :
+      profession.icon_big
+
+    const name = elite && elite.elite && elite.profession === profession.id ?
+      elite.name :
+      profession.name
+
+    const text = overrideText || name
 
     return <Container
       className={cx(parseProfessionClassNames(profession), className)}
@@ -65,11 +76,11 @@ export class Profession implements m.Component<ProfessionAttributes> {
             classSize
           )}
           disablePlaceholder={true}
-          src={profession.icon_big}
+          src={icon}
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(profession.name)} /> :
+            <Link href={link || buildWikiLink(name)} /> :
             null
           }
         </Icon> :
@@ -82,9 +93,9 @@ export class Profession implements m.Component<ProfessionAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(profession.name)}
-            >{name}</Link> :
-            name
+              href={link || buildWikiLink(name)}
+            >{text}</Link> :
+            text
           }</Text> :
         null
       }
