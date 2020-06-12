@@ -14,6 +14,11 @@
     align-items: stretch;
     display: flex;
     min-height: var(--nav-min-height);
+    padding-left: 1rem;
+
+    @include desktop() {
+        padding-left: 0;
+    }
 
     .nav-item,
     .nav-link {
