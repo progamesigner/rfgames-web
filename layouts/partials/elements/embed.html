@@ -3,6 +3,9 @@
 {{- $data := 2 | index . | default dict -}}
 {{- $class := 3 | index . | default slice -}}
 
+{{- $data = $type | dict "type" | merge $data -}}
+{{- $data = $inline | string | dict "inline" | merge $data -}}
+
 {{- $classes := slice -}}
 {{- $classes = $classes | append "gw2-embed" -}}
 {{- with $inline -}}
@@ -15,17 +18,28 @@
     {{- $classes = $classes | append . -}}
 {{- end -}}
 
-<div
-    class="{{ delimit $classes " " }}"
-    data-embed-type="{{ $type }}"
-    data-embed-inline="{{ $inline | string }}"
-    {{ range $key, $value := $data }}
-        {{ $value | string | printf "data-embed-%s=%q" $key | safeHTMLAttr }}
-    {{ end }}
->
-    {{- if $inline -}}
+{{- $attributes := dict -}}
+{{- $attributes = delimit $classes " " | dict "class" | merge $attributes -}}
+{{- range $key, $value := $data -}}
+    {{- $attribute := $key | printf "data-embed-%s" -}}
+    {{- $attributes = $value | string | dict $attribute | merge $attributes -}}
+{{- end -}}
+
+{{- if $inline -}}
+    <span
+        {{ range $key, $value := $attributes }}
+            {{ printf "%s=%q" $key $value | safeHTMLAttr }}
+        {{ end }}
+    >
         {{- with "text" | index $data -}}
             <span class="gw2-embed-inline-placeholder"></span>{{- . -}}
         {{- end -}}
-    {{- end -}}
-</div>
+    </span>
+{{- else -}}
+    <div
+        {{ range $key, $value := $attributes }}
+            {{ printf "%s=%q" $key $value | safeHTMLAttr }}
+        {{ end }}
+    >
+    </div>
+{{- end -}}
