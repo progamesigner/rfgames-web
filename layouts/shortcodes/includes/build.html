@@ -95,8 +95,6 @@
 {{- define "__rfgames_shortcode_includes__build_equipment_weapon__" -}}
     {{- $classes := 0 | index . | printf "is-%s" | slice "is-weapon" -}}
 
-    {{- $block := "TEST" -}}
-
     {{- with 1 | index . -}}
         {{- $type := "type" | index . -}}
 
@@ -356,7 +354,7 @@
 
 <div class="build-card is-template">
     <div class="build-card-content">
-        <span class="template-addon">Template</span>
+        <span class="template-addon">Template</a></span>
         <span class="template-code" data-auto-selection>{{ $chatcode }}</span>
         <button
             class="template-copy"
@@ -369,25 +367,25 @@
 <div class="build-card is-armors">
     <h5 class="title">Armors</h5>
     <div class="build-card-content">
-        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "head" $equipments.head $armorRuneCounts }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "shoulders" $equipments.shoulders $armorRuneCounts }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "coat" $equipments.coat $armorRuneCounts }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "gloves" $equipments.gloves $armorRuneCounts }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "leggings" $equipments.leggings $armorRuneCounts }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_armor__" slice "boots" $equipments.boots $armorRuneCounts }}
+        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice "head" $equipments.head $armorRuneCounts -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice "shoulders" $equipments.shoulders $armorRuneCounts -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice "coat" $equipments.coat $armorRuneCounts -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice "gloves" $equipments.gloves $armorRuneCounts -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice "leggings" $equipments.leggings $armorRuneCounts -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice "boots" $equipments.boots $armorRuneCounts -}}
     </div>
 </div>
 
 <div class="build-card is-weapons">
     <h5 class="title">Weapons</h5>
     <div class="build-card-content">
-        {{ template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon1" $equipments.weapon1 }}
+        {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon1" $equipments.weapon1 -}}
         <div class="gw2-embed-container">
             {{- range $equipments.weapon1.skills -}}
                 {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . false -}}
             {{- end -}}
         </div>
-        {{ template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon2" $equipments.weapon2 }}
+        {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon2" $equipments.weapon2 -}}
         <div class="gw2-embed-container">
             {{- range $equipments.weapon2.skills -}}
                 {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . false -}}
@@ -399,20 +397,20 @@
 <div class="build-card is-trinkets">
     <h5 class="title">Trinkets</h5>
     <div class="build-card-content">
-        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "back" $equipments.back }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "accessory1" $equipments.accessory1 }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "accessory2" $equipments.accessory2 }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "amulet" $equipments.amulet }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "ring1" $equipments.ring1 }}
-        {{ template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "ring2" $equipments.ring2 }}
+        {{- template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "back" $equipments.back -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "accessory1" $equipments.accessory1 -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "accessory2" $equipments.accessory2 -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "amulet" $equipments.amulet -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "ring1" $equipments.ring1 -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_trinket__" slice "ring2" $equipments.ring2 -}}
     </div>
 </div>
 
 <div class="build-card is-consumables">
     <h5 class="title">Consumables</h5>
     <div class="build-card-content">
-        {{ template "__rfgames_shortcode_includes__build_consumable__" slice "food" $consumables.food }}
-        {{ template "__rfgames_shortcode_includes__build_consumable__" slice "utility" $consumables.utility }}
+        {{- template "__rfgames_shortcode_includes__build_consumable__" slice "food" $consumables.food -}}
+        {{- template "__rfgames_shortcode_includes__build_consumable__" slice "utility" $consumables.utility -}}
     </div>
 </div>
 
