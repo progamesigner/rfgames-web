@@ -1,6 +1,0 @@
-{{- $type := 0 | index . -}}
-{{- $id := 1 | index . -}}
-
-{{- $chatlink := slice $type $id | partial "functions/gw2-chat-link.string" | replaceRE "&" "%26" -}}
-
-{{- return printf "https://wiki.guildwars2.com/?search=%s" $chatlink -}}
