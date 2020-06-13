@@ -34,14 +34,12 @@ function onConsentAccepted(document: Document) {
 
 export function bootstrap(window: Window): void {
   const {
-    __shared_states__: sharedStates,
+    __shared_states__: {
+      gtag: id
+    },
     document,
     localStorage
   } = window
-
-  const {
-    gtag: id
-  } = sharedStates as ConsentSharedStates
 
   const dnt =
     window.navigator.doNotTrack ||

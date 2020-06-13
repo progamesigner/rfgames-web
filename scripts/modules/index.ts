@@ -3,7 +3,7 @@ import { DisqusSharedStates } from './disqus'
 
 declare global {
   interface Window {
-    __shared_states__: ConsentSharedStates | DisqusSharedStates;
+    __shared_states__: ConsentSharedStates & DisqusSharedStates;
   }
 }
 

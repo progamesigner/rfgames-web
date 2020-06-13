@@ -27,18 +27,16 @@ export type DisqusSharedStates = {
 
 export function bootstrap(window: Window): void {
   const {
-    __shared_states__: sharedStates,
+    __shared_states__: {
+      disqus: id,
+      page: {
+        permalink,
+        title,
+        uniqueId
+      }
+    },
     document
   } = window
-
-  const {
-    disqus: id,
-    page: {
-      permalink,
-      title,
-      uniqueId
-    }
-  } = sharedStates as DisqusSharedStates
 
   window.disqus_config = function () {
     this.page.identifier = uniqueId
