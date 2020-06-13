@@ -87,18 +87,29 @@
             {{- with $files -}}
             assets: {{ . | jsonify | safeJS }},
             {{- end -}}
+
             {{- with .Site.Config.Services.Disqus.Shortname -}}
             disqus: '{{ . }}',
             {{- end -}}
+
             {{- with .Site.Config.Services.GoogleAnalytics.ID -}}
             gtag: '{{ . }}',
             {{- end -}}
+
             page: {
-                permalink: '{{ .Permalink }}',
-                title: '{{ $title }}',
+                {{- with .Params.disqusId -}}
+                id: '{{ . }}',
+                {{- else -}}
                 {{ with .File }}
-                uniqueId: '{{ .UniqueID }}',
-                {{ end }}
+                id: '{{ .UniqueID }}',
+                {{- end -}}
+                {{- end -}}
+
+                {{- with .Permalink -}}
+                permalink: '{{ . | html }}',
+                {{- end -}}
+
+                title: '{{ $title }}'
             }
         };
     </script>

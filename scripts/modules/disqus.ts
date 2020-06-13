@@ -15,9 +15,9 @@ type DisqusConfig = {
 }
 
 type DisqusPage = {
+  id?: string;
   permalink?: string;
   title?: string;
-  uniqueId?: string;
 }
 
 export type DisqusSharedStates = {
@@ -28,23 +28,23 @@ export type DisqusSharedStates = {
 export function bootstrap(window: Window): void {
   const {
     __shared_states__: {
-      disqus: id,
+      disqus,
       page: {
+        id,
         permalink,
-        title,
-        uniqueId
+        title
       }
     },
     document
   } = window
 
   window.disqus_config = function () {
-    this.page.identifier = uniqueId
+    this.page.identifier = id
     this.page.title = title
     this.page.url = permalink
   }
 
   if (document.getElementById('disqus_thread')) {
-    loadScript(window, `https://${id}.disqus.com/embed.js`)
+    loadScript(window, `https://${disqus}.disqus.com/embed.js`)
   }
 }
