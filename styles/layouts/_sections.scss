@@ -21,7 +21,7 @@
 
     @include desktop() {
         grid-template-areas: "armors armors armors weapons weapons weapons" "consumables consumables consumables trinkets trinkets trinkets" "template template template template template template" "skills skills specializations specializations specializations specializations";
-        grid-template-columns: repeat(6, calc((var(--desktop-breakpoint) - var(--container-offset) - 2 * var(--page-body-padding) - 3 * var(--build-section-spacing)) / 6));
+        grid-template-columns: repeat(6, calc((var(--desktop-breakpoint) - var(--container-offset) - 2 * var(--page-body-padding) - 5 * var(--build-section-spacing)) / 6));
         margin-left: 0;
         margin-right: 0;
     }
@@ -55,6 +55,7 @@
                 display: grid;
                 gap: var(--build-section-card-item-spacing);
                 grid-template-areas: "back accessory1 accessory2" "amulet ring1 ring2";
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -132,8 +133,8 @@
 
         &.is-trinket {
             grid-template-areas: "icon" "text";
-            grid-template-columns: auto auto;
-            grid-template-rows: repeat(2, var(--gw2-embed-item-size));
+            grid-template-columns: auto;
+            grid-template-rows: var(--gw2-embed-item-size) auto;
 
             .build-card-text {
                 justify-content: center;
