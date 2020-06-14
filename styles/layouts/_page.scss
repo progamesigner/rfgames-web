@@ -7,18 +7,27 @@
     @include print() {
         display: none;
     }
+}
+
+.page-background {
+    z-index: var(--page-background-z-index);
 
     .image {
         @include overlay();
     }
 }
 
-.page-background {
-    z-index: var(--page-background-z-index);
-}
-
 .page-overlay {
     z-index: var(--page-overlay-z-index);
+
+    .image {
+        left: 50%;
+        min-width: 80rem;
+        position: absolute;
+        top: 0;
+        transform: translateX(-50%);
+        width: 100vw;
+    }
 }
 
 .page-head {
