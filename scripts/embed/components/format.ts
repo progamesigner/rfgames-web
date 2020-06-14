@@ -35,7 +35,7 @@ export function attributeToName(attribute: string): string {
   return attribute
 }
 
-export function markup(text: string, flavors: MarkupFlavorMap = {}): string {
+export function markup(text = '', flavors: MarkupFlavorMap = {}): string {
   return text
     .replace(regexColorHex, (_, color, text) => {
       return `${tagOpen}span class="${makeClassName('color-format')}" style="color:${color}"${tagClose}${text}${tagOpen}/span${tagClose}`
