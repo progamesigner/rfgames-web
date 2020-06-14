@@ -46,10 +46,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    letter-spacing: var(--page-head-letter-spacing);
+    min-height: var(--page-head-icon-dimensions);
     padding: var(--page-head-padding);
     text-align: center;
     text-transform: uppercase;
-    min-height: var(--page-head-icon-dimensions);
 
     @include desktop() {
         flex-direction: row;
