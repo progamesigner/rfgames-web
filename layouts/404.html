@@ -5,7 +5,7 @@
     </div>
 
     <div class="page-overlay">
-        {{- slice "overlays/default" "1280,1920,3840" "png" .Title | partial "functions/responsive-image.html" -}}
+        {{- slice "overlays/default" "1280,1920,3840" "png" .Title false | partial "functions/responsive-image.html" -}}
     </div>
 
     <div class="container">

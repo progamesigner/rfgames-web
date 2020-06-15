@@ -3,22 +3,23 @@
     margin: 0;
     position: relative;
 
-    img[data-placeholder] {
-        @include overlay();
-
-        & ~ img {
-            opacity: 0;
-            position: relative;
-            transition: opacity var(--speed-slow) var(--easing) var(--delay-long);
-
-            &.is-loaded {
-                opacity: 1;
-            }
-        }
-    }
-
     img {
         @include overlay();
+
+        position: relative;
+
+        &[data-placeholder] {
+            position: absolute;
+
+            & ~ img {
+                opacity: 0;
+                transition: opacity var(--speed-slow) var(--easing) var(--delay-long);
+
+                &.is-loaded {
+                    opacity: 1;
+                }
+            }
+        }
 
         height: 100%;
         object-fit: cover;

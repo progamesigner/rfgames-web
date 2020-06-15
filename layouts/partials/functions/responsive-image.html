@@ -2,6 +2,7 @@
 {{- $sizes := 1 | index . -}}
 {{- $ext := 2 | index . | default "jpg" -}}
 {{- $alt := 3 | index . | default "" -}}
+{{- $enablePlaceholder := 4 | index . | default true -}}
 
 {{- $widths := split $sizes "," -}}
 
@@ -51,11 +52,13 @@
 {{- end -}}
 
 <figure class="image">
-    <img
-        src="{{ template "__rfgames_partials_functions__image_placeholder__" (slice $name $ext) }}"
-        alt="{{ $alt }}"
-        data-placeholder
-    >
+    {{- with $enablePlaceholder -}}
+        <img
+            src="{{ template "__rfgames_partials_functions__image_placeholder__" (slice $name $ext) }}"
+            alt="{{ $alt }}"
+            data-placeholder
+        >
+    {{- end -}}
     <img
         sizes="{{ template "__rfgames_partials_functions__image_sizes__" (slice $widths) }}"
         srcset="{{ template "__rfgames_partials_functions__image_srcset__" (slice $name $ext $widths) }}"
