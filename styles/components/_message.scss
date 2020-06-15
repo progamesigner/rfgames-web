@@ -1,0 +1,23 @@
+.message {
+  @include block();
+
+  background-color: var(--message-background-color);
+  border-radius: var(--message-border-radius);
+  padding: var(--message-padding);
+
+  strong {
+    color: currentColor;
+  }
+}
+
+.message-head {
+  color: var(--message-head-text-color);
+  font-size: var(--message-head-font-size);
+  margin: var(--message-head-margin);
+}
+
+.message-body {
+  color: var(--message-body-text-color);
+  font-size: var(--message-body-font-size);
+  margin: 0;
+}

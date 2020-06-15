@@ -350,6 +350,15 @@ $speed: 86ms !default;
     --list-title-text-color: #{$foreground-alternative-color};
     --list-title-text-shadow: 0.0625rem 0.0625rem 0.0625rem #{$background-color};
 
+    --message-background-color: #{rgba(map-get($danger-palette, 100), 0.15)};
+    --message-body-font-size: #{$font-size-6};
+    --message-body-text-color: #{$foreground-color};
+    --message-border-radius: #{$radius};
+    --message-head-font-size: #{$font-size-6};
+    --message-head-margin: 0 0 0.25rem;
+    --message-head-text-color: #{$foreground-color};
+    --message-padding: 0.75rem 0.5rem;
+
     --page-background-color: #{rgba($background-color, 0.85)};
     --page-background-z-index: -5;
     --page-body-padding: 2rem;
