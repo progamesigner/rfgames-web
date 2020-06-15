@@ -110,20 +110,15 @@
         &.is-armor,
         &.is-weapon {
             grid-template-areas: "icon text" "icon upgrade";
-            grid-template-columns: var(--gw2-embed-item-size) auto;
-            grid-template-rows: repeat(2, calc(var(--gw2-embed-item-size) / 2));
+            grid-template-columns: var(--gw2-embed-size) auto;
+            grid-template-rows: repeat(2, calc(var(--gw2-embed-size) / 2));
         }
 
-        &.is-consumable {
-            grid-template-areas: "icon text";
-            grid-template-columns: var(--gw2-embed-item-size) auto;
-            grid-template-rows: var(--gw2-embed-item-size);
-        }
-
+        &.is-consumable,
         &.is-skill {
             grid-template-areas: "icon text";
-            grid-template-columns: var(--gw2-embed-skill-size) auto;
-            grid-template-rows: var(--gw2-embed-item-size);
+            grid-template-columns: var(--gw2-embed-size) auto;
+            grid-template-rows: var(--gw2-embed-size);
         }
 
         &.is-traitline {
@@ -134,7 +129,7 @@
         &.is-trinket {
             grid-template-areas: "icon" "text";
             grid-template-columns: auto;
-            grid-template-rows: var(--gw2-embed-item-size) auto;
+            grid-template-rows: var(--gw2-embed-size) auto;
 
             .build-card-text {
                 justify-content: center;
@@ -143,15 +138,15 @@
 
         &.is-weapon-skill {
             grid-template-areas: "icon";
-            grid-template-columns: var(--gw2-embed-skill-size);
-            grid-template-rows: var(--gw2-embed-item-size);
+            grid-template-columns: var(--gw2-embed-size);
+            grid-template-rows: var(--gw2-embed-size);
         }
 
         @include tablet() {
             &.is-trinket {
                 grid-template-areas: "icon text";
-                grid-template-columns: var(--gw2-embed-item-size) auto;
-                grid-template-rows: var(--gw2-embed-item-size);
+                grid-template-columns: var(--gw2-embed-size) auto;
+                grid-template-rows: var(--gw2-embed-size);
 
                 .build-card-text {
                     justify-content: flex-start;
@@ -164,7 +159,7 @@
             &.is-trinket {
                 grid-template-areas: "icon" "text";
                 grid-template-columns: auto;
-                grid-template-rows: var(--gw2-embed-item-size) auto;
+                grid-template-rows: var(--gw2-embed-size) auto;
 
                 .build-card-text {
                     justify-content: center;
@@ -193,10 +188,10 @@
     .build-card-upgrade {
         grid-area: upgrade;
         grid-template-areas: "icon text";
-        grid-template-columns: var(--gw2-embed-item-size-small) auto;
+        grid-template-columns: var(--gw2-embed-size-mini) auto;
 
         .gw2-embed {
-            --gw2-embed-icon-size: var(--gw2-embed-item-size-small);
+            --gw2-embed-icon-size: var(--gw2-embed-size-mini);
         }
 
         .build-card-text {

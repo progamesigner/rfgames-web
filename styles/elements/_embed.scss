@@ -1,41 +1,12 @@
 .gw2-embed {
+    --gw2-embed-icon-size: var(--gw2-embed-size);
+
     display: block;
 
-    &.is-inline {
-        display: inline-block;
-    }
-
-    &.is-item {
-        --gw2-embed-icon-size: var(--gw2-embed-item-size);
-
-        &.is-inline {
-            --gw2-embed-icon-size: var(--gw2-embed-item-inline-size);
-        }
-    }
-
-    &.is-skill {
-        --gw2-embed-icon-size: var(--gw2-embed-skill-size);
-
-        &.is-inline {
-            --gw2-embed-icon-size: var(--gw2-embed-skill-inline-size);
-        }
-    }
-
-    &.is-profession {
-        --gw2-embed-icon-size: var(--gw2-embed-profession-size);
-
-        &.is-inline {
-            --gw2-embed-icon-size: var(--gw2-embed-profession-inline-size);
-        }
-    }
-
+    &.is-profession,
     &.is-trait,
     &.is-traitline {
-        --gw2-embed-icon-size: var(--gw2-embed-trait-size);
-
-        &.is-inline {
-            --gw2-embed-icon-size: var(--gw2-embed-trait-inline-size);
-        }
+        --gw2-embed-icon-size: var(--gw2-embed-size-small);
     }
 
     &.is-traitline {
@@ -43,6 +14,11 @@
         display: flex;
         justify-content: center;
         min-height: var(--gw2-embed-traitline-min-height);
+    }
+
+    &.is-inline {
+        --gw2-embed-icon-size: var(--gw2-embed-size-micro);
+        display: inline-block;
     }
 
     .gw2-embed-icon {

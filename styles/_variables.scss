@@ -327,15 +327,10 @@ $speed: 86ms !default;
     --form-modal-content-padding: 1.5rem;
     --form-modal-content-text-color: #{$background-color};
 
-    --gw2-embed-item-inline-size: 1rem;
-    --gw2-embed-item-size-small: 2rem;
-    --gw2-embed-item-size: 4rem;
-    --gw2-embed-profession-inline-size: 1rem;
-    --gw2-embed-profession-size: 2.5rem;
-    --gw2-embed-skill-inline-size: 1rem;
-    --gw2-embed-skill-size: 4rem;
-    --gw2-embed-trait-inline-size: 1rem;
-    --gw2-embed-trait-size: 2.5rem;
+    --gw2-embed-size-micro: 1rem;
+    --gw2-embed-size-mini: 2rem;
+    --gw2-embed-size-small: 2.5rem;
+    --gw2-embed-size: 4rem;
     --gw2-embed-traitline-min-height: 8.75rem;
 
     --header-background-color: #{$background-color};
