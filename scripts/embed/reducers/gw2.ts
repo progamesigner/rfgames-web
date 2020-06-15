@@ -37,7 +37,7 @@ const failureReducer = <T extends GW2Resources>(
       [id]: {
         data: item,
         error: null,
-        state: GW2AsyncState.DONE
+        state: GW2AsyncState.FAILED
       }
     }), state[resource])
 
