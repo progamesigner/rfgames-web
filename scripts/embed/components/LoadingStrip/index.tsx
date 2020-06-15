@@ -7,7 +7,7 @@ import { Text } from '../Text'
 import * as styles from './styles'
 
 interface LoadingStripAttributes extends m.Attributes {
-  text?: string
+  text?: string;
 }
 
 export class LoadingStrip implements m.Component<LoadingStripAttributes> {
