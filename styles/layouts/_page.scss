@@ -27,6 +27,10 @@
         top: 0;
         transform: translateX(-50%);
         width: 100vw;
+
+        img {
+            position: relative;
+        }
     }
 }
 

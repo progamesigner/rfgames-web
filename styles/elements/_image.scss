@@ -6,11 +6,7 @@
     img {
         @include overlay();
 
-        position: relative;
-
         &[data-placeholder] {
-            position: absolute;
-
             & ~ img {
                 opacity: 0;
                 transition: opacity var(--speed-slow) var(--easing) var(--delay-long);
