@@ -20,4 +20,8 @@
   color: var(--message-body-text-color);
   font-size: var(--message-body-font-size);
   margin: 0;
+
+  p {
+    margin: 0;
+  }
 }
