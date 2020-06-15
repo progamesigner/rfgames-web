@@ -10,7 +10,7 @@ import {
 
 import { Container } from '../Container'
 import { Icon } from '../Icon'
-import { Text } from '../Text'
+import { LoadingStrip } from '../LoadingStrip'
 
 import * as styles from './styles'
 
@@ -55,9 +55,11 @@ export class Loader implements m.Component<LoaderAttributes> {
       }
       {
         !disableText ?
-        <Text className={cx(styles.text, classText)}>
-          {overrideText || 'Loading ...'}
-        </Text> :
+        <LoadingStrip
+          className={cx(styles.text, classText)}
+          text={overrideText}
+        >
+        </LoadingStrip> :
         null
       }
     </Container>
