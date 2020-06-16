@@ -52,7 +52,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
       ...(
         trait.skills ?
         slice(index || 0, 1)(trait.skills).map(skill =>
-          <SkillTooltip key={skill.id} skill={skill} />
+          <SkillTooltip key={skill.id} activeTraits={activeTraits} skill={skill} />
         ) :
         []
       ),
