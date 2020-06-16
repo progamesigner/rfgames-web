@@ -329,27 +329,46 @@
 
 {{- define "__rfgames_shortcode_includes__build_skill__" -}}
     {{- $classes := 0 | index . | printf "is-%s" | slice "is-skill" -}}
-    {{- $showText := 2 | index . | default true -}}
+    {{- $traitlines := 2 | index . -}}
+    {{- $showText := 3 | index . | default true -}}
+
+    {{- $activeTraitlines := slice -}}
+    {{- range $traitlines -}}
+        {{- $traitline := delimit . "|" -}}
+        {{- $activeTraitlines = $activeTraitlines | append $traitline -}}
+    {{- end -}}
 
     {{- with 1 | index . -}}
         {{- $skill := dict -}}
         {{- $skill = . | dict "id" | merge $skill -}}
+        {{- $skill = delimit $activeTraitlines "," | dict "active-traitlines" | merge $skill -}}
 
         {{- template "__rfgames_shortcode_includes__build_embed__" slice "skill" $classes $skill false $showText -}}
     {{- end -}}
 {{- end -}}
 
 {{- define "__rfgames_shortcode_includes__build_traitline__" -}}
-    {{- $id := 0 | index . -}}
-    {{- $traits := . | after 1 -}}
+    {{- $traitlines := 1 | index . -}}
 
-    {{- $classes := slice "is-traitline" -}}
+    {{- $activeTraitlines := slice -}}
+    {{- range $traitlines -}}
+        {{- $traitline := delimit . "|" -}}
+        {{- $activeTraitlines = $activeTraitlines | append $traitline -}}
+    {{- end -}}
 
-    {{- $traitline := dict -}}
-    {{- $traitline = $id | dict "id" | merge $traitline -}}
-    {{- $traitline = delimit $traits "," | dict "traits" | merge $traitline -}}
+    {{- with 0 | index . -}}
+        {{- $id := 0 | index . -}}
+        {{- $traits := . | after 1 -}}
 
-    {{- template "__rfgames_shortcode_includes__build_embed__" slice "traitline" $classes $traitline false false -}}
+        {{- $classes := slice "is-traitline" -}}
+
+        {{- $traitline := dict -}}
+        {{- $traitline = $id | dict "id" | merge $traitline -}}
+        {{- $traitline = delimit $traits "," | dict "traits" | merge $traitline -}}
+        {{- $traitline = delimit $activeTraitlines "," | dict "active-traitlines" | merge $traitline -}}
+
+        {{- template "__rfgames_shortcode_includes__build_embed__" slice "traitline" $classes $traitline false false -}}
+    {{- end -}}
 {{- end -}}
 
 <div class="build-card is-armors">
@@ -378,17 +397,17 @@
         <div class="gw2-embed-container">
             {{- range $template.skills | first 1 -}}
                 {{- range . | first 1 -}}
-                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "healing" . -}}
+                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "healing" . $template.traits -}}
                 {{- end -}}
             {{- end -}}
             {{- range $template.skills | after 1 | first 3 -}}
                 {{- range . | first 1 -}}
-                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "utility" . -}}
+                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "utility" . $template.traits -}}
                 {{- end -}}
             {{- end -}}
             {{- range $template.skills | after 4 -}}
                 {{- range . | first 1 -}}
-                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "elite" . -}}
+                    {{- template "__rfgames_shortcode_includes__build_skill__" slice "elite" . $template.traits -}}
                 {{- end -}}
             {{- end -}}
         </div>
@@ -399,7 +418,7 @@
     <h5 class="title">Specializations</h5>
     <div class="build-card-content">
         {{- range $template.traits -}}
-            {{- template "__rfgames_shortcode_includes__build_traitline__" . -}}
+            {{- template "__rfgames_shortcode_includes__build_traitline__" slice . $template.traits -}}
         {{- end -}}
     </div>
 </div>
@@ -434,13 +453,13 @@
         {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon1" $equipments.weapon1 -}}
         <div class="gw2-embed-container">
             {{- range $equipments.weapon1.skills -}}
-                {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . false -}}
+                {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . $template.traits false -}}
             {{- end -}}
         </div>
         {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice "weapon2" $equipments.weapon2 -}}
         <div class="gw2-embed-container">
             {{- range $equipments.weapon2.skills -}}
-                {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . false -}}
+                {{- template "__rfgames_shortcode_includes__build_skill__" slice "weapon-skill" . $template.traits false -}}
             {{- end -}}
         </div>
     </div>
