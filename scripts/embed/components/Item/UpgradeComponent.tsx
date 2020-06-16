@@ -53,7 +53,7 @@ export class UpgradeComponent implements m.Component<UpgradeComponentAttributes>
                   { [styles.tooltip.bonusInactive]: upgradeCount <= index }
                 )}
               >
-                <span>({index + 1}): {markup(bonus, styles.flavors)}</span>
+                <span>({index + 1}): {m.trust(markup(bonus, styles.flavors))}</span>
               </div>
             )) :
             null

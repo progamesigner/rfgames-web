@@ -147,7 +147,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
                 { [styles.tooltip.bonusInactive]: upgradeCount <= index }
               )}
             >
-              <span>({index + 1}): {bonus}</span>
+              <span>({index + 1}): {m.trust(markup(bonus, styles.flavors))}</span>
             </div>
           )) :
           null
