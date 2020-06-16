@@ -1,19 +1,35 @@
 .content {
     @include block(var(--content-spacing));
 
+    h5,
+    h6,
     p,
     ul {
+        @include block(var(--content-block-spacing));
+
+        font-size: var(--content-font-size);
         margin: 0;
         padding: 0;
     }
 
-    ul {
-        padding: var(--content-list-padding);
+    h5 {
+        font-family: var(--content-h5-font-family);
+        font-size: var(--content-h5-font-size);
+        font-weight: var(--content-h5-font-weight);
     }
 
-    p,
+    h6 {
+        font-family: var(--content-h6-font-family);
+        font-size: var(--content-h6-font-size);
+        font-weight: var(--content-h6-font-weight);
+    }
+
+    p {
+        line-height: var(--content-line-height);
+    }
+
     ul {
-        @include block(var(--content-block-spacing));
+        padding: var(--content-list-padding);
     }
 
     li {

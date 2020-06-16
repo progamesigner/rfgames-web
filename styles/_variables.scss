@@ -210,11 +210,6 @@ $speed: 86ms !default;
     --button-text-hover-color: #{$button-text-hover-color};
     --button-text-success-color: #{$button-text-success-color};
 
-    --content-block-spacing: 0.5rem;
-    --content-list-padding: 0 0 0 2rem;
-    --content-list-spacing: 0.25rem;
-    --content-spacing: 1.5rem;
-
     --control-font-size: #{$font-size-6};
     --control-padding-horizontal: 0.675rem;
     --control-padding-vertical: 0.375rem;
@@ -238,6 +233,19 @@ $speed: 86ms !default;
     --consent-border-color: #{$background-alternative-color};
     --consent-padding: 1.25rem 3.5rem;
     --consent-z-index: 150;
+
+    --content-block-spacing: 0.75rem;
+    --content-font-size: #{$font-size-6};
+    --content-h5-font-family: #{$font-family-title};
+    --content-h5-font-size: #{$font-size-4};
+    --content-h5-font-weight: #{$font-weight-bold};
+    --content-h6-font-family: #{$font-family-title};
+    --content-h6-font-size: #{$font-size-5};
+    --content-h6-font-weight: #{$font-weight-bold};
+    --content-line-height: 1.25rem;
+    --content-list-padding: 0 0 0 2rem;
+    --content-list-spacing: 0.5rem;
+    --content-spacing: 1.5rem;
 
     --container-offset: #{$gap * 2};
 
