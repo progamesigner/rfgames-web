@@ -8,7 +8,8 @@ import {
   Store
 } from 'redux'
 
-import { reducer } from './reducers'
+import { config } from './config'
+import { initializeReducer } from './reducers'
 import { initializeState } from './states'
 import { EmbedOptions, EmbedState } from './types'
 
@@ -19,16 +20,17 @@ const mithril: Middleware = () => dispatch => action => {
 function parseOptions(window: Window): EmbedOptions {
   return {
     cacheVersion: '__INITIAL__',
-    language: 'en',
+    language: config.gw2ApiDefaultLanguage,
     useLocalStorageAsCache: true,
     ...window.GW2_EMBED_OPTIONS
   }
 }
 
 export function getStore(window: Window): Store<EmbedState, Action> {
+  const options = parseOptions(window)
   return createStore(
-    reducer,
-    initializeState(parseOptions(window)),
+    initializeReducer(options),
+    initializeState(options),
     applyMiddleware(mithril)
   )
 }

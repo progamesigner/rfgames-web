@@ -55,7 +55,8 @@ function actionFactory<T extends GW2Resources>(
 
   const debounced = batchFactory<T>(async (ids, dispatch, getState) => {
     const {
-      [resource]: data
+      [resource]: data,
+      language
     } = getState()
 
     const item = data as ExtractGW2State<T> | undefined
@@ -68,15 +69,16 @@ function actionFactory<T extends GW2Resources>(
     }))
 
     if (idsToFetch.length > 0) {
-      const requests = new Array<Promise<GW2ResourceRecord<T>>>()
+      const fetcher = fetch.bind(null, language || config.gw2ApiDefaultLanguage)
       const idsToSlice = Array.prototype.concat([], idsToFetch)
+      const requests = new Array<Promise<GW2ResourceRecord<T>>>()
 
       dispatch({
         type: request,
         ids: idsToFetch
       })
 
-      requests.push(...makeChunks(idsToSlice).map(fetch))
+      requests.push(...makeChunks(idsToSlice).map(fetcher))
 
       try {
         const responses = await Promise.all(requests)

@@ -18,7 +18,7 @@ import {
   GW2Resources
 } from '../types'
 
-interface Reducers {
+interface GW2Reducers {
   [key: string]: Reducer<EmbedState>;
 }
 
@@ -72,7 +72,8 @@ const requestReducer = <T extends GW2Resources>(
 }
 
 const responseReducer = <T extends GW2Resources>(
-  resource: T
+  resource: T,
+  language: string
 ): Reducer<EmbedState> => (state = {}, action) => {
   const {
     items
@@ -89,7 +90,7 @@ const responseReducer = <T extends GW2Resources>(
     }), state[resource])
 
   if (state.useLocalStorageAsCache) {
-    const localStorageKey = makeResourceKey(resource)
+    const localStorageKey = makeResourceKey(resource, language)
     const storedData = data as Record<ExtractGW2KeyType<T>, ExtractStoreRecord<T>> | undefined
 
     if (storedData) {
@@ -113,7 +114,10 @@ const responseReducer = <T extends GW2Resources>(
   }
 }
 
-function reducerFactory<T extends GW2Resources>(resource: T): Reducers {
+function reducerFactory<T extends GW2Resources>(
+  resource: T,
+  language: string
+): GW2Reducers {
   const {
     failure,
     request,
@@ -123,16 +127,18 @@ function reducerFactory<T extends GW2Resources>(resource: T): Reducers {
   return {
     [failure]: failureReducer(resource),
     [request]: requestReducer(resource),
-    [success]: responseReducer(resource)
+    [success]: responseReducer(resource, language)
   }
 }
 
-export const gw2Reducers = {
-  ...reducerFactory(GW2Resources.ITEM),
-  ...reducerFactory(GW2Resources.ITEM_STAT),
-  ...reducerFactory(GW2Resources.PET),
-  ...reducerFactory(GW2Resources.SKILL),
-  ...reducerFactory(GW2Resources.SPECIALIZATION),
-  ...reducerFactory(GW2Resources.TRAIT),
-  ...reducerFactory(GW2Resources.PROFESSION)
+export function gw2Reducers(language: string): GW2Reducers {
+  return {
+    ...reducerFactory(GW2Resources.ITEM, language),
+    ...reducerFactory(GW2Resources.ITEM_STAT, language),
+    ...reducerFactory(GW2Resources.PET, language),
+    ...reducerFactory(GW2Resources.SKILL, language),
+    ...reducerFactory(GW2Resources.SPECIALIZATION, language),
+    ...reducerFactory(GW2Resources.TRAIT, language),
+    ...reducerFactory(GW2Resources.PROFESSION, language)
+  }
 }

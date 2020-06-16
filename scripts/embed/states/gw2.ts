@@ -10,6 +10,8 @@ import {
 
 const EMPTY = JSON.stringify({})
 
+type GW2InitialState = Record<string, ExtractGW2State<GW2Resources>>
+
 function mapCacheToStore<T extends GW2Resources>(
   items: Array<ExtractGW2ResourceType<T>>
 ) {
@@ -24,9 +26,10 @@ function mapCacheToStore<T extends GW2Resources>(
 }
 
 function stateFactory<T extends GW2Resources>(
-  resource: T
+  resource: T,
+  language: string
 ): Record<string, ExtractGW2State<T>> {
-  const localStorageKey = makeResourceKey(resource)
+  const localStorageKey = makeResourceKey(resource, language)
 
   clearCacheIfNewBuild(localStorageKey)
 
@@ -37,12 +40,14 @@ function stateFactory<T extends GW2Resources>(
   }
 }
 
-export const gw2InitialState = {
-  ...stateFactory(GW2Resources.ITEM),
-  ...stateFactory(GW2Resources.ITEM_STAT),
-  ...stateFactory(GW2Resources.PET),
-  ...stateFactory(GW2Resources.SKILL),
-  ...stateFactory(GW2Resources.SPECIALIZATION),
-  ...stateFactory(GW2Resources.TRAIT),
-  ...stateFactory(GW2Resources.PROFESSION)
+export function gw2InitialState(language: string): GW2InitialState {
+  return {
+    ...stateFactory(GW2Resources.ITEM, language),
+    ...stateFactory(GW2Resources.ITEM_STAT, language),
+    ...stateFactory(GW2Resources.PET, language),
+    ...stateFactory(GW2Resources.SKILL, language),
+    ...stateFactory(GW2Resources.SPECIALIZATION, language),
+    ...stateFactory(GW2Resources.TRAIT, language),
+    ...stateFactory(GW2Resources.PROFESSION, language)
+  }
 }

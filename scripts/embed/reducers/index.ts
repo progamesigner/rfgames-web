@@ -3,14 +3,16 @@ import { Action, Reducer } from 'redux'
 import { gw2Reducers } from './gw2'
 import { tooltipReducers } from './tooltip'
 
-import { EmbedState } from '../types'
+import { EmbedState, EmbedOptions } from '../types'
 
-const reducers = {
-  ...gw2Reducers,
-  ...tooltipReducers
-} as Record<string, Reducer<EmbedState>>
+export function initializeReducer(options: EmbedOptions): Reducer {
+  const reducers = {
+    ...gw2Reducers(options.language),
+    ...tooltipReducers
+  } as Record<string, Reducer<EmbedState>>
 
-export function reducer(state: EmbedState = {}, action: Action): EmbedState {
-  const reducer = reducers[action.type]
-  return reducer ? reducer(state, action) : state
+  return (state: EmbedState = {}, action: Action): EmbedState => {
+    const reducer = reducers[action.type]
+    return reducer ? reducer(state, action) : state
+  }
 }

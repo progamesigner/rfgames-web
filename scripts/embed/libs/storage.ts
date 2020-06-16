@@ -62,6 +62,6 @@ export function initializeLocalStorage(id: number): void {
   }
 }
 
-export function makeResourceKey(resource: GW2Resources): string {
-  return `${resource.replace('GW2_', '').replace('_', '')}S_DATA`
+export function makeResourceKey(resource: GW2Resources, language: string): string {
+  return `${resource.replace('GW2_', '').replace('_', '')}S_${language}_DATA`
 }
