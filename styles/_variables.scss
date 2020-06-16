@@ -210,6 +210,11 @@ $speed: 86ms !default;
     --button-text-hover-color: #{$button-text-hover-color};
     --button-text-success-color: #{$button-text-success-color};
 
+    --content-block-spacing: 0.5rem;
+    --content-list-padding: 0 0 0 2rem;
+    --content-list-spacing: 0.25rem;
+    --content-spacing: 1.5rem;
+
     --control-font-size: #{$font-size-6};
     --control-padding-horizontal: 0.675rem;
     --control-padding-vertical: 0.375rem;
