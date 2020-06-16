@@ -2,6 +2,7 @@ import { Store } from 'redux'
 import { sortBy } from 'lodash/fp'
 
 import { hideTooltip, showTooltip } from '../actions'
+import { config } from '../config'
 import {
   GW2Fact,
   GW2FactType,
@@ -53,8 +54,12 @@ export function bindTooltipEvents<T extends TooltipType>(
   }
 }
 
-export function buildWikiLink(to: string, lang = 'en'): string {
-  return `https://wiki-${lang}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
+export function buildWikiLink(store: Store, to: string): string {
+  const {
+    language
+  } = store.getState()
+
+  return `https://wiki-${language || config.gw2ApiDefaultLanguage}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
 }
 
 export function sortFacts(facts: Array<GW2Fact>): Array<GW2Fact> {

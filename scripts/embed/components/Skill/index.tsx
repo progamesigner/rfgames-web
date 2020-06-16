@@ -88,7 +88,7 @@ export class Skill implements m.Component<SkillAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(skill.name)} /> :
+            <Link href={link || buildWikiLink(store, skill.name)} /> :
             null
           }
         </Icon> :
@@ -104,7 +104,7 @@ export class Skill implements m.Component<SkillAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(skill.name)}
+              href={link || buildWikiLink(store, skill.name)}
               {...!disableTextLink && tooltipEvents}
             >{name}</Link> :
             name

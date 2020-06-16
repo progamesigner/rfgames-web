@@ -8,6 +8,7 @@ import {
   HasIconLinkAttributes,
   HasIDAttributes,
   HasInlineAttributes,
+  HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes
 } from '../../types'
@@ -27,6 +28,7 @@ interface ProfessionAttributes extends
   HasIconLinkAttributes,
   HasIDAttributes<string>,
   HasInlineAttributes,
+  HasStoreAttributes,
   HasTextAttributes,
   HasTextLinkAttributes
 {
@@ -49,7 +51,8 @@ export class Profession implements m.Component<ProfessionAttributes> {
       inline,
       link,
       overrideText,
-      profession
+      profession,
+      store
     }
   }: m.Vnode<ProfessionAttributes>): m.Children {
     const icon = elite && elite.elite && elite.profession === profession.id ?
@@ -80,7 +83,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(name)} /> :
+            <Link href={link || buildWikiLink(store, name)} /> :
             null
           }
         </Icon> :
@@ -93,7 +96,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(name)}
+              href={link || buildWikiLink(store, name)}
             >{text}</Link> :
             text
           }</Text> :

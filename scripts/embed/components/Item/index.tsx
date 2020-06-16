@@ -103,7 +103,7 @@ export class Item implements m.Component<ItemAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(item.name)} /> :
+            <Link href={link || buildWikiLink(store, item.name)} /> :
             null
           }
         </Icon> :
@@ -119,7 +119,7 @@ export class Item implements m.Component<ItemAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(item.name)}
+              href={link || buildWikiLink(store, item.name)}
               {...!disableTextLink && tooltipEvents}
             >{name}</Link> :
             name
