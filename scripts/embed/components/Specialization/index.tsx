@@ -65,7 +65,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       store
     }
   }: m.Vnode<SpecializationAttributes>): m.Children {
-    const name = overrideText || specialization
+    const name = overrideText || specialization.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {
