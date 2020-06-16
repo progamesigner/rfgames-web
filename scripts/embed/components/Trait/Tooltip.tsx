@@ -13,7 +13,7 @@ import {
   TooltipHead
 } from '../Tooltip'
 
-import { markup, sortFacts } from './lib'
+import { applyTraitedFacts, markup, sortFacts } from './lib'
 
 import * as styles from './styles'
 
@@ -28,6 +28,7 @@ declare module '../../types/tooltip' {
 }
 
 interface TraitTooltipAttributes extends m.Attributes {
+  activeTraits?: Array<number>;
   trait: GW2Trait;
   index?: number;
 }
@@ -35,10 +36,18 @@ interface TraitTooltipAttributes extends m.Attributes {
 export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
   public view({
     attrs: {
+      activeTraits,
       index,
       trait
     }
   }: m.Vnode<TraitTooltipAttributes>): m.Children {
+    const facts = trait.facts ?
+      sortFacts(
+        applyTraitedFacts(trait.facts, activeTraits || [], trait.traited_facts),
+        traitedFact => traitedFact.fact.type
+      ) :
+      []
+
     return m.fragment({}, [
       ...(
         trait.skills ?
@@ -52,9 +61,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
         <TooltipBody>
           {m.trust(markup(trait.description, styles.flavors))}
         </TooltipBody>
-        {trait.facts && sortFacts(trait.facts).map((fact, index) => {
-          return <TooltipFact key={index} fact={fact} />
-        })}
+        {facts.map((traitedFact, index) => <TooltipFact key={index} {...traitedFact} />)}
       </TooltipContent>
     ])
   }

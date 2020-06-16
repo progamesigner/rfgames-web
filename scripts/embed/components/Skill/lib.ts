@@ -2,7 +2,12 @@ import { cx } from '../../libs'
 import { GW2Skill } from '../../types'
 
 export { markup } from '../format'
-export { bindTooltipEvents, buildWikiLink, sortFacts } from '../helpers'
+export {
+  applyTraitedFacts,
+  bindTooltipEvents,
+  buildWikiLink,
+  sortFacts
+} from '../helpers'
 
 const regexSkillType = /^([a-zA-Z\u00C0-\u017F]+ ?[a-zA-Z\u00C0-\u017F]*.?[:.])/gm
 

@@ -11,11 +11,14 @@ import {
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
-type ItemContainerAttributes =
-  m.Attributes &
-  HasEmptyTextAttributes &
-  HasIDAttributes<number> &
+interface ItemContainerAttributes extends
+  m.Attributes,
+  HasEmptyTextAttributes,
+  HasIDAttributes<number>,
   HasStoreAttributes
+{
+  stat?: number;
+}
 
 const fetch = wrapAsyncAction(fetchItem)
 const fetchStat = wrapAsyncAction(fetchItemStat)

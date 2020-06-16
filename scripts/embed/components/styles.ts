@@ -44,6 +44,7 @@ export const colors = {
   tooltipText: color('hsla(0, 0%, 95%, 0.95)'),
   tooltipTextShadow: color('hsl(0, 0%, 5%, 0.15)'),
   tooltipTitle: color('hsl(0, 0%, 95%)'),
+  tooltipTraitedFact: color('hsl(215, 100%, 65%)'),
   traitlineConnector: color('hsla(0, 0%, 95%, 0.25)'),
   traitlineShadow: color('hsl(0, 0%, 14%)')
 }

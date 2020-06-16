@@ -10,7 +10,7 @@ import {
   TooltipHead
 } from '../Tooltip'
 
-import { addSkillTypeTags, markup, sortFacts } from './lib'
+import { addSkillTypeTags, applyTraitedFacts, markup, sortFacts } from './lib'
 
 import * as styles from './styles'
 
@@ -25,18 +25,26 @@ declare module '../../types/tooltip' {
 }
 
 interface SkillTooltipAttributes extends m.Attributes {
+  activeTraits?: Array<number>;
   skill: GW2Skill;
 }
 
 export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
   public view({
     attrs: {
+      activeTraits,
       skill
     }
   }: m.Vnode<SkillTooltipAttributes>): m.Children {
+    const facts = skill.facts ?
+      sortFacts(
+        applyTraitedFacts(skill.facts, activeTraits || [], skill.traited_facts),
+        traitedFact => traitedFact.fact.type
+      ) :
+      []
+
     return <TooltipContent type="skill">
       <TooltipHead className={styles.tooltip.head}>{skill.name}</TooltipHead>
-
       {
         skill.description ?
         <TooltipBody className={styles.tooltip.body}>
@@ -44,13 +52,7 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
         </TooltipBody> :
         null
       }
-
-      {
-        skill.facts ? sortFacts(skill.facts).map((fact, index) => {
-          return <TooltipFact key={index} fact={fact} />
-        }) :
-        null
-      }
+      {facts.map((traitedFact, index) => <TooltipFact key={index} {...traitedFact} />)}
     </TooltipContent>
   }
 }

@@ -38,12 +38,14 @@ interface SkillAttributes extends
   HasTextLinkAttributes,
   HasTooltipAttributes
 {
+  activeTraits?: Array<number>;
   skill: GW2Skill;
 }
 
 export class Skill implements m.Component<SkillAttributes> {
   public view({
     attrs: {
+      activeTraits,
       classIcon,
       className,
       classSize,
@@ -65,6 +67,7 @@ export class Skill implements m.Component<SkillAttributes> {
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SKILL, {
+        activeTraits,
         skill
       }) :
       {}

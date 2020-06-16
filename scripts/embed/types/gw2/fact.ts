@@ -6,7 +6,7 @@ interface GW2FactBase<T extends GW2FactType> {
 
 interface GW2TraitedFactFields {
   requires_trait: number;
-  overrides: number;
+  overrides?: number;
 }
 
 export const enum GW2FactType {

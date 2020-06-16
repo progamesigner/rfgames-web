@@ -3,7 +3,7 @@ import * as m from 'mithril'
 import { Effect } from '../containers'
 import { EmbedStore } from '../types'
 
-import { extractBoolean, extractString } from './extractor'
+import { extractBoolean, extractString } from './helpers'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {

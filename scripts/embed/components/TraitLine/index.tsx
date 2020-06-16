@@ -17,14 +17,14 @@ import { Container } from '../Container'
 import {
   bindTooltipEvents,
   isTraitActive,
-  mapSelectionToIds,
-  parseTraitlineClassNames,
-  TraitSelection
+  parseTraitlineClassNames
 } from './lib'
 
 import * as styles from './styles'
 
-export { TraitMode, TraitPosition, TraitSelection } from './lib'
+interface TraitIconAttributes extends m.Attributes {
+  activeTraits?: Array<number>;
+}
 
 interface TraitLineAttributes extends
   m.Attributes,
@@ -33,7 +33,7 @@ interface TraitLineAttributes extends
   HasTooltipAttributes
 {
   data: GW2Specialization;
-  selectedTraits: Array<TraitSelection>;
+  selectedTraits: Array<number>;
 }
 
 function mapFromMajorClassName(
@@ -80,12 +80,16 @@ class TraitConnector implements m.Component<m.Attributes> {
   }
 }
 
-class TraitIcon implements m.Component<m.Attributes> {
-  public view({ attrs: {
-    className,
-    ...attrs
-  } }: m.Vnode<m.Attributes>) {
+class TraitIcon implements m.Component<TraitIconAttributes> {
+  public view({
+    attrs: {
+      activeTraits,
+      className,
+      ...attrs
+    }
+  }: m.Vnode<m.Attributes>) {
     return <Trait
+      activeTraits={activeTraits}
       classIcon={className}
       disableIconLink={true}
       disableIconPlaceholder={true}
@@ -98,6 +102,7 @@ class TraitIcon implements m.Component<m.Attributes> {
 export class TraitLine implements m.Component<TraitLineAttributes> {
   public view({
     attrs: {
+      activeTraits,
       className,
       data,
       disableTooltip,
@@ -106,7 +111,6 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
     }
   }: m.Vnode<TraitLineAttributes>): m.Children {
     const majorTraitChunks = chunk(3)(data.major_traits)
-    const selectedTraitIds = mapSelectionToIds(data, selectedTraits)
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {
@@ -136,6 +140,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
             <TraitIcon
               id={data.minor_traits[tier]}
               className={styles.traits.minorIcon}
+              activeTraits={activeTraits}
               disableTooltip={disableTooltip}
               store={store}
             />
@@ -143,7 +148,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
           <TraitConnector
             key={`connector-to-${tier}`}
             className={cx(
-              mapFromMinorClassName(majorTraitChunks[tier], selectedTraitIds)
+              mapFromMinorClassName(majorTraitChunks[tier], selectedTraits)
             )}
           />,
           <div key={`major-${tier}`} className={styles.traits.major}>
@@ -152,8 +157,9 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
               id={majorTrait}
               className={cx(
                 styles.traits.majorIcon,
-                { [styles.traits.inactive]: !isTraitActive(majorTrait, selectedTraitIds) }
+                { [styles.traits.inactive]: !isTraitActive(majorTrait, selectedTraits) }
               )}
+              activeTraits={activeTraits}
               disableTooltip={disableTooltip}
               store={store}
             />)}
@@ -161,7 +167,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
           <TraitConnector
             key={`connector-from-${tier}`}
             className={cx(
-              mapFromMajorClassName(majorTraitChunks[tier], selectedTraitIds),
+              mapFromMajorClassName(majorTraitChunks[tier], selectedTraits),
               { [styles.connector.disabled]: tier === 2}
             )}
           />

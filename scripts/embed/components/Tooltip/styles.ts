@@ -105,6 +105,9 @@ export const fact = stylesheet({
     color: colors.tooltipFact.toString(),
     marginLeft: em(layouts.gap)
   },
+  traited: {
+    color: colors.tooltipTraitedFact.toString(),
+  },
   recharge: {
     position: 'absolute',
     right: em(layouts.rechargeOffset),

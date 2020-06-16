@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { fetchSkill } from '../actions'
+import { fetchSkill, fetchSpecialization } from '../actions'
 import { Empty, Loader, Skill } from '../components'
 import {
   GW2Resources,
@@ -9,27 +9,44 @@ import {
   HasStoreAttributes
 } from '../types'
 
-import { isFetchFinished, wrapAsyncAction } from './helpers'
+import {
+  isFetchFinished,
+  mapActiveTraitlinesToTraitIds,
+  TraitSelection,
+  wrapAsyncAction
+} from './helpers'
 
-type SkillContainerAttributes =
-  m.Attributes &
-  HasEmptyTextAttributes &
-  HasIDAttributes<number> &
+interface SkillContainerAttributes extends
+  m.Attributes,
+  HasEmptyTextAttributes,
+  HasIDAttributes<number>,
   HasStoreAttributes
+{
+  activeTraitlines?: Record<number, Array<TraitSelection>>;
+}
 
 const fetch = wrapAsyncAction(fetchSkill)
+const fetchSpec = wrapAsyncAction(fetchSpecialization)
 
 export class SkillContainer implements m.Component<SkillContainerAttributes> {
   public oninit({ attrs }: m.Vnode<SkillContainerAttributes>): void {
     const {
+      activeTraitlines,
       store,
       id
     } = attrs
     fetch(store, id)
+    if (activeTraitlines) {
+      Object
+        .keys(activeTraitlines)
+        .map(parseInt)
+        .map(fetchSpec.bind(null, store))
+    }
   }
 
   public view({
     attrs: {
+      activeTraitlines,
       id,
       overrideEmptyText,
       store,
@@ -37,14 +54,20 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
     }
   }: m.Vnode<SkillContainerAttributes>): m.Children {
     const {
-      [GW2Resources.SKILL]: skills
+      [GW2Resources.SKILL]: skills,
+      [GW2Resources.SPECIALIZATION]: specializations
     } = store.getState()
 
     if (id > 0 && skills) {
       const skill = skills[id]
 
+      const activeTraits = specializations ?
+        mapActiveTraitlinesToTraitIds(specializations, activeTraitlines) :
+        []
+
       if (skill && isFetchFinished(skill.state)) {
         return <Skill
+          activeTraits={activeTraits}
           skill={skill.data}
           store={store}
           {...attrs}

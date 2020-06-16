@@ -1,7 +1,7 @@
 import * as m from 'mithril'
 
 import { fetchSpecialization } from '../actions'
-import { Empty, Loader, TraitLine, TraitSelection } from '../components'
+import { Empty, Loader, TraitLine } from '../components'
 import {
   GW2Resources,
   HasEmptyTextAttributes,
@@ -9,9 +9,13 @@ import {
   HasStoreAttributes
 } from '../types'
 
-import { isFetchFinished, wrapAsyncAction } from './helpers'
-
-export { TraitMode, TraitPosition, TraitSelection } from '../components'
+import {
+  isFetchFinished,
+  mapActiveTraitlinesToTraitIds,
+  mapTraitSelectionToTraitIds,
+  TraitSelection,
+  wrapAsyncAction
+} from './helpers'
 
 interface TraitLineContainerAttributes extends
   m.Attributes,
@@ -19,6 +23,7 @@ interface TraitLineContainerAttributes extends
   HasIDAttributes<number>,
   HasStoreAttributes
 {
+  activeTraitlines?: Record<number, Array<TraitSelection>>;
   selectedTraits: Array<TraitSelection>;
 }
 
@@ -27,14 +32,22 @@ const fetch = wrapAsyncAction(fetchSpecialization)
 export class TraitLineContainer implements m.Component<TraitLineContainerAttributes> {
   public oninit({ attrs }: m.Vnode<TraitLineContainerAttributes>): void {
     const {
+      activeTraitlines,
       store,
       id
     } = attrs
     fetch(store, id)
+    if (activeTraitlines) {
+      Object
+        .keys(activeTraitlines)
+        .map(parseInt)
+        .map(fetch.bind(null, store))
+    }
   }
 
   public view({
     attrs: {
+      activeTraitlines,
       id,
       overrideEmptyText,
       selectedTraits,
@@ -50,9 +63,18 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
       const specialization = specializations[id]
 
       if (specialization && isFetchFinished(specialization.state)) {
+        const activeTraits = specializations ?
+          mapActiveTraitlinesToTraitIds(specializations, activeTraitlines) :
+          []
+
+        const selectedTraitIds = specialization.data ?
+          mapTraitSelectionToTraitIds(specialization.data, selectedTraits) :
+          []
+
         return <TraitLine
+          activeTraits={activeTraits}
           data={specialization.data}
-          selectedTraits={selectedTraits}
+          selectedTraits={selectedTraitIds}
           store={store}
           {...attrs}
         />

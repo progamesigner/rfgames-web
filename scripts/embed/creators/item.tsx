@@ -8,7 +8,7 @@ import {
   extractNumber,
   extractNumberList,
   extractString
-} from './extractor'
+} from './helpers'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {

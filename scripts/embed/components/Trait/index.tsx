@@ -43,12 +43,14 @@ interface TraitAttributes extends
   HasTextLinkAttributes,
   HasTooltipAttributes
 {
+  activeTraits?: Array<number>;
   trait: GW2Trait;
 }
 
 export class Trait implements m.Component<TraitAttributes> {
   public view({
     attrs: {
+      activeTraits,
       classIcon,
       className,
       classSize,
@@ -70,6 +72,7 @@ export class Trait implements m.Component<TraitAttributes> {
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_TRAIT, {
+        activeTraits,
         trait
       }) :
       {}

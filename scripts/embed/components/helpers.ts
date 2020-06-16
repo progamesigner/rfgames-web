@@ -1,12 +1,13 @@
 import { Store } from 'redux'
-import { sortBy } from 'lodash/fp'
+import { omit, sortBy } from 'lodash/fp'
 
 import { hideTooltip, showTooltip } from '../actions'
 import { config } from '../config'
 import {
+  ExtractTooltipDataType,
   GW2Fact,
   GW2FactType,
-  ExtractTooltipDataType,
+  GW2TraitedFact,
   TooltipType
 } from '../types'
 
@@ -39,6 +40,48 @@ type TooltipEvents = {
   ontouchend(): void;
 }
 
+const omitTraitedFactFields = omit(['overrides', 'requires_trait'])
+
+interface TraitedFact {
+  fact: GW2Fact;
+  traited: boolean;
+}
+
+export function applyTraitedFacts(
+  facts: Array<GW2Fact>,
+  traits: Array<number>,
+  traitedFacts: Array<GW2TraitedFact> = [],
+): Array<TraitedFact> {
+  const untratedFacts = Array.prototype.concat(
+    [],
+    facts.map<TraitedFact>(fact => ({
+      fact,
+      traited: false
+    }))
+  )
+
+  return traitedFacts
+    .filter(fact => traits.includes(fact.requires_trait))
+    .map(fact => ({
+      fact: omitTraitedFactFields(fact) as GW2Fact,
+      index: fact.overrides || -1
+    }))
+    .reduce((facts, { fact, index }) => {
+      const traitedFact = {
+        fact,
+        traited: true
+      }
+
+      if (index > 0) {
+        facts.splice(index, 1, traitedFact)
+      } else {
+        facts.push(traitedFact)
+      }
+
+      return facts
+    }, untratedFacts)
+}
+
 export function bindTooltipEvents<T extends TooltipType>(
   store: Store,
   type: T,
@@ -62,6 +105,9 @@ export function buildWikiLink(store: Store, to: string): string {
   return `https://wiki-${language || config.gw2ApiDefaultLanguage}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
 }
 
-export function sortFacts(facts: Array<GW2Fact>): Array<GW2Fact> {
-  return sortBy((fact: GW2Fact) => factOrders[fact.type])(facts)
+export function sortFacts<T>(
+  facts: Array<T>,
+  typer: (fact: T) => GW2FactType
+): Array<T> {
+  return sortBy((fact: T) => factOrders[typer(fact)])(facts)
 }

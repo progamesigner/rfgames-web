@@ -3,7 +3,13 @@ import * as m from 'mithril'
 import { Trait } from '../containers'
 import { EmbedStore } from '../types'
 
-import { extractBoolean, extractNumber, extractString } from './extractor'
+import {
+  extractBoolean,
+  extractNumber,
+  extractString,
+  extractStringList,
+  parseTraitlines
+} from './helpers'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {
@@ -18,7 +24,9 @@ export function create(store: EmbedStore, element: Element): m.Component {
     inline: extractBoolean(element, 'inline', false),
     link: extractString(element, 'link', ''),
     overrideEmptyText: extractString(element, 'empty-text', ''),
-    overrideText: extractString(element, 'text', '')
+    overrideText: extractString(element, 'text', ''),
+
+    activeTraitlines: parseTraitlines(extractStringList(element, 'active-traitlines'))
   }
 
   return {
