@@ -267,6 +267,14 @@ $speed: 86ms !default;
     --subtitle-negative-margin: -1.25rem;
     --subtitle-text-color: #{$foreground-alternative-color};
 
+    --tag-background-color: #{rgba($background-color, 0.25)};
+    --tag-font-size: #{$font-size-7};
+    --tag-height: 2rem;
+    --tag-line-height: 1.5;
+    --tag-padding: 0 0.75rem;
+    --tag-radius: #{$radius};
+    --tag-text-color: #{$foreground-color};
+
     --title-font-family: #{$font-family-title};
     --title-font-size: #{$font-size-3};
     --title-font-weight: #{$font-weight-semibold};

@@ -75,9 +75,9 @@
 
 .page-body {
     background-color: var(--page-background-color);
+    border-radius: var(--page-radius);
     margin-bottom: var(--section-gap);
     padding: var(--page-body-padding);
-    border-radius: var(--page-radius);
 
     .banner {
         .subtitle {
