@@ -1,0 +1,16 @@
+{{- $build := .Page.Params.build -}}
+
+{{- $traits := $build.template.traits -}}
+
+{{- define "__rfgames_shortcode_includes__build_overview_specialization__" -}}
+    {{- $id := 0 | index . -}}
+    {{- $traits := . | after 1 -}}
+
+    {{- dict "id" $id "disable-text" true | slice "specialization" false | partial "elements/embed.html" -}}
+{{- end -}}
+
+<div class="build-overview is-specializations">
+    {{- range $traits -}}
+        {{- template "__rfgames_shortcode_includes__build_overview_specialization__" . -}}
+    {{- end -}}
+</div>

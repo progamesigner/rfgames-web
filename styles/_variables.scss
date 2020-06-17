@@ -338,6 +338,8 @@ $speed: 86ms !default;
     --build-section-title-background-color: #{rgba($background-color, 0.75)};
     --build-section-title-font-size: #{$font-size-4};
     --build-section-title-padding: 0.5rem 0 0.25rem;
+    --build-overview-tag-background-color: #{rgba($background-color, 0.75)};
+    --build-overview-tag-alternative-background-color: #{rgba($background-color, 0.25)};
 
     --discussion-section-padding: 0;
 

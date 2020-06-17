@@ -243,6 +243,45 @@
     }
 }
 
+.page-section-build-overview {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: var(--gw2-embed-size);
+    width: 100%;
+
+    @include tablet() {
+        justify-content: flex-end;
+        position: absolute;
+        transform: translateY(-100%);
+    }
+
+    .build-overview {
+        align-items: center;
+        display: flex;
+        justify-content: flex-start;
+
+        .gw2-embed {
+            width: var(--gw2-embed-size);
+        }
+    }
+}
+
+.page-section-build-tags {
+    display: flex;
+    justify-content: flex-end;
+
+    .tag {
+        &:first-child {
+            background-color: var(--build-overview-tag-background-color);
+        }
+
+        &:last-child {
+            background-color: var(--build-overview-tag-alternative-background-color);
+        }
+    }
+}
+
 .page-section-discussion {
     padding: var(--discussion-section-padding);
 }
