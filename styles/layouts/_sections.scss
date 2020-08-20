@@ -27,6 +27,8 @@
     }
 
     .title {
+        --content-block-spacing: 0;
+
         background-color: var(--build-section-title-background-color);
         border-radius: var(--build-section-card-radius) var(--build-section-card-radius) 0 0;
         margin: 0;
