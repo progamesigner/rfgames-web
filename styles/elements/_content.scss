@@ -1,8 +1,6 @@
 .content {
     @include block(var(--content-spacing));
 
-    h5,
-    h6,
     p,
     ul {
         @include block(var(--content-block-spacing));
@@ -13,12 +11,16 @@
     }
 
     h5 {
+        --block-spacing: 0;
+
         font-family: var(--content-h5-font-family);
         font-size: var(--content-h5-font-size);
         font-weight: var(--content-h5-font-weight);
     }
 
     h6 {
+        --block-spacing: 0;
+
         font-family: var(--content-h6-font-family);
         font-size: var(--content-h6-font-size);
         font-weight: var(--content-h6-font-weight);

@@ -259,6 +259,8 @@ $speed: 86ms !default;
     --icon-raduis: #{$radius};
 
     --section-gap: #{$gap};
+    --section-nested-gap: #{$gap / 2};
+    --section-nested-nested-gap: #{$gap / 4};
 
     --subtitle-font-family: #{$font-family-title};
     --subtitle-font-size: #{$font-size-5};

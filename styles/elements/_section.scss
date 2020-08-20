@@ -4,4 +4,12 @@
     &:not(:last-child) {
         margin-bottom: var(--section-gap);
     }
+
+    .section {
+        --section-gap: var(--section-nested-gap);
+
+        .section {
+            --section-gap: var(--section-nested-nested-gap);
+        }
+    }
 }
