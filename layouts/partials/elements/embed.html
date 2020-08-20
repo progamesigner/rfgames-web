@@ -33,6 +33,8 @@
     >
         {{- with "text" | index $data -}}
             <span class="gw2-embed-inline-placeholder"></span>{{- . -}}
+        {{- else -}}
+            &nbsp;
         {{- end -}}
     </span>
 {{- else -}}
