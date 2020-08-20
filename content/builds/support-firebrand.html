@@ -1,0 +1,258 @@
+---
+title: Support Firebrand
+
+theme: guardian
+disqus: true
+disqusId: support-firebrand
+menu:
+    nav:
+        parent: Builds
+
+button: firebrand
+overlay: guardian
+
+header:
+    title: Firebrand
+    subtitle: Support
+
+build:
+    equipments:
+        weapon1:
+            type: TwoHand
+            weapon: { id: 75200 }
+            sigil1: { id: 74326 }
+            sigil2: { id: 24607 }
+            infusion1: 43250
+            infusion2: 43250
+            skills:
+            - 9122
+            - 9140
+            - 9143
+            - 9265
+            - 9144
+        weapon2:
+            type: DualWield
+            weapon1: { id: 71457 }
+            weapon2: { id: 74748 }
+            sigil1: { id: 74326 }
+            sigil2: { id: 24607 }
+            infusion1: 43250
+            infusion2: 43250
+            skills:
+            - 9109
+            - 9111
+            - 9086
+            - 9087
+            - 9091
+        head:
+            id: 84879
+            rune: { id: 73653 }
+            infusion: 43250
+        shoulders:
+            id: 85286
+            rune: { id: 73653 }
+            infusion: 43250
+        coat:
+            id: 85126
+            rune: { id: 73653 }
+            infusion: 43250
+        gloves:
+            id: 85330
+            rune: { id: 73653 }
+            infusion: 43250
+        leggings:
+            id: 85024
+            rune: { id: 73653 }
+            infusion: 43250
+        boots:
+            id: 85196
+            rune: { id: 73653 }
+            infusion: 43250
+        back:
+            id: 81462
+            stat: 1134
+            infusions:
+            - 43250
+            - 43250
+        accessory1:
+            id: 81908
+            stat: 1134
+            infusion: 43250
+        accessory2:
+            id: 91048
+            stat: 1134
+            infusion: 43250
+        amulet:
+            id: 92991
+            stat: 1134
+            infusion: 43250
+        ring1:
+            id: 91234
+            stat: 1134
+            infusions:
+            - 43250
+            - 43250
+            - 43250
+        ring2:
+            id: 93105
+            stat: 1134
+            infusions:
+            - 43250
+            - 43250
+            - 43250
+    template:
+        profession: guardian
+        traits:
+        - [49, top, middle, bottom]
+        - [46, middle, middle, middle]
+        - [62, middle, top, bottom]
+        skills:
+        - [41714, 41714]
+        - [9153, 9153]
+        - [45460, 45460]
+        - [9163, 9163]
+        - [43357, 43357]
+        pets: [0, 0, 0, 0]
+        legends: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    consumables:
+        food: { id: 81621 }
+        utility: { id: 67528 }
+---
+
+{{< section title="Overview" >}}
+    <div class="page-section-build-overview">
+        {{% includes/build-overview %}}
+    </div>
+
+    <p>{{% inlines/profession id="Guardian" text="Support Firebrand" elite=62 %}} provides powerful healing, condition cleansing, and boons to allies. You play an important role to maintain sustainability of your team. The purpose of this build is to provide maximum support to allies via {{% inlines/effect id="Aegis" %}}, {{% inlines/effect id="Might" %}}, {{% inlines/effect id="Protection" %}}, {{% inlines/effect id="Regeneration" %}}, {{% inlines/effect id="Retaliation" %}}, {{% inlines/effect id="Stability" %}}, {{% inlines/effect id="Quickness" %}}, healing, condition cleansing, and crowd controls.</p>
+    <p>You heal allies by dodging, by giving {{% inlines/effect id="Aegis" %}}, from your utility skills and tomes. You also provide constant healing and optional burst healing when required.</p>
+    <p>As a {{% inlines/profession id="Guardian" elite=62 %}}, your virtues becomes tomes:
+        <ul>
+            <li>{{% inlines/skill id=44364 %}} is mainly used for {{% inlines/effect id="Burning" %}} pressures and crowd control.</li>
+            <li>{{% inlines/skill id=41780 %}} provides burst healing, condition cleansing, and water field.</li>
+            <li>{{% inlines/skill id=42259 %}} is the primary way to protect your party with {{% inlines/effect id="Aegis" %}}, {{% inlines/effect id="Protection" %}}, {{% inlines/effect id="Resistance" %}}, {{% inlines/effect id="Stability" %}}, and reflection.</li>
+        </ul>
+    </p>
+
+    <div class="page-section-build-tags">
+        {{% includes/build-tags %}}
+    </div>
+{{< /section >}}
+
+{{< section title="Build" >}}
+    <div class="page-section-build">
+        {{% includes/build %}}
+    </div>
+{{< /section >}}
+
+{{< section title="Guide" >}}
+    {{< section title="Settings" >}}
+        <ul>
+            <li>Under "General Options" / "User Interface" check "Always show squad health bars" and "Always show party health bars". This will make it much easier to keep track of who needs support. Besides, you can also check "Thick squad health bars" or "Thick party health bars" but they are up to your personal preference</li>
+            <li>Under "Squad Options" uncheck "View as a grid". This will allow you keep track of your allies' boons, conditions, and health, enabling a better decision-making and skill management.</li>
+        </ul>
+    {{< /section >}}
+
+    {{< section title="The Core of Build" >}}
+        <p>The core of this build consists of {{% inlines/specialization id=62 %}} specialization which grants you access to powerful boon support, {{% inlines/trait id=549 %}} trait which is your primary healing source via {{% inlines/effect id="Aegis" %}}, and {{% inlines/trait id=554 %}} which shares your {{% inlines/skill id=9250 %}} passive to allies to constant healing.</p>
+        <p>The {{% inlines/specialization id=62 %}} specialization brings you {{% inlines/skill id=41780 %}} and {{% inlines/skill id=42259 %}}. Both of them bring new skill sets which grant you access to an extremely powerful boon support, healing, and condition cleansing as well as unique buff for your alles. It's fundamental to know when to enter and stow a tome, how to support while a tome is on cooldown.</p>
+        <p>{{% inlines/trait id=549 %}} is your primary trait to keep your allies' health. It will heal if your {{% inlines/effect id="Aegis" %}} blocks an attack. One source of {{% inlines/effect id="Aegis" %}} comes from your {{% inlines/skill id=41714 %}} and sometimes your Mace. The {{% inlines/specialization id=49 %}} specialization also brings you {{% inlines/trait id=551 %}} which heals your allies when you dodge roll.</p>
+        <p>{{% inlines/trait id=554 %}} share your {{% inlines/skill id=9250 %}} passive to allies which is a health regeneration. Coupled with {{% inlines/trait id=1685 %}}, your {{% inlines/skill id=9250 %}} passive can also regenerate endurance. With {{% inlines/trait id=2159 %}}, you retain {{% inlines/skill id=9250 %}} and {{% inlines/skill id=9268 %}} passives even they are on cooldown.</p>
+        {{< section title="Aegis" >}}
+            <p>Your primary healing comes from {{% inlines/effect id="Aegis" %}} which is synergetic with {{% inlines/trait id=549 %}}.</p>
+            <ul>
+                <li>Healing skill {{% inlines/skill id=41714 %}} grants {{% inlines/effect id="Aegis" %}} to allies.</li>
+                <li>Mace #3 {{% inlines/skill id=9086 %}} blocks an attack for allies and grants them {{% inlines/effect id="Aegis" %}} .</li>
+                <li>Shield #4 {{% inlines/skill id=9091 %}} grants allies {{% inlines/effect id="Aegis" %}}.</li>
+                <li>{{% inlines/trait id=625 %}} is a defensive trait that you gain {{% inlines/effect id="Aegis" %}} when disabled.</li>
+                <li>Most skills in your {{% inlines/skill id=42259 %}} grant {{% inlines/effect id="Aegis" %}} or other defensive boons to allies.</li>
+            </ul>
+        {{< /section >}}
+        {{< section title="Healing" >}}
+            <p>One of important purposes is to maintain allies' sustainability. Your {{% inlines/skill id=9250 %}} passive is shared to allies because of {{% inlines/trait id=554 %}}.</p>
+            <ul>
+                <li>{{% inlines/trait id=551 %}} heals on dodging.</li>
+                <li>{{% inlines/trait id=1682 %}} increases your vitality and improves your healing based on your vitality.</li>
+                <li>Most skills in your {{% inlines/skill id=41780 %}} grant {{% inlines/effect id="Regeneration" %}} and heal allies.</li>
+            </ul>
+        {{< /section >}}
+        {{< section title="Virtues" >}}
+            <p>Virtues are fundamental to play {{% inlines/profession id="Guardian" elite=62 %}}, most of your healing, boon support, and condition cleansing are depends on virtues.</p>
+            <ul>
+                <li>{{% inlines/trait id=1685 %}} improves {{% inlines/skill id=9250 %}} passive with endurance regeneration.</li>
+                <li>{{% inlines/trait id=621 %}} applies {{% inlines/effect id="Might" %}}, {{% inlines/effect id="Regeneration" %}}, or {{% inlines/effect id="Protection" %}} to allies when you enter a tome.</li>
+                <li>{{% inlines/trait id=604 %}} applies {{% inlines/effect id="Retaliation" %}} to allies when you enter a tome.</li>
+                <li>{{% inlines/trait id=610 %}} improves {{% inlines/skill id=9250 %}} passive with more healing and when you enter {{% inlines/skill id=41780 %}}, you will remove 3 conditions from allies.</li>
+                <li>{{% inlines/trait id=620 %}} reduces recharges of tomes.</li>
+                <li>{{% inlines/trait id=2101 %}} grants allies {{% inlines/effect id="Quickness" %}} when you use {{% inlines/skill id=41714 %}}, {{% inlines/skill id=41475 %}}, and {{% inlines/skill id=42960 %}}.</li>
+                <li>{{% inlines/trait id=2159 %}} reduces recharge of your chapter skills and retain your {{% inlines/skill id=9250 %}} and {{% inlines/skill id=9268 %}} passives even they are on cooldown</li>
+            </ul>
+        {{< /section >}}
+    {{< /section >}}
+
+    {{< section title="Tomes" >}}
+        <p>Your {{% inlines/skill id=44364 %}} brings you {{% inlines/effect id="Burning" %}} pressure; however, you should notice your {{% inlines/effect id="Burning" %}} will be {{% inlines/effect id="Aegis" %}} if opponent convert them.</p>
+        <p>Your {{% inlines/skill id=41780 %}} brings you instant and continual healing to allies.</p>
+        <p>Your {{% inlines/skill id=42259 %}} brings you strong {{% inlines/effect id="Aegis" %}} and {{% inlines/effect id="Resistance" %}} for your allies.</p>
+    {{< /section >}}
+
+    {{< section title="Skills" >}}
+        <p>{{% inlines/skill id=9153 %}} is an immensely strong in group fight and provides 5 stacks of {{% inlines/effect id="Stability" %}} with considerable duration for your party. This is your main and most important source of group {{% inlines/effect id="Stability" %}}. Don't use {{% inlines/skill id=9153 %}} as a stunbreak unless it's absolutely necessary; you can use {{% inlines/skill id=43357 %}} as your stunbreak instead.</p>
+        <p>Besides {{% inlines/skill id=9153 %}}, most your skills are mantras, and they have reduced recharge time. Mantras from {{% inlines/profession id="Guardian" elite=62 %}} have powerful "final charge" which grant powerful effects, but you have to re-cast them after cooldown. Think twice before using the final charge.</p>
+        <p>{{% inlines/skill id=41714 %}} is your healing skill and grant {{% inlines/effect id="Aegis" %}} to allies. {{% inlines/skill id=41475 %}} only heals yourself and the final charge {{% inlines/skill id=42960 %}} heals yourself more.</p>
+        <p>{{% inlines/skill id=45460 %}} is your on demand AoE condition cleansing, and it also grants allies {{% inlines/effect id="Regeneration" %}}. Use {{% inlines/skill id=42864 %}} whenever condition cleansing is required. The final charge {{% inlines/skill id=44248 %}} is only used when you have no access to other condition cleansing and being heavily condition pressured.</p>
+        <p>{{% inlines/skill id=43357 %}} is your on-demand stunbreak and grants {{% inlines/effect id="Stability" %}} to allies. You can use {{% inlines/skill id=40114 %}} whenever maintaining {{% inlines/effect id="Stability" %}} or stunbreak is necessary. We recommend to use {{% inlines/skill id=40114 %}} over {{% inlines/skill id=9153 %}} when you are not sure if enemy is going to push or just fake push; also when we just committing a small and ranged skirmish. The final charge {{% inlines/skill id=41328 %}} is similar to {{% inlines/skill id=9153 %}}, but mainly used when you have no access to other {{% inlines/effect id="Stability" %}} sources or need a stunbreak instantly.</p>
+        <p>{{% inlines/skill id=9163 %}} can be a savior if you cast it well at right mate. Coordinated the usage with your team to save whom stunned, pulled, or downed during regrouping.</p>
+        {{< section title="Staff" >}}
+            <p>Your {{% inlines/skill id=9265 %}} is a good opening skill to stack Might; {{% inlines/skill id=9144 %}} is a strong crowd control and can be used as offensive and defensive skill.</p>
+        {{< /section >}}
+        {{< section title="Mace / Shield" >}}
+            <p>The Mace / Shield can be a defensive weapon set.</p>
+        {{< /section >}}
+    {{< /section >}}
+
+    {{< section title="Playstyles" >}}
+        <p>In party, you should provide your unique support and avoid overlapping skills with your teammates. If you are paired with {{% inlines/profession id="Engineer" text="Support Scrapper" elite=43 %}} or {{% inlines/profession id="Elementalist" text="Support Tempest" elite=48 %}}, all provide healing but only you provide a large amount of {{% inlines/effect id="Stability" %}}. Thus you should prioritize your {{% inlines/effect id="Stability" %}} and fill the gap of healing for your teammate.</p>
+    {{< /section >}}
+
+    {{< section title="Variants" >}}
+        {{< section title="Weapons" >}}
+            <ul>
+                <li>If your change Mace with another weapon, remember to swap {{% inlines/trait id=1899 %}} with {{% inlines/trait id=654 %}}.</li>
+                <li>Swap Mace with Axe to bring more crowd control at the cost of a powerful block and boon support.</li>
+                <li>Swap Mace with Scepter to bring single target {{% inlines/effect id="Immobile" %}}.</li>
+            </ul>
+        {{< /section >}}
+        {{< section title="Traits" >}}
+            <ul>
+                <li>Swap {{% inlines/trait id=1682 %}} with {{% inlines/trait id=553 %}} if you heavily depends on {{% inlines/skill id=9153 %}} and change {{% inlines/skill id=9163 %}} with {{% inlines/skill id=9084 %}} or {{% inlines/skill id=9152 %}}.</li>
+                <li>Swap {{% inlines/trait id=1682 %}} with {{% inlines/trait id=558 %}} if you need more direct healing.</li>
+                <li>Swap {{% inlines/trait id=2101 %}} with {{% inlines/trait id=2086 %}} if you need more tome pages but we encourage that cast only necessary skills and stow a tome as fast as possible.</li>
+                <li>Swap {{% inlines/trait id=2063 %}} with {{% inlines/trait id=2116 %}} if {{% inlines/effect id="Regeneration" %}} and {{% inlines/effect id="Protection" %}} uptime is an issue, or you are the only support in your party.</li>
+                <li>Swap {{% inlines/specialization id=46 %}} with {{% inlines/specialization id=13 %}} for personal sustain and {{% inlines/skill id=42259 %}} availability. Only viable as second {{% inlines/profession id="Guardian" elite=62 %}} in a party.</li>
+            </ul>
+        {{< /section >}}
+        {{< section title="Skills" >}}
+            <ul>
+                <li>Swap {{% inlines/skill id=41714 %}} with {{% inlines/skill id=9083 %}} as a viable burst heal skill.</li>
+                <li>Swap {{% inlines/skill id=9163 %}} with {{% inlines/skill id=40915 %}} if {{% inlines/effect id="Quickness" %}} uptime is required.</li>
+                <li>Swap {{% inlines/skill id=9163 %}} with {{% inlines/skill id=9175 %}} for AoE pulsing healing.</li>
+                <li>Swap {{% inlines/skill id=9163 %}} with {{% inlines/skill id=9253 %}} for AoE pulsing {{% inlines/effect id="Stability" %}}.</li>
+            </ul>
+        {{< /section >}}
+        {{< section title="Runes" >}}
+            <ul>
+                <li>{{% inlines/item id=24842 upgrade-count=6 %}} provides more healing but less toughness and boon support.</li>
+                <li>{{% inlines/item id=38206 upgrade-count=6 %}} provides more condition cleansing with {{% inlines/skill id=43357 %}}.</li>
+            </ul>
+        {{< /section >}}
+        {{< section title="Sigils" >}}
+            <ul>
+                <li>You should always keep {{% inlines/item id=24607 %}}.</li>
+                <li>{{% inlines/item id=72339 %}} provides more boon uptime.</li>
+                <li>{{% inlines/item id=24584 %}} provides more healings if you can keep uptime of 25 stack.</li>
+                <li>{{% inlines/item id=44947 %}} provides AoE healing on weapon / tome swap.</li>
+            </ul>
+        {{< /section >}}
+    {{< /section >}}
+{{< /section >}}
