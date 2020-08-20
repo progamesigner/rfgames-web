@@ -1,0 +1,1 @@
+{{- dict "text" .Params.id | merge .Params | slice "effect" true | partial "elements/embed.html" -}}
