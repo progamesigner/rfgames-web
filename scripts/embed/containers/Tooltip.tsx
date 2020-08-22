@@ -81,7 +81,7 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       tooltip
     } = store.getState()
 
-    const hide = () => store.dispatch(hideTooltip())
+    const hide = () => tooltip && tooltip.show && store.dispatch(hideTooltip())
 
     return <Tooltip
       className={className}
