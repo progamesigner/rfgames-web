@@ -88,7 +88,11 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
 
     return <TooltipContent type="item">
       <TooltipHead className={styles.tooltip.head}>
-        <Icon className={styles.tooltip.icon} src={item.icon}></Icon>
+        <Icon
+          className={styles.tooltip.icon}
+          classSize={styles.tooltip.iconSize}
+          src={item.icon}
+        />
         <span
           className={cx(styles.tooltip.name, mapRarityToColor(item.rarity))}
       >{buildItemName(item, stat)}</span>
@@ -157,6 +161,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           <div className={styles.tooltip.consumable}>
             <Icon
               className={styles.tooltip.effectIcon}
+              classSize={styles.tooltip.effectIconSize}
               disablePlaceholder={true}
               src={item.details.icon}
             />

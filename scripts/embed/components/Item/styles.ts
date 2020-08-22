@@ -44,8 +44,12 @@ export const tooltip = stylesheet({
     display: 'flex'
   },
   effectIcon: {
+    flexGrow: 0,
+    flexShrink: 0,
+    marginRight: em(layouts.gap)
+  },
+  effectIconSize: {
     height: em(sizes.tooltipEffectIcon),
-    marginRight: em(layouts.gap),
     width: em(sizes.tooltipEffectIcon)
   },
   head: {
@@ -60,8 +64,10 @@ export const tooltip = stylesheet({
     borderColor: colors.tooltipItemBorder,
     flexGrow: 0,
     flexShrink: 0,
+    marginRight: em(layouts.gap)
+  },
+  iconSize: {
     height: em(sizes.tooltipItemIcon),
-    marginRight: em(layouts.gap),
     width: em(sizes.tooltipItemIcon)
   },
   name: {
@@ -86,6 +92,8 @@ export const tooltip = stylesheet({
     marginLeft: em(layouts.gap)
   },
   upgradeIcon: {
+    flexGrow: 0,
+    flexShrink: 0,
     marginRight: em(layouts.gap)
   },
   upgradeIconSize: {
