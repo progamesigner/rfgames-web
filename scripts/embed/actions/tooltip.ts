@@ -9,9 +9,15 @@ interface UpdateTooltipPayload {
   payload: TooltipState;
 }
 
+interface UpdateTooltipHidabilityPayload {
+  hidable: boolean;
+}
+
 export const UPDATE_TOOLTIP = 'UPDATE_TOOLTIP'
+export const UPDATE_TOOLTIP_HIDABILITY = 'UPDATE_TOOLTIP_HIDABILITY'
 
 export type UpdateTooltipAction = BaseAction<UpdateTooltipPayload>
+export type UpdateTooltipHidabilityAction = BaseAction<UpdateTooltipHidabilityPayload>
 
 export function hideTooltip(): UpdateTooltipAction {
   return {
@@ -35,5 +41,12 @@ export function showTooltip<T extends TooltipType>(
       show: true,
       type
     }
+  }
+}
+
+export function updateHidability(hidable: boolean): UpdateTooltipHidabilityAction {
+  return {
+    type: UPDATE_TOOLTIP_HIDABILITY,
+    hidable
   }
 }

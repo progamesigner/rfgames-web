@@ -18,6 +18,7 @@ export interface EmbedState extends Partial<EmbedOptions> {
   [GW2Resources.SPECIALIZATION]?: ExtractGW2State<GW2Resources.SPECIALIZATION>;
   [GW2Resources.TRAIT]?: ExtractGW2State<GW2Resources.TRAIT>;
   tooltip?: TooltipState;
+  tooltipHidable?: boolean;
   [key: string]: unknown;
 }
 

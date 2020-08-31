@@ -4,5 +4,6 @@ export const config = {
   gw2ApiDefaultLanguage: 'en',
   gw2ApiEndpoint: 'https://api.guildwars2.com',
   gw2ApiRequestLimit: 200,
-  gw2RenderServiceBase: 'https://render.guildwars2.com'
+  gw2RenderServiceBase: 'https://render.guildwars2.com',
+  tooltipDebouncedWait: 150
 } as const

@@ -1,7 +1,7 @@
 import { Store } from 'redux'
-import { omit, sortBy } from 'lodash/fp'
+import { debounce, omit, sortBy } from 'lodash/fp'
 
-import { hideTooltip, showTooltip } from '../actions'
+import { hideTooltip, showTooltip, updateHidability } from '../actions'
 import { config } from '../config'
 import {
   ExtractTooltipDataType,
@@ -87,8 +87,25 @@ export function bindTooltipEvents<T extends TooltipType>(
   type: T,
   data: ExtractTooltipDataType<T>
 ): TooltipEvents {
-  const hide = () => store.dispatch(hideTooltip())
-  const show = () => store.dispatch(showTooltip(type, data))
+  const debounced = debounce(config.tooltipDebouncedWait)(() => {
+    const {
+      tooltipHidable,
+    } = store.getState()
+
+    if (tooltipHidable) {
+      store.dispatch(hideTooltip())
+    }
+  })
+
+  const hide = () => {
+    store.dispatch(updateHidability(true))
+    debounced()
+  }
+
+  const show = () => {
+    store.dispatch(updateHidability(false))
+    store.dispatch(showTooltip(type, data))
+  }
 
   return {
     onmouseenter: show,
