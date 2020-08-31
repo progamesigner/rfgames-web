@@ -35,9 +35,9 @@ const factOrders = {
 }
 
 type TooltipEvents = {
-  onmouseenter(): void;
-  onmouseleave(): void;
-  ontouchend(): void;
+  onmouseenter(event: MouseEvent): void;
+  onmouseleave(event: MouseEvent): void;
+  ontouchend(event: TouchEvent): void;
 }
 
 const omitTraitedFactFields = omit(['overrides', 'requires_trait'])
@@ -97,14 +97,22 @@ export function bindTooltipEvents<T extends TooltipType>(
     }
   })
 
-  const hide = () => {
+  const hide = (event: MouseEvent) => {
     store.dispatch(updateHidability(true))
     debounced()
+    event.preventDefault()
   }
 
-  const show = () => {
+  const show = (event: MouseEvent | TouchEvent) => {
     store.dispatch(updateHidability(false))
     store.dispatch(showTooltip(type, data))
+
+    // @note: trigger redraw on touch-enabled devices by "mousemove" event
+    if ('touches' in event) {
+      window.dispatchEvent(new MouseEvent('mousemove'))
+    }
+
+    event.preventDefault()
   }
 
   return {

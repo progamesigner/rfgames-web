@@ -41,6 +41,10 @@ function calculateStyle(
   }
 }
 
+function isTouchDevice(window: Window): boolean {
+  return 'ontouchstart' in window || window.navigator.maxTouchPoints > 0 || window.navigator.msMaxTouchPoints > 0
+}
+
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
   protected container: Element | null = null;
   protected style: types.CSSProperties = {};
@@ -52,6 +56,14 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       window
     }
   }: m.VnodeDOM<TooltipContainerAttributes>): void {
+    // @note: show tooltip by default on touch-enabled devices
+    if (isTouchDevice(window)) {
+      this.style = {
+        ...this.style,
+        opacity: 1
+      }
+    }
+
     this.unbindMouseMoveEvent = bindEventListener(
       window,
       'mousemove',
@@ -81,7 +93,10 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       tooltip
     } = store.getState()
 
-    const hide = () => tooltip && tooltip.show && store.dispatch(hideTooltip())
+    const hide = (event: TouchEvent) => {
+      tooltip && tooltip.show && store.dispatch(hideTooltip())
+      event.preventDefault()
+    }
 
     return <Tooltip
       className={className}
