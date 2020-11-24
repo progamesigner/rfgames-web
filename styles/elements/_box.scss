@@ -1,0 +1,10 @@
+.box {
+  @include block(var(--box-block-spacing));
+
+  background-color: var(--box-background-color);
+  border-radius: var(--box-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--box-text-color);
+  display: block;;
+  padding: var(--box-padding);
+}

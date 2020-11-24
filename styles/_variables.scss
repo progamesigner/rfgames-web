@@ -229,6 +229,13 @@ $speed: 86ms !default;
     --loader-radius: #{$radius-rounded};
 
     // Elements
+    --box-background-color: #{rgba(map-get($danger-palette, 100), 0.15)};
+    --box-block-spacing: #{$block-spacing};
+    --box-padding: 0.75rem 0.5rem;
+    --box-radius: #{$radius};
+    --box-shadow: 0 0.5rem 1rem -0.125rem #{rgba($background-alternative-color, 0.1)}, 0 0px 0 1px #{rgba($background-alternative-color, 0.02)};
+    --box-text-color: #{$foreground-color};
+
     --consent-background-color: #{rgba($background-color, 0.75)};
     --consent-border-color: #{$background-alternative-color};
     --consent-padding: 1.25rem 3.5rem;
