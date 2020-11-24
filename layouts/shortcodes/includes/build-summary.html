@@ -9,7 +9,7 @@
     {{- dict "id" $id "disable-text" true | slice "specialization" false | partial "elements/embed.html" -}}
 {{- end -}}
 
-<div class="build-overview is-specializations">
+<div class="build-traitlines">
     {{- range $traits -}}
         {{- template "__rfgames_shortcode_includes__build_overview_specialization__" . -}}
     {{- end -}}
