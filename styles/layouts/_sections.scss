@@ -248,12 +248,12 @@
 .page-section-build-overview {
     display: grid;
     gap: var(--build-section-spacing);
-    grid-template-areas: "specializations" "overview" "summary" "tags";
+    grid-template-areas: ". specializations ." "overview overview overview" "summary summary summary" "tags tags tags";
+    grid-template-columns: auto calc(7 * var(--gw2-embed-size-mini)) auto;
     grid-template-rows: var(--gw2-embed-size) repeat(3, auto);
 
     @include tablet() {
-        grid-template-areas: ". specializations" "overview overview" "summary summary" "tags tags";
-        grid-template-columns: 7.5fr 2.5fr;
+        grid-template-areas: ". specializations" "overview summary" "tags tags";
         margin-top: calc(0px - var(--gw2-embed-size) - var(--build-section-spacing));
     }
 
@@ -276,7 +276,7 @@
         grid-area: summary;
 
         .rating {
-            @include block(0.5rem);
+            @include block(var(--build-section-spacing));
 
             display: grid;
             grid-template-areas: "title text" "gauge gauge";
@@ -344,18 +344,18 @@
             width: 100%;
 
             @include tablet() {
-                width: calc(50% - 0.5rem);
+                width: calc(50% - var(--build-section-spacing));
 
                 &:nth-child(even) {
-                    margin-left: 0.5rem;
+                    margin-left: var(--build-section-spacing);
                 }
             }
 
             @include desktop() {
-                width: calc(25% - 0.5rem);
+                width: calc(25% - var(--build-section-spacing));
 
                 &:nth-child(4n + 3) {
-                    margin-left: 0.5rem;
+                    margin-left: var(--build-section-spacing);
                 }
             }
         }
