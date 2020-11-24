@@ -1,0 +1,6 @@
+{{- $kind := 0 | index . | string | lower -}}
+{{- $rating := 1 | index . | int | default 0 -}}
+
+{{- $kindMaps := partialCached "functions/build-rating-text.dict" . -}}
+
+{{- return (printf "%s-%d" $kind $rating | index $kindMaps | default "Unrated") -}}

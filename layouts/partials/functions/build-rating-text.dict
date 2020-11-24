@@ -1,0 +1,61 @@
+{{- $map := dict -}}
+
+{{- $map = dict "survivability-5" "Great" | merge $map -}}
+{{- $map = dict "survivability-4" "Good" | merge $map -}}
+{{- $map = dict "survivability-3" "Average" | merge $map -}}
+{{- $map = dict "survivability-2" "Difficult" | merge $map -}}
+{{- $map = dict "survivability-1" "Nightmare" | merge $map -}}
+
+{{- $map = dict "damage-burst-power-5" "Brust Power" | merge $map -}}
+{{- $map = dict "damage-burst-power-4" "Brust Power" | merge $map -}}
+{{- $map = dict "damage-burst-power-3" "Brust Power" | merge $map -}}
+{{- $map = dict "damage-burst-condition-5" "Burst Condition" | merge $map -}}
+{{- $map = dict "damage-burst-condition-4" "Burst Condition" | merge $map -}}
+{{- $map = dict "damage-burst-condition-3" "Burst Condition" | merge $map -}}
+{{- $map = dict "damage-condition-pressure-5" "Condition Pressure" | merge $map -}}
+{{- $map = dict "damage-condition-pressure-4" "Condition Pressure" | merge $map -}}
+{{- $map = dict "damage-condition-pressure-3" "Condition Pressure" | merge $map -}}
+{{- $map = dict "damage-hybrid-5" "Hybrid" | merge $map -}}
+{{- $map = dict "damage-hybrid-4" "Hybrid" | merge $map -}}
+{{- $map = dict "damage-hybrid-3" "Hybrid" | merge $map -}}
+{{- $map = dict "damage-low-3" "Try Your Best" | merge $map -}}
+{{- $map = dict "damage-low-2" "Try Your Best" | merge $map -}}
+{{- $map = dict "damage-low-1" "Try Your Best" | merge $map -}}
+
+{{- $map = dict "healing-brust-5" "Burst" | merge $map -}}
+{{- $map = dict "healing-brust-4" "Burst" | merge $map -}}
+{{- $map = dict "healing-brust-3" "Burst" | merge $map -}}
+{{- $map = dict "healing-dripping-5" "Dripping" | merge $map -}}
+{{- $map = dict "healing-dripping-4" "Dripping" | merge $map -}}
+{{- $map = dict "healing-dripping-3" "Dripping" | merge $map -}}
+{{- $map = dict "healing-barrier-5" "Barrier" | merge $map -}}
+{{- $map = dict "healing-barrier-4" "Barrier" | merge $map -}}
+{{- $map = dict "healing-barrier-3" "Barrier" | merge $map -}}
+{{- $map = dict "healing-selfish-3" "Selfish" | merge $map -}}
+{{- $map = dict "healing-low-3" "Unsubstantial" | merge $map -}}
+{{- $map = dict "healing-low-2" "Unsubstantial" | merge $map -}}
+{{- $map = dict "healing-low-1" "Unsubstantial" | merge $map -}}
+
+{{- $map = dict "cleansing-brust-5" "Brust" | merge $map -}}
+{{- $map = dict "cleansing-brust-4" "Brust" | merge $map -}}
+{{- $map = dict "cleansing-brust-3" "Brust" | merge $map -}}
+{{- $map = dict "cleansing-dripping-5" "Dripping" | merge $map -}}
+{{- $map = dict "cleansing-dripping-4" "Dripping" | merge $map -}}
+{{- $map = dict "cleansing-dripping-3" "Dripping" | merge $map -}}
+{{- $map = dict "cleansing-passive-5" "Passive" | merge $map -}}
+{{- $map = dict "cleansing-passive-4" "Passive" | merge $map -}}
+{{- $map = dict "cleansing-passive-3" "Passive" | merge $map -}}
+{{- $map = dict "cleansing-selfish-3" "Selfish" | merge $map -}}
+{{- $map = dict "cleansing-low-3" "Poor" | merge $map -}}
+{{- $map = dict "cleansing-low-2" "Poor" | merge $map -}}
+{{- $map = dict "cleansing-low-1" "Poor" | merge $map -}}
+
+{{- $map = dict "striping-reliable-5" "Reliable" | merge $map -}}
+{{- $map = dict "striping-reliable-4" "Reliable" | merge $map -}}
+{{- $map = dict "striping-reliable-3" "Reliable" | merge $map -}}
+{{- $map = dict "striping-single-3" "Single Target" | merge $map -}}
+{{- $map = dict "striping-low-3" "Inefficient" | merge $map -}}
+{{- $map = dict "striping-low-2" "Inefficient" | merge $map -}}
+{{- $map = dict "striping-low-1" "Inefficient" | merge $map -}}
+
+{{- return $map -}}

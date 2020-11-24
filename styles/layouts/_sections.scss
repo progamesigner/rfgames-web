@@ -246,41 +246,130 @@
 }
 
 .page-section-build-overview {
-    .build-summary {
+    display: grid;
+    gap: var(--build-section-spacing);
+    grid-template-areas: "specializations" "overview" "summary" "tags";
+    grid-template-rows: var(--gw2-embed-size) repeat(3, auto);
+
+    @include tablet() {
+        grid-template-areas: ". specializations" "overview overview" "summary summary" "tags tags";
+        grid-template-columns: 7.5fr 2.5fr;
+        margin-top: calc(0px - var(--gw2-embed-size) - var(--build-section-spacing));
+    }
+
+    @include desktop() {
+        grid-template-areas: ". specializations" "overview summary" "tags tags";
+    }
+
+    .build-overview {
+        grid-area: overview;
+    }
+
+    .build-specializations {
         align-items: center;
         display: flex;
-        justify-content: center;
-        height: var(--gw2-embed-size);
-        width: 100%;
+        grid-area: specializations;
+        justify-content: space-around;
+    }
 
-        @include tablet() {
-            justify-content: flex-end;
-            position: absolute;
-            transform: translateY(-100%);
+    .build-summary {
+        grid-area: summary;
+
+        .rating {
+            @include block(0.5rem);
+
+            display: grid;
+            grid-template-areas: "title text" "gauge gauge";
+            grid-template-columns: 7fr 3fr;
         }
 
-        .build-traitlines {
-            align-items: center;
+        .rating-cell {
+            background-color: var(--build-overview-rating-gauge-color);
+            flex-basis: calc(20% - 2 * var(--build-overview-rating-gauge-gap));
+            margin: 0 var(--build-overview-rating-gauge-gap);
+            transform: skewX(-45deg);
+
+            &.is-fill {
+                background-color: var(--build-overview-rating-gauge-fill-color);
+            }
+        }
+
+        .rating-effects {
+            align-items: flex-end;
             display: flex;
-            justify-content: flex-start;
+            grid-area: gauge;
+            height: calc(var(--gw2-embed-size-mini) + var(--build-overview-rating-gauge-height));
 
             .gw2-embed {
-                width: var(--gw2-embed-size);
+                --gw2-embed-icon-size: var(--gw2-embed-size-mini);
             }
+        }
+
+        .rating-text {
+            font-weight: var(--build-overview-rating-text-font-weight);
+            grid-area: text;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .rating-title {
+            font-weight: var(--build-overview-rating-title-font-weight);
+            grid-area: title;
+            white-space: nowrap;
+        }
+
+        .rating-gauge {
+            display: flex;
+            grid-area: gauge;
+            height: var(--build-overview-rating-gauge-height);
         }
     }
 
     .build-tags {
         display: flex;
-        justify-content: flex-end;
+        flex-direction: column;
+        grid-area: tags;
+
+        @include tablet() {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        @include desktop() {
+            justify-content: flex-end;
+        }
+
+        .tags {
+            margin-left: 0;
+            width: 100%;
+
+            @include tablet() {
+                width: calc(50% - 0.5rem);
+
+                &:nth-child(even) {
+                    margin-left: 0.5rem;
+                }
+            }
+
+            @include desktop() {
+                width: calc(25% - 0.5rem);
+
+                &:nth-child(4n + 3) {
+                    margin-left: 0.5rem;
+                }
+            }
+        }
 
         .tag {
             &:first-child {
                 background-color: var(--build-overview-tag-background-color);
+                width: 25%;
             }
 
             &:last-child {
                 background-color: var(--build-overview-tag-alternative-background-color);
+                display: flex;
+                width: 75%;
             }
         }
     }

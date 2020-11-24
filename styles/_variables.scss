@@ -330,6 +330,14 @@ $speed: 86ms !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     // Layouts
+    --build-overview-rating-gauge-color: #{rgba($background-color, 0.25)};
+    --build-overview-rating-gauge-fill-color: #{rgba($foreground-color, 0.75)};
+    --build-overview-rating-gauge-gap: 0.125rem;
+    --build-overview-rating-gauge-height: 0.25rem;
+    --build-overview-rating-text-font-weight: #{$font-weight-normal};
+    --build-overview-rating-title-font-weight: #{$font-weight-bold};
+    --build-overview-tag-alternative-background-color: #{rgba($background-color, 0.25)};
+    --build-overview-tag-background-color: #{rgba($background-color, 0.75)};
     --build-section-card-background-color: #{rgba($background-color, 0.25)};
     --build-section-card-item-spacing: 0.25rem;
     --build-section-card-radius: #{$radius};
@@ -347,8 +355,6 @@ $speed: 86ms !default;
     --build-section-title-background-color: #{rgba($background-color, 0.75)};
     --build-section-title-font-size: #{$font-size-4};
     --build-section-title-padding: 0.5rem 0 0.25rem;
-    --build-overview-tag-background-color: #{rgba($background-color, 0.75)};
-    --build-overview-tag-alternative-background-color: #{rgba($background-color, 0.25)};
 
     --discussion-section-padding: 0;
 
