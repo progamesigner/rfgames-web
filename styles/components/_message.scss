@@ -1,5 +1,5 @@
 .message {
-  @include block();
+  @include block(var(--message-block-spacing));
 
   background-color: var(--message-background-color);
   border-radius: var(--message-border-radius);

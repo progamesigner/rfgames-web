@@ -376,6 +376,7 @@ $speed: 86ms !default;
     --list-title-text-shadow: 0.0625rem 0.0625rem 0.0625rem #{$background-color};
 
     --message-background-color: #{rgba(map-get($danger-palette, 100), 0.15)};
+    --message-block-spacing: #{$block-spacing};
     --message-body-font-size: #{$font-size-6};
     --message-body-text-color: #{$foreground-color};
     --message-border-radius: #{$radius};
