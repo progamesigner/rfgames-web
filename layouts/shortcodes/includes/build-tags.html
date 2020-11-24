@@ -1,3 +1,9 @@
+{{- with .Get "credit" -}}
+    <div class="tags has-addons">
+        <span class="tag">Creditd</span>
+        <span class="tag">{{ . }}</span>
+    </div>
+{{- end -}}
 <div class="tags has-addons">
     <span class="tag">Updated</span>
     <span class="tag">{{ .Page.Lastmod.Format "2006 / 01 / 02" }}</span>
