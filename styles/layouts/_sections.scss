@@ -250,10 +250,11 @@
     gap: var(--build-section-spacing);
     grid-template-areas: ". specializations ." "overview overview overview" "summary summary summary" "tags tags tags";
     grid-template-columns: auto calc(7 * var(--gw2-embed-size-mini)) auto;
-    grid-template-rows: var(--gw2-embed-size) repeat(3, auto);
+    grid-template-rows: var(--gw2-embed-size);
 
     @include tablet() {
         grid-template-areas: ". specializations" "overview summary" "tags tags";
+        grid-template-columns: auto calc(7 * var(--gw2-embed-size-mini));
         margin-top: calc(0px - var(--gw2-embed-size) - var(--build-section-spacing));
     }
 
