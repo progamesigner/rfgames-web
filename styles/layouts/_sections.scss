@@ -327,50 +327,40 @@
     }
 
     .build-tags {
-        display: flex;
-        flex-direction: column;
         grid-area: tags;
 
-        @include tablet() {
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        @include desktop() {
-            justify-content: flex-end;
-        }
-
         .tags {
-            margin-left: 0;
-            width: 100%;
-
             @include tablet() {
-                width: calc(50% - var(--build-section-spacing));
-
-                &:nth-child(even) {
-                    margin-left: var(--build-section-spacing);
-                }
+                justify-content: flex-end;
             }
 
-            @include desktop() {
-                width: calc(25% - var(--build-section-spacing));
+            &.has-addons {
+                width: 75%;
 
-                &:nth-child(4n + 3) {
-                    margin-left: var(--build-section-spacing);
+                @include tablet() {
+                    margin-right: 0;
+                    width: 30%;
+
+                    &:not(:first-child) {
+                        margin-left: 0.5rem;
+                    }
+                }
+
+                @include desktop() {
+                    width: 25%;
                 }
             }
         }
 
         .tag {
             &:first-child {
-                background-color: var(--build-overview-tag-background-color);
-                width: 25%;
+                --tag-background-color: var(--build-overview-tag-background-color);
+                width: 40%;
             }
 
             &:last-child {
-                background-color: var(--build-overview-tag-alternative-background-color);
-                display: flex;
-                width: 75%;
+                --tag-background-color: var(--build-overview-tag-alternative-background-color);
+                width: 60%;
             }
         }
     }
