@@ -79,17 +79,13 @@ $warrior-palette: (
 ) !default;
 
 @mixin theme($palette: $default-palette) {
-    --build-overview-rating-gauge-color: #{rgba(map-get($palette, 'darker'), 0.25)};
-    --build-overview-rating-gauge-fill-color: #{rgba(map-get($palette, 'dark'), 0.75)};
-    --build-overview-tag-alternative-background-color: #{rgba(map-get($palette, 'darker'), 0.25)};
-    --build-overview-tag-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
-    --build-section-embed-name-text-color: #{map-get($palette, 'medium')};
-    --build-section-embed-name-text-hover-color: #{map-get($palette, 'lighter')};
-    --build-section-embed-upgrade-name-text-color: #{rgba(map-get($palette, 'medium'), 0.75)};
-    --build-section-embed-upgrade-name-text-hover-color: #{rgba(map-get($palette, 'lighter'), 0.75)};
-    --build-section-template-addon-alternative-background-color: #{rgba(map-get($palette, 'darker'), 0.5)};
-    --build-section-template-addon-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
-    --build-section-title-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
+    --build-alternative-background-color: #{rgba(map-get($palette, 'darker'), 0.25)};
+    --build-hover-background-color: #{rgba(map-get($palette, 'darker'), 0.75)};
+    --build-link-alternative-color: #{rgba(map-get($palette, 'medium'), 0.75)};
+    --build-link-color: #{map-get($palette, 'medium')};
+    --build-link-hover-alternative-color: #{rgba(map-get($palette, 'lighter'), 0.75)};
+    --build-link-hover-color: #{map-get($palette, 'lighter')};
+    --build-main-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
 
     & ~ [id^="gw2-embed-tooltip"] {
         & > .gw2-embed-tooltip {
