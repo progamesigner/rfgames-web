@@ -348,31 +348,21 @@ $speed: 86ms !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     // Layouts
-    --build-overview-rating-gauge-color: #{rgba($background-color, 0.25)};
-    --build-overview-rating-gauge-fill-color: #{rgba($foreground-color, 0.75)};
-    --build-overview-rating-gauge-gap: 0.125rem;
-    --build-overview-rating-gauge-height: 0.25rem;
-    --build-overview-rating-text-font-weight: #{$font-weight-normal};
-    --build-overview-rating-title-font-weight: #{$font-weight-bold};
-    --build-overview-tag-alternative-background-color: #{rgba($background-color, 0.25)};
-    --build-overview-tag-background-color: #{rgba($background-color, 0.75)};
-    --build-section-card-background-color: #{rgba($background-color, 0.25)};
-    --build-section-card-item-spacing: 0.25rem;
-    --build-section-card-radius: #{$radius};
-    --build-section-embed-name-font-size: #{$font-size-6};
-    --build-section-embed-name-text-color: #{$foreground-color};
-    --build-section-embed-traitline-min-height: 8.75rem;
-    --build-section-embed-upgrade-name-font-size: #{$font-size-6};
-    --build-section-embed-upgrade-name-text-color: #{rgba($foreground-color, 0.75)};
-    --build-section-spacing: 0.5rem;
-    --build-section-template-addon-alternative-background-color: #{rgba($background-color, 0.5)};
-    --build-section-template-addon-background-color: #{rgba($background-color, 0.75)};
-    --build-section-template-addon-padding: 0.5rem 1rem;
-    --build-section-template-addon-text-color: #{$foreground-color};
-    --build-section-template-code-text-color: #{rgba($foreground-color, 0.75)};
-    --build-section-title-background-color: #{rgba($background-color, 0.75)};
-    --build-section-title-font-size: #{$font-size-4};
-    --build-section-title-padding: 0.5rem 0 0.25rem;
+    --build-block-spacing: 0.5rem;
+    --build-content-card-background-color: #{rgba($background-color, 0.25)};
+    --build-content-card-item-spacing: 0.25rem;
+    --build-content-card-radius: #{$radius};
+    --build-content-card-title-font-size: #{$font-size-4};
+    --build-content-card-title-padding: 0.5rem 0 0.25rem;
+    --build-embed-font-size: #{$font-size-6};
+    --build-embed-traitline-min-height: 8.75rem;
+    --build-rating-gap: 0.25rem;
+    --build-rating-gauge-height: 0.25rem;
+    --build-rating-text-font-weight: #{$font-weight-normal};
+    --build-rating-title-font-weight: #{$font-weight-bold};
+    --build-template-addon-padding: 0.5rem 1rem;
+    --build-template-addon-text-color: #{$foreground-color};
+    --build-template-code-text-color: #{rgba($foreground-color, 0.75)};
 
     --discussion-section-padding: 0;
 
