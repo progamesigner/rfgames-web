@@ -4,10 +4,6 @@
     flex-wrap: wrap;
     justify-content: flex-start;
 
-    ~ .tags {
-        margin-left: 0.5rem;
-    }
-
     &.has-addons {
         flex-wrap: nowrap;
 
@@ -30,6 +26,14 @@
 
         &:not(:last-child) {
             margin-right: 0.5rem;
+        }
+    }
+
+    .tags {
+        &.has-addons {
+            &:not(:last-child) {
+                margin-right: 0.5rem;
+            }
         }
     }
 }

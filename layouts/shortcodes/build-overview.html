@@ -61,21 +61,19 @@
     </div>
 
     <div class="build-tags">
-        {{- with $credits.designer -}}
+        <div class="tags">
             <div class="tags has-addons">
                 <span class="tag">Credit</span>
-                <span class="tag">{{ . }}</span>
+                <span class="tag">{{ $credits.designer }}</span>
             </div>
-        {{- end -}}
-        <div class="tags has-addons">
-            <span class="tag">Updated</span>
-            <span class="tag">{{ .Page.Lastmod.Format "2006 / 01 / 02" }}</span>
-        </div>
-        {{- if .Page.GitInfo -}}
+            <div class="tags has-addons">
+                <span class="tag">Updated</span>
+                <span class="tag">{{ .Page.Lastmod.Format "2006 / 01 / 02" }}</span>
+            </div>
             <div class="tags has-addons">
                 <span class="tag">Source</span>
-                <span class="tag"><a href="{{ .Site.Params.gitRepository }}/blob/master/content/{{ .Page.File.Path }}">{{ .Page.GitInfo.AbbreviatedHash }}</a></span>
+                <span class="tag"><a href="{{ .Site.Params.gitRepository }}/blob/master/content/{{ .Page.File.Path }}">{{ with .Page.GitInfo }}{{ .AbbreviatedHash }}{{ else }}Unknown{{ end }}</a></span>
             </div>
-        {{- end -}}
+        </div>
     </div>
 </div>
