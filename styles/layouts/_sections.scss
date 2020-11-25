@@ -280,6 +280,7 @@
             @include block(var(--build-section-spacing));
 
             display: grid;
+            gap: calc(var(--build-section-spacing) / 2);
             grid-template-areas: "title text" "gauge gauge";
             grid-template-columns: 7fr 3fr;
         }
@@ -299,7 +300,7 @@
             align-items: flex-end;
             display: flex;
             grid-area: gauge;
-            height: calc(var(--gw2-embed-size-mini) + var(--build-overview-rating-gauge-height));
+            height: var(--gw2-embed-size-mini);
 
             .gw2-embed {
                 --gw2-embed-icon-size: var(--gw2-embed-size-mini);
