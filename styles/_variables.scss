@@ -276,6 +276,24 @@ $speed: 86ms !default;
     --subtitle-negative-margin: -1.25rem;
     --subtitle-text-color: #{$foreground-alternative-color};
 
+    --table-background-color: transparent;
+    --table-block-spacing: #{$block-spacing};
+    --table-body-background-color: transparent;
+    --table-cell-background-color: #{rgba($background-color, 0.25)};
+    --table-cell-border-color: #{$background-alternative-color};
+    --table-cell-border-width: 0.0625rem;
+    --table-cell-heading-background-color: #{rgba($background-color, 0.25)};
+    --table-cell-heading-text-color: #{$foreground-alternative-color};
+    --table-cell-padding: 0.5rem 0.75rem;
+    --table-cell-text-color: #{$foreground-color};
+    --table-foot-background-color: transparent;
+    --table-foot-cell-border-width: 0.125rem;
+    --table-foot-cell-text-color: #{$foreground-alternative-color};
+    --table-head-background-color: transparent;
+    --table-head-cell-border-width: 0.125rem;
+    --table-head-cell-text-color: #{$foreground-alternative-color};
+    --table-text-color: #{$foreground-color};
+
     --tag-background-color: #{rgba($background-color, 0.25)};
     --tag-font-size: #{$font-size-7};
     --tag-height: 2rem;

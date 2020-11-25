@@ -1,0 +1,70 @@
+.table {
+    @include block(var(--table-block-spacing));
+
+    background-color: var(--table-background-color);
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: var(--table-text-color);
+    width: 100%;
+
+    td,
+    th {
+        background-color: var(--table-cell-background-color);
+        border: 0 solid var(--table-cell-border-color);
+        border-width: 0 0 var(--table-cell-border-width);
+        color: var(--table-cell-text-color);
+        padding: var(--table-cell-padding);
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: var(--table-cell-heading-background-color);
+        color: var(--table-cell-heading-text-color);
+
+        &:not([align]) {
+            text-align: inherit;
+        }
+    }
+
+    thead {
+        background-color: var(--table-head-background-color);
+
+        td,
+        th {
+            border-width: 0 0 var(--table-head-cell-border-width);
+            color: var(--table-head-cell-text-color);
+        }
+    }
+
+    tfoot {
+        background-color: var(--table-foot-background-color);
+
+        td,
+        th {
+            border-width: var(--table-foot-cell-border-width) 0 0;
+            color: var(--table-foot-cell-text-color);
+        }
+    }
+
+    tbody {
+        background-color: var(--table-body-background-color);
+
+        tr {
+            &:last-child {
+                td,
+                th {
+                    border-bottom-width: 0;
+                }
+            }
+        }
+    }
+}
+
+.table-container {
+    @include block(var(--table-block-spacing));
+
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    overflow-y: hidden;
+    overflow: auto;
+}
