@@ -1,5 +1,6 @@
 .section {
     position: relative;
+    text-align: justify;
 
     &:not(:last-child) {
         margin-bottom: var(--section-gap);
