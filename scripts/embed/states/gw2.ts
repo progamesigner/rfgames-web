@@ -43,9 +43,9 @@ export function gw2InitialState(language: string): GW2InitialState {
     ...stateFactory(GW2Resources.ITEM, language),
     ...stateFactory(GW2Resources.ITEM_STAT, language),
     ...stateFactory(GW2Resources.PET, language),
+    ...stateFactory(GW2Resources.PROFESSION, language),
     ...stateFactory(GW2Resources.SKILL, language),
     ...stateFactory(GW2Resources.SPECIALIZATION, language),
-    ...stateFactory(GW2Resources.TRAIT, language),
-    ...stateFactory(GW2Resources.PROFESSION, language)
+    ...stateFactory(GW2Resources.TRAIT, language)
   }
 }

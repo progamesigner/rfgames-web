@@ -10,8 +10,8 @@ export interface EmbedOptions {
 }
 
 export interface EmbedState extends Partial<EmbedOptions> {
-  [GW2Resources.ITEM_STAT]?: ExtractGW2State<GW2Resources.ITEM_STAT>;
   [GW2Resources.ITEM]?: ExtractGW2State<GW2Resources.ITEM>;
+  [GW2Resources.ITEM_STAT]?: ExtractGW2State<GW2Resources.ITEM_STAT>;
   [GW2Resources.PET]?: ExtractGW2State<GW2Resources.PET>;
   [GW2Resources.PROFESSION]?: ExtractGW2State<GW2Resources.PROFESSION>;
   [GW2Resources.SKILL]?: ExtractGW2State<GW2Resources.SKILL>;
