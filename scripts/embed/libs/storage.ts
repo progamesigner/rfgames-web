@@ -8,6 +8,8 @@ const CACHE_VERSION_KEY = 'CACHE_VERSION'
 const FORCE_CLEAR_CACHE_KEY = 'FORCE_CLEAR_CACHE'
 const GW2_BUILD_KEY = 'GW2_BUILD'
 
+const EMPTY_CACHE = JSON.stringify({})
+
 const makeKey = (key: string) => `GW2:EMBED:${key.toUpperCase()}`
 
 const markForceClared = debounce(config.cacheClearBatchWait)(clear.bind(null, FORCE_CLEAR_CACHE_KEY))
@@ -33,12 +35,12 @@ export function forceClearCacheOnNextLoad(key: string): void {
   }
 }
 
-export function get(key: string): string | null {
+export function get<T>(key: string): T {
   const compressed = localStorage.getItem(makeKey(key))
   if (compressed) {
-    return decompressFromUTF16(compressed)
+    return JSON.parse(decompressFromUTF16(compressed) || EMPTY_CACHE) as T
   }
-  return null
+  return {} as T
 }
 
 export function set(key: string, value: string): void {

@@ -8,8 +8,6 @@ import {
   GW2Resources
 } from '../types'
 
-const EMPTY = JSON.stringify({})
-
 type GW2InitialState = Record<string, ExtractGW2State<GW2Resources>>
 
 function mapCacheToStore<T extends GW2Resources>(
@@ -35,7 +33,7 @@ function stateFactory<T extends GW2Resources>(
 
   return {
     [resource]: {
-      ...mapCacheToStore(JSON.parse(get(localStorageKey) || EMPTY))
+      ...mapCacheToStore(get<Array<ExtractGW2ResourceType<T>>>(localStorageKey))
     }
   }
 }
