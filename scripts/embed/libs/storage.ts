@@ -35,12 +35,16 @@ export function forceClearCacheOnNextLoad(key: string): void {
   }
 }
 
-export function get<T>(key: string): T {
+export function get(key: string): string | null {
   const compressed = localStorage.getItem(makeKey(key))
   if (compressed) {
-    return JSON.parse(decompressFromUTF16(compressed) || EMPTY_CACHE) as T
+    return decompressFromUTF16(compressed)
   }
-  return {} as T
+  return null
+}
+
+export function parse<T>(key: string): T {
+  return JSON.parse(get(key) || EMPTY_CACHE) as T
 }
 
 export function set(key: string, value: string): void {
