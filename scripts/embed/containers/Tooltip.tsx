@@ -46,7 +46,7 @@ function isSmallScreen(window: Window): boolean {
 }
 
 function isTouchDevice(window: Window): boolean {
-  return 'ontouchstart' in window || window.navigator.maxTouchPoints > 0 || window.navigator.msMaxTouchPoints > 0
+  return window.navigator.maxTouchPoints > 0
 }
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
