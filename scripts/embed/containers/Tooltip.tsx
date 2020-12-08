@@ -41,8 +41,8 @@ function calculateStyle(
   }
 }
 
-function isTouchDevice(window: Window): boolean {
-  return 'ontouchstart' in window || window.navigator.maxTouchPoints > 0 || window.navigator.msMaxTouchPoints > 0
+function isSmallScreen(window: Window): boolean {
+  return window.document.body.offsetWidth <= styles.SMALL_SCREEN_WIDTH
 }
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
@@ -56,8 +56,8 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       window
     }
   }: m.VnodeDOM<TooltipContainerAttributes>): void {
-    // @note: show tooltip by default on touch-enabled devices
-    if (isTouchDevice(window)) {
+    // @note: show tooltip by default on small-screen devices
+    if (isSmallScreen(window)) {
       this.style = {
         ...this.style,
         opacity: 1

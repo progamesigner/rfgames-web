@@ -2,6 +2,8 @@ import { borderColor, color, cssRaw, px, url, em } from '../libs'
 
 export * from '../libs'
 
+export const SMALL_SCREEN_WIDTH = 768
+
 export const animations = {
   easing: 'ease-out',
   speed: '86ms'

@@ -13,7 +13,8 @@ import {
   stylesheet,
   textShadow,
   viewWidth,
-  zIndices
+  zIndices,
+  SMALL_SCREEN_WIDTH
 } from '../styles'
 
 export const root = style({
@@ -29,7 +30,7 @@ export const root = style({
   top: em(layouts.tooltipOffset),
   zIndex: zIndices.tooltip,
   $nest: {
-    [`@media screen and (max-width: ${px(768)})`]: {
+    [`@media screen and (max-width: ${px(SMALL_SCREEN_WIDTH)})`]: {
       bottom: em(layouts.tooltipOffset),
       maxWidth: calc(`${viewWidth(100)} - ${em(layouts.tooltipOffset * 2)}`),
       pointerEvents: 'inherit',

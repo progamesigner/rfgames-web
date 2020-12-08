@@ -109,7 +109,12 @@ export function bindTooltipEvents<T extends TooltipType>(
 
     // @note: trigger redraw on touch-enabled devices by "mousemove" event
     if ('touches' in event) {
-      window.dispatchEvent(new MouseEvent('mousemove'))
+      window.dispatchEvent(new MouseEvent('mousemove', {
+        clientX: event.changedTouches[0].clientX,
+        clientY: event.changedTouches[0].clientY,
+        screenX: event.changedTouches[0].screenX,
+        screenY: event.changedTouches[0].screenY
+      }))
     }
 
     event.preventDefault()
