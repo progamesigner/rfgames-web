@@ -4,7 +4,7 @@ import { Dispatch } from 'redux'
 
 import { apis, GW2Fetcher } from '../apis'
 import { config } from '../config'
-import { batch } from '../libs'
+import { batch, checkBuildIdUpdated, makeResourceKey, parse } from '../libs'
 import {
   BaseAction,
   EmbedState,
@@ -20,12 +20,18 @@ type GW2Action<T extends GW2Resources> = (dispatch: Dispatch, getState: GetState
 type GW2BatchFunction<T extends GW2Resources> = (ids: Array<ExtractGW2KeyType<T>>, dispatch: Dispatch, getState: GetState) => Promise<GW2ResourceRecord<T>>
 type GW2ErrorRecord<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, ExtractGW2ErrorType<T>>
 type GW2PostProcessor<T extends GW2Resources> = (dispatch: Dispatch, items: GW2ResourceRecord<T>) => GW2ResourceRecord<T>
+type GW2RefreshAction = (dispatch: Dispatch, getState: GetState) => (language: string) => void
 type GW2ResourceRecord<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>>
 
 interface GW2ActionNames {
   failure: string;
+  refresh: string;
   request: string;
   success: string;
+}
+
+interface GW2ErrorPayload<T extends GW2Resources> {
+  errors: GW2ErrorRecord<T>;
 }
 
 interface GW2RequestPayload<T extends GW2Resources> {
@@ -34,10 +40,6 @@ interface GW2RequestPayload<T extends GW2Resources> {
 
 interface GW2ResponsePayload<T extends GW2Resources> {
   items: GW2ResourceRecord<T>;
-}
-
-interface GW2ErrorPayload<T extends GW2Resources> {
-  errors: GW2ErrorRecord<T>;
 }
 
 function actionFactory<T extends GW2Resources>(
@@ -126,6 +128,29 @@ function batchFactory<T extends GW2Resources>(func: GW2BatchFunction<T>) {
   return batch(func, config.gw2ApiBatchWait)
 }
 
+function refreshActionFactory<T extends GW2Resources>(
+  resource: T,
+  fetcher: GW2Action<T>
+): GW2RefreshAction {
+  return (dispatch, getState) => language => {
+    const {
+      refresh
+    } = makeActionNames(resource)
+
+    const localStorageKey = makeResourceKey(resource, language)
+    const items = parse<Array<ExtractGW2ResourceType<T>>>(localStorageKey)
+
+    dispatch({
+      type: refresh
+    })
+
+    Object
+      .values(items)
+      .map(item => item.id as ExtractGW2KeyType<T>)
+      .map(fetcher(dispatch, getState))
+  }
+}
+
 function flattenResponses<T extends GW2Resources>(
   responses: Array<GW2ResourceRecord<T>>
 ): GW2ResourceRecord<T> {
@@ -137,9 +162,9 @@ function flattenResponses<T extends GW2Resources>(
   }, {} as GW2ResourceRecord<T>)
 }
 
+export type GW2ErrorAction<T extends GW2Resources> = BaseAction<GW2ErrorPayload<T>>
 export type GW2RequestAction<T extends GW2Resources> = BaseAction<GW2RequestPayload<T>>
 export type GW2ResponseAction<T extends GW2Resources> = BaseAction<GW2ResponsePayload<T>>
-export type GW2ErrorAction<T extends GW2Resources> = BaseAction<GW2ErrorPayload<T>>
 
 export const fetchItem = actionFactory(GW2Resources.ITEM, apis.fetchGW2Items)
 export const fetchItemStat = actionFactory(GW2Resources.ITEM_STAT, apis.fetchGW2ItemStats)
@@ -149,11 +174,49 @@ export const fetchSkill = actionFactory(GW2Resources.SKILL, apis.fetchGW2Skills)
 export const fetchSpecialization = actionFactory(GW2Resources.SPECIALIZATION, apis.fetchGW2Specializations)
 export const fetchTrait = actionFactory(GW2Resources.TRAIT, apis.fetchGW2Traits)
 
+export const refreshItems = refreshActionFactory(GW2Resources.ITEM, fetchItem)
+export const refreshItemStats = refreshActionFactory(GW2Resources.ITEM_STAT, fetchItemStat)
+export const refreshPets = refreshActionFactory(GW2Resources.PET, fetchPet)
+export const refreshProfessions = refreshActionFactory(GW2Resources.PROFESSION, fetchProfession)
+export const refreshSkills = refreshActionFactory(GW2Resources.SKILL, fetchSkill)
+export const refreshSpecializations = refreshActionFactory(GW2Resources.SPECIALIZATION, fetchSpecialization)
+export const refreshTraits = refreshActionFactory(GW2Resources.TRAIT, fetchTrait)
+
+export async function refreshIfNewBuild(
+  dispatch: Dispatch,
+  getState: GetState
+): Promise<void> {
+  const {
+    id
+  } = await apis.fetchGW2Build()
+
+  if (checkBuildIdUpdated(id)) {
+    const {
+      language
+    } = getState()
+
+    const actions = [
+      refreshItems,
+      refreshItemStats,
+      refreshPets,
+      refreshProfessions,
+      refreshSkills,
+      refreshSpecializations,
+      refreshTraits
+    ]
+
+    actions
+      .map(action => action(dispatch, getState))
+      .map(action => action(language || config.gw2ApiDefaultLanguage))
+  }
+}
+
 export function makeActionNames(resource: GW2Resources): GW2ActionNames {
   const name = resource.toUpperCase()
 
   return {
     failure: `FETCH_${name}_FAILURE`,
+    refresh: `FETCH_${name}_REFRESH`,
     request: `FETCH_${name}_REQUEST`,
     success: `FETCH_${name}_SUCCESS`
   }

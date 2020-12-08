@@ -1,6 +1,6 @@
 import { values } from 'lodash/fp'
 
-import { clearCacheIfNewBuild, makeResourceKey, parse } from '../libs'
+import { clearCacheIfRequested, makeResourceKey, parse } from '../libs'
 import {
   ExtractGW2ResourceType,
   ExtractGW2State,
@@ -29,7 +29,7 @@ function stateFactory<T extends GW2Resources>(
 ): Record<string, ExtractGW2State<T>> {
   const localStorageKey = makeResourceKey(resource, language)
 
-  clearCacheIfNewBuild(localStorageKey)
+  clearCacheIfRequested(localStorageKey)
 
   return {
     [resource]: {

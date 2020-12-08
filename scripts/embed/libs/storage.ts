@@ -14,11 +14,18 @@ const makeKey = (key: string) => `GW2:EMBED:${key.toUpperCase()}`
 
 const markForceClared = debounce(config.cacheClearBatchWait)(clear.bind(null, FORCE_CLEAR_CACHE_KEY))
 
+export function checkBuildIdUpdated(id: number): boolean {
+  const currentBuildId = `${id}`
+  const savedBuildId = get(GW2_BUILD_KEY)
+  set(GW2_BUILD_KEY, currentBuildId)
+  return !!savedBuildId && currentBuildId !== savedBuildId
+}
+
 export function clear(key: string): void {
   localStorage.removeItem(makeKey(key))
 }
 
-export function clearCacheIfNewBuild(key: string): void {
+export function clearCacheIfRequested(key: string): void {
   if (get(FORCE_CLEAR_CACHE_KEY) === 'true') {
     clear(key)
     markForceClared()
@@ -53,18 +60,6 @@ export function set(key: string, value: string): void {
     localStorage.setItem(makeKey(key), compressed)
   } catch (error) {
     console.error('Local storage is full!')
-  }
-}
-
-export function initializeLocalStorage(id: number): void {
-  const currentBuildId = `${id}`
-  const savedBuildId = get(GW2_BUILD_KEY)
-
-  if (!savedBuildId) {
-    set(GW2_BUILD_KEY, currentBuildId)
-  } else if(currentBuildId !== savedBuildId) {
-    set(GW2_BUILD_KEY, currentBuildId)
-    set(FORCE_CLEAR_CACHE_KEY, 'true')
   }
 }
 

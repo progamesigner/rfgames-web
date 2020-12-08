@@ -7,7 +7,13 @@ import {
   GW2ResponseAction,
   makeActionNames
 } from '../actions'
-import { set, makeResourceKey } from '../libs'
+
+import {
+  clear,
+  set,
+  makeResourceKey
+} from '../libs'
+
 import {
   EmbedState,
   ExtractGW2ErrorType,
@@ -44,6 +50,21 @@ const failureReducer = <T extends GW2Resources>(
   return {
     ...state,
     [resource]: data
+  }
+}
+
+const refreshReducer = <T extends GW2Resources>(
+  resource: T,
+  language: string
+): Reducer<EmbedState> => (state = {}) => {
+  if (state.useLocalStorageAsCache) {
+    const localStorageKey = makeResourceKey(resource, language)
+    clear(localStorageKey)
+  }
+
+  return {
+    ...state,
+    [resource]: {}
   }
 }
 
@@ -120,12 +141,14 @@ function reducerFactory<T extends GW2Resources>(
 ): GW2Reducers {
   const {
     failure,
+    refresh,
     request,
     success
   } = makeActionNames(resource)
 
   return {
     [failure]: failureReducer(resource),
+    [refresh]: refreshReducer(resource, language),
     [request]: requestReducer(resource),
     [success]: responseReducer(resource, language)
   }

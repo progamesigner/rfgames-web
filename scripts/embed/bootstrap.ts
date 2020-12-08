@@ -1,10 +1,9 @@
 import { random } from 'lodash/fp'
 import { mount } from 'mithril'
 
-import { apis } from './apis'
+import { refreshIfNewBuild } from './actions'
 import {
   forceClearCacheOnNextLoad,
-  initializeLocalStorage,
   makeAttributeName,
   makeClassName
 } from './libs'
@@ -13,11 +12,9 @@ import { EmbedStore } from './types'
 
 const tooltipContainerId = makeClassName(`tooltip-${random(1000)(9999)}`)
 
-async function bootstrapCache(): Promise<void> {
-  const {
-    id
-  } = await apis.fetchGW2Build()
-  initializeLocalStorage(id)
+function bootstrapCache(store: EmbedStore): Promise<void> {
+  refreshIfNewBuild(store.dispatch, store.getState)
+  return Promise.resolve()
 }
 
 function bootstrapEmbeds(
@@ -87,13 +84,11 @@ export async function bootstrap(window: Window): Promise<Array<void>> {
     cacheVersion
   } = store.getState()
 
-  if (cacheVersion) {
-    forceClearCacheOnNextLoad(cacheVersion)
-  }
+  forceClearCacheOnNextLoad(cacheVersion || '__DEFAULT__')
 
   return Promise
     .all([
-      bootstrapCache(),
+      bootstrapCache(store),
       ...bootstrapEmbeds(window, store),
       bootstrapTooltip(window, store)
     ])
