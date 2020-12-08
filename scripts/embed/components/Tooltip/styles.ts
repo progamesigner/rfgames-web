@@ -29,7 +29,7 @@ export const root = style({
   top: em(layouts.tooltipOffset),
   zIndex: zIndices.tooltip,
   $nest: {
-    [`@media screen and (max-width: ${px(480)})`]: {
+    [`@media screen and (max-width: ${px(768)})`]: {
       bottom: em(layouts.tooltipOffset),
       maxWidth: calc(`${viewWidth(100)} - ${em(layouts.tooltipOffset * 2)}`),
       pointerEvents: 'inherit',
