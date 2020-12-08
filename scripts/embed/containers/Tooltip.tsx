@@ -45,6 +45,10 @@ function isSmallScreen(window: Window): boolean {
   return window.document.body.offsetWidth <= styles.SMALL_SCREEN_WIDTH
 }
 
+function isTouchDevice(window: Window): boolean {
+  return 'ontouchstart' in window || window.navigator.maxTouchPoints > 0 || window.navigator.msMaxTouchPoints > 0
+}
+
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
   protected container: Element | null = null;
   protected style: types.CSSProperties = {};
@@ -124,7 +128,14 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       }
 
       if (this.container) {
-        if (tooltip && tooltip.show) {
+        if (
+          tooltip &&
+          tooltip.show &&
+          (
+            !isTouchDevice(window) ||
+            event.target === window
+          )
+        ) {
           const style = calculateStyle(
             window,
             this.container as HTMLElement,
