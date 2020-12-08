@@ -23,18 +23,17 @@ function reduceById<T extends GW2Resources>(
 function fetchGW2ApiFactory<T extends GW2Resources>(
   resource: string
 ): GW2Fetcher<T> {
-  return async (
-    language: string,
-    ids: Array<ExtractGW2KeyType<T>>
-  ) => request<Array<ExtractGW2ResourceType<T>>>({
-    background: true,
-    params: {
-      ids: ids.join(','),
-      lang: language
-    },
-    url: `${config.gw2ApiEndpoint}/v2/${resource}`
-  })
-  .then(response => reduceById(response))
+  return async (language: string, ids: Array<ExtractGW2KeyType<T>>) => {
+    const response = await request<Array<ExtractGW2ResourceType<T>>>({
+      background: true,
+      params: {
+        ids: ids.join(','),
+        lang: language
+      },
+      url: `${config.gw2ApiEndpoint}/v2/${resource}`
+    })
+    return reduceById(response)
+  }
 }
 
 export type GW2Fetcher<
