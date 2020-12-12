@@ -1,13 +1,13 @@
 import * as m from 'mithril'
 
-import { bindEventListener, UnbindEventListener } from '../../libs'
-
 import { hideTooltip } from '../actions'
 import { Tooltip } from '../components'
 import { EmbedStore, HasStoreAttributes, HasWindowAttributes } from '../types'
 import { px, transform, translate3d, types } from '../libs'
 
 import * as styles from '../components/styles'
+
+type UnbindEventListener = () => void
 
 // @note: we assume default base is 16px
 const tooltipOffset = styles.layouts.tooltipOffset * 16
@@ -60,6 +60,8 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       window
     }
   }: m.VnodeDOM<TooltipContainerAttributes>): void {
+    const listener = this.handleMouseMove.bind(this, window, store)
+
     // @note: show tooltip by default on small-screen devices
     if (isSmallScreen(window)) {
       this.style = {
@@ -68,11 +70,11 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       }
     }
 
-    this.unbindMouseMoveEvent = bindEventListener(
-      window,
-      'mousemove',
-      this.handleMouseMove.bind(this, window, store)
-    )
+    this.unbindMouseMoveEvent =  (): void => {
+      window.removeEventListener('mousemove', listener, false)
+    }
+
+    window.addEventListener('mousemove', listener, false)
   }
 
   public onremove(): void {
