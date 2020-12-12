@@ -8,7 +8,8 @@ import {
   bootstrapLinkModule,
   bootstrapModalModule,
   bootstrapSelectionModule,
-  bootstrapTogglerModule
+  bootstrapTogglerModule,
+  bootstrapTopModule
 } from './modules'
 
 export function bootstrap(window: Window): void {
@@ -22,4 +23,5 @@ export function bootstrap(window: Window): void {
   bootstrapModalModule(window)
   bootstrapSelectionModule(window)
   bootstrapTogglerModule(window)
+  bootstrapTopModule(window)
 }
