@@ -13,8 +13,8 @@ function deferred<R, E = Error>(): Deferred<R, E> {
   let resolve
   let reject
 
-  const promise = new Promise<R>((w, f) => {
-    resolve = w
+  const promise = new Promise<R>((s, f) => {
+    resolve = s
     reject = f
   })
 
@@ -28,9 +28,9 @@ export function batch<T, R, A extends Array<unknown>>(
   let debouncedIds = [] as Array<T>
   let defer = deferred<R>()
 
-  const runAndReset = (ids: Array<T>, ...args: A) => {
+  const runAndReset = (ids: Array<T>, ...args: Array<unknown>) => {
     try {
-      defer.resolve && defer.resolve(func(ids, ...args))
+      defer.resolve && defer.resolve(func(ids, ...args as A))
     } catch (error) {
       defer.reject && defer.reject(error)
     }
@@ -41,9 +41,9 @@ export function batch<T, R, A extends Array<unknown>>(
 
   const debouncedFunc = debounce(wait)(runAndReset)
 
-  return (id: T, ...args: A): Promise<R> => {
-    debouncedIds = Array.prototype.concat(debouncedIds, [id])
-    debouncedFunc(debouncedIds, ...args)
+  return (id: T, ...args: Array<unknown>): Promise<R> => {
+    debouncedIds = [...debouncedIds, id]
+    debouncedFunc(debouncedIds, ...args as A)
     return defer.promise
   }
 }
