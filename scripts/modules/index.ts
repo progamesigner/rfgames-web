@@ -1,9 +1,10 @@
 import { ConsentSharedStates } from './consent'
 import { DisqusSharedStates } from './disqus'
+import { TopSharedStates } from './top'
 
 declare global {
   interface Window {
-    __shared_states__: ConsentSharedStates & DisqusSharedStates;
+    __shared_states__: ConsentSharedStates & DisqusSharedStates & TopSharedStates;
   }
 }
 
@@ -17,3 +18,4 @@ export { bootstrap as bootstrapLinkModule } from './link'
 export { bootstrap as bootstrapModalModule } from './modal'
 export { bootstrap as bootstrapSelectionModule } from './selection'
 export { bootstrap as bootstrapTogglerModule } from './toggler'
+export { bootstrap as bootstrapTopModule } from './top'
