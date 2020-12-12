@@ -310,6 +310,17 @@ $speed: 86ms !default;
     --title-text-color: #{$foreground-alternative-color};
     --title-text-shadow: 0.1875rem 0.1875rem 0.25rem #{rgba($background-color, 0.5)};
 
+    --top-background-color: #{rgba($background-color, 0.5)};
+    --top-background-hover-color: #{rgba($background-color, 0.75)};
+    --top-box-shadow: 0 0.5rem 1rem -0.125rem #{rgba($background-alternative-color, 0.1)}, 0 0px 0 1px #{rgba($background-alternative-color, 0.02)};
+    --top-fill-color: #{rgba($foreground-color, 0.75)};
+    --top-fill-hover-color: #{$foreground-color};
+    --top-offset: 1.25rem;
+    --top-padding: 0.5rem;
+    --top-radius: #{$radius-large};
+    --top-size: 2.5rem;
+    --top-z-index: 100;
+
     // Components
     --column-gap: 0.75rem;
 

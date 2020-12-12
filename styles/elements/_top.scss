@@ -1,0 +1,29 @@
+.back-to-top {
+    background-color: var(--top-background-color);
+    border-top-left-radius: var(--top-radius);
+    border-top-right-radius: var(--top-radius);
+    bottom: 0;
+    box-shadow: var(--top-box-shadow);
+    cursor: pointer;
+    display: block;
+    fill: var(--top-fill-color);
+    height: var(--top-size);
+    opacity: 0;
+    padding: var(--top-padding);
+    position: fixed;
+    right: var(--top-offset);
+    transition: background-color var(--speed) var(--easing), fill var(--speed) var(--easing), opacity var(--speed) var(--easing), visibility var(--speed) var(--easing);
+    visibility: hidden;
+    width: var(--top-size);
+    z-index: var(--top-z-index);
+
+    &:hover {
+        background-color: var(--top-background-hover-color);
+        fill: var(--top-fill-hover-color);
+    }
+
+    &.is-active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
