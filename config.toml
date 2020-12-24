@@ -20,7 +20,7 @@ disqusShortname = "rfgames"
 googleAnalytics = "UA-109064425-4"
 
 [params]
-  applicationFormURL = "https://apis.rfgames.tw/v1/apply"
-  contactFormURL = "https://apis.rfgames.tw/v1/contact"
+  applicationFormURL = "https://api.rfgames.tw/v1/apply"
+  contactFormURL = "https://api.rfgames.tw/v1/contact"
   description = "A NA SEA fight-focused WvW guild"
   gitRepository = "https://github.com/progamesigner/rfgames-web"
