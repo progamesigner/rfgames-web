@@ -1,0 +1,12 @@
+{{- $worlds := partialCached "functions/gw2-current-worlds.list" . -}}
+
+{{- $mainWorld := $worlds | first 1 -}}
+{{- $linkedWorlds := $worlds | after 1 -}}
+
+{{- range $mainWorld -}}
+  {{- if len $linkedWorlds | lt 0 -}}
+    <strong>{{ . }}</strong> (currently linked with <strong>{{ delimit $linkedWorlds "</strong> and <strong>" }}</strong>)
+  {{- else -}}
+    <strong>{{ . }}</strong>
+  {{- end -}}
+{{- end -}}
