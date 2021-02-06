@@ -11,8 +11,8 @@
     {{- $kind := "kind" | index $rating | default "" -}}
     {{- $rating := "rating" | index $rating | default 0 -}}
 
-    {{- $title := slice $kind | partial "functions/build-rating-title.string" -}}
-    {{- $text := slice $kind $rating | partial "functions/build-rating-text.string" -}}
+    {{- $title := slice $context $kind | partial "functions/build-rating-title.string" -}}
+    {{- $text := slice $context $kind $rating | partial "functions/build-rating-text.string" -}}
 
     <div class="rating">
         <div class="rating-title">{{ $title }}</div>

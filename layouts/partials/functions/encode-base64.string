@@ -1,4 +1,5 @@
-{{- $bytes := . | default slice -}}
+{{- $context := 0 | index . -}}
+{{- $bytes := 1 | index . | default slice -}}
 
 {{- $chatacters := partialCached "functions/base64.dict" . -}}
 

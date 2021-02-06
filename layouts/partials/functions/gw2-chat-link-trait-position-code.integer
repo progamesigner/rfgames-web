@@ -1,4 +1,5 @@
-{{- $position := 0 | index . | string | lower -}}
+{{- $context := 0 | index . -}}
+{{- $position := 1 | index . | string | lower -}}
 
 {{- $positionCodes := partialCached "functions/gw2-chat-link-trait-position-code.dict" . -}}
 

@@ -1,8 +1,9 @@
-{{- $name := 0 | index . -}}
-{{- $sizes := 1 | index . -}}
-{{- $ext := 2 | index . | default "jpg" -}}
-{{- $alt := 3 | index . | default "" -}}
-{{- $enablePlaceholder := 4 | index . | default true -}}
+{{- $context := 0 | index . -}}
+{{- $name := 1 | index . -}}
+{{- $sizes := 2 | index . -}}
+{{- $ext := 3 | index . | default "jpg" -}}
+{{- $alt := 4 | index . | default "" -}}
+{{- $enablePlaceholder := 5 | index . | default true -}}
 
 {{- $widths := split $sizes "," -}}
 

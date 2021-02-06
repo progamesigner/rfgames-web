@@ -1,6 +1,7 @@
-{{- $entry := 0 | index . -}}
-{{- $page := 1 | index . -}}
-{{- $menu := 2 | index . -}}
+{{- $context := 0 | index . -}}
+{{- $entry := 1 | index . -}}
+{{- $page := 2 | index . -}}
+{{- $menu := 3 | index . -}}
 
 {{- $classes := slice "nav-item" -}}
 {{- if $entry | $page.IsMenuCurrent $menu -}}

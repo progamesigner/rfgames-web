@@ -1,4 +1,5 @@
-{{- $legend := 0 | index . | string | lower -}}
+{{- $context := 0 | index . -}}
+{{- $legend := 1 | index . | string | lower -}}
 
 {{- $legendCodes := partialCached "gw2-chat-link-legend-code.dict" . -}}
 

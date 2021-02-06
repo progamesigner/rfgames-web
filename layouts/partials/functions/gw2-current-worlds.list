@@ -1,6 +1,7 @@
-{{- $worlds := slice -}}
+{{- $context := 0 | index . -}}
+{{- $accessToken := 1 | index . -}}
 
-{{- $accessToken := getenv "GW2_ACCESS_TOKEN" -}}
+{{- $worlds := slice -}}
 
 {{- if $accessToken | ne "" -}}
     {{- $accountData := getJSON "https://api.guildwars2.com" "/v2/account" "?access_token=" $accessToken -}}

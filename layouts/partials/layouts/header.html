@@ -22,21 +22,21 @@
             <div class="nav-menu" data-menu>
                 {{ range "nav" | index .Site.Menus }}
                 {{ if .HasChildren }}
-                <div class="{{ slice . $currentPage "nav" | partial "functions/nav-item-class.string" }} has-dropdown">
+                <div class="{{ slice $ . $currentPage "nav" | partial "functions/nav-item-class.string" }} has-dropdown">
                     <a class="nav-link" href="{{ .URL }}">
                         {{ .Pre }}<span>{{ .Title }}</span>{{ .Post }}
                     </a>
 
                     <div class="nav-dropdown">
                         {{ range .Children }}
-                        <a class="{{ slice . $currentPage "nav" | partial "functions/nav-item-class.string" }}" href="{{ .URL }}">
+                        <a class="{{ slice $ . $currentPage "nav" | partial "functions/nav-item-class.string" }}" href="{{ .URL }}">
                             {{ .Pre }}<span>{{ .Title }}</span>{{ .Post }}
                         </a>
                         {{ end }}
                     </div>
                 </div>
                 {{ else }}
-                <a class="{{ slice . $currentPage "nav" | partial "functions/nav-item-class.string" }}" href="{{ .URL }}">
+                <a class="{{ slice $ . $currentPage "nav" | partial "functions/nav-item-class.string" }}" href="{{ .URL }}">
                     {{ .Pre }}<span>{{ .Title }}</span>{{ .Post }}
                 </a>
                 {{ end }}

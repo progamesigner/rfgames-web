@@ -1,4 +1,5 @@
-{{- $profession := 0 | index . | string | lower -}}
+{{- $context := 0 | index . -}}
+{{- $profession := 1 | index . | string | lower -}}
 
 {{- $professionCodes := partialCached "functions/gw2-chat-link-profession-code.dict" . -}}
 

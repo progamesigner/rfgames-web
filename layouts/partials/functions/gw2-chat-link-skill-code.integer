@@ -1,4 +1,5 @@
-{{- $id := 0 | index . | string -}}
+{{- $context := 0 | index . -}}
+{{- $id := 1 | index . | string -}}
 
 {{- $skillCodes := partialCached "functions/gw2-chat-link-skill-code.dict" . -}}
 

@@ -1,9 +1,10 @@
-{{- $type := 0 | index . | string | lower -}}
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . | string | lower -}}
 
 {{- $code := slice -}}
 
 {{- if $type | eq "item" -}}
-    {{- $id := 1 | index . -}}
+    {{- $id := 2 | index . -}}
 
     {{- $code = $code | append 2 -}}
     {{- $code = $code | append 1 -}}
@@ -11,21 +12,21 @@
 {{- end -}}
 
 {{- if $type | eq "skill" -}}
-    {{- $id := 1 | index . -}}
+    {{- $id := 2 | index . -}}
 
     {{- $code = $code | append 6 -}}
     {{- $code = $code | append (mod $id 256) (div $id 256) (div $id 65536) 0 -}}
 {{- end -}}
 
 {{- if $type | eq "trait" -}}
-    {{- $id := 1 | index . -}}
+    {{- $id := 2 | index . -}}
 
     {{- $code = $code | append 7 -}}
     {{- $code = $code | append (mod $id 256) (div $id 256) (div $id 65536) 0 -}}
 {{- end -}}
 
 {{- if $type | eq "build" -}}
-    {{- with 1 | index . -}}
+    {{- with 2 | index . -}}
         {{- $legends := "legends" | index . -}}
         {{- $pets := "pets" | index . -}}
         {{- $profession := "profession" | index . -}}
@@ -33,18 +34,18 @@
         {{- $traits := "traits" | index . -}}
 
         {{- $code = $code | append 13 -}}
-        {{- $code = $code | append ($profession | slice | partial "functions/gw2-chat-link-profession-code.integer") -}}
+        {{- $code = $code | append ($profession | slice $context | partial "functions/gw2-chat-link-profession-code.integer") -}}
         {{- range $traits | first 3 -}}
             {{- $specializtion := 0 | index . -}}
-            {{- $trait1 := 1 | index . | slice | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
-            {{- $trait2 := 2 | index . | slice | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
-            {{- $trait3 := 3 | index . | slice | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
+            {{- $trait1 := 1 | index . | slice $context | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
+            {{- $trait2 := 2 | index . | slice $context | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
+            {{- $trait3 := 3 | index . | slice $context | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
 
             {{- $code = $code | append $specializtion ($trait1 | add (mul $trait2 4) | add (mul $trait3 16)) -}}
         {{- end -}}
         {{- range $skills | first 5 -}}
-            {{- $terrestrialSkill := 0 | index . | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $aquaticSkill := 1 | index . | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $terrestrialSkill := 0 | index . | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $aquaticSkill := 1 | index . | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
 
             {{- $code = $code | append (mod $terrestrialSkill 256) (div $terrestrialSkill 256) -}}
             {{- $code = $code | append (mod $aquaticSkill 256) (div $aquaticSkill 256) -}}
@@ -61,16 +62,16 @@
         {{- end -}}
 
         {{- if $profession | eq 9 | and $legends -}}
-            {{- $terrestrialLegend1 := 0 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $terrestrialLegend2 := 1 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $aquaticLegend1 := 2 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $aquaticLegend2 := 3 | index $legends | slice | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $inactiveTerrestrialSkill1 := 4 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveTerrestrialSkill2 := 5 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveTerrestrialSkill3 := 6 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveAquaticSkill1 := 7 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveAquaticSkill2 := 8 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveAquaticSkill3 := 9 | index $legends | slice | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $terrestrialLegend1 := 0 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $terrestrialLegend2 := 1 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $aquaticLegend1 := 2 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $aquaticLegend2 := 3 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
+            {{- $inactiveTerrestrialSkill1 := 4 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveTerrestrialSkill2 := 5 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveTerrestrialSkill3 := 6 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveAquaticSkill1 := 7 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveAquaticSkill2 := 8 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $inactiveAquaticSkill3 := 9 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
 
             {{- $inactiveSkillValue1 := 0 | add (math.Pow $inactiveTerrestrialSkill1 2) | add (math.Pow $inactiveTerrestrialSkill2 0) -}}
             {{- $inactiveSkillValue2 := 0 | add (math.Pow $inactiveTerrestrialSkill3 2) | add (math.Pow $inactiveAquaticSkill1 0) -}}
@@ -86,6 +87,6 @@
     {{- end -}}
 {{- end -}}
 
-{{- $chatlink := $code | partial "functions/encode-base64.string" | printf "[&%s]" -}}
+{{- $chatlink := slice $context $code | partial "functions/encode-base64.string" | printf "[&%s]" -}}
 
 {{- return $chatlink -}}

@@ -1,5 +1,6 @@
-{{- $kind := 0 | index . | string | lower -}}
-{{- $rating := 1 | index . | int | default 0 -}}
+{{- $context := 0 | index . -}}
+{{- $kind := 1 | index . | string | lower -}}
+{{- $rating := 2 | index . | int | default 0 -}}
 
 {{- $kindMaps := partialCached "functions/build-rating-text.dict" . -}}
 
