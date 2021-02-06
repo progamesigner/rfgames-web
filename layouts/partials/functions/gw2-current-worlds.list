@@ -3,32 +3,32 @@
 {{- $accessToken := getenv "GW2_ACCESS_TOKEN" -}}
 
 {{- if $accessToken | ne "" -}}
-  {{- $accountData := getJSON "https://api.guildwars2.com" "/v2/account" "?access_token=" $accessToken -}}
-  {{- $matchData := getJSON "https://api.guildwars2.com" "/v2/wvw/matches" "?world=" $accountData.world -}}
+    {{- $accountData := getJSON "https://api.guildwars2.com" "/v2/account" "?access_token=" $accessToken -}}
+    {{- $matchData := getJSON "https://api.guildwars2.com" "/v2/wvw/matches" "?world=" $accountData.world -}}
 
-  {{- $mainWorldIds := slice -}}
-  {{- $linkedWorldIds := slice -}}
-  {{- range $color, $worldIds := $matchData.all_worlds -}}
-    {{- if $accountData.world | in $worldIds -}}
-      {{- $mainWorldId := $color | index $matchData.worlds -}}
-      {{- $mainWorldIds = $mainWorldIds | append $mainWorldId -}}
-      {{- range $worldIds -}}
-        {{- if . | ne $mainWorldId -}}
-          {{- $linkedWorldIds = $linkedWorldIds | append . -}}
+    {{- $mainWorldIds := slice -}}
+    {{- $linkedWorldIds := slice -}}
+    {{- range $color, $worldIds := $matchData.all_worlds -}}
+        {{- if $accountData.world | in $worldIds -}}
+            {{- $mainWorldId := $color | index $matchData.worlds -}}
+            {{- $mainWorldIds = $mainWorldIds | append $mainWorldId -}}
+            {{- range $worldIds -}}
+                {{- if . | ne $mainWorldId -}}
+                    {{- $linkedWorldIds = $linkedWorldIds | append . -}}
+                {{- end -}}
+            {{- end -}}
         {{- end -}}
-      {{- end -}}
     {{- end -}}
-  {{- end -}}
 
-  {{- $worldIds := $mainWorldIds | append $linkedWorldIds -}}
-  {{- $worldData := getJSON "https://api.guildwars2.com" "/v2/worlds" "?ids=" (delimit $worldIds ",") -}}
+    {{- $worldIds := $mainWorldIds | append $linkedWorldIds -}}
+    {{- $worldData := getJSON "https://api.guildwars2.com" "/v2/worlds" "?ids=" (delimit $worldIds ",") -}}
 
-  {{- range $worldData -}}
-    {{- $worlds = $worlds | append .name -}}
-  {{- end -}}
+    {{- range $worldData -}}
+        {{- $worlds = $worlds | append .name -}}
+    {{- end -}}
 {{- else -}}
-  {{- warnf "There is no GW2_ACCESS_TOKEN set, skipping ..." -}}
-  {{- $worlds = $worlds | append "Unknown" -}}
+    {{- warnf "There is no GW2_ACCESS_TOKEN set, skipping ..." -}}
+    {{- $worlds = $worlds | append "Unknown" -}}
 {{- end -}}
 
 {{- return $worlds -}}
