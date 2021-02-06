@@ -5,9 +5,11 @@
 {{- $traits := $build.template.traits -}}
 
 {{- define "__rfgames_shortcode__build_overview_summary_rating__" -}}
-    {{- $effects := "effects" | index . | default slice -}}
-    {{- $kind := "kind" | index . | default "" -}}
-    {{- $rating := "rating" | index . | default 0 -}}
+    {{- $context := 0 | index . -}}
+    {{- $rating := 1 | index . -}}
+    {{- $effects := "effects" | index $rating | default slice -}}
+    {{- $kind := "kind" | index $rating | default "" -}}
+    {{- $rating := "rating" | index $rating | default 0 -}}
 
     {{- $title := slice $kind | partial "functions/build-rating-title.string" -}}
     {{- $text := slice $kind $rating | partial "functions/build-rating-text.string" -}}
@@ -29,7 +31,7 @@
         {{- if $effects | len | lt 0 -}}
             <div class="rating-effects">
                 {{- range $effects -}}
-                    {{- . | title | dict "disable-text" true "id" | slice "effect" false | partial "elements/embed.html" -}}
+                    {{- . | title | dict "disable-text" true "id" | slice $context "effect" false | partial "elements/embed.html" -}}
                 {{- end -}}
             </div>
         {{- end -}}
@@ -37,10 +39,11 @@
 {{- end -}}
 
 {{- define "__rfgames_shortcode__build_overview_specialization__" -}}
-    {{- $id := 0 | index . -}}
-    {{- $traits := . | after 1 -}}
+    {{- $context := 0 | index . -}}
+    {{- $id := 1 | index . -}}
+    {{- $traits := . | after 2 -}}
 
-    {{- $id | dict "disable-text" true "id" | slice "specialization" false | partial "elements/embed.html" -}}
+    {{- $id | dict "disable-text" true "id" | slice $context "specialization" false | partial "elements/embed.html" -}}
 {{- end -}}
 
 <div class="page-section-build-overview">
@@ -50,13 +53,13 @@
 
     <div class="build-specializations">
         {{- range $traits -}}
-            {{- template "__rfgames_shortcode__build_overview_specialization__" . -}}
+            {{- template "__rfgames_shortcode__build_overview_specialization__" slice $ | append . -}}
         {{- end -}}
     </div>
 
     <div class="build-summary">
         {{- range $ratings -}}
-            {{- template "__rfgames_shortcode__build_overview_summary_rating__" . -}}
+            {{- template "__rfgames_shortcode__build_overview_summary_rating__" slice $ . -}}
         {{- end -}}
     </div>
 

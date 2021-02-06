@@ -1,7 +1,8 @@
-{{- $type := 0 | index . | lower -}}
-{{- $inline := 1 | index . | default false -}}
-{{- $data := 2 | index . | default dict -}}
-{{- $class := 3 | index . | default slice -}}
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . | lower -}}
+{{- $inline := 2 | index . | default false -}}
+{{- $data := 3 | index . | default dict -}}
+{{- $class := 4 | index . | default slice -}}
 
 {{- $data = $type | dict "type" | merge $data -}}
 {{- $data = $inline | string | dict "inline" | merge $data -}}
