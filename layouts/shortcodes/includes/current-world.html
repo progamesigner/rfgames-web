@@ -5,7 +5,7 @@
 
 {{- range $mainWorld -}}
   {{- if len $linkedWorlds | lt 0 -}}
-    <strong>{{ . }}</strong> (currently linked with <strong>{{ delimit $linkedWorlds "</strong> and <strong>" }}</strong>)
+    <strong>{{ . }}</strong> (linked with <strong>{{ delimit $linkedWorlds "</strong> and <strong>" }}</strong>)
   {{- else -}}
     <strong>{{ . }}</strong>
   {{- end -}}
