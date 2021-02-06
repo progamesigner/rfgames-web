@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $position := 1 | index . | string | lower -}}
 
-{{- $positionCodes := partialCached "functions/gw2-chat-link-trait-position-code.dict" . -}}
+{{- $positionCodes := "gw2-chat-link-trait-position-code" | index $context.Site.Data -}}
 
 {{- return ($position | index $positionCodes | default 0) -}}

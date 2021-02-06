@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $kind := 1 | index . | string | lower -}}
 
-{{- $kindMaps := partialCached "functions/build-rating-title.dict" . -}}
+{{- $kindMaps := "build-rating-title" | index $context.Site.Data -}}
 
 {{- return ($kind | index $kindMaps | default "Unknown") -}}

@@ -1,0 +1,13 @@
+{
+    "guardian": 1,
+    "warrior": 2,
+    "engineer": 3,
+    "ranger": 4,
+    "thief": 5,
+    "elementalist": 6,
+    "mesmer": 7,
+    "necromancer": 8,
+    "revenant": 9,
+
+    "__END__": "__END__"
+}

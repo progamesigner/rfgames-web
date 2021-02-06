@@ -2,6 +2,6 @@
 {{- $kind := 1 | index . | string | lower -}}
 {{- $rating := 2 | index . | int | default 0 -}}
 
-{{- $kindMaps := partialCached "functions/build-rating-text.dict" . -}}
+{{- $kindMaps := "build-rating-text" | index $context.Site.Data -}}
 
 {{- return (printf "%s-%d" $kind $rating | index $kindMaps | default "Unrated") -}}

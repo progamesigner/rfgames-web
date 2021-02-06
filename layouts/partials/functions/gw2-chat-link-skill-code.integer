@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $id := 1 | index . | string -}}
 
-{{- $skillCodes := partialCached "functions/gw2-chat-link-skill-code.dict" . -}}
+{{- $skillCodes := "gw2-chat-link-skill-code" | index $context.Site.Data -}}
 
 {{- return ($id | index $skillCodes | default 0) -}}
