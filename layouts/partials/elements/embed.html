@@ -76,7 +76,7 @@
 {{- if $inline -}}
     <span
         {{ range $key, $value := $attributes }}
-            {{ printf "%s=%q" $key $value | safeHTMLAttr }}
+            {{ $value | htmlEscape | printf "%s=%q" $key | safeHTMLAttr }}
         {{ end }}
     >
         {{- with "text" | index $data -}}
