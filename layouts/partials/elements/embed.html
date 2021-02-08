@@ -45,6 +45,10 @@
         {{- $data = $name | index $nameToId | dict "id" | merge $data -}}
     {{- end -}}
 
+    {{- if "id" | index $data | not -}}
+        {{- errorf "Unable to find %s name: %s" $type $name -}}
+    {{- end -}}
+
     {{- if not $data.text -}}
         {{- $data = dict "text" $name | merge $data -}}
     {{- end -}}
