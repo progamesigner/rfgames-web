@@ -37,7 +37,6 @@ module.exports = (env, argv) => {
     output: {
       chunkFilename: isProduction ? '[contenthash].chunk.js' : '[name].chunk.js',
       filename: isProduction ? '[contenthash].js' : '[name].js',
-      jsonpFunction: 'rfgamesJsonp', // @note: to avoid conflict with gw2-embed
       path: path.resolve(__dirname, 'assets', 'dist'),
       publicPath: '/'
     },
@@ -45,7 +44,7 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: isProduction ? '[contenthash].css' : '[name].css'
       }),
-      new ManifestPlugin({
+      new ManifestPlugin.WebpackManifestPlugin({
         fileName: path.join(path.resolve(__dirname, 'data'), 'assets.json'),
         publicPath: false
       })
