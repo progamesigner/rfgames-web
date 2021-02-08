@@ -13,9 +13,8 @@
     {{- $query = dict "access_token" . | merge $query -}}
 {{- end -}}
 
-{{- with $gw2APISchemaVersion -}}
-    {{- $query = dict "v" . | merge $query -}}
-{{- end -}}
+{{- $query = dict "lang" "en" | merge $query -}}
+{{- $query = dict "v" $gw2APISchemaVersion | merge $query -}}
 
 {{- $parts := slice -}}
 {{- range $key, $value := $query -}}
