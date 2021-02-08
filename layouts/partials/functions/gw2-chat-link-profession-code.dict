@@ -1,0 +1,13 @@
+{{- $context := 0 | index . -}}
+
+{{- $codes := dict -}}
+
+{{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
+
+{{- range $id, $profession := $professions -}}
+    {{- $professionId := $id | add 1 -}}
+    {{- $professionName := $profession.name | lower -}}
+    {{- $codes = dict $professionName $professionId | merge $codes -}}
+{{- end -}}
+
+{{- return $codes -}}

@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $id := 1 | index . | string -}}
 
-{{- $skillCodes := "gw2-chat-link-skill-code" | index $context.Site.Data -}}
+{{- $skillCodes := slice $context | partialCached "functions/gw2-chat-link-skill-code.dict" -}}
 
 {{- return ($id | index $skillCodes | default 0) -}}
