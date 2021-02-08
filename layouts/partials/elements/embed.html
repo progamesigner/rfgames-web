@@ -33,6 +33,12 @@
         {{- end -}}
     {{- end -}}
 
+    {{- if $type | eq "specialization" -}}
+        {{- $nameToId := slice $context | partialCached "functions/gw2-data-specialization-name-to-id.dict" -}}
+
+        {{- $data = $name | index $nameToId | dict "id" | merge $data -}}
+    {{- end -}}
+
     {{- if not $data.text -}}
         {{- $data = dict "text" $name | merge $data -}}
     {{- end -}}
