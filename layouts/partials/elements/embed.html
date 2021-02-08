@@ -33,6 +33,12 @@
         {{- end -}}
     {{- end -}}
 
+    {{- if $type | eq "skill" -}}
+        {{- $nameToId := slice $context | partialCached "functions/gw2-data-skill-name-to-id.dict" -}}
+
+        {{- $data = $name | urlize | lower | index $nameToId | dict "id" | merge $data -}}
+    {{- end -}}
+
     {{- if $type | eq "specialization" -}}
         {{- $nameToId := slice $context | partialCached "functions/gw2-data-specialization-name-to-id.dict" -}}
 

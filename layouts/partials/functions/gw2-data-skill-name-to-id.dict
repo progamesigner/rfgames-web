@@ -1,0 +1,14 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
+
+{{- range $skills -}}
+    {{- $name := .name | urlize | lower -}}
+    {{- if $name | index $data | not -}}
+        {{- $data = dict $name .id | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}
