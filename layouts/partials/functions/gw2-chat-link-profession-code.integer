@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $profession := 1 | index . | string | lower -}}
 
-{{- $professionCodes := slice $context | partialCached "functions/gw2-chat-link-profession-code.dict" -}}
+{{- $professionCodes := slice $context | partialCached "functions/gw2-data-profession-name-to-code.dict" -}}
 
 {{- return ($profession | index $professionCodes | default 0) -}}
