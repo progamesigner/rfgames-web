@@ -9,7 +9,8 @@
     {{- range .specializations -}}
         {{- with . | string | index $specializations -}}
             {{- if .elite -}}
-                {{- $data = dict .name .id | merge $data -}}
+                {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+                {{- $data = .id | dict $slug | merge $data -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}

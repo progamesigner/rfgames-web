@@ -1,0 +1,6 @@
+{{- $context := 0 | index . -}}
+{{- $name := 1 | index . -}}
+
+{{- $slug := $name | lower | urlize -}}
+
+{{- return $slug -}}

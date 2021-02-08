@@ -5,9 +5,9 @@
 {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
 
 {{- range $skills -}}
-    {{- $name := .name | urlize | lower -}}
-    {{- if $name | index $data | not -}}
-        {{- $data = dict $name .id | merge $data -}}
+    {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+    {{- if $slug | index $data | not -}}
+        {{- $data = .name | htmlEscape | dict $slug | merge $data -}}
     {{- end -}}
 {{- end -}}
 

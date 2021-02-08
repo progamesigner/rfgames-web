@@ -3,4 +3,6 @@
 
 {{- $legendCodes := "gw2-chat-link-legend-code" | index $context.Site.Data -}}
 
-{{- return ($legend | index $legendCodes | default 0) -}}
+{{- $code := $legend | index $legendCodes | default 0 -}}
+
+{{- return $code -}}
