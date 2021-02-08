@@ -1,6 +1,5 @@
 {{- $context := 0 | index . -}}
 
-{{- $professionIdsData := slice $context "/v2/professions" | partial "functions/gw2-api-url.string" | getJSON -}}
-{{- $data := delimit $professionIdsData "," | dict "ids" | slice $context "/v2/professions" | partial "functions/gw2-api-url.string" | getJSON -}}
+{{- $data := slice $context "/v2/professions" | partial "functions/gw2-api-paginated-data.dict" -}}
 
 {{- return $data -}}

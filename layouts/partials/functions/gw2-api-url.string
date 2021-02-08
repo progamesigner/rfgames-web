@@ -6,7 +6,8 @@
 {{- $gw2APISchemaVersion := $context.Site.Param "gw2APISchemaVersion" -}}
 
 {{- if reflect.IsMap $accessToken -}}
-    {{- $query = $accessToken -}}
+    {{- $query = $accessToken | default dict -}}
+    {{- $accessToken = "" -}}
 {{- end -}}
 
 {{- with $accessToken -}}
@@ -18,7 +19,7 @@
 
 {{- $parts := slice -}}
 {{- range $key, $value := $query -}}
-    {{- $part := printf "%s=%s" $key $value -}}
+    {{- $part := $value | string | printf "%s=%s" $key -}}
     {{- $parts = $parts | append $part -}}
 {{- end -}}
 

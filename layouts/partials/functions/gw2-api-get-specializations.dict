@@ -1,11 +1,9 @@
 {{- $context := 0 | index . -}}
 
+{{- $specializations := slice $context "/v2/specializations" | partial "functions/gw2-api-paginated-data.dict" -}}
+
 {{- $data := dict -}}
-
-{{- $specializationIdsData := slice $context "/v2/specializations" | partial "functions/gw2-api-url.string" | getJSON -}}
-{{- $specializationData := delimit $specializationIdsData "," | dict "ids" | slice $context "/v2/specializations" | partial "functions/gw2-api-url.string" | getJSON -}}
-
-{{- range $specializationData -}}
+{{- range $specializations -}}
     {{- $id := string .id -}}
     {{- $data = dict $id . | merge $data -}}
 {{- end -}}
