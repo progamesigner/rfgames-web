@@ -6,8 +6,8 @@
 {{- $data := dict "page" $page "page_size" $count | slice $context $url | partial "functions/gw2-api-url.string" | getJSON -}}
 {{- if $data | len | le $count -}}
   {{- $nextPage := $page | add 1 -}}
-  {{- $chunk := slice $context $url $nextPage $count | partial "functions/gw2-api-paginated-data.dict" -}}
-  {{- $data = $chunk | merge $data -}}
+  {{- $chunk := slice $context $url $nextPage $count | partial "functions/gw2-api-paginated-data.list" -}}
+  {{- $data = $data | append $chunk -}}
 {{- end -}}
 
 {{- return $data -}}

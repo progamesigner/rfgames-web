@@ -1,0 +1,5 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := slice $context "/v2/traits" | partial "functions/gw2-api-paginated-data.list" -}}
+
+{{- return $data -}}

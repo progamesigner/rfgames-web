@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 
-{{- $specializations := slice $context "/v2/specializations" | partial "functions/gw2-api-paginated-data.dict" -}}
+{{- $specializations := slice $context "/v2/specializations" | partial "functions/gw2-api-paginated-data.list" -}}
 
 {{- $data := dict -}}
 {{- range $specializations -}}
