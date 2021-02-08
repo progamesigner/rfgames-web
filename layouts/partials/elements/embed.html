@@ -19,13 +19,11 @@
     {{- $classes = $classes | append . -}}
 {{- end -}}
 
-{{- if $data.name -}}
-    {{- $name := $data.name -}}
-
-    {{- $slug := $name | slice $context $name | partial "functions/gw2-data-slugify.string" -}}
+{{- with $data.name -}}
+    {{- $slug := . | slice $context | partial "functions/gw2-data-slugify.string" -}}
 
     {{- if $type | eq "effect" -}}
-        {{- $data = $name | dict "id" | merge $data -}}
+        {{- $data = . | dict "id" | merge $data -}}
     {{- end -}}
 
     {{- if $type | eq "profession" -}}
@@ -60,11 +58,11 @@
     {{- end -}}
 
     {{- if not $data.text -}}
-        {{- $data = dict "text" $name | merge $data -}}
+        {{- $data = . | dict "text" | merge $data -}}
     {{- end -}}
 
     {{- if "id" | index $data | not -}}
-        {{- errorf "Unable to find %s name: %s" $type $name -}}
+        {{- errorf "Unable to find %s name: %s" $type . -}}
     {{- end -}}
 {{- end -}}
 
