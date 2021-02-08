@@ -24,6 +24,10 @@
 
     {{- $slug := $name | slice $context $name | partial "functions/gw2-data-slugify.string" -}}
 
+    {{- if $type | eq "effect" -}}
+        {{- $data = $name | dict "id" | merge $data -}}
+    {{- end -}}
+
     {{- if $type | eq "profession" -}}
         {{- $slugToId := slice $context | partialCached "functions/gw2-data-profession-slug-to-id.dict" -}}
         {{- $slugToElite := slice $context | partialCached "functions/gw2-data-profession-slug-to-elite.dict" -}}
