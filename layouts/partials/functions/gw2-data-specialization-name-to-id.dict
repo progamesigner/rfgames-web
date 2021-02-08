@@ -1,0 +1,11 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
+
+{{- range $specializations -}}
+    {{- $data = dict .name .id | merge $data -}}
+{{- end -}}
+
+{{- return $data -}}
