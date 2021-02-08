@@ -19,11 +19,32 @@
     {{- $classes = $classes | append . -}}
 {{- end -}}
 
+{{- if $data.name -}}
+    {{- $name := $data.name -}}
+
+    {{- if $type | eq "profession" -}}
+        {{- $nameToId := slice $context | partialCached "functions/gw2-data-profession-name-to-id.dict" -}}
+        {{- $nameToElite := slice $context | partialCached "functions/gw2-data-profession-name-to-elite.dict" -}}
+
+        {{- $data = $name | index $nameToId | dict "id" | merge $data -}}
+
+        {{- with $name | index $nameToElite -}}
+            {{- $data = . | dict "elite" | merge $data -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if not $data.text -}}
+        {{- $data = dict "text" $name | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
 {{- $attributes := dict -}}
 {{- $attributes = delimit $classes " " | dict "class" | merge $attributes -}}
 {{- range $key, $value := $data -}}
-    {{- $attribute := $key | printf "data-embed-%s" -}}
-    {{- $attributes = $value | string | dict $attribute | merge $attributes -}}
+    {{- if "name" | ne $key -}}
+        {{- $attribute := $key | printf "data-embed-%s" -}}
+        {{- $attributes = $value | string | dict $attribute | merge $attributes -}}
+    {{- end -}}
 {{- end -}}
 
 {{- if $inline -}}

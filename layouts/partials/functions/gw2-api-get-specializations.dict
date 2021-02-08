@@ -1,0 +1,13 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $specializationIdsData := slice $context "/v2/specializations" | partial "functions/gw2-api-url.string" | getJSON -}}
+{{- $specializationData := delimit $specializationIdsData "," | dict "ids" | slice $context "/v2/specializations" | partial "functions/gw2-api-url.string" | getJSON -}}
+
+{{- range $specializationData -}}
+    {{- $id := string .id -}}
+    {{- $data = dict $id . | merge $data -}}
+{{- end -}}
+
+{{- return $data -}}

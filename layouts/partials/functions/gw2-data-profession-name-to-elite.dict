@@ -1,0 +1,18 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
+{{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
+
+{{- range $professions -}}
+    {{- range .specializations -}}
+        {{- with . | string | index $specializations -}}
+            {{- if .elite -}}
+                {{- $data = dict .name .id | merge $data -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}
