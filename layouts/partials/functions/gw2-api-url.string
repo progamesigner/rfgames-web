@@ -1,0 +1,28 @@
+{{- $context := 0 | index . -}}
+{{- $endpoint := 1 | index . -}}
+{{- $accessToken := 2 | index . -}}
+{{- $query := 3 | index . | default dict -}}
+
+{{- $gw2APISchemaVersion := $context.Site.Param "gw2APISchemaVersion" -}}
+
+{{- if reflect.IsMap $accessToken -}}
+    {{- $query = $accessToken -}}
+{{- end -}}
+
+{{- with $accessToken -}}
+    {{- $query = dict "access_token" . | merge $query -}}
+{{- end -}}
+
+{{- with $gw2APISchemaVersion -}}
+    {{- $query = dict "v" . | merge $query -}}
+{{- end -}}
+
+{{- $parts := slice -}}
+{{- range $key, $value := $query -}}
+    {{- $part := printf "%s=%s" $key $value -}}
+    {{- $parts = $parts | append $part -}}
+{{- end -}}
+
+{{- $url := delimit $parts "&" | printf "https://api.guildwars2.com%s?%s" $endpoint -}}
+
+{{- return $url -}}
