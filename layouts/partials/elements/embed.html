@@ -39,6 +39,12 @@
         {{- $data = $name | index $nameToId | dict "id" | merge $data -}}
     {{- end -}}
 
+    {{- if $type | eq "trait" -}}
+        {{- $nameToId := slice $context | partialCached "functions/gw2-data-trait-name-to-id.dict" -}}
+
+        {{- $data = $name | index $nameToId | dict "id" | merge $data -}}
+    {{- end -}}
+
     {{- if not $data.text -}}
         {{- $data = dict "text" $name | merge $data -}}
     {{- end -}}
