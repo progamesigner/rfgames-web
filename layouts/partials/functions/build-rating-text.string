@@ -2,8 +2,7 @@
 {{- $kind := 1 | index . | string | lower -}}
 {{- $rating := 2 | index . | int | default 0 -}}
 
-{{- $ratingMaps := "build-ratings" | index $context.Site.Data -}}
-{{- $ratingTexts := "texts" | index $ratingMaps -}}
+{{- $ratingTexts := slice $context | partialCached "functions/build-rating-text.dict" -}}
 
 {{- $text := printf "%s-%d" $kind $rating | index $ratingTexts | default "Unrated" -}}
 

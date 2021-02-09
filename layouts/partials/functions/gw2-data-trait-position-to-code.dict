@@ -1,0 +1,9 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $data = dict "top" 1 | merge $data -}}
+{{- $data = dict "middle" 2 | merge $data -}}
+{{- $data = dict "bottom" 3 | merge $data -}}
+
+{{- return $data -}}

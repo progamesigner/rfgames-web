@@ -1,0 +1,31 @@
+{{- $data := dict -}}
+
+{{- $data = dict "survivability" "Survivability" | merge $data -}}
+
+{{- $data = dict "damage-burst-power" "Damage" | merge $data -}}
+{{- $data = dict "damage-burst-condition" "Damage" | merge $data -}}
+{{- $data = dict "damage-condition-pressure" "Damage" | merge $data -}}
+{{- $data = dict "damage-hybrid" "Damage" | merge $data -}}
+{{- $data = dict "damage-low" "Damage" | merge $data -}}
+
+{{- $data = dict "healing-brust" "Healing" | merge $data -}}
+{{- $data = dict "healing-dripping" "Healing" | merge $data -}}
+{{- $data = dict "healing-barrier" "Healing" | merge $data -}}
+{{- $data = dict "healing-selfish" "Healing" | merge $data -}}
+{{- $data = dict "healing-low" "Healing" | merge $data -}}
+
+{{- $data = dict "cleansing-brust" "Condition Cleansing" | merge $data -}}
+{{- $data = dict "cleansing-dripping" "Condition Cleansing" | merge $data -}}
+{{- $data = dict "cleansing-passive" "Condition Cleansing" | merge $data -}}
+{{- $data = dict "cleansing-selfish" "Condition Cleansing" | merge $data -}}
+{{- $data = dict "cleansing-low" "Condition Cleansing" | merge $data -}}
+
+{{- $data = dict "striping-reliable" "Boon Striping" | merge $data -}}
+{{- $data = dict "striping-single" "Boon Striping" | merge $data -}}
+{{- $data = dict "striping-low" "Boon Striping" | merge $data -}}
+
+{{- $data = dict "supports" "Team Support" | merge $data -}}
+
+{{- $data = dict "pressures" "Enemy Pressure" | merge $data -}}
+
+{{- return $data -}}

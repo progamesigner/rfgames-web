@@ -1,0 +1,61 @@
+{{- $data := dict -}}
+
+{{- $data = dict "survivability-5" "Great" | merge $data -}}
+{{- $data = dict "survivability-4" "Good" | merge $data -}}
+{{- $data = dict "survivability-3" "Average" | merge $data -}}
+{{- $data = dict "survivability-2" "Difficult" | merge $data -}}
+{{- $data = dict "survivability-1" "Nightmare" | merge $data -}}
+
+{{- $data = dict "damage-burst-power-5" "Brust Power" | merge $data -}}
+{{- $data = dict "damage-burst-power-4" "Brust Power" | merge $data -}}
+{{- $data = dict "damage-burst-power-3" "Brust Power" | merge $data -}}
+{{- $data = dict "damage-burst-condition-5" "Burst Condition" | merge $data -}}
+{{- $data = dict "damage-burst-condition-4" "Burst Condition" | merge $data -}}
+{{- $data = dict "damage-burst-condition-3" "Burst Condition" | merge $data -}}
+{{- $data = dict "damage-condition-pressure-5" "Condition Pressure" | merge $data -}}
+{{- $data = dict "damage-condition-pressure-4" "Condition Pressure" | merge $data -}}
+{{- $data = dict "damage-condition-pressure-3" "Condition Pressure" | merge $data -}}
+{{- $data = dict "damage-hybrid-5" "Hybrid" | merge $data -}}
+{{- $data = dict "damage-hybrid-4" "Hybrid" | merge $data -}}
+{{- $data = dict "damage-hybrid-3" "Hybrid" | merge $data -}}
+{{- $data = dict "damage-low-3" "Try Your Best" | merge $data -}}
+{{- $data = dict "damage-low-2" "Try Your Best" | merge $data -}}
+{{- $data = dict "damage-low-1" "Try Your Best" | merge $data -}}
+
+{{- $data = dict "healing-brust-5" "Burst" | merge $data -}}
+{{- $data = dict "healing-brust-4" "Burst" | merge $data -}}
+{{- $data = dict "healing-brust-3" "Burst" | merge $data -}}
+{{- $data = dict "healing-dripping-5" "Dripping" | merge $data -}}
+{{- $data = dict "healing-dripping-4" "Dripping" | merge $data -}}
+{{- $data = dict "healing-dripping-3" "Dripping" | merge $data -}}
+{{- $data = dict "healing-barrier-5" "Barrier" | merge $data -}}
+{{- $data = dict "healing-barrier-4" "Barrier" | merge $data -}}
+{{- $data = dict "healing-barrier-3" "Barrier" | merge $data -}}
+{{- $data = dict "healing-selfish-3" "Selfish" | merge $data -}}
+{{- $data = dict "healing-low-3" "Unsubstantial" | merge $data -}}
+{{- $data = dict "healing-low-2" "Unsubstantial" | merge $data -}}
+{{- $data = dict "healing-low-1" "Unsubstantial" | merge $data -}}
+
+{{- $data = dict "cleansing-brust-5" "Brust" | merge $data -}}
+{{- $data = dict "cleansing-brust-4" "Brust" | merge $data -}}
+{{- $data = dict "cleansing-brust-3" "Brust" | merge $data -}}
+{{- $data = dict "cleansing-dripping-5" "Dripping" | merge $data -}}
+{{- $data = dict "cleansing-dripping-4" "Dripping" | merge $data -}}
+{{- $data = dict "cleansing-dripping-3" "Dripping" | merge $data -}}
+{{- $data = dict "cleansing-passive-5" "Passive" | merge $data -}}
+{{- $data = dict "cleansing-passive-4" "Passive" | merge $data -}}
+{{- $data = dict "cleansing-passive-3" "Passive" | merge $data -}}
+{{- $data = dict "cleansing-selfish-3" "Selfish" | merge $data -}}
+{{- $data = dict "cleansing-low-3" "Poor" | merge $data -}}
+{{- $data = dict "cleansing-low-2" "Poor" | merge $data -}}
+{{- $data = dict "cleansing-low-1" "Poor" | merge $data -}}
+
+{{- $data = dict "striping-reliable-5" "Reliable" | merge $data -}}
+{{- $data = dict "striping-reliable-4" "Reliable" | merge $data -}}
+{{- $data = dict "striping-reliable-3" "Reliable" | merge $data -}}
+{{- $data = dict "striping-single-3" "Single Target" | merge $data -}}
+{{- $data = dict "striping-low-3" "Inefficient" | merge $data -}}
+{{- $data = dict "striping-low-2" "Inefficient" | merge $data -}}
+{{- $data = dict "striping-low-1" "Inefficient" | merge $data -}}
+
+{{- return $data -}}
