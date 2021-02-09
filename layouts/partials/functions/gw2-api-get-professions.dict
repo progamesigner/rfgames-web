@@ -1,5 +1,11 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := slice $context "/v2/professions" | partial "functions/gw2-api-paginated-data.dict" -}}
+{{- $professions := slice $context "/v2/professions" | partial "functions/gw2-api-paginated-data.dict" -}}
+
+{{- $data := dict -}}
+{{- range $professions -}}
+    {{- $id := .id | string -}}
+    {{- $data = . | dict $id | merge $data -}}
+{{- end -}}
 
 {{- return $data -}}

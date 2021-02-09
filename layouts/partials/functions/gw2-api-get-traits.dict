@@ -1,5 +1,11 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := slice $context "/v2/traits" | partial "functions/gw2-api-paginated-data.list" -}}
+{{- $traits := slice $context "/v2/traits" | partial "functions/gw2-api-paginated-data.list" -}}
+
+{{- $data := dict -}}
+{{- range $traits -}}
+    {{- $id := .id | string -}}
+    {{- $data = . | dict $id | merge $data -}}
+{{- end -}}
 
 {{- return $data -}}

@@ -4,8 +4,8 @@
 
 {{- $data := dict -}}
 {{- range $specializations -}}
-    {{- $id := string .id -}}
-    {{- $data = dict $id . | merge $data -}}
+    {{- $id := .id | string -}}
+    {{- $data = . | dict $id | merge $data -}}
 {{- end -}}
 
 {{- return $data -}}

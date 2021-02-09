@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 
-{{- $codes := dict -}}
+{{- $data := dict -}}
 
 {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
 
@@ -8,8 +8,8 @@
     {{- range .skills_by_palette -}}
         {{- $paletteId := 0 | index . -}}
         {{- $skillId := 1 | index . | string -}}
-        {{- $codes = dict $skillId $paletteId | merge $codes -}}
+        {{- $data = dict $skillId $paletteId | merge $data -}}
     {{- end -}}
 {{- end -}}
 
-{{- return $codes -}}
+{{- return $data -}}
