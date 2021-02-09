@@ -3,6 +3,6 @@
 
 {{- $professionCodes := slice $context | partialCached "functions/gw2-data-profession-name-to-code.dict" -}}
 
-{{- $code := $profession | lower | index $professionCodes | default 0 | int -}}
+{{- $code := $profession | index $professionCodes | default 0 | int -}}
 
 {{- return $code -}}

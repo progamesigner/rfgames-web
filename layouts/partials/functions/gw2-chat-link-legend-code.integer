@@ -3,6 +3,6 @@
 
 {{- $legendCodes := slice $context | partialCached "functions/gw2-data-legend-name-to-code.dict" -}}
 
-{{- $code := $legend | lower | index $legendCodes | default 0 | int -}}
+{{- $code := $legend | index $legendCodes | default 0 | int -}}
 
 {{- return $code -}}

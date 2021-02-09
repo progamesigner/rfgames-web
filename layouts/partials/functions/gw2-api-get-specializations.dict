@@ -1,8 +1,9 @@
 {{- $context := 0 | index . -}}
 
+{{- $data := dict -}}
+
 {{- $specializations := slice $context "/v2/specializations" | partial "functions/gw2-api-paginated-data.list" -}}
 
-{{- $data := dict -}}
 {{- range $specializations -}}
     {{- $id := .id | string -}}
     {{- $data = . | dict $id | merge $data -}}
