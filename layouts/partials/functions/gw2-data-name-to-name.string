@@ -1,5 +1,5 @@
 {{- $context := 0 | index . -}}
-{{- $kind := 1 | index . -}}
+{{- $type := 1 | index . -}}
 {{- $query := 2 | index . -}}
 
 {{- $name := $query -}}
@@ -7,7 +7,7 @@
 
 {{- $slugToName := dict -}}
 
-{{- if $kind | eq "skill" -}}
+{{- if $type | eq "skill" -}}
     {{- $slugToName = slice $context | partialCached "functions/gw2-data-skill-slug-to-name.dict" -}}
 {{- end -}}
 

@@ -1,5 +1,5 @@
 {{- $context := 0 | index . -}}
-{{- $kind := 1 | index . -}}
+{{- $type := 1 | index . -}}
 {{- $name := 2 | index . -}}
 
 {{- $id := $name -}}
@@ -8,15 +8,15 @@
 {{- if $name | string | eq $name -}}
     {{- $slugToId := dict -}}
 
-    {{- if $kind | eq "skill" -}}
+    {{- if $type | eq "skill" -}}
         {{- $slugToId = slice $context | partialCached "functions/gw2-data-skill-slug-to-id.dict" -}}
     {{- end -}}
 
-    {{- if $kind | eq "specialization" -}}
+    {{- if $type | eq "specialization" -}}
         {{- $slugToId = slice $context | partialCached "functions/gw2-data-specialization-slug-to-id.dict" -}}
     {{- end -}}
 
-    {{- if $kind | eq "trait" -}}
+    {{- if $type | eq "trait" -}}
         {{- $slugToId = slice $context | partialCached "functions/gw2-data-trait-slug-to-id.dict" -}}
     {{- end -}}
 

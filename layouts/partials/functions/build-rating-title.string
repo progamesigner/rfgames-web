@@ -1,8 +1,8 @@
 {{- $context := 0 | index . -}}
-{{- $kind := 1 | index . | string | lower -}}
+{{- $type := 1 | index . | string | lower -}}
 
 {{- $ratingTitles := slice $context | partialCached "functions/build-rating-title.dict" -}}
 
-{{- $title := $kind | index $ratingTitles | default "Unknown" -}}
+{{- $title := $type | index $ratingTitles | default "Unknown" -}}
 
 {{- return $title -}}

@@ -1,5 +1,5 @@
 {{- $context := 0 | index . -}}
-{{- $kind := 1 | index . -}}
+{{- $type := 1 | index . -}}
 {{- $name := 2 | index . -}}
 
 {{- $id := $name -}}
@@ -8,7 +8,7 @@
 {{- if $name | string | eq $name -}}
     {{- $slugToId := dict -}}
 
-    {{- if $kind | eq "profession" -}}
+    {{- if $type | eq "profession" -}}
         {{- $slugToId = slice $context | partialCached "functions/gw2-data-profession-slug-to-id.dict" -}}
     {{- end -}}
 

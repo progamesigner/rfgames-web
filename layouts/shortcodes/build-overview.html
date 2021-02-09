@@ -7,12 +7,13 @@
 {{- define "__rfgames_shortcode__build_overview_summary_rating__" -}}
     {{- $context := 0 | index . -}}
     {{- $rating := 1 | index . -}}
+
     {{- $effects := "effects" | index $rating | default slice -}}
-    {{- $kind := "kind" | index $rating | default "" -}}
+    {{- $type := "type" | index $rating | default "" -}}
     {{- $rating := "rating" | index $rating | default 0 -}}
 
-    {{- $title := slice $context $kind | partial "functions/build-rating-title.string" -}}
-    {{- $text := slice $context $kind $rating | partial "functions/build-rating-text.string" -}}
+    {{- $title := slice $context $type | partial "functions/build-rating-title.string" -}}
+    {{- $text := slice $context $type $rating | partial "functions/build-rating-text.string" -}}
 
     <div class="rating">
         <div class="rating-title">{{ $title }}</div>

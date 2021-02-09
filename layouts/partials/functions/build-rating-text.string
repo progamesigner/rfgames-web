@@ -1,9 +1,9 @@
 {{- $context := 0 | index . -}}
-{{- $kind := 1 | index . | string | lower -}}
+{{- $type := 1 | index . | string | lower -}}
 {{- $rating := 2 | index . | int | default 0 -}}
 
 {{- $ratingTexts := slice $context | partialCached "functions/build-rating-text.dict" -}}
 
-{{- $text := printf "%s-%d" $kind $rating | index $ratingTexts | default "Unrated" -}}
+{{- $text := printf "%s-%d" $type $rating | index $ratingTexts | default "Unrated" -}}
 
 {{- return $text -}}
