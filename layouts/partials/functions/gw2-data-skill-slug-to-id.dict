@@ -2,7 +2,18 @@
 
 {{- $data := dict -}}
 
+{{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
 {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
+
+{{- range $professions -}}
+    {{- range .skills_by_palette -}}
+        {{- $skill := 1 | index . | string | index $skills -}}
+        {{- with $skill -}}
+            {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+            {{- $data = .id | dict $slug | merge $data -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
 
 {{- range $skills -}}
     {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
