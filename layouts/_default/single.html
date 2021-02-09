@@ -1,66 +1,66 @@
-{{ define "main" }}
+{{- define "main" -}}
+    {{- $background := .Param "background" | default "default" | printf "backgrounds/%s" -}}
+    {{- $overlay := .Param "overlay" | default "default" | printf "overlays/%s" -}}
 
-{{- $background := .Param "background" | default "default" | printf "backgrounds/%s" -}}
-{{- $overlay := .Param "overlay" | default "default" | printf "overlays/%s" -}}
-
-<main class="main is-page has-theme-{{ .Param "theme" | default "default" }}">
-    <div class="page-background">
-        {{- slice $ $background "1280,1920,3840" "jpg" .Title | partial "functions/responsive-image.html" -}}
-    </div>
-
-    <div class="page-overlay">
-        {{- slice $ $overlay "1280,1920,3840" "png" .Title false | partial "functions/responsive-image.html" -}}
-    </div>
-
-    <div class="container">
-        <div class="page-head">
-            {{ with .Param "header" }}
-            {{ if index . "image" }}
-            {{- $icon := index . "image" | printf "headers/%s.png" | resources.Get | fingerprint "sha512" -}}
-            <div class="page-head-icon">
-                <figure class="image">
-                    <img src="{{ $icon.RelPermalink }}" alt="{{ index . "title" | default $.Title | safeHTML }}">
-                </figure>
-            </div>
-            {{ end }}
-            {{ end }}
-            <div class="page-head-text">
-                {{ with .Param "header" }}
-                {{ with index . "subtitle" }}
-                <h3 class="subtitle">{{ . | safeHTML }}</h3>
-                {{ end }}
-                {{ with index . "title" }}
-                <h2 class="title">{{ . | safeHTML }}</h2>
-                {{ else }}
-                <h2 class="title">{{ $.Title | safeHTML }}</h2>
-                {{ end }}
-                {{ else }}
-                <h2 class="title">{{ .Title | safeHTML }}</h2>
-                {{ end }}
-            </div>
+    <main class="main is-page has-theme-{{ .Param "theme" | default "default" }}">
+        <div class="page-background">
+            {{- slice $ $background "1280,1920,3840" "jpg" .Title | partial "functions/responsive-image.html" -}}
         </div>
 
-        <div class="page-body">
-            <div class="content">
-                {{ .Content }}
-            </div>
+        <div class="page-overlay">
+            {{- slice $ $overlay "1280,1920,3840" "png" .Title false | partial "functions/responsive-image.html" -}}
         </div>
 
-        {{- if "disqus" | index .Params -}}
-            <div class="page-foot has-disqus">
-                <div id="disqus_thread">
-                    <noscript>
-                        <p class="has-text-centered has-text-danger">Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">Disqus</a> comments.</p>
-                    </noscript>
-                    <p class="dsq-brlink has-text-centered">
-                        Comments powered by <a href="https://disqus.com">Disqus</a>.
-                    </p>
+        <div class="container">
+            <div class="page-head">
+                {{- with .Param "header" -}}
+                    {{- if index . "image" -}}
+                        {{- $icon := index . "image" | printf "headers/%s.png" | resources.Get | fingerprint "sha512" -}}
+                        <div class="page-head-icon">
+                            <figure class="image">
+                                <img src="{{ $icon.RelPermalink }}" alt="{{ index . "title" | default $.Title | safeHTML }}">
+                            </figure>
+                        </div>
+                    {{- end -}}
+                {{- end -}}
+                <div class="page-head-text">
+                    {{- with .Param "header" -}}
+                        {{- with index . "subtitle" -}}
+                            <h3 class="subtitle">{{ . | safeHTML }}</h3>
+                        {{- end -}}
+
+                        {{- with index . "title" -}}
+                            <h2 class="title">{{ . | safeHTML }}</h2>
+                        {{- else -}}
+                            <h2 class="title">{{ $.Title | safeHTML }}</h2>
+                        {{- end -}}
+                    {{- else -}}
+                        <h2 class="title">{{ .Title | safeHTML }}</h2>
+                    {{- end -}}
                 </div>
             </div>
-        {{- else -}}
-            <div class="page-foot">
+
+            <div class="page-body">
+                <div class="content">
+                    {{- .Content -}}
+                </div>
             </div>
-        {{- end -}}
-    </div>
-</main>
-{{ end }}
+
+            {{- if "disqus" | index .Params -}}
+                <div class="page-foot has-disqus">
+                    <div id="disqus_thread">
+                        <noscript>
+                            <p class="has-text-centered has-text-danger">Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">Disqus</a> comments.</p>
+                        </noscript>
+                        <p class="dsq-brlink has-text-centered">
+                            Comments powered by <a href="https://disqus.com">Disqus</a>.
+                        </p>
+                    </div>
+                </div>
+            {{- else -}}
+                <div class="page-foot">
+                </div>
+            {{- end -}}
+        </div>
+    </main>
+{{- end -}}

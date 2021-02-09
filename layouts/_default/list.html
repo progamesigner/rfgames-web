@@ -1,71 +1,71 @@
-{{ define "main" }}
+{{- define "main" -}}
+    {{- $background := .Param "background" | default "default" | printf "backgrounds/%s" -}}
+    {{- $overlay := .Param "overlay" | default "default" | printf "overlays/%s" -}}
 
-{{- $background := .Param "background" | default "default" | printf "backgrounds/%s" -}}
-{{- $overlay := .Param "overlay" | default "default" | printf "overlays/%s" -}}
-
-<main class="main is-list has-theme-{{ .Param "theme" | default "default" }}">
-    <div class="page-background">
-        {{- slice $ $background "1280,1920,3840" "jpg" .Title | partial "functions/responsive-image.html" -}}
-    </div>
-
-    <div class="page-overlay">
-        {{- slice $ $overlay "1280,1920,3840" "png" .Title false | partial "functions/responsive-image.html" -}}
-    </div>
-
-    <div class="container">
-        <div class="page-head">
-            {{ with .Param "header" }}
-            {{ if index . "image" }}
-            {{- $icon := index . "image" | printf "headers/%s.png" | resources.Get | fingerprint "sha512" -}}
-            <div class="page-head-icon">
-                <figure class="image">
-                    <img src="{{ $icon.RelPermalink }}" alt="{{ index . "title" | default $.Title | safeHTML }}">
-                </figure>
-            </div>
-            {{ end }}
-            {{ end }}
-            <div class="page-head-text">
-                {{ with .Param "header" }}
-                {{ with index . "subtitle" }}
-                <h3 class="subtitle">{{ . | safeHTML }}</h3>
-                {{ end }}
-                {{ with index . "title" }}
-                <h2 class="title">{{ . | safeHTML }}</h2>
-                {{ else }}
-                <h2 class="title">{{ $.Title | safeHTML }}</h2>
-                {{ end }}
-                {{ else }}
-                <h2 class="title">{{ .Title | safeHTML }}</h2>
-                {{ end }}
-            </div>
+    <main class="main is-list has-theme-{{ .Param "theme" | default "default" }}">
+        <div class="page-background">
+            {{- slice $ $background "1280,1920,3840" "jpg" .Title | partial "functions/responsive-image.html" -}}
         </div>
 
-        <div class="page-body">
-            <div class="content">
-                {{ .Content }}
+        <div class="page-overlay">
+            {{- slice $ $overlay "1280,1920,3840" "png" .Title false | partial "functions/responsive-image.html" -}}
+        </div>
 
-                <div class="columns is-multiline">
-                    {{ range .Pages }}
-                    {{- $menu := or (.Param "menu") (.Param "menus") | default dict -}}
-                    {{- $nav := "nav" | index $menu | default dict -}}
-                    {{- $url := "url" | index $nav | default .RelPermalink | printf -}}
-
-                    <div class="column">
-                        <a class="list-item button has-image" href="{{ $url }}">
+        <div class="container">
+            <div class="page-head">
+                {{- with .Param "header" -}}
+                    {{- if index . "image" -}}
+                        {{- $icon := index . "image" | printf "headers/%s.png" | resources.Get | fingerprint "sha512" -}}
+                        <div class="page-head-icon">
                             <figure class="image">
-                                {{- $button := .Param "button" | default "default" | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
-                                <img src="{{ $button.RelPermalink }}">
-                                <figcaption class="title">{{ .Title }}</figcaption>
+                                <img src="{{ $icon.RelPermalink }}" alt="{{ index . "title" | default $.Title | safeHTML }}">
                             </figure>
-                        </a>
-                    </div>
-                    {{ end }}
+                        </div>
+                    {{- end -}}
+                {{- end -}}
+                <div class="page-head-text">
+                    {{- with .Param "header" -}}
+                        {{- with index . "subtitle" -}}
+                            <h3 class="subtitle">{{- . | safeHTML -}}</h3>
+                        {{- end -}}
+
+                        {{- with index . "title" -}}
+                            <h2 class="title">{{- . | safeHTML -}}</h2>
+                        {{- else -}}
+                            <h2 class="title">{{- $.Title | safeHTML -}}</h2>
+                        {{- end -}}
+                    {{- else -}}
+                        <h2 class="title">{{- .Title | safeHTML -}}</h2>
+                    {{- end -}}
                 </div>
             </div>
-        </div>
 
-        <div class="page-foot">
+            <div class="page-body">
+                <div class="content">
+                    {{- .Content -}}
+
+                    <div class="columns is-multiline">
+                        {{- range .Pages -}}
+                            {{- $menu := or (.Param "menu") (.Param "menus") | default dict -}}
+                            {{- $nav := "nav" | index $menu | default dict -}}
+                            {{- $url := "url" | index $nav | default .RelPermalink | printf -}}
+
+                            <div class="column">
+                                <a class="list-item button has-image" href="{{ $url }}">
+                                    <figure class="image">
+                                        {{- $button := .Param "button" | default "default" | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
+                                        <img src="{{ $button.RelPermalink }}">
+                                        <figcaption class="title">{{- .Title -}}</figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        {{- end -}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-foot">
+            </div>
         </div>
-    </div>
-</main>
-{{ end }}
+    </main>
+{{- end -}}

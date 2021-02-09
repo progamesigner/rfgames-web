@@ -38,15 +38,15 @@
     <meta name="twitter:title" content="{{ $title }}">
     <meta name="twitter:description" content="{{ $description }}">
 
-    {{ with .Param "button" }}
+    {{- with .Param "button" -}}
         {{- $button := . | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
         <meta property="og:image" content="{{ $button.Permalink }}">
         <meta name="twitter:image" content="{{ $button.Permalink }}">
-    {{ else }}
+    {{- else -}}
         {{- $button := .Param "background" | default "default" | printf "backgrounds/%s-fallback.jpg" | resources.Get | fingerprint "sha512" -}}
         <meta property="og:image" content="{{ $button.Permalink }}">
         <meta name="twitter:image" content="{{ $button.Permalink }}">
-    {{ end }}
+    {{- end -}}
 
     <meta name="theme-color" content="#0D0D0D">
     <link rel="icon" href="{{ "/favicon-32.png" | absURL }}" sizes="32x32">
@@ -72,43 +72,43 @@
 </head>
 
 <body>
-    <span class="back-to-top">{{ partial "svgs/arrow-up.svg" $ }}</span>
+    <span class="back-to-top">{{- partial "svgs/arrow-up.svg" $ -}}</span>
 
-    {{ partial "layouts/header.html" . }}
+    {{- partial "layouts/header.html" . -}}
 
-    {{ block "main" . }}
+    {{- block "main" . -}}
         <main class="main">
-            {{ .Content }}
+            {{- .Content -}}
         </main>
-    {{ end }}
+    {{- end -}}
 
-    {{ partial "layouts/footer.html" . }}
+    {{- partial "layouts/footer.html" . -}}
 
     <script>
         window.__shared_states__ = {
             {{- with $files -}}
-            assets: {{ . | jsonify | safeJS }},
+                assets: {{ . | jsonify | safeJS }},
             {{- end -}}
 
             {{- with .Site.Config.Services.Disqus.Shortname -}}
-            disqus: '{{ . }}',
+                disqus: '{{ . }}',
             {{- end -}}
 
             {{- with .Site.Config.Services.GoogleAnalytics.ID -}}
-            gtag: '{{ . }}',
+                gtag: '{{ . }}',
             {{- end -}}
 
             page: {
                 {{- with .Params.disqusId -}}
-                id: '{{ . }}',
+                    id: '{{ . }}',
                 {{- else -}}
-                {{ with .File }}
-                id: '{{ .UniqueID }}',
-                {{- end -}}
+                    {{ with .File }}
+                        id: '{{ .UniqueID }}',
+                    {{- end -}}
                 {{- end -}}
 
                 {{- with .Permalink -}}
-                permalink: '{{ . | html }}',
+                    permalink: '{{ . | html }}',
                 {{- end -}}
 
                 title: '{{ $title }}'
