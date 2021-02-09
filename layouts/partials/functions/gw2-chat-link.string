@@ -26,12 +26,15 @@
 {{- end -}}
 
 {{- if $type | eq "build" -}}
+    {{- $defaultSkill := slice 0 0 -}}
+    {{- $defaultTrait := slice 0 0 0 0 -}}
+
     {{- with 2 | index . -}}
-        {{- $legends := "legends" | index . -}}
-        {{- $pets := "pets" | index . -}}
-        {{- $profession := "profession" | index . -}}
-        {{- $skills := "skills" | index . -}}
-        {{- $traits := "traits" | index . -}}
+        {{- $legends := "legends" | index . | default slice -}}
+        {{- $pets := "pets" | index . | default slice -}}
+        {{- $profession := "profession" | index . | lower -}}
+        {{- $skills := "skills" | index . | default slice | append $defaultSkill $defaultSkill $defaultSkill $defaultSkill $defaultSkill -}}
+        {{- $traits := "traits" | index . | default slice | append $defaultTrait $defaultTrait $defaultTrait -}}
 
         {{- $code = $code | append 13 -}}
         {{- $code = $code | append ($profession | slice $context | partial "functions/gw2-chat-link-profession-code.integer") -}}
@@ -51,17 +54,17 @@
             {{- $code = $code | append (mod $aquaticSkill 256) (div $aquaticSkill 256) -}}
         {{- end -}}
 
-        {{- if $profession | eq 4 | and $pets -}}
-            {{- $terrestrialPetId1 := 0 | index $pets -}}
-            {{- $terrestrialPetId2 := 1 | index $pets -}}
-            {{- $aquaticPetId1 := 2 | index $pets -}}
-            {{- $aquaticPetId2 := 3 | index $pets -}}
+        {{- if $profession | eq "ranger" -}}
+            {{- $terrestrialPetId1 := 0 | index $pets | default 0 -}}
+            {{- $terrestrialPetId2 := 1 | index $pets | default 0 -}}
+            {{- $aquaticPetId1 := 2 | index $pets | default 0 -}}
+            {{- $aquaticPetId2 := 3 | index $pets | default 0 -}}
 
-            {{- $code = $code | append $terrestrialPetId1 $terrestrialPetId2 $aquaticPetId1 $aquaticPetId2 -}}
+            {{- $code = $code | append (mod $terrestrialPetId1 256) (mod $terrestrialPetId2 256) (mod $aquaticPetId1 256) (mod $aquaticPetId2 256) -}}
             {{- $code = $code | append 0 0 0 0 0 0 0 0 0 0 0 0 -}}
         {{- end -}}
 
-        {{- if $profession | eq 9 | and $legends -}}
+        {{- if $profession | eq "revenant" -}}
             {{- $terrestrialLegend1 := 0 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
             {{- $terrestrialLegend2 := 1 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
             {{- $aquaticLegend1 := 2 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
@@ -73,15 +76,12 @@
             {{- $inactiveAquaticSkill2 := 8 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
             {{- $inactiveAquaticSkill3 := 9 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
 
-            {{- $inactiveSkillValue1 := 0 | add (math.Pow $inactiveTerrestrialSkill1 2) | add (math.Pow $inactiveTerrestrialSkill2 0) -}}
-            {{- $inactiveSkillValue2 := 0 | add (math.Pow $inactiveTerrestrialSkill3 2) | add (math.Pow $inactiveAquaticSkill1 0) -}}
-            {{- $inactiveSkillValue3 := 0 | add (math.Pow $inactiveAquaticSkill2 2) | add (math.Pow $inactiveAquaticSkill3 0) -}}
-
-            {{- $code = $code | append $terrestrialLegend1 $terrestrialLegend2 $aquaticLegend1 $aquaticLegend2 -}}
-            {{- $code = $code | append $inactiveSkillValue1 $inactiveSkillValue2 $inactiveSkillValue3 -}}
+            {{- $code = $code | append (mod $terrestrialLegend1 256) (mod $terrestrialLegend2 256) (mod $aquaticLegend1 256) (mod $aquaticLegend2 256) -}}
+            {{- $code = $code | append (mod $inactiveTerrestrialSkill1 256) (div $inactiveTerrestrialSkill1 256) (mod $inactiveTerrestrialSkill2 256) (div $inactiveTerrestrialSkill2 256) (mod $inactiveTerrestrialSkill3 256) (div $inactiveTerrestrialSkill3 256) -}}
+            {{- $code = $code | append (mod $inactiveAquaticSkill1 256) (div $inactiveAquaticSkill1 256) (mod $inactiveAquaticSkill2 256) (div $inactiveAquaticSkill2 256) (mod $inactiveAquaticSkill3 256) (div $inactiveAquaticSkill3 256) -}}
         {{- end -}}
 
-        {{- if and ($profession | ne 4) ($profession | ne 9) -}}
+        {{- if and ($profession | ne "ranger") ($profession | ne "revenant") -}}
             {{- $code = $code | append 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -}}
         {{- end -}}
     {{- end -}}
