@@ -20,45 +20,31 @@
 {{- end -}}
 
 {{- with $data.name -}}
-    {{- $slug := . | slice $context | partial "functions/gw2-data-slugify.string" -}}
-
     {{- if $type | eq "effect" -}}
         {{- $data = . | dict "id" | merge $data -}}
     {{- end -}}
 
     {{- if $type | eq "profession" -}}
-        {{- $slugToId := slice $context | partialCached "functions/gw2-data-profession-slug-to-id.dict" -}}
-        {{- $slugToElite := slice $context | partialCached "functions/gw2-data-profession-slug-to-elite.dict" -}}
-
-        {{- $data = $slug | index $slugToId | dict "id" | merge $data -}}
-
-        {{- with $slug | index $slugToElite -}}
+        {{- $data = . | slice $context "profession" | partial "functions/gw2-data-name-to-id.string" | dict "id" | merge $data -}}
+        {{- with . | slice $context | partial "functions/gw2-data-profession-name-to-elite-id.integer" -}}
             {{- $data = . | dict "elite" | merge $data -}}
         {{- end -}}
     {{- end -}}
 
     {{- if $type | eq "skill" -}}
-        {{- $slugToId := slice $context | partialCached "functions/gw2-data-skill-slug-to-id.dict" -}}
-        {{- $slugToName := slice $context | partialCached "functions/gw2-data-skill-slug-to-name.dict" -}}
-
-        {{- $data = $slug | index $slugToId | dict "id" | merge $data -}}
-        {{- $data = $slug | index $slugToName | dict "text" | merge $data -}}
+        {{- $data = . | slice $context "skill" | partial "functions/gw2-data-name-to-id.integer" | dict "id" | merge $data -}}
     {{- end -}}
 
     {{- if $type | eq "specialization" -}}
-        {{- $slugToId := slice $context | partialCached "functions/gw2-data-specialization-slug-to-id.dict" -}}
-
-        {{- $data = $slug | index $slugToId | dict "id" | merge $data -}}
+        {{- $data = . | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" | dict "id" | merge $data -}}
     {{- end -}}
 
     {{- if $type | eq "trait" -}}
-        {{- $slugToId := slice $context | partialCached "functions/gw2-data-trait-slug-to-id.dict" -}}
-
-        {{- $data = $slug | index $slugToId | dict "id" | merge $data -}}
+        {{- $data = . | slice $context "trait" | partial "functions/gw2-data-name-to-id.integer" | dict "id" | merge $data -}}
     {{- end -}}
 
-    {{- if not $data.text -}}
-        {{- $data = . | dict "text" | merge $data -}}
+    {{- if "text" | index $data | not -}}
+        {{- $data = . | slice $context $type | partial "functions/gw2-data-name-to-name.string" | dict "text" | merge $data -}}
     {{- end -}}
 
     {{- if "id" | index $data | not -}}

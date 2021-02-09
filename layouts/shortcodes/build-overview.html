@@ -43,7 +43,7 @@
     {{- $id := 1 | index . -}}
     {{- $traits := . | after 2 -}}
 
-    {{- $id | dict "disable-text" true "id" | slice $context "specialization" false | partial "elements/embed.html" -}}
+    {{- $id | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" | dict "disable-text" true "id" | slice $context "specialization" false | partial "elements/embed.html" -}}
 {{- end -}}
 
 <div class="page-section-build-overview">

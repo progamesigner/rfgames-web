@@ -344,7 +344,7 @@
         {{- $activeTraitlines = $activeTraitlines | append $traitline -}}
     {{- end -}}
 
-    {{- with 2 | index . -}}
+    {{- with 2 | index . | slice $context "skill" | partial "functions/gw2-data-name-to-id.integer" -}}
         {{- $skill := dict -}}
         {{- $skill = . | dict "id" | merge $skill -}}
         {{- $skill = delimit $activeTraitlines "," | dict "active-traitlines" | merge $skill -}}
@@ -364,13 +364,12 @@
     {{- end -}}
 
     {{- with 1 | index . -}}
-        {{- $id := 0 | index . -}}
         {{- $traits := . | after 1 -}}
 
         {{- $classes := slice "is-traitline" -}}
 
         {{- $traitline := dict -}}
-        {{- $traitline = $id | dict "id" | merge $traitline -}}
+        {{- $traitline = 0 | index . | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" | dict "id" | merge $traitline -}}
         {{- $traitline = delimit $traits "," | dict "traits" | merge $traitline -}}
         {{- $traitline = delimit $activeTraitlines "," | dict "active-traitlines" | merge $traitline -}}
 

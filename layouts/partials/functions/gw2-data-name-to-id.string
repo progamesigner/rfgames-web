@@ -1,0 +1,18 @@
+{{- $context := 0 | index . -}}
+{{- $kind := 1 | index . -}}
+{{- $name := 2 | index . -}}
+
+{{- $id := $name -}}
+{{- $slug := $name | slice $context | partial "functions/gw2-data-slugify.string" -}}
+
+{{- if $name | string | eq $name -}}
+    {{- $slugToId := dict -}}
+
+    {{- if $kind | eq "profession" -}}
+        {{- $slugToId = slice $context | partialCached "functions/gw2-data-profession-slug-to-id.dict" -}}
+    {{- end -}}
+
+    {{- $id = $slug | index $slugToId | default "" | string -}}
+{{- end -}}
+
+{{- return $id -}}

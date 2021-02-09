@@ -1,0 +1,26 @@
+{{- $context := 0 | index . -}}
+{{- $kind := 1 | index . -}}
+{{- $name := 2 | index . -}}
+
+{{- $id := $name -}}
+{{- $slug := $name | slice $context | partial "functions/gw2-data-slugify.string" -}}
+
+{{- if $name | string | eq $name -}}
+    {{- $slugToId := dict -}}
+
+    {{- if $kind | eq "skill" -}}
+        {{- $slugToId = slice $context | partialCached "functions/gw2-data-skill-slug-to-id.dict" -}}
+    {{- end -}}
+
+    {{- if $kind | eq "specialization" -}}
+        {{- $slugToId = slice $context | partialCached "functions/gw2-data-specialization-slug-to-id.dict" -}}
+    {{- end -}}
+
+    {{- if $kind | eq "trait" -}}
+        {{- $slugToId = slice $context | partialCached "functions/gw2-data-trait-slug-to-id.dict" -}}
+    {{- end -}}
+
+    {{- $id = $slug | index $slugToId | default 0 | int -}}
+{{- end -}}
+
+{{- return $id -}}
