@@ -3,6 +3,6 @@
 
 {{- $positionCodes := "gw2-chat-link-trait-position-code" | index $context.Site.Data -}}
 
-{{- $code := $position | index $positionCodes | default 0 -}}
+{{- $code := $position | index $positionCodes | default 0 | int -}}
 
 {{- return $code -}}

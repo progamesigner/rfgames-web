@@ -3,6 +3,6 @@
 
 {{- $skillCodes := slice $context | partialCached "functions/gw2-data-skill-palette.dict" -}}
 
-{{- $code := $id | index $skillCodes | default 0 -}}
+{{- $code := $id | index $skillCodes | default 0 | int -}}
 
 {{- return $code -}}

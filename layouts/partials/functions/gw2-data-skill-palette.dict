@@ -6,7 +6,7 @@
 
 {{- range $professions -}}
     {{- range .skills_by_palette -}}
-        {{- $paletteId := 0 | index . -}}
+        {{- $paletteId := 0 | index . | int -}}
         {{- $skillId := 1 | index . | string -}}
         {{- $data = dict $skillId $paletteId | merge $data -}}
     {{- end -}}

@@ -1,8 +1,8 @@
 {{- $context := 0 | index . -}}
 {{- $legend := 1 | index . | string | lower -}}
 
-{{- $legendCodes := "gw2-chat-link-legend-code" | index $context.Site.Data -}}
+{{- $legendCodes := slice $context | partialCached "functions/gw2-data-legend-name-to-code.dict" -}}
 
-{{- $code := $legend | index $legendCodes | default 0 -}}
+{{- $code := $legend | lower | index $legendCodes | default 0 | int -}}
 
 {{- return $code -}}
