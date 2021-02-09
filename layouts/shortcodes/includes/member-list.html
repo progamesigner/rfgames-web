@@ -1,56 +1,56 @@
 {{- $members := index .Site.Data "members" -}}
 
 <div class="columns is-centered is-multiline">
-    {{ range $members }}
-    {{- $avatar := index . "avatar" | printf "images/members/%s.jpg" | resources.Get | fingerprint "sha512" -}}
+    {{- range $members -}}
+        {{- $avatar := index . "avatar" | printf "images/members/%s.jpg" | resources.Get | fingerprint "sha512" -}}
 
-    <div class="column">
-        <div class="member">
-            <figure class="member-avatar image">
-                <img src="{{ $avatar.RelPermalink }}">
-            </figure>
-            <div class="member-nameplate">
-                <div class="member-nameplate-side is-front">
-                    <span class="member-nameplate-item">{{ index . "name" }}</span>
-                </div>
-                <div class="member-nameplate-side is-back">
-                    {{ with index . "accounts" }}
-                        {{ with index . "account" }}
-                        <div class="member-nameplate-item">
-                            <span class="icon icon-account-name">
-                                {{ partial "svgs/account.svg" $ }}
-                            </span>
-                            <span class="member-nameplate-item-text">{{ . }}</span>
-                        </div>
-                        {{ end }}
-                        {{ with index . "discord" }}
-                        <div class="member-nameplate-item">
-                            <span class="icon icon-discord">
-                                {{ partial "svgs/discord.svg" $ }}
-                            </span>
-                            <span class="member-nameplate-item-text">{{ . }}</span>
-                        </div>
-                        {{ end }}
-                        {{ with index . "youtube" }}
-                        <a class="member-nameplate-item" href="https://www.youtube.com/channel/{{ . }}">
-                            <span class="icon icon-youtube">
-                                {{ partial "svgs/youtube.svg" $ }}
-                            </span>
-                            <span class="member-nameplate-item-text">YouTube</span>
-                        </a>
-                        {{ end }}
-                        {{ with index . "twitch" }}
-                        <a class="member-nameplate-item" href="https://www.twitch.tv/{{ . }}">
-                            <span class="icon icon-twitch">
-                                {{ partial "svgs/twitch.svg" $ }}
-                            </span>
-                            <span class="member-nameplate-item-text">Twitch</span>
-                        </a>
-                        {{ end }}
-                    {{ end }}
+        <div class="column">
+            <div class="member">
+                <figure class="member-avatar image">
+                    <img src="{{ $avatar.RelPermalink }}">
+                </figure>
+                <div class="member-nameplate">
+                    <div class="member-nameplate-side is-front">
+                        <span class="member-nameplate-item">{{ index . "name" }}</span>
+                    </div>
+                    <div class="member-nameplate-side is-back">
+                        {{- with index . "accounts" -}}
+                            {{- with index . "account" -}}
+                                <div class="member-nameplate-item">
+                                    <span class="icon icon-account-name">
+                                        {{- partial "svgs/account.svg" $ -}}
+                                    </span>
+                                    <span class="member-nameplate-item-text">{{ . }}</span>
+                                </div>
+                            {{- end -}}
+                            {{- with index . "discord" -}}
+                                <div class="member-nameplate-item">
+                                    <span class="icon icon-discord">
+                                        {{- partial "svgs/discord.svg" $ -}}
+                                    </span>
+                                    <span class="member-nameplate-item-text">{{ . }}</span>
+                                </div>
+                            {{- end -}}
+                            {{- with index . "youtube" -}}
+                                <a class="member-nameplate-item" href="https://www.youtube.com/channel/{{ . }}">
+                                    <span class="icon icon-youtube">
+                                        {{- partial "svgs/youtube.svg" $ -}}
+                                    </span>
+                                    <span class="member-nameplate-item-text">YouTube</span>
+                                </a>
+                            {{- end -}}
+                            {{- with index . "twitch" -}}
+                                <a class="member-nameplate-item" href="https://www.twitch.tv/{{ . }}">
+                                    <span class="icon icon-twitch">
+                                        {{- partial "svgs/twitch.svg" $ -}}
+                                    </span>
+                                    <span class="member-nameplate-item-text">Twitch</span>
+                                </a>
+                            {{- end -}}
+                        {{- end -}}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{ end }}
+    {{- end -}}
 </div>

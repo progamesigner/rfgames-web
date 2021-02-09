@@ -6,9 +6,9 @@
 {{- $linkedWorlds := $worlds | after 1 -}}
 
 {{- range $mainWorld -}}
-  {{- if len $linkedWorlds | lt 0 -}}
-    <strong>{{ . }}</strong> (linked with <strong>{{ delimit $linkedWorlds "</strong> and <strong>" }}</strong>)
-  {{- else -}}
-    <strong>{{ . }}</strong>
-  {{- end -}}
+    {{- if len $linkedWorlds | lt 0 -}}
+        <strong>{{ . }}</strong> (linked with <strong>{{ delimit $linkedWorlds "</strong> and <strong>" }}</strong>)
+    {{- else -}}
+        <strong>{{ . }}</strong>
+    {{- end -}}
 {{- end -}}
