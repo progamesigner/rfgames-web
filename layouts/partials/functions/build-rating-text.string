@@ -2,6 +2,9 @@
 {{- $kind := 1 | index . | string | lower -}}
 {{- $rating := 2 | index . | int | default 0 -}}
 
-{{- $kindMaps := "build-rating-text" | index $context.Site.Data -}}
+{{- $ratingMaps := "build-ratings" | index $context.Site.Data -}}
+{{- $ratingTexts := "texts" | index $ratingMaps -}}
 
-{{- return (printf "%s-%d" $kind $rating | index $kindMaps | default "Unrated") -}}
+{{- $text := printf "%s-%d" $kind $rating | index $ratingTexts | default "Unrated" -}}
+
+{{- return $text -}}

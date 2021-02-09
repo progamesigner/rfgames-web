@@ -1,6 +1,9 @@
 {{- $context := 0 | index . -}}
 {{- $kind := 1 | index . | string | lower -}}
 
-{{- $kindMaps := "build-rating-title" | index $context.Site.Data -}}
+{{- $ratingMaps := "build-ratings" | index $context.Site.Data -}}
+{{- $ratingTitles := "titles" | index $ratingMaps -}}
 
-{{- return ($kind | index $kindMaps | default "Unknown") -}}
+{{- $title := $kind | index $ratingTitles | default "Unknown" -}}
+
+{{- return $title -}}
