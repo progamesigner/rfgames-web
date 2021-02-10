@@ -3,6 +3,6 @@
 
 {{- $guildwars2 := "guildwars2" | index $context.Site.Data | default dict -}}
 {{- $prefetch := "prefetch" | index $guildwars2 | default dict -}}
-{{- $ids := $type | index $prefetch | default slice -}}
+{{- $ids := $type | index $prefetch | default slice | uniq -}}
 
 {{- return $ids -}}
