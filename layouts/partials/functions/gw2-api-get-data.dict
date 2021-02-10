@@ -1,9 +1,15 @@
 {{- $context := 0 | index . -}}
 {{- $url := 1 | index . -}}
+{{- $prefetchIds := 2 | index . | default slice -}}
 
 {{- $data := dict -}}
+{{- $entities := dict -}}
 
-{{- $entities := slice $context $url | partial "functions/gw2-api-paginated-data.dict" -}}
+{{- if $prefetchIds | len | lt 0 -}}
+    {{- $entities = slice $context $url $prefetchIds | partial "functions/gw2-api-paginated-data-by-ids.dict" -}}
+{{- else -}}
+    {{- $entities = slice $context $url | partial "functions/gw2-api-paginated-data.dict" -}}
+{{- end -}}
 
 {{- range $entities -}}
     {{- $id := .id | string -}}

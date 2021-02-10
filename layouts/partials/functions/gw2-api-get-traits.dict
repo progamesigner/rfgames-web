@@ -1,5 +1,7 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := slice $context "/v2/traits" | partial "functions/gw2-api-get-data.list" -}}
+{{- $prefetchIds := slice $context "traits" | partial "functions/gw2-data-prefetch-ids.list" -}}
+
+{{- $data := slice $context "/v2/traits" $prefetchIds | partial "functions/gw2-api-get-data.list" -}}
 
 {{- return $data -}}

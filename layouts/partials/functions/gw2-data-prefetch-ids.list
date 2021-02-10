@@ -1,0 +1,8 @@
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . -}}
+
+{{- $guildwars2 := "guildwars2" | index $context.Site.Data | default dict -}}
+{{- $prefetch := "prefetch" | index $guildwars2 | default dict -}}
+{{- $ids := $type | index $prefetch | default slice -}}
+
+{{- return $ids -}}
