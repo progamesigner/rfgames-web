@@ -8,6 +8,10 @@
 {{- if $name | string | eq $name -}}
     {{- $slugToId := dict -}}
 
+    {{- if $type | eq "item" -}}
+        {{- $slugToId = slice $context | partialCached "functions/gw2-data-item-slug-to-id.dict" -}}
+    {{- end -}}
+
     {{- if $type | eq "skill" -}}
         {{- $slugToId = slice $context | partialCached "functions/gw2-data-skill-slug-to-id.dict" -}}
     {{- end -}}

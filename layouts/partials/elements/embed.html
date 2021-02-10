@@ -24,6 +24,10 @@
         {{- $data = . | dict "id" | merge $data -}}
     {{- end -}}
 
+    {{- if $type | eq "item" -}}
+        {{- $data = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" | dict "id" | merge $data -}}
+    {{- end -}}
+
     {{- if $type | eq "profession" -}}
         {{- $data = . | slice $context "profession" | partial "functions/gw2-data-name-to-id.string" | dict "id" | merge $data -}}
         {{- with . | slice $context | partial "functions/gw2-data-profession-name-to-elite-id.integer" -}}
