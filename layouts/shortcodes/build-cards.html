@@ -286,7 +286,7 @@
 
 {{- define "__rfgames_shortcode_includes__build_equipment_trinket__" -}}
     {{- $context := 0 | index . -}}
-    {{- $classes := 2 | index . | printf "is-%s" | slice "is-trinket" -}}
+    {{- $classes := 1 | index . | printf "is-%s" | slice "is-trinket" -}}
 
     {{- with 2 | index . -}}
         {{- $id := "id" | index . -}}
