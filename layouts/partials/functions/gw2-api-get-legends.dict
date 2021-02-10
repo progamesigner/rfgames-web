@@ -1,12 +1,5 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := dict -}}
-
-{{- $legends := slice $context "/v2/legends" | partial "functions/gw2-api-paginated-data.list" -}}
-
-{{- range $legends -}}
-    {{- $id := .id | string -}}
-    {{- $data = . | dict $id | merge $data -}}
-{{- end -}}
+{{- $data := slice $context "/v2/legends" | partial "functions/gw2-api-get-data.list" -}}
 
 {{- return $data -}}

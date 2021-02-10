@@ -1,0 +1,13 @@
+{{- $context := 0 | index . -}}
+{{- $url := 1 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $entities := slice $context $url | partial "functions/gw2-api-paginated-data.dict" -}}
+
+{{- range $entities -}}
+    {{- $id := .id | string -}}
+    {{- $data = . | dict $id | merge $data -}}
+{{- end -}}
+
+{{- return $data -}}
