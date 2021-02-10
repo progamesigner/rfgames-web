@@ -1,4 +1,4 @@
-{{- $members := index .Site.Data "members" -}}
+{{- $members := "members" | index .Site.Data -}}
 
 <div class="columns is-centered is-multiline">
     {{- range $members -}}

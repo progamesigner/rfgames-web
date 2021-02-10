@@ -1,60 +1,60 @@
 [
-  {
-    "name": "Lee",
-    "avatar": "lee",
-    "accounts": {
-      "account": "Leo.8142",
-      "discord": "Lee#6622",
-      "youtube": "UC2aZ2w1igIAjmd5xDALJh3Q"
+    {
+        "name": "Lee",
+        "avatar": "lee",
+        "accounts": {
+            "account": "Leo.8142",
+            "discord": "Lee#6622",
+            "youtube": "UC2aZ2w1igIAjmd5xDALJh3Q"
+        }
+    },
+    {
+        "name": "Winee",
+        "avatar": "winee",
+        "accounts": {
+            "account": "winee.5082",
+            "discord": "Winee#9225"
+        }
+    },
+    {
+        "name": "Galaxy Raccoon",
+        "avatar": "galaxy-raccoon",
+        "accounts": {
+            "account": "YangJieShiou.3859",
+            "discord": "Yang Jie Shiou#9611",
+            "youtube": "UCnNYpFTcmB3Mq-vw-1VQ32A"
+        }
+    },
+    {
+        "name": "Vin",
+        "avatar": "vin",
+        "accounts": {
+            "account": "EricChou.2906",
+            "discord": "ShaDin#4081"
+        }
+    },
+    {
+        "name": "Negativethree",
+        "avatar": "negativethree",
+        "accounts": {
+            "account": "gosineiga.4716",
+            "discord": "33 [Rush]#4992"
+        }
+    },
+    {
+        "name": "JR",
+        "avatar": "jr",
+        "accounts": {
+            "account": "the Jhang.9813",
+            "discord": "Jr#1974"
+        }
+    },
+    {
+        "name": "Ringo",
+        "avatar": "ringo",
+        "accounts": {
+            "account": "Mordecai.4356",
+            "discord": "domo#2757"
+        }
     }
-  },
-  {
-    "name": "Winee",
-    "avatar": "winee",
-    "accounts": {
-      "account": "winee.5082",
-      "discord": "Winee#9225"
-    }
-  },
-  {
-    "name": "Galaxy Raccoon",
-    "avatar": "galaxy-raccoon",
-    "accounts": {
-      "account": "YangJieShiou.3859",
-      "discord": "Yang Jie Shiou#9611",
-      "youtube": "UCnNYpFTcmB3Mq-vw-1VQ32A"
-    }
-  },
-  {
-    "name": "Vin",
-    "avatar": "vin",
-    "accounts": {
-      "account": "EricChou.2906",
-      "discord": "ShaDin#4081"
-    }
-  },
-  {
-    "name": "Negativethree",
-    "avatar": "negativethree",
-    "accounts": {
-      "account": "gosineiga.4716",
-      "discord": "33 [Rush]#4992"
-    }
-  },
-  {
-    "name": "JR",
-    "avatar": "jr",
-    "accounts": {
-      "account": "the Jhang.9813",
-      "discord": "Jr#1974"
-    }
-  },
-  {
-    "name": "Ringo",
-    "avatar": "ringo",
-    "accounts": {
-      "account": "Mordecai.4356",
-      "discord": "domo#2757"
-    }
-  }
 ]
