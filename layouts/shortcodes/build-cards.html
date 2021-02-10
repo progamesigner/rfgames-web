@@ -99,7 +99,7 @@
     {{- $classes := 1 | index . | printf "is-%s" | slice "is-weapon" -}}
 
     {{- with 2 | index . -}}
-        {{- $type := "type" | index . -}}
+        {{- $kind := "kind" | index . -}}
 
         {{- $weapon := "weapon" | index . -}}
         {{- $weapon1 := "weapon1" | index . -}}
@@ -109,7 +109,7 @@
         {{- $infusion1 := "infusion1" | index . -}}
         {{- $infusion2 := "infusion2" | index . -}}
 
-        {{- if $type | eq "DualWield" -}}
+        {{- if $kind | eq "DualWield" -}}
             {{- with $weapon1 -}}
                 {{- $id := "id" | index . -}}
                 {{- $name := "name" | index . -}}
@@ -160,7 +160,7 @@
                 {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes $item $upgrade -}}
             {{- end -}}
         {{- end -}}
-        {{- if $type | eq "MainHandOnly" -}}
+        {{- if $kind | eq "MainHandOnly" -}}
             {{- with $weapon1 -}}
                 {{- $id := "id" | index . -}}
                 {{- $name := "name" | index . -}}
@@ -195,7 +195,7 @@
                 {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes $item -}}
             {{- end -}}
         {{- end -}}
-        {{- if $type | eq "OffHandOnly" -}}
+        {{- if $kind | eq "OffHandOnly" -}}
             {{- with . -}}
                 {{- $item := dict "id" -1 -}}
 
@@ -230,7 +230,7 @@
                 {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes $item $upgrade -}}
             {{- end -}}
         {{- end -}}
-        {{- if $type | eq "TwoHand" -}}
+        {{- if $kind | eq "TwoHand" -}}
             {{- with $weapon -}}
                 {{- $id := "id" | index . -}}
                 {{- $name := "name" | index . -}}
