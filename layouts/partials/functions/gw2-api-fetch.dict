@@ -1,0 +1,14 @@
+{{- $context := 0 | index . -}}
+{{- $url := 1 | index . -}}
+{{- $prefetchIds := 2 | index . | default slice -}}
+
+{{- $data := dict -}}
+
+{{- $entities := slice $context $url $prefetchIds | partial "functions/gw2-api-fetch-paginated.list" -}}
+
+{{- range $entities -}}
+    {{- $id := .id | string -}}
+    {{- $data = . | dict $id | merge $data -}}
+{{- end -}}
+
+{{- return $data -}}

@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
-{{- $worldIds := 1 | index . -}}
+{{- $worldIds := 1 | index . | default slice -}}
 
-{{- $data := string $worldIds | dict "ids" | slice $context "/v2/worlds" | partial "functions/gw2-api-url.string" | getJSON -}}
+{{- $data := slice $context "/v2/worlds" $worldIds | partial "functions/gw2-api-fetch.dict" -}}
 
 {{- return $data -}}

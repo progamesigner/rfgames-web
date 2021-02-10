@@ -24,7 +24,7 @@
     {{- end -}}
 
     {{- $worldIds := $mainWorldIds | append $linkedWorldIds -}}
-    {{- $worldData := delimit $worldIds "," | slice $context | partial "functions/gw2-api-get-worlds-by-world-ids.dict" -}}
+    {{- $worldData := $worldIds | slice $context | partial "functions/gw2-api-get-worlds-by-world-ids.dict" -}}
 
     {{- range $worldData -}}
         {{- $worlds = $worlds | append .name -}}

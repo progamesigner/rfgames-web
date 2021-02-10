@@ -2,6 +2,6 @@
 
 {{- $prefetchIds := slice $context "skills" | partial "functions/gw2-data-prefetch-ids.list" -}}
 
-{{- $data := slice $context "/v2/skills" $prefetchIds | partial "functions/gw2-api-get-data.list" -}}
+{{- $data := slice $context "/v2/skills" $prefetchIds | partial "functions/gw2-api-fetch.dict" -}}
 
 {{- return $data -}}
