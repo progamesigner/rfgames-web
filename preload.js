@@ -14,7 +14,8 @@ const {
   map,
   max,
   reduce,
-  tap
+  tap,
+  zip
 } = require('lodash/fp')
 const {
   default: fetch
@@ -150,7 +151,10 @@ const transformers = [
       reduce(concat, []),
       map(getter => getter(specializations)),
       filter(({ elite }) => elite),
-      map(eliteSpecialization => [slugify(eliteSpecialization.name), professions[eliteSpecialization.profession].name])
+      map(eliteSpecialization => [
+        slugify(eliteSpecialization.name),
+        professions[eliteSpecialization.profession].name
+      ])
     )(professions))
 
     const professionSlugToId = {
@@ -169,11 +173,32 @@ const transformers = [
       reduce(concat, []),
       map(getter => getter(specializations)),
       filter(({ elite }) => elite),
-      map(eliteSpecialization => [slugify(eliteSpecialization.name), eliteSpecialization.id])
+      map(eliteSpecialization => [
+        slugify(eliteSpecialization.name),
+        eliteSpecialization.id
+      ])
     )(professions))
 
     return saveToPreloadData('profession-slug-to-elite', professionSlugToElite)
       .then(() => console.log('Prepared "profession-slug-to-elite" done!'))
+  },
+  ({ legends, skills }) => {
+    const legendNameToCode = fromPairs(zip(
+      flow(
+        Object.values,
+        map(get('swap')),
+        map(get),
+        map(getter => getter(skills)),
+        map(legendSwapSkill => slugify(legendSwapSkill.name.replace(/Legendary (.+) Stance/, '$1')))
+      )(legends),
+      flow(
+        Object.values,
+        map(get('code')),
+      )(legends)
+    ))
+
+    return saveToPreloadData('legend-name-to-code', legendNameToCode)
+      .then(() => console.log('Prepared "legend-name-to-code" done!'))
   },
 ]
 
