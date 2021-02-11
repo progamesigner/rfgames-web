@@ -6,13 +6,11 @@
 {{- $slug := $name | slice $context | partial "functions/gw2-data-slugify.string" -}}
 
 {{- if $name | string | eq $name -}}
-    {{- $slugToId := dict -}}
+    {{- $slugToId := slice $context | partialCached "functions/gw2-data-slug-to-id.dict" -}}
 
-    {{- if $type | eq "profession" -}}
-        {{- $slugToId = slice $context | partialCached "functions/gw2-data-profession-slug-to-id.dict" -}}
+    {{- with $type | index $slugToId -}}
+        {{- $id = $slug | index . | default "" | string -}}
     {{- end -}}
-
-    {{- $id = $slug | index $slugToId | default "" | string -}}
 {{- end -}}
 
 {{- return $id -}}

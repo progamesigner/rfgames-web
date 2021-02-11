@@ -6,7 +6,7 @@
 {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
 
 {{- range $professions -}}
-    {{- range .skills_by_palette -}}
+    {{- range "skills_by_palette" | index . -}}
         {{- $paletteId := 0 | index . | int -}}
         {{- $skillId := 1 | index . | string -}}
         {{- $data = $paletteId | dict $skillId | merge $data -}}
@@ -15,27 +15,29 @@
 
 {{- $revenantSkillMaxIds := dict "heal" 0 "utility1" 0 "utility2" 0 "utility3" 0 "elite" 0 -}}
 {{- range $legends -}}
-    {{- with .heal -}}
+    {{- with "heal" | index . -}}
         {{- if "heal" | index $revenantSkillMaxIds | gt . -}}
             {{- $revenantSkillMaxIds = . | dict "heal" | merge $revenantSkillMaxIds -}}
         {{- end -}}
     {{- end -}}
-    {{- with 0 | index .utilities -}}
-        {{- if "utility1" | index $revenantSkillMaxIds | gt . -}}
-            {{- $revenantSkillMaxIds = . | dict "utility1" | merge $revenantSkillMaxIds -}}
+    {{- with "utilities" | index . -}}
+        {{- with 0 | index . -}}
+            {{- if "utility1" | index $revenantSkillMaxIds | gt . -}}
+                {{- $revenantSkillMaxIds = . | dict "utility1" | merge $revenantSkillMaxIds -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with 1 | index . -}}
+            {{- if "utility2" | index $revenantSkillMaxIds | gt . -}}
+                {{- $revenantSkillMaxIds = . | dict "utility2" | merge $revenantSkillMaxIds -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with 2 | index . -}}
+            {{- if "utility3" | index $revenantSkillMaxIds | gt . -}}
+                {{- $revenantSkillMaxIds = . | dict "utility3" | merge $revenantSkillMaxIds -}}
+            {{- end -}}
         {{- end -}}
     {{- end -}}
-    {{- with 1 | index .utilities -}}
-        {{- if "utility2" | index $revenantSkillMaxIds | gt . -}}
-            {{- $revenantSkillMaxIds = . | dict "utility2" | merge $revenantSkillMaxIds -}}
-        {{- end -}}
-    {{- end -}}
-    {{- with 2 | index .utilities -}}
-        {{- if "utility3" | index $revenantSkillMaxIds | gt . -}}
-            {{- $revenantSkillMaxIds = . | dict "utility3" | merge $revenantSkillMaxIds -}}
-        {{- end -}}
-    {{- end -}}
-    {{- with .elite -}}
+    {{- with "elite" | index . -}}
         {{- if "elite" | index $revenantSkillMaxIds | gt . -}}
             {{- $revenantSkillMaxIds = . | dict "elite" | merge $revenantSkillMaxIds -}}
         {{- end -}}
@@ -43,27 +45,29 @@
 {{- end -}}
 
 {{- range $legends -}}
-    {{- with .heal -}}
+    {{- with "heal" | index . -}}
         {{- $paletteId := "heal" | index $revenantSkillMaxIds | string | index $data | int -}}
         {{- $skillId := . | string -}}
         {{- $data = $paletteId | dict $skillId | merge $data -}}
     {{- end -}}
-    {{- with 0 | index .utilities -}}
-        {{- $paletteId := "utility1" | index $revenantSkillMaxIds | string | index $data | int -}}
-        {{- $skillId := . | string -}}
-        {{- $data = $paletteId | dict $skillId | merge $data -}}
+    {{- with "utilities" | index . -}}
+        {{- with 0 | index . -}}
+            {{- $paletteId := "utility1" | index $revenantSkillMaxIds | string | index $data | int -}}
+            {{- $skillId := . | string -}}
+            {{- $data = $paletteId | dict $skillId | merge $data -}}
+        {{- end -}}
+        {{- with 1 | index . -}}
+            {{- $paletteId := "utility2" | index $revenantSkillMaxIds | string | index $data | int -}}
+            {{- $skillId := . | string -}}
+            {{- $data = $paletteId | dict $skillId | merge $data -}}
+        {{- end -}}
+        {{- with 2 | index . -}}
+            {{- $paletteId := "utility3" | index $revenantSkillMaxIds | string | index $data | int -}}
+            {{- $skillId := . | string -}}
+            {{- $data = $paletteId | dict $skillId | merge $data -}}
+        {{- end -}}
     {{- end -}}
-    {{- with 1 | index .utilities -}}
-        {{- $paletteId := "utility2" | index $revenantSkillMaxIds | string | index $data | int -}}
-        {{- $skillId := . | string -}}
-        {{- $data = $paletteId | dict $skillId | merge $data -}}
-    {{- end -}}
-    {{- with 2 | index .utilities -}}
-        {{- $paletteId := "utility3" | index $revenantSkillMaxIds | string | index $data | int -}}
-        {{- $skillId := . | string -}}
-        {{- $data = $paletteId | dict $skillId | merge $data -}}
-    {{- end -}}
-    {{- with .elite -}}
+    {{- with "elite" | index . -}}
         {{- $paletteId := "elite" | index $revenantSkillMaxIds | string | index $data | int -}}
         {{- $skillId := . | string -}}
         {{- $data = $paletteId | dict $skillId | merge $data -}}

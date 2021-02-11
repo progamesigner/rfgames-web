@@ -10,7 +10,8 @@
     "deploy:prod": "npm run build:prod && npm run hugo:prod",
     "hugo": "hugo --buildDrafts --buildFuture --environment development --templateMetrics --templateMetricsHints",
     "hugo:prod": "hugo --environment production --enableGitInfo --minify",
-    "hugo:watch": "hugo serve --buildDrafts --buildFuture --environment development"
+    "hugo:watch": "hugo serve --buildDrafts --buildFuture --environment development",
+    "preload": "node preload.js"
   },
   "author": "Yang Sheng Han <progamesigner@gmail.com>",
   "license": "MIT",
@@ -31,6 +32,7 @@
     "lz-string": "^1.4.4",
     "mini-css-extract-plugin": "^1.3.5",
     "mithril": "^2.0.4",
+    "node-fetch": "^2.6.1",
     "normalize.css": "^8.0.1",
     "postcss-loader": "^5.0.0",
     "redux": "^4.0.5",

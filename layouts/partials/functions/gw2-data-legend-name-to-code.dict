@@ -6,7 +6,7 @@
 {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
 
 {{- range $legends -}}
-    {{- $legendSwapSkill := .swap | string | index $skills -}}
+    {{- $legendSwapSkill := "swap" | index . | string | index $skills -}}
     {{- $legendName := "name" | index $legendSwapSkill | replaceRE "Legendary (.+) Stance" "$1" | lower -}}
     {{- $data = .code | dict $legendName | merge $data -}}
 {{- end -}}

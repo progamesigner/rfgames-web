@@ -6,25 +6,11 @@
 {{- $slug := $name | slice $context | partial "functions/gw2-data-slugify.string" -}}
 
 {{- if $name | string | eq $name -}}
-    {{- $slugToId := dict -}}
+    {{- $slugToId := slice $context | partialCached "functions/gw2-data-slug-to-id.dict" -}}
 
-    {{- if $type | eq "item" -}}
-        {{- $slugToId = slice $context | partialCached "functions/gw2-data-item-slug-to-id.dict" -}}
+    {{- with $type | index $slugToId -}}
+        {{- $id = $slug | index . | default 0 | int -}}
     {{- end -}}
-
-    {{- if $type | eq "skill" -}}
-        {{- $slugToId = slice $context | partialCached "functions/gw2-data-skill-slug-to-id.dict" -}}
-    {{- end -}}
-
-    {{- if $type | eq "specialization" -}}
-        {{- $slugToId = slice $context | partialCached "functions/gw2-data-specialization-slug-to-id.dict" -}}
-    {{- end -}}
-
-    {{- if $type | eq "trait" -}}
-        {{- $slugToId = slice $context | partialCached "functions/gw2-data-trait-slug-to-id.dict" -}}
-    {{- end -}}
-
-    {{- $id = $slug | index $slugToId | default 0 | int -}}
 {{- end -}}
 
 {{- return $id -}}

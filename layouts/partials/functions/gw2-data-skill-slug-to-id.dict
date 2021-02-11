@@ -6,7 +6,7 @@
 {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
 
 {{- range $professions -}}
-    {{- range .skills_by_palette -}}
+    {{- range "skills_by_palette" | index . -}}
         {{- $skill := 1 | index . | string | index $skills -}}
         {{- with $skill -}}
             {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
