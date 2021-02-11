@@ -5,7 +5,7 @@
 
 {{- $data := slice $context $type | partial "functions/gw2-data-load.dict" -}}
 
-{{- if $data | len | le 0 -}}
+{{- if $data | len | ge 0 -}}
     {{- $data = slice $context $url $prefetchIds | partial "functions/gw2-api-fetch.dict" | default dict -}}
 {{- end -}}
 
