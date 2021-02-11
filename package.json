@@ -8,7 +8,7 @@
     "build:watch": "npx webpack-cli --mode development --watch",
     "deploy": "npm run build && npm run hugo",
     "deploy:prod": "npm run build:prod && npm run hugo:prod",
-    "hugo": "hugo --buildDrafts --buildFuture --environment development",
+    "hugo": "hugo --buildDrafts --buildFuture --environment development --templateMetrics --templateMetricsHints",
     "hugo:prod": "hugo --environment production --enableGitInfo --minify",
     "hugo:watch": "hugo serve --buildDrafts --buildFuture --environment development"
   },
