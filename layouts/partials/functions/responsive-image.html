@@ -55,15 +55,15 @@
 <figure class="image">
     {{- with $enablePlaceholder -}}
         <img
-            src="{{ template "__rfgames_partials_functions__image_placeholder__" (slice $name $ext) }}"
+            src="{{ template "__rfgames_partials_functions__image_placeholder__" slice $name $ext }}"
             alt="{{ $alt }}"
             data-placeholder
         >
     {{- end -}}
     <img
-        sizes="{{ template "__rfgames_partials_functions__image_sizes__" (slice $widths) }}"
-        srcset="{{ template "__rfgames_partials_functions__image_srcset__" (slice $name $ext $widths) }}"
-        src="{{ template "__rfgames_partials_functions__image_fallback__" (slice $name $ext) }}"
+        sizes="{{ template "__rfgames_partials_functions__image_sizes__" slice $widths }}"
+        srcset="{{ template "__rfgames_partials_functions__image_srcset__" slice $name $ext $widths }}"
+        src="{{ template "__rfgames_partials_functions__image_fallback__" slice $name $ext }}"
         alt="{{ $alt }}"
     >
 </figure>
