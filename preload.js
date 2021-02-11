@@ -23,6 +23,7 @@ const pipeline = flow(
       'id',
       'name',
       'skills_by_palette',
+      'specializations',
       'swap',
       'utilities',
     ])
