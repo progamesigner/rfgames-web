@@ -23,11 +23,11 @@ build:
     equipments:
         weapon1:
             kind: TwoHand
-            weapon: { id: 75200 }
-            sigil1: { id: 74326 }
-            sigil2: { id: 24607 }
-            infusion1: 43250
-            infusion2: 43250
+            weapon: { id: Maklain's Spire }
+            sigil1: { id: Superior Sigil of Transference }
+            sigil2: { id: Superior Sigil of Energy }
+            infusion1: Healing WvW Infusion
+            infusion2: Healing WvW Infusion
             skills:
             - Bolt of Wrath
             - Holy Strike
@@ -36,12 +36,12 @@ build:
             - Line of Warding
         weapon2:
             kind: DualWield
-            weapon1: { id: 71457 }
-            weapon2: { id: 74748 }
-            sigil1: { id: 74326 }
-            sigil2: { id: 24607 }
-            infusion1: 43250
-            infusion2: 43250
+            weapon1: { id: Maklain's Flanged Mace }
+            weapon2: { id: Maklain's Bastion }
+            sigil1: { id: Superior Sigil of Transference }
+            sigil2: { id: Superior Sigil of Energy }
+            infusion1: Healing WvW Infusion
+            infusion2: Healing WvW Infusion
             skills:
             - True Strike
             - Symbol of Faith
@@ -49,64 +49,64 @@ build:
             - Shield of Judgment
             - Shield of Absorption
         head:
-            id: 84879
-            rune: { id: 73653 }
-            infusion: 43250
+            id: Zehtuka's Visor
+            rune: { id: Superior Rune of Durability }
+            infusion: Healing WvW Infusion
         shoulders:
-            id: 85286
-            rune: { id: 73653 }
-            infusion: 43250
+            id: Zehtuka's Pauldrons
+            rune: { id: Superior Rune of Durability }
+            infusion: Healing WvW Infusion
         coat:
-            id: 85126
-            rune: { id: 73653 }
-            infusion: 43250
+            id: Zehtuka's Breastplate
+            rune: { id: Superior Rune of Durability }
+            infusion: Healing WvW Infusion
         gloves:
-            id: 85330
-            rune: { id: 73653 }
-            infusion: 43250
+            id: Zehtuka's Warfists
+            rune: { id: Superior Rune of Durability }
+            infusion: Healing WvW Infusion
         leggings:
-            id: 85024
-            rune: { id: 73653 }
-            infusion: 43250
+            id: Zehtuka's Tassets
+            rune: { id: Superior Rune of Durability }
+            infusion: Healing WvW Infusion
         boots:
-            id: 85196
-            rune: { id: 73653 }
-            infusion: 43250
+            id: Zehtuka's Greaves
+            rune: { id: Superior Rune of Durability }
+            infusion: Healing WvW Infusion
         back:
-            id: 81462
+            id: Warbringer
             stat: 1134
             infusions:
-            - 43250
-            - 43250
+            - Healing WvW Infusion
+            - Healing WvW Infusion
         accessory1:
-            id: 81908
+            id: Aurora
             stat: 1134
-            infusion: 43250
+            infusion: Healing WvW Infusion
         accessory2:
-            id: 91048
+            id: Vision
             stat: 1134
-            infusion: 43250
+            infusion: Healing WvW Infusion
         amulet:
-            id: 92991
+            id: Transcendence
             stat: 1134
-            infusion: 43250
+            infusion: Healing WvW Infusion
         ring1:
-            id: 91234
+            id: Coalescence
             stat: 1134
             infusions:
-            - 43250
-            - 43250
-            - 43250
+            - Healing WvW Infusion
+            - Healing WvW Infusion
+            - Healing WvW Infusion
         ring2:
-            id: 93105
+            id: Conflux
             stat: 1134
             infusions:
-            - 43250
-            - 43250
-            - 43250
+            - Healing WvW Infusion
+            - Healing WvW Infusion
+            - Healing WvW Infusion
     consumables:
-        food: { id: 81621 }
-        utility: { id: 67528 }
+        food: { id: Oysters with Pesto Sauce }
+        utility: { id: Bountiful Maintenance Oil }
     template:
         profession: guardian
         traits:
@@ -246,16 +246,16 @@ build:
             {{< /section >}}
             {{< section title="Runes" >}}
                 <ul>
-                    <li>{{% inlines/item id=24842 upgrade-count=6 %}} provides more healing but less toughness and boon support.</li>
-                    <li>{{% inlines/item id=38206 upgrade-count=6 %}} provides more condition cleansing with {{% inlines/skill name="Mantra of Liberation" %}}.</li>
+                    <li>{{% inlines/item name="Superior Rune of the Monk" upgrade-count=6 %}} provides more healing but less toughness and boon support.</li>
+                    <li>{{% inlines/item name="Superior Rune of Altruism" upgrade-count=6 %}} provides more condition cleansing with {{% inlines/skill name="Mantra of Liberation" %}}.</li>
                 </ul>
             {{< /section >}}
             {{< section title="Sigils" >}}
                 <ul>
-                    <li>You should always keep {{% inlines/item id=24607 %}}.</li>
-                    <li>{{% inlines/item id=72339 %}} provides more boon uptime.</li>
-                    <li>{{% inlines/item id=24584 %}} provides more healings if you can keep uptime of 25 stack.</li>
-                    <li>{{% inlines/item id=44947 %}} provides AoE healing on weapon / tome swap.</li>
+                    <li>You should always keep {{% inlines/item name="Superior Sigil of Energy" %}}.</li>
+                    <li>{{% inlines/item name="Superior Sigil of Concentration" %}} provides more boon uptime.</li>
+                    <li>{{% inlines/item name="Superior Sigil of Benevolence" %}} provides more healings if you can keep uptime of 25 stack.</li>
+                    <li>{{% inlines/item name="Superior Sigil of Renewal" %}} provides AoE healing on weapon / tome swap.</li>
                 </ul>
             {{< /section >}}
         {{< /section >}}
