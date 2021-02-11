@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $accessToken := 1 | index . -}}
 
-{{- $data := slice $context "/v2/account" $accessToken | partial "functions/gw2-api-url.string" | getJSON -}}
+{{- $data := slice $context "/v2/account" $accessToken | partial "functions/gw2-api-url.string" | getJSON | default dict -}}
 
 {{- return $data -}}

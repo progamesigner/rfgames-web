@@ -10,11 +10,11 @@
     {{- $offset := $page | mul $count -}}
     {{- $fetchIds := $ids | after $offset | first $count -}}
 
-    {{- $chunk := delimit $fetchIds "," | dict "ids" | slice $context $url | partial "functions/gw2-api-url.string" | getJSON -}}
+    {{- $chunk := delimit $fetchIds "," | dict "ids" | slice $context $url | partial "functions/gw2-api-url.string" | getJSON | default slice -}}
 
     {{- $data = $data | append $chunk -}}
 {{- else -}}
-    {{- $chunk := dict "page" $page "page_size" $count | slice $context $url | partial "functions/gw2-api-url.string" | getJSON -}}
+    {{- $chunk := dict "page" $page "page_size" $count | slice $context $url | partial "functions/gw2-api-url.string" | getJSON | default slice -}}
 
     {{- $data = $data | append $chunk -}}
 {{- end -}}
