@@ -51,7 +51,7 @@ const transformers = [
     const professionSkillSlugToId = fromPairs(flow(
       Object.values,
       map(get('skills_by_palette')),
-      map(map(([_, skillId]) => get(`${skillId}`))),
+      map(map(([_, skillId]) => get(skillId))),
       reduce(concat, []),
       map(getter => getter(skills)),
       map(skill => [slugify(skill.name), skill.id]),
@@ -74,7 +74,7 @@ const transformers = [
     const professionSkillSlugToName = fromPairs(flow(
       Object.values,
       map(get('skills_by_palette')),
-      map(map(([_, skillId]) => get(`${skillId}`))),
+      map(map(([_, skillId]) => get(skillId))),
       reduce(concat, []),
       map(getter => getter(skills)),
       map(skill => [slugify(skill.name), skill.name]),
@@ -136,6 +136,30 @@ const transformers = [
 
     return saveToPreloadData('skill-id-to-code', idToCode)
       .then(() => console.log('Prepared "skill-id-to-code" done!'))
+  },
+  ({ professions, specializations }) => {
+    const corePofessionSlugToId = fromPairs(flow(
+      Object.values,
+      map(profession => [slugify(profession.name), profession.id]),
+    )(professions))
+
+    const eliteProfessionSlugToId = fromPairs(flow(
+      Object.values,
+      map(get('specializations')),
+      map(map(get)),
+      reduce(concat, []),
+      map(getter => getter(specializations)),
+      filter(({ elite }) => elite),
+      map(eliteSpecialization => [slugify(eliteSpecialization.name), professions[eliteSpecialization.profession].name])
+    )(professions))
+
+    const professionSlugToId = {
+      ...corePofessionSlugToId,
+      ...eliteProfessionSlugToId,
+    }
+
+    return saveToPreloadData('profession-slug-to-id', professionSlugToId)
+      .then(() => console.log('Prepared "profession-slug-to-id" done!'))
   },
 ]
 
