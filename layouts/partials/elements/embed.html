@@ -47,6 +47,10 @@
         {{- $data = . | slice $context "trait" | partial "functions/gw2-data-name-to-id.integer" | dict "id" | merge $data -}}
     {{- end -}}
 
+    {{- if $type | eq "traitline" -}}
+        {{- $data = . | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" | dict "id" | merge $data -}}
+    {{- end -}}
+
     {{- if "text" | index $data | not -}}
         {{- $data = . | slice $context $type | partial "functions/gw2-data-name-to-name.string" | dict "text" | merge $data -}}
     {{- end -}}
