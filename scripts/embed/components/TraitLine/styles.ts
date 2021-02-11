@@ -96,6 +96,7 @@ export const root = style({
   height: em(traitlineHeight),
   maxWidth: em(traitlineMaximumWidth),
   position: 'relative',
+  width: percent(100),
   $nest: {
     '&:hover': {
       $nest: {
