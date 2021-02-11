@@ -400,7 +400,7 @@
 <div class="build-card is-skills">
     <h5 class="title">Skills</h5>
     <div class="build-card-content">
-        <div class="gw2-embed-container">
+        <div class="gw2-embed-wrapper">
             {{- range $template.skills | first 1 -}}
                 {{- range . | first 1 -}}
                     {{- template "__rfgames_shortcode_includes__build_skill__" slice $ "healing" . $template.traits -}}
@@ -457,13 +457,13 @@
     <h5 class="title">Weapons</h5>
     <div class="build-card-content">
         {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice $ "weapon1" $equipments.weapon1 -}}
-        <div class="gw2-embed-container">
+        <div class="gw2-embed-wrapper">
             {{- range $equipments.weapon1.skills -}}
                 {{- template "__rfgames_shortcode_includes__build_skill__" slice $ "weapon-skill" . $template.traits false -}}
             {{- end -}}
         </div>
         {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice $ "weapon2" $equipments.weapon2 -}}
-        <div class="gw2-embed-container">
+        <div class="gw2-embed-wrapper">
             {{- range $equipments.weapon2.skills -}}
                 {{- template "__rfgames_shortcode_includes__build_skill__" slice $ "weapon-skill" . $template.traits false -}}
             {{- end -}}

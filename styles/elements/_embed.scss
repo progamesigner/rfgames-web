@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
 .gw2-embed {
     --gw2-embed-icon-size: var(--gw2-embed-size);
-
-    display: block;
 
     &.is-profession,
     &.is-trait,
@@ -25,21 +25,31 @@
         height: var(--gw2-embed-icon-size);
         width: var(--gw2-embed-icon-size);
     }
-
-    .gw2-embed-traitline {
-        width: 100%;
-    }
 }
 
 .gw2-embed-container {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.gw2-embed-icon {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.gw2-embed-text {
+    align-items: center;
+    display: inline-flex;
+
+    &:not(:first-child) {
+        margin-left: 0.25rem;
+    }
+}
+
+.gw2-embed-wrapper {
     align-items: center;
     display: flex;
     justify-content: center;
-}
-
-.gw2-embed-inline-placeholder {
-    display: inline-block;
-    height: var(--gw2-embed-icon-size);
-    width: var(--gw2-embed-icon-size);
-    margin-right: 0.25rem;
 }

@@ -65,23 +65,82 @@
     {{- end -}}
 {{- end -}}
 
+{{- define "__rfgames_partials_elements__embed_class__" -}}
+    {{- . | printf "gw2-embed-%s" -}}
+{{- end -}}
+
 {{- if $inline -}}
     <span
         {{ range $key, $value := $attributes }}
             {{ $value | htmlEscape | printf "%s=%q" $key | safeHTMLAttr }}
         {{ end }}
     >
-        {{- with "text" | index $data -}}
-            <span class="gw2-embed-inline-placeholder"></span>{{- . -}}
-        {{- else -}}
-            &nbsp;
-        {{- end -}}
+        <span
+            class="{{ template "__rfgames_partials_elements__embed_class__" "container" }} {{ template "__rfgames_partials_elements__embed_class__" $type }}"
+        >
+            {{- if "disable-icon" | index $data | not -}}
+                <span
+                    class="{{ template "__rfgames_partials_elements__embed_class__" "icon" }}"
+                >
+                    {{- if "disable-icon-link" | index $data | not -}}
+                        <a
+                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
+                            href="{{ "link" | index $data }}"
+                        ></a>
+                    {{- end -}}
+                </span>
+            {{- end -}}
+            {{- if "disable-text" | index $data | not -}}
+                <span
+                    class="{{ template "__rfgames_partials_elements__embed_class__" "text" }}"
+                >
+                    {{- if "disable-text-link" | index $data -}}
+                        <a
+                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
+                            href="{{ "link" | index $data }}"
+                        >{{ "text" | index $data }}</a>
+                    {{- else -}}
+                        {{ "text" | index $data }}
+                    {{- end -}}
+                </span>
+            {{- end -}}
+        </span>
     </span>
 {{- else -}}
     <div
         {{ range $key, $value := $attributes }}
-            {{ printf "%s=%q" $key $value | safeHTMLAttr }}
+            {{ $value | htmlEscape | printf "%s=%q" $key | safeHTMLAttr }}
         {{ end }}
     >
+        <div
+            class="{{ template "__rfgames_partials_elements__embed_class__" "container" }} {{ template "__rfgames_partials_elements__embed_class__" $type }}"
+        >
+            {{- if "disable-icon" | index $data | not -}}
+                <div
+                    class="{{ template "__rfgames_partials_elements__embed_class__" "icon" }}"
+                >
+                    {{- if "disable-icon-link" | index $data | not -}}
+                        <a
+                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
+                            href="{{ "link" | index $data }}"
+                        ></a>
+                    {{- end -}}
+                </div>
+            {{- end -}}
+            {{- if "disable-text" | index $data | not -}}
+                <div
+                    class="{{ template "__rfgames_partials_elements__embed_class__" "text" }}"
+                >
+                    {{- if "disable-text-link" | index $data -}}
+                        <a
+                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
+                            href="{{ "link" | index $data }}"
+                        >{{ "text" | index $data }}</a>
+                    {{- else -}}
+                        {{ "text" | index $data }}
+                    {{- end -}}
+                </div>
+            {{- end -}}
+        </div>
     </div>
 {{- end -}}

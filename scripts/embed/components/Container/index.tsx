@@ -18,7 +18,12 @@ export class Container implements m.Component<ContainerAttributes> {
     children
   }: m.Vnode<ContainerAttributes>): m.Children {
     return <div
-      className={cx(styles.root, makeClassName(type), className)}
+      className={cx(
+        styles.root,
+        makeClassName('container'),
+        makeClassName(type),
+        className
+      )}
       {...attrs}
     >
       {children}

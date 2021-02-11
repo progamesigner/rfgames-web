@@ -75,14 +75,14 @@
         }
 
         &.is-skills {
-            .gw2-embed-container {
+            .gw2-embed-wrapper {
                 align-items: flex-start;
                 flex-direction: column;
             }
         }
 
         &.is-weapons {
-            .gw2-embed-container {
+            .gw2-embed-wrapper {
                 @include block(var(--build-content-card-item-spacing));
 
                 justify-content: flex-start;
