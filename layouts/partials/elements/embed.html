@@ -19,7 +19,7 @@
     {{- $classes = $classes | append . -}}
 {{- end -}}
 
-{{- with $data.name -}}
+{{- with "name" | index $data -}}
     {{- if $type | eq "effect" -}}
         {{- $data = . | dict "id" | merge $data -}}
     {{- end -}}
@@ -54,6 +54,24 @@
     {{- if "id" | index $data | not -}}
         {{- errorf "Unable to find %s name: %s" $type . -}}
     {{- end -}}
+{{- end -}}
+
+{{- with "infusions" | index $data | default "" -}}
+    {{- $infusions := slice -}}
+    {{- range split . "," -}}
+        {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $infusions = $infusions | append $id -}}
+    {{- end -}}
+    {{- $data = delimit $infusions "," | dict "infusions" | merge $data -}}
+{{- end -}}
+
+{{- with "upgrades" | index $data | default "" -}}
+    {{- $upgrades := slice -}}
+    {{- range split . "," -}}
+        {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $upgrades = $upgrades | append $id -}}
+    {{- end -}}
+    {{- $data = delimit $upgrades "," | dict "upgrades" | merge $data -}}
 {{- end -}}
 
 {{- $link := "" -}}
