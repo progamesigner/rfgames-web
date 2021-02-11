@@ -1,24 +1,26 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := dict -}}
+{{- $data := slice $context "skill-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
 
-{{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
-{{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
+{{- if $data | len | ge 0 -}}
+    {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
+    {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
 
-{{- range $professions -}}
-    {{- range "skills_by_palette" | index . -}}
-        {{- $skill := 1 | index . | string | index $skills -}}
-        {{- with $skill -}}
-            {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
-            {{- $data = .id | dict $slug | merge $data -}}
+    {{- range $professions -}}
+        {{- range "skills_by_palette" | index . -}}
+            {{- $skill := 1 | index . | string | index $skills -}}
+            {{- with $skill -}}
+                {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+                {{- $data = .id | dict $slug | merge $data -}}
+            {{- end -}}
         {{- end -}}
     {{- end -}}
-{{- end -}}
 
-{{- range $skills -}}
-    {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
-    {{- if $slug | index $data | not -}}
-        {{- $data = .id | dict $slug | merge $data -}}
+    {{- range $skills -}}
+        {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+        {{- if $slug | index $data | not -}}
+            {{- $data = .id | dict $slug | merge $data -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 

@@ -1,13 +1,15 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := dict -}}
+{{- $data := slice $context "skill-slug-to-name" | partial "functions/gw2-data-load.dict" -}}
 
-{{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
+{{- if $data | len | ge 0 -}}
+    {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
 
-{{- range $skills -}}
-    {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
-    {{- if $slug | index $data | not -}}
-        {{- $data = .name | dict $slug | merge $data -}}
+    {{- range $skills -}}
+        {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+        {{- if $slug | index $data | not -}}
+            {{- $data = .name | dict $slug | merge $data -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 

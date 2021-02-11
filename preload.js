@@ -4,8 +4,21 @@ const { readFile, writeFile } = require('fs')
 const { stringify } = require('querystring')
 const { promisify } = require('util')
 
-const { chunk, filter, flow, fromPairs, pick, toPairs } = require('lodash/fp')
-const { default: fetch } = require('node-fetch')
+const {
+  chunk,
+  concat,
+  filter,
+  flow,
+  fromPairs,
+  get,
+  map,
+  max,
+  reduce,
+  tap
+} = require('lodash/fp')
+const {
+  default: fetch
+} = require('node-fetch')
 
 const GW2_API_ACCESS_TOKEN = process.env.GW2_ACCESS_TOKEN
 const GW2_API_LANGUAGE = 'en'
@@ -13,34 +26,106 @@ const GW2_API_SCHEMA_VERSION = '2021-01-01T00:00:00Z'
 
 const read = promisify(readFile)
 const write = promisify(writeFile)
-const pipeline = flow(
-  filter(item => item.name === undefined || item.name !== ''),
-  items => items.map(flow(
-    pick([
-      'code',
-      'elite',
-      'heal',
-      'id',
-      'name',
-      'skills_by_palette',
-      'specializations',
-      'swap',
-      'utilities',
-    ])
-  )),
-  items => items.map(item => [item.id, item]),
-  fromPairs
-)
 
-const APIS = {
-  items: '/v2/items',
-  itemstats: '/v2/itemstats',
-  legends: '/v2/legends',
-  professions: '/v2/professions',
-  skills: '/v2/skills',
-  specializations: '/v2/specializations',
-  traits: '/v2/traits',
-}
+const apis = [
+  ['items', '/v2/items'],
+  ['itemstats', '/v2/itemstats'],
+  ['legends', '/v2/legends'],
+  ['professions', '/v2/professions'],
+  ['skills', '/v2/skills'],
+  ['specializations', '/v2/specializations'],
+  ['traits', '/v2/traits'],
+]
+
+const transformers = [
+  ({ items }) => {
+    const slugToId = fromPairs(Object.values(items)
+      .map(item => [slugify(item.name), item.id]))
+
+    return saveToPreloadData('item-slug-to-id', slugToId)
+      .then(() => console.log('Prepared "item-slug-to-id" done!'))
+  },
+  ({ professions, skills }) => {
+    const professionSkillSlugToId = Object.values(professions)
+      .map(get('skills_by_palette'))
+      .map(palettes => palettes.map(([_, skillId]) => get(`${skillId}`)))
+      .reduce((getters, getter) => [...getters, ...getter], [])
+      .map(getter => getter(skills))
+      .map(skill => [slugify(skill.name), skill.id])
+
+    const skillSlugToId = Object.values(skills)
+      .map(skill => [slugify(skill.name), skill.id])
+
+    const slugToId = {
+      ...fromPairs(skillSlugToId),
+      ...fromPairs(professionSkillSlugToId),
+    }
+
+    return saveToPreloadData('skill-slug-to-id', slugToId)
+      .then(() => console.log('Prepared "skill-slug-to-id" done!'))
+  },
+  ({ professions, skills }) => {
+    const professionSkillSlugToId = Object.values(professions)
+      .map(get('skills_by_palette'))
+      .map(palettes => palettes.map(([_, skillId]) => get(`${skillId}`)))
+      .reduce(concat, [])
+      .map(getter => getter(skills))
+      .map(skill => [slugify(skill.name), skill.name])
+
+    const skillSlugToId = Object.values(skills)
+      .map(skill => [slugify(skill.name), skill.name])
+
+    const slugToId = {
+      ...fromPairs(skillSlugToId),
+      ...fromPairs(professionSkillSlugToId),
+    }
+
+    return saveToPreloadData('skill-slug-to-name', slugToId)
+      .then(() => console.log('Prepared "skill-slug-to-name" done!'))
+  },
+  ({ legends, professions }) => {
+    const pipeline = path => flow(
+      legends => Object.values(legends).map(get(path)),
+      max,
+      id => [path, id]
+    )
+
+    const revenantSkillMaxIds = [
+      'heal',
+      'utilities[0]',
+      'utilities[1]',
+      'utilities[2]',
+      'elite'
+    ]
+      .map(pipeline)
+      .map(getter => getter(legends))
+
+    const professionSkillIdToCode = fromPairs(flow(
+      Object.values,
+      map(flow(
+        get('skills_by_palette'),
+        map(([code, skillId]) => [skillId, code])
+      )),
+      reduce(concat, [])
+    )(professions))
+
+    const legendSkillIdToCode = fromPairs(flow(
+      Object.values,
+      map(legend => map(([path, codeSkillId]) => {
+        return [get(path)(legend), professionSkillIdToCode[codeSkillId]]
+      })(revenantSkillMaxIds)),
+      reduce(concat, [])
+    )(legends))
+
+    const idToCode = {
+      ...professionSkillIdToCode,
+      ...legendSkillIdToCode,
+    }
+
+    return saveToPreloadData('skill-id-to-code', idToCode)
+      .then(() => console.log('Prepared "skill-id-to-code" done!'))
+  },
+]
 
 function request(url, params) {
   const query = stringify({
@@ -75,23 +160,38 @@ function requestPagedAPI(url, page, pageSize) {
     })
 }
 
-function loadPrefetchData(type) {
+function slugify(name) {
+  return name.toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '')
+}
+
+function loadPrefetchData(name) {
   return read('data/guildwars2.json', 'utf8')
     .then(data => JSON.parse(data))
-    .then(data => data.prefetch && data.prefetch[type] || [])
+    .then(data => data.prefetch && data.prefetch[name] || [])
 }
 
-function saveToPreloadData(type, data) {
-  return write(`data/preloads/${type}.json`, JSON.stringify(data))
-    .then(() => true)
-    .catch(() => false)
+function saveToPreloadData(name, data) {
+  return write(`data/preloads/${name}.json`, JSON.stringify(data))
+    .then(() => data)
+    .catch(() => null)
 }
 
-const requests = toPairs(APIS)
+const requests = apis
   .map(([type, url]) => {
     const pageSize = 200
 
-    loadPrefetchData(type)
+    const pipeline = flow(
+      filter(item => item.name === undefined || item.name !== ''),
+      items => items.map(item => [item.id, item]),
+      fromPairs
+    )
+
+    return loadPrefetchData(type)
       .then(prefetchIds => {
         console.info(`Preloading "${type}" started!`)
         return prefetchIds
@@ -121,10 +221,13 @@ const requests = toPairs(APIS)
         }
       })
       .then(data => saveToPreloadData(type, data))
-      .then(result => {
+      .then(data => {
         console.info(`Preloading "${type}" finished!`)
-        return result
+        return [type, data]
       })
   })
 
-return Promise.all(requests)
+return Promise
+  .all(requests)
+  .then(fromPairs)
+  .then(data => transformers.map(transformer => tap(transformer)(data)))
