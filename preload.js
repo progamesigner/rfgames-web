@@ -161,6 +161,20 @@ const transformers = [
     return saveToPreloadData('profession-slug-to-id', professionSlugToId)
       .then(() => console.log('Prepared "profession-slug-to-id" done!'))
   },
+  ({ professions, specializations }) => {
+    const professionSlugToElite = fromPairs(flow(
+      Object.values,
+      map(get('specializations')),
+      map(map(get)),
+      reduce(concat, []),
+      map(getter => getter(specializations)),
+      filter(({ elite }) => elite),
+      map(eliteSpecialization => [slugify(eliteSpecialization.name), eliteSpecialization.id])
+    )(professions))
+
+    return saveToPreloadData('profession-slug-to-elite', professionSlugToElite)
+      .then(() => console.log('Prepared "profession-slug-to-elite" done!'))
+  },
 ]
 
 function request(url, params) {

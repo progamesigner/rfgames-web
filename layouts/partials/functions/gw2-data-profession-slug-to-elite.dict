@@ -1,16 +1,18 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := dict -}}
+{{- $data := slice $context "profession-slug-to-elite" | partial "functions/gw2-data-load.dict" -}}
 
-{{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
-{{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
+{{- if $data | len | ge 0 -}}
+    {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
+    {{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
 
-{{- range $professions -}}
-    {{- range .specializations -}}
-        {{- with . | string | index $specializations -}}
-            {{- if "elite" | index . -}}
-                {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
-                {{- $data = .id | dict $slug | merge $data -}}
+    {{- range $professions -}}
+        {{- range .specializations -}}
+            {{- with . | string | index $specializations -}}
+                {{- if "elite" | index . -}}
+                    {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+                    {{- $data = .id | dict $slug | merge $data -}}
+                {{- end -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
