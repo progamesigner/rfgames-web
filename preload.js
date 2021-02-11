@@ -39,66 +39,78 @@ const apis = [
 
 const transformers = [
   ({ items }) => {
-    const slugToId = fromPairs(Object.values(items)
-      .map(item => [slugify(item.name), item.id]))
+    const slugToId = fromPairs(flow(
+      Object.values,
+      map(item => [slugify(item.name), item.id]),
+    )(items))
 
     return saveToPreloadData('item-slug-to-id', slugToId)
       .then(() => console.log('Prepared "item-slug-to-id" done!'))
   },
   ({ professions, skills }) => {
-    const professionSkillSlugToId = Object.values(professions)
-      .map(get('skills_by_palette'))
-      .map(palettes => palettes.map(([_, skillId]) => get(`${skillId}`)))
-      .reduce((getters, getter) => [...getters, ...getter], [])
-      .map(getter => getter(skills))
-      .map(skill => [slugify(skill.name), skill.id])
+    const professionSkillSlugToId = fromPairs(flow(
+      Object.values,
+      map(get('skills_by_palette')),
+      map(map(([_, skillId]) => get(`${skillId}`))),
+      reduce(concat, []),
+      map(getter => getter(skills)),
+      map(skill => [slugify(skill.name), skill.id]),
+    )(professions))
 
-    const skillSlugToId = Object.values(skills)
-      .map(skill => [slugify(skill.name), skill.id])
+    const skillSlugToId = fromPairs(flow(
+      Object.values,
+      map(skill => [slugify(skill.name), skill.id]),
+    )(skills))
 
     const slugToId = {
-      ...fromPairs(skillSlugToId),
-      ...fromPairs(professionSkillSlugToId),
+      ...skillSlugToId,
+      ...professionSkillSlugToId,
     }
 
     return saveToPreloadData('skill-slug-to-id', slugToId)
       .then(() => console.log('Prepared "skill-slug-to-id" done!'))
   },
   ({ professions, skills }) => {
-    const professionSkillSlugToId = Object.values(professions)
-      .map(get('skills_by_palette'))
-      .map(palettes => palettes.map(([_, skillId]) => get(`${skillId}`)))
-      .reduce(concat, [])
-      .map(getter => getter(skills))
-      .map(skill => [slugify(skill.name), skill.name])
+    const professionSkillSlugToName = fromPairs(flow(
+      Object.values,
+      map(get('skills_by_palette')),
+      map(map(([_, skillId]) => get(`${skillId}`))),
+      reduce(concat, []),
+      map(getter => getter(skills)),
+      map(skill => [slugify(skill.name), skill.name]),
+    )(professions))
 
-    const skillSlugToId = Object.values(skills)
-      .map(skill => [slugify(skill.name), skill.name])
+    const skillSlugToName = fromPairs(flow(
+      Object.values,
+      map(skill => [slugify(skill.name), skill.name]),
+    )(skills))
 
-    const slugToId = {
-      ...fromPairs(skillSlugToId),
-      ...fromPairs(professionSkillSlugToId),
+    const slugToName = {
+      ...skillSlugToName,
+      ...professionSkillSlugToName,
     }
 
-    return saveToPreloadData('skill-slug-to-name', slugToId)
+    return saveToPreloadData('skill-slug-to-name', slugToName)
       .then(() => console.log('Prepared "skill-slug-to-name" done!'))
   },
   ({ legends, professions }) => {
-    const pipeline = path => flow(
-      legends => Object.values(legends).map(get(path)),
-      max,
-      id => [path, id]
-    )
-
-    const revenantSkillMaxIds = [
+    const revenantSkillMaxIds = flow(
+      map(path => flow(
+        flow(
+          Object.values,
+          map(get(path)),
+        ),
+        max,
+        id => [path, id]
+      )),
+      map(getter => getter(legends)),
+    )([
       'heal',
       'utilities[0]',
       'utilities[1]',
       'utilities[2]',
       'elite'
-    ]
-      .map(pipeline)
-      .map(getter => getter(legends))
+    ])
 
     const professionSkillIdToCode = fromPairs(flow(
       Object.values,
@@ -198,23 +210,23 @@ const requests = apis
       })
       .then(prefetchIds => {
         if (prefetchIds.length > 0) {
-          const requests = chunk(pageSize)(prefetchIds)
-            .map(ids => {
+          const requests = flow(
+            chunk(pageSize),
+            map(ids => {
               const params = {
                 ids: ids.join(',')
               }
 
               return request(url, params)
-            })
+            }),
+          )(prefetchIds)
 
           return Promise
             .all(requests)
-            .then(responses => responses.reduce((data, items) => {
-              return {
-                ...data,
-                ...pipeline(items),
-              }
-            }, {}))
+            .then(responses => reduce((data, items) => ({
+              ...data,
+              ...pipeline(items),
+            }), {})(responses))
         } else {
           return requestPagedAPI(url, 0, pageSize)
             .then(pipeline)
