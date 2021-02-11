@@ -72,7 +72,7 @@
 </head>
 
 <body>
-    <span class="back-to-top">{{- partial "svgs/arrow-up.svg" $ -}}</span>
+    <span class="back-to-top">{{- $ | partialCached "svgs/arrow-up.svg" -}}</span>
 
     {{- partial "layouts/header.html" . -}}
 
