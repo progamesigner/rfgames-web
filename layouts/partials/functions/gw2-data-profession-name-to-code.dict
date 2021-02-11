@@ -1,12 +1,14 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := dict -}}
+{{- $data := slice $context "profession-name-to-code" | partial "functions/gw2-data-load.dict" -}}
 
-{{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
+{{- if $data | len | ge 0 -}}
+    {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
 
-{{- range $professions -}}
-    {{- $professionName := .name | lower -}}
-    {{- $data = .code | dict $professionName | merge $data -}}
+    {{- range $professions -}}
+        {{- $professionName := .name | lower -}}
+        {{- $data = .code | dict $professionName | merge $data -}}
+    {{- end -}}
 {{- end -}}
 
 {{- return $data -}}

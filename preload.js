@@ -165,6 +165,15 @@ const transformers = [
     return saveToPreloadData('profession-slug-to-id', professionSlugToId)
       .then(() => console.log('Prepared "profession-slug-to-id" done!'))
   },
+  ({ professions }) => {
+    const professionNameToCode = fromPairs(flow(
+      Object.values,
+      map(profession => [slugify(profession.name), profession.code]),
+    )(professions))
+
+    return saveToPreloadData('profession-name-to-code', professionNameToCode)
+      .then(() => console.log('Prepared "profession-name-to-code" done!'))
+  },
   ({ professions, specializations }) => {
     const professionSlugToElite = fromPairs(flow(
       Object.values,
