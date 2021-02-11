@@ -34,7 +34,7 @@
                 {{- $data = true | dict "disable-tooltip" | merge $data -}}
             {{- end -}}
 
-            {{- slice "build-card-icon" | slice $ $type false $data | partial "elements/embed.html" -}}
+            {{- slice "build-card-icon" | slice $context $type false $data | partial "elements/embed.html" -}}
         {{- end -}}
 
         {{- if $showText -}}
@@ -46,7 +46,7 @@
                     {{- $data = true | dict "disable-text" | merge $data -}}
                 {{- end -}}
 
-                {{- slice "build-card-text" | slice $ $type false $data | partial "elements/embed.html" -}}
+                {{- slice "build-card-text" | slice $context $type false $data | partial "elements/embed.html" -}}
             {{- end -}}
         {{- end -}}
 
