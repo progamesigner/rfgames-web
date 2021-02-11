@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+.gw2-embed {
+    &:not(.is-inline) {
+        &:not(.is-traitline) {
+            .gw2-embed-icon {
+                background-color: hsl(200, 10%, 10%);
+                background-image: radial-gradient(circle, hsl(0, 0%, 50%), hsl(0, 0%, 20%));
+                border: 0.0625rem solid hsl(200, 10%, 5%);
+            }
+        }
+    }
+}
+
+.gw2-embed-container {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.gw2-embed-icon {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.gw2-embed-text {
+    align-items: center;
+    display: inline-flex;
+
+    &:not(:first-child) {
+        margin-left: 0.25rem;
+    }
+}
