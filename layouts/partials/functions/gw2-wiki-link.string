@@ -1,0 +1,12 @@
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . -}}
+{{- $argument := 2 | index . -}}
+
+{{- $chatlink := slice $context $type $argument | partial "functions/gw2-chat-link.string" | replaceRE "&" "%26" -}}
+
+{{- $url := "" -}}
+{{- if $chatlink | len | lt 0 -}}
+    {{- $url = $chatlink | printf "https://wiki-en.guildwars2.com/?search=%s" -}}
+{{- end -}}
+
+{{- return $url -}}

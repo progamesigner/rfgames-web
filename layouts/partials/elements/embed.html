@@ -56,6 +56,13 @@
     {{- end -}}
 {{- end -}}
 
+{{- $link := "" -}}
+{{- if "link" | index $data | not -}}
+    {{- with "id" | index $data -}}
+        {{- $link = . | slice $context $type | partial "functions/gw2-wiki-link.string" -}}
+    {{- end -}}
+{{- end -}}
+
 {{- $attributes := dict -}}
 {{- $attributes = delimit $classes " " | dict "class" | merge $attributes -}}
 {{- range $key, $value := $data -}}
@@ -81,24 +88,21 @@
             {{- if "disable-icon" | index $data | not -}}
                 <span
                     class="{{ template "__rfgames_partials_elements__embed_class__" "icon" }}"
-                >
-                    {{- if "disable-icon-link" | index $data | not -}}
-                        <a
-                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
-                            href="{{ "link" | index $data }}"
-                        ></a>
-                    {{- end -}}
-                </span>
+                ></span>
             {{- end -}}
             {{- if "disable-text" | index $data | not -}}
                 <span
                     class="{{ template "__rfgames_partials_elements__embed_class__" "text" }}"
                 >
-                    {{- if "disable-text-link" | index $data -}}
-                        <a
-                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
-                            href="{{ "link" | index $data }}"
-                        >{{ "text" | index $data }}</a>
+                    {{- if "disable-text-link" | index $data | not -}}
+                        {{- with "link" | index $data | default $link -}}
+                            <a
+                                class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
+                                href="{{ . }}"
+                            >{{ "text" | index $data }}</a>
+                        {{- else -}}
+                            {{ "text" | index $data }}
+                        {{- end -}}
                     {{- else -}}
                         {{ "text" | index $data }}
                     {{- end -}}
@@ -118,24 +122,21 @@
             {{- if "disable-icon" | index $data | not -}}
                 <div
                     class="{{ template "__rfgames_partials_elements__embed_class__" "icon" }}"
-                >
-                    {{- if "disable-icon-link" | index $data | not -}}
-                        <a
-                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
-                            href="{{ "link" | index $data }}"
-                        ></a>
-                    {{- end -}}
-                </div>
+                ></div>
             {{- end -}}
             {{- if "disable-text" | index $data | not -}}
                 <div
                     class="{{ template "__rfgames_partials_elements__embed_class__" "text" }}"
                 >
-                    {{- if "disable-text-link" | index $data -}}
-                        <a
-                            class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
-                            href="{{ "link" | index $data }}"
-                        >{{ "text" | index $data }}</a>
+                    {{- if "disable-text-link" | index $data | not -}}
+                        {{- with "link" | index $data | default $link -}}
+                            <a
+                                class="{{ template "__rfgames_partials_elements__embed_class__" "link" }}"
+                                href="{{ . }}"
+                            >{{ "text" | index $data }}</a>
+                        {{- else -}}
+                            {{ "text" | index $data }}
+                        {{- end -}}
                     {{- else -}}
                         {{ "text" | index $data }}
                     {{- end -}}
