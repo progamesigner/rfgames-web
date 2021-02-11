@@ -22,7 +22,13 @@ export function checkBuildIdUpdated(id: number): boolean {
 }
 
 export function clear(key: string): void {
-  localStorage.removeItem(makeKey(key))
+  const {
+    localStorage
+  } = window
+
+  if (localStorage) {
+    localStorage.removeItem(makeKey(key))
+  }
 }
 
 export function clearCacheIfRequested(key: string): void {
@@ -43,10 +49,18 @@ export function forceClearCacheOnNextLoad(key: string): void {
 }
 
 export function get(key: string): string | null {
-  const compressed = localStorage.getItem(makeKey(key))
-  if (compressed) {
-    return decompressFromUTF16(compressed)
+  const {
+    localStorage
+  } = window
+
+  if (localStorage) {
+    const compressed = localStorage.getItem(makeKey(key))
+
+    if (compressed) {
+      return decompressFromUTF16(compressed)
+    }
   }
+
   return null
 }
 
@@ -55,11 +69,18 @@ export function parse<T>(key: string): T {
 }
 
 export function set(key: string, value: string): void {
-  const compressed = compressToUTF16(value)
-  try {
-    localStorage.setItem(makeKey(key), compressed)
-  } catch (error) {
-    console.error('Local storage is full!')
+  const {
+    localStorage
+  } = window
+
+  if (localStorage) {
+    const compressed = compressToUTF16(value)
+
+    try {
+      localStorage.setItem(makeKey(key), compressed)
+    } catch (error) {
+      console.error('Local storage is full!')
+    }
   }
 }
 
