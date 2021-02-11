@@ -87,6 +87,9 @@
     {{- end -}}
 {{- end -}}
 
-{{- $chatlink := slice $context $code | partial "functions/encode-base64.string" | printf "[&%s]" -}}
+{{- $chatlink := "" -}}
+{{- if $code | len | lt 0 -}}
+    {{- $chatlink = $code | slice $context | partial "functions/encode-base64.string" | printf "[&%s]" -}}
+{{- end -}}
 
 {{- return $chatlink -}}
