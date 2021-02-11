@@ -3,11 +3,7 @@
 {{- $url := 2 | index . -}}
 {{- $prefetchIds := 3 | index . | default slice -}}
 
-{{- $data := dict -}}
-
-{{- with "preloads" | index $context.Site.Data -}}
-    {{- $data = $type | index . | default dict -}}
-{{- end -}}
+{{- $data := slice $context $type | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | le 0 -}}
     {{- $data = slice $context $url $prefetchIds | partial "functions/gw2-api-fetch.dict" | default dict -}}

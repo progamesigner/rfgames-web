@@ -1,0 +1,10 @@
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . -}}
+
+{{- $data := dict -}}
+
+{{- with "preloads" | index $context.Site.Data -}}
+    {{- $data = $type | index . | default dict -}}
+{{- end -}}
+
+{{- return $data -}}
