@@ -1,4 +1,4 @@
-<form class="form" action="{{ .Page.Param "contactFormURL" | default "#" }}" method="POST" data-form="contact">
+<form class="form" action="{{ "contactFormURL" | .Page.Param | default "#" }}" method="POST" data-form="contact">
     <div class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">

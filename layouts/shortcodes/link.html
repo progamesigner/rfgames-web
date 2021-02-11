@@ -1,7 +1,7 @@
 {{- $page := .Get 0 -}}
 
 {{- with .Site.GetPage $page -}}
-    {{- $menu := or (.Param "menu") (.Param "menus") | default dict -}}
+    {{- $menu := or ("menu" | .Param) ("menus" | .Param) | default dict -}}
     {{- $nav := "nav" | index $menu | default dict -}}
     {{- "url" | index $nav | default .RelPermalink | printf -}}
 {{- else -}}

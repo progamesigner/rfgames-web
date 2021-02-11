@@ -1,8 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $accessToken := 1 | index . -}}
 
-{{- $gw2APISchemaVersion := $context.Site.Param "gw2APISchemaVersion" -}}
-
 {{- $worlds := slice -}}
 
 {{- if $accessToken | ne "" -}}

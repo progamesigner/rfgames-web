@@ -1,4 +1,4 @@
-{{- $description := .Param "description" | default .Site.Params.Description | safeHTML -}}
+{{- $description := "description" | .Param | default .Site.Params.Description | safeHTML -}}
 {{- $title := printf "%s | %s" .Title .Site.Title | safeHTML -}}
 
 {{- $assets := "assets" | index .Site.Data | default dict -}}
@@ -38,12 +38,12 @@
     <meta name="twitter:title" content="{{ $title }}">
     <meta name="twitter:description" content="{{ $description }}">
 
-    {{- with .Param "button" -}}
+    {{- with "button" | .Param  -}}
         {{- $button := . | printf "buttons/%s.jpg" | resources.Get | fingerprint "sha512" -}}
         <meta property="og:image" content="{{ $button.Permalink }}">
         <meta name="twitter:image" content="{{ $button.Permalink }}">
     {{- else -}}
-        {{- $button := .Param "background" | default "default" | printf "backgrounds/%s-fallback.jpg" | resources.Get | fingerprint "sha512" -}}
+        {{- $button := "background" | .Param | default "default" | printf "backgrounds/%s-fallback.jpg" | resources.Get | fingerprint "sha512" -}}
         <meta property="og:image" content="{{ $button.Permalink }}">
         <meta name="twitter:image" content="{{ $button.Permalink }}">
     {{- end -}}
@@ -72,7 +72,9 @@
 </head>
 
 <body>
-    <span class="back-to-top">{{- $ | partialCached "svgs/arrow-up.svg" -}}</span>
+    <span class="back-to-top">
+        {{- $ | partialCached "svgs/arrow-up.svg" -}}
+    </span>
 
     {{- partial "layouts/header.html" . -}}
 

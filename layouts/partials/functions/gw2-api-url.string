@@ -3,8 +3,6 @@
 {{- $accessToken := 2 | index . -}}
 {{- $query := 3 | index . | default dict -}}
 
-{{- $gw2APISchemaVersion := $context.Site.Param "gw2APISchemaVersion" -}}
-
 {{- if reflect.IsMap $accessToken -}}
     {{- $query = $accessToken | default dict -}}
     {{- $accessToken = "" -}}
@@ -14,8 +12,8 @@
     {{- $query = dict "access_token" . | merge $query -}}
 {{- end -}}
 
-{{- $query = dict "lang" "en" | merge $query -}}
-{{- $query = dict "v" $gw2APISchemaVersion | merge $query -}}
+{{- $query = "gw2APILanguage" | $context.Site.Param | dict "lang" | merge $query -}}
+{{- $query = "gw2APISchemaVersion" | $context.Site.Param | dict "v" | merge $query -}}
 
 {{- $parts := slice -}}
 {{- range $key, $value := $query -}}

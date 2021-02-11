@@ -24,4 +24,6 @@ googleAnalytics = "UA-109064425-4"
   contactFormURL = "https://api.rfgames.tw/v1/contact"
   description = "A NA SEA fight-focused WvW guild"
   gitRepository = "https://github.com/progamesigner/rfgames-web"
+  gw2APILanguage = 'en'
   gw2APISchemaVersion = '2021-01-01T00:00:00Z'
+  gw2WikiLanguage = 'en'

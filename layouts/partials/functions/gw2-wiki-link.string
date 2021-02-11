@@ -2,11 +2,13 @@
 {{- $type := 1 | index . -}}
 {{- $argument := 2 | index . -}}
 
+{{- $wikiLanguage := "gw2WikiLanguage" | $context.Site.Param -}}
+
 {{- $chatlink := slice $context $type $argument | partial "functions/gw2-chat-link.string" | replaceRE "&" "%26" -}}
 
 {{- $url := "" -}}
 {{- if $chatlink | len | lt 0 -}}
-    {{- $url = $chatlink | printf "https://wiki-en.guildwars2.com/?search=%s" -}}
+    {{- $url = $chatlink | printf "https://wiki-%s.guildwars2.com/?search=%s" $wikiLanguage -}}
 {{- end -}}
 
 {{- return $url -}}
