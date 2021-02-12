@@ -7,7 +7,7 @@
 {{- $entities := slice $context $url $prefetchIds | partial "functions/gw2-api-fetch-paginated.list" -}}
 
 {{- range $entities -}}
-    {{- $id := .id | string -}}
+    {{- $id := "id" | index . | string -}}
     {{- $data = . | dict $id | merge $data -}}
 {{- end -}}
 

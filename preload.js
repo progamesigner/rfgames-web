@@ -257,6 +257,7 @@ function loadPrefetchData(name) {
   return read('data/guildwars2.json', 'utf8')
     .then(data => JSON.parse(data))
     .then(data => data.prefetch && data.prefetch[name] || [])
+    .then(filter(id => Number.isInteger(id)))
 }
 
 function saveToPreloadData(name, data) {
