@@ -11,8 +11,8 @@
 
 {{- range $armorParts -}}
     {{- $armorItem := . | index $equipments -}}
-    {{- $armorRuneItem := "rune" | index $armorItem -}}
-    {{- with "id" | index $armorRuneItem | string -}}
+    {{- $armorRune := "rune" | index $armorItem -}}
+    {{- with $armorRune | string -}}
         {{- $armorRuneCounts = . | index $armorRuneCounts | default 0 | add 1 | dict . | merge $armorRuneCounts -}}
     {{- end -}}
 {{- end -}}
@@ -70,10 +70,7 @@
         {{- $rune := "rune" | index . -}}
         {{- $upgradeCount := 0 -}}
 
-        {{- $runeId := "id" | index $rune -}}
-        {{- $runeName := "name" | index $rune -}}
-
-        {{- with $runeId -}}
+        {{- with $rune -}}
             {{- $upgradeCount = . | string | index $armorRuneCounts -}}
         {{- end -}}
 
@@ -81,7 +78,7 @@
         {{- $item = $id | dict "id" | merge $item -}}
         {{- $item = $stat | dict "stat" | merge $item -}}
         {{- $item = $infusion | dict "infusions" | merge $item -}}
-        {{- $item = $runeId | dict "upgrades" | merge $item -}}
+        {{- $item = $rune | dict "upgrades" | merge $item -}}
         {{- $item = $upgradeCount | dict "upgrade-count" | merge $item -}}
 
         {{- if $id | string | eq $id -}}
@@ -95,12 +92,8 @@
         {{- $upgrade := dict -}}
         {{- $upgrade = $upgradeCount | dict "upgrade-count" | merge $upgrade -}}
 
-        {{- if $runeId | string | eq $runeId -}}
-            {{- $upgrade = $runeId | dict "name" | merge $upgrade -}}
-        {{- end -}}
-
-        {{- with $runeName -}}
-            {{- $upgrade = $runeName | dict "text" | merge $upgrade -}}
+        {{- if $rune | string | eq $rune -}}
+            {{- $upgrade = $rune | dict "name" | merge $upgrade -}}
         {{- end -}}
 
         {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes $item $upgrade -}}
@@ -128,14 +121,11 @@
                 {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $sigilId := "id" | index $sigil1 -}}
-                {{- $sigilName := "name" | index $sigil1 -}}
-
                 {{- $item := dict -}}
                 {{- $item = $id | dict "id" | merge $item -}}
                 {{- $item = $stat | dict "stat" | merge $item -}}
                 {{- $item = $infusion1 | dict "infusions" | merge $item -}}
-                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+                {{- $item = $sigil1 | dict "upgrades" | merge $item -}}
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
@@ -146,14 +136,10 @@
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
-                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
 
-                {{- if $sigilId | string | eq $sigilId -}}
-                    {{- $upgrade = $sigilId | dict "name" | merge $upgrade -}}
-                {{- end -}}
-
-                {{- with $sigilName -}}
-                    {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+                {{- if $sigil1 | string | eq $sigil1 -}}
+                    {{- $upgrade = $sigil1 | dict "name" | merge $upgrade -}}
                 {{- end -}}
 
                 {{- $classes = $classes | append "is-dual-wield" -}}
@@ -167,14 +153,11 @@
                 {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $sigilId := "id" | index $sigil2 -}}
-                {{- $sigilName := "name" | index $sigil2 -}}
-
                 {{- $item := dict -}}
                 {{- $item = $id | dict "id" | merge $item -}}
                 {{- $item = $stat | dict "stat" | merge $item -}}
                 {{- $item = $infusion2 | dict "infusions" | merge $item -}}
-                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+                {{- $item = $sigil2 | dict "upgrades" | merge $item -}}
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
@@ -185,14 +168,10 @@
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
-                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
 
-                {{- if $sigilId | string | eq $sigilId -}}
-                    {{- $upgrade = $sigilId | dict "name" | merge $upgrade -}}
-                {{- end -}}
-
-                {{- with $sigilName -}}
-                    {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+                {{- if $sigil2 | string | eq $sigil2 -}}
+                    {{- $upgrade = $sigil2 | dict "name" | merge $upgrade -}}
                 {{- end -}}
 
                 {{- $classes = $classes | append "is-dual-wield" -}}
@@ -207,14 +186,11 @@
                 {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $sigilId := "id" | index $sigil1 -}}
-                {{- $sigilName := "name" | index $sigil1 -}}
-
                 {{- $item := dict -}}
                 {{- $item = $id | dict "id" | merge $item -}}
                 {{- $item = $stat | dict "stat" | merge $item -}}
                 {{- $item = $infusion1 | dict "infusions" | merge $item -}}
-                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+                {{- $item = $sigil1 | dict "upgrades" | merge $item -}}
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
@@ -225,14 +201,10 @@
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
-                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
 
-                {{- if $sigilId | string | eq $sigilId -}}
-                    {{- $upgrade = $sigilId | dict "name" | merge $upgrade -}}
-                {{- end -}}
-
-                {{- with $sigilName -}}
-                    {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+                {{- if $sigil1 | string | eq $sigil1 -}}
+                    {{- $upgrade = $sigil1 | dict "name" | merge $upgrade -}}
                 {{- end -}}
 
                 {{- $classes = $classes | append "is-main-hand-only" -}}
@@ -265,14 +237,11 @@
                 {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $sigilId := "id" | index $sigil2 -}}
-                {{- $sigilName := "name" | index $sigil2 -}}
-
                 {{- $item := dict -}}
                 {{- $item = $id | dict "id" | merge $item -}}
                 {{- $item = $stat | dict "stat" | merge $item -}}
                 {{- $item = $infusion2 | dict "infusions" | merge $item -}}
-                {{- $item = $sigilId | dict "upgrades" | merge $item -}}
+                {{- $item = $sigil2 | dict "upgrades" | merge $item -}}
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
@@ -283,14 +252,10 @@
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
-                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
 
-                {{- if $sigilId | string | eq $sigilId -}}
-                    {{- $upgrade = $sigilId | dict "name" | merge $upgrade -}}
-                {{- end -}}
-
-                {{- with $sigilName -}}
-                    {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+                {{- if $sigil2 | string | eq $sigil2 -}}
+                    {{- $upgrade = $sigil2 | dict "name" | merge $upgrade -}}
                 {{- end -}}
 
                 {{- $classes = $classes | append "is-off-hand-only" -}}
@@ -305,10 +270,7 @@
                 {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
-                {{- $sigilId := "id" | index $sigil1 -}}
-                {{- $sigilName := "name" | index $sigil1 -}}
-
-                {{- $sigils := "id" | index $sigil2 | slice $sigilId -}}
+                {{- $sigils := slice $sigil1 $sigil2 -}}
                 {{- $infusions := slice $infusion1 $infusion2 -}}
 
                 {{- $item := dict -}}
@@ -326,14 +288,10 @@
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
-                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
 
-                {{- if $sigilId | string | eq $sigilId -}}
-                    {{- $upgrade = $sigilId | dict "name" | merge $upgrade -}}
-                {{- end -}}
-
-                {{- with $sigilName -}}
-                    {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+                {{- if $sigil1 | string | eq $sigil1 -}}
+                    {{- $upgrade = $sigil1 | dict "name" | merge $upgrade -}}
                 {{- end -}}
 
                 {{- $classes = $classes | append "is-two-hand" -}}
@@ -343,10 +301,7 @@
             {{- end -}}
 
             {{- with . -}}
-                {{- $sigilId := "id" | index $sigil2 -}}
-                {{- $sigilName := "name" | index $sigil2 -}}
-
-                {{- $sigils := "id" | index $sigil1 | slice $sigilId -}}
+                {{- $sigils := slice $sigil1 $sigil2 -}}
                 {{- $infusions := slice $infusion1 $infusion2 -}}
 
                 {{- $item := dict -}}
@@ -355,14 +310,10 @@
                 {{- $item = delimit $sigils "," | dict "upgrades" | merge $item -}}
 
                 {{- $upgrade := dict -}}
-                {{- $upgrade = $sigilId | dict "id" | merge $upgrade -}}
+                {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
 
-                {{- if $sigilId | string | eq $sigilId -}}
-                    {{- $upgrade = $sigilId | dict "name" | merge $upgrade -}}
-                {{- end -}}
-
-                {{- with $sigilName -}}
-                    {{- $upgrade = $sigilName | dict "text" | merge $upgrade -}}
+                {{- if $sigil2 | string | eq $sigil2 -}}
+                    {{- $upgrade = $sigil2 | dict "name" | merge $upgrade -}}
                 {{- end -}}
 
                 {{- $classes = $classes | append "is-two-hand" -}}
