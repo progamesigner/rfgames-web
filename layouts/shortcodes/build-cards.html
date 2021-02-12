@@ -64,7 +64,6 @@
 
     {{- with 2 | index . -}}
         {{- $id := "id" | index . -}}
-        {{- $name := "name" | index . -}}
         {{- $stat := "stat" | index . | default -1 -}}
         {{- $infusion := "infusion" | index . -}}
         {{- $rune := "rune" | index . -}}
@@ -83,10 +82,6 @@
 
         {{- if $id | string | eq $id -}}
             {{- $item = $id | dict "name" | merge $item -}}
-        {{- end -}}
-
-        {{- with $name -}}
-            {{- $item = $name | dict "text" | merge $item -}}
         {{- end -}}
 
         {{- $upgrade := dict -}}
@@ -118,7 +113,6 @@
         {{- if $kind | eq "DualWield" -}}
             {{- with $weapon1 -}}
                 {{- $id := "id" | index . -}}
-                {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
                 {{- $item := dict -}}
@@ -129,10 +123,6 @@
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
-                {{- end -}}
-
-                {{- with $name -}}
-                    {{- $item = $name | dict "text" | merge $item -}}
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
@@ -150,7 +140,6 @@
 
             {{- with $weapon2 -}}
                 {{- $id := "id" | index . -}}
-                {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
                 {{- $item := dict -}}
@@ -161,10 +150,6 @@
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
-                {{- end -}}
-
-                {{- with $name -}}
-                    {{- $item = $name | dict "text" | merge $item -}}
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
@@ -183,7 +168,6 @@
         {{- if $kind | eq "MainHandOnly" -}}
             {{- with $weapon1 -}}
                 {{- $id := "id" | index . -}}
-                {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
                 {{- $item := dict -}}
@@ -194,10 +178,6 @@
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
-                {{- end -}}
-
-                {{- with $name -}}
-                    {{- $item = $name | dict "text" | merge $item -}}
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
@@ -234,7 +214,6 @@
 
             {{- with $weapon2 -}}
                 {{- $id := "id" | index . -}}
-                {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
                 {{- $item := dict -}}
@@ -245,10 +224,6 @@
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
-                {{- end -}}
-
-                {{- with $name -}}
-                    {{- $item = $name | dict "text" | merge $item -}}
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
@@ -267,7 +242,6 @@
         {{- if $kind | eq "TwoHand" -}}
             {{- with $weapon -}}
                 {{- $id := "id" | index . -}}
-                {{- $name := "name" | index . -}}
                 {{- $stat := "stat" | index . | default -1 -}}
 
                 {{- $sigils := slice $sigil1 $sigil2 -}}
@@ -281,10 +255,6 @@
 
                 {{- if $id | string | eq $id -}}
                     {{- $item = $id | dict "name" | merge $item -}}
-                {{- end -}}
-
-                {{- with $name -}}
-                    {{- $item = $name | dict "text" | merge $item -}}
                 {{- end -}}
 
                 {{- $upgrade := dict -}}
@@ -331,7 +301,6 @@
 
     {{- with 2 | index . -}}
         {{- $id := "id" | index . -}}
-        {{- $name := "name" | index . -}}
         {{- $stat := "stat" | index . | default -1 -}}
         {{- $infusion := "infusion" | index . -}}
         {{- $infusions := "infusions" | index . | default slice -}}
@@ -356,10 +325,6 @@
             {{- $item = $id | dict "name" | merge $item -}}
         {{- end -}}
 
-        {{- with $name -}}
-            {{- $item = $name | dict "text" | merge $item -}}
-        {{- end -}}
-
         {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes $item -}}
     {{- end -}}
 {{- end -}}
@@ -370,17 +335,12 @@
 
     {{- with 2 | index . -}}
         {{- $id := "id" | index . -}}
-        {{- $name := "name" | index . -}}
 
         {{- $item := dict -}}
         {{- $item = $id | dict "id" | merge $item -}}
 
         {{- if $id | string | eq $id -}}
             {{- $item = $id | dict "name" | merge $item -}}
-        {{- end -}}
-
-        {{- with $name -}}
-            {{- $item = $name | dict "text" | merge $item -}}
         {{- end -}}
 
         {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes $item -}}
