@@ -10,16 +10,16 @@
         {{- range "skills_by_palette" | index . -}}
             {{- $skill := 1 | index . | string | index $skills -}}
             {{- with $skill -}}
-                {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
-                {{- $data = .id | dict $slug | merge $data -}}
+                {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+                {{- $data = "id" | index . | dict $slug | merge $data -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
 
     {{- range $skills -}}
-        {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
         {{- if $slug | index $data | not -}}
-            {{- $data = .id | dict $slug | merge $data -}}
+            {{- $data = "id" | index . | dict $slug | merge $data -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}

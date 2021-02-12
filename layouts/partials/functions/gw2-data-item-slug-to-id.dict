@@ -6,9 +6,9 @@
     {{- $items := slice $context | partialCached "functions/gw2-api-get-items.dict" -}}
 
     {{- range $items -}}
-        {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
         {{- if $slug | index $data | not -}}
-            {{- $data = .id | dict $slug | merge $data -}}
+            {{- $data = "id" | index . | dict $slug | merge $data -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}

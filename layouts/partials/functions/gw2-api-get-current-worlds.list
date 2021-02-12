@@ -25,7 +25,8 @@
     {{- $worldData := $worldIds | slice $context | partial "functions/gw2-api-get-worlds-by-world-ids.dict" -}}
 
     {{- range $worldData -}}
-        {{- $worlds = $worlds | append .name -}}
+        {{- $worldName := "name" | index . -}}
+        {{- $worlds = $worlds | append $worldName -}}
     {{- end -}}
 {{- else -}}
     {{- warnf "There is no GW2_ACCESS_TOKEN set, skipping ..." -}}

@@ -7,9 +7,9 @@
     {{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
 
     {{- range $professions -}}
-        {{- $id := .id -}}
+        {{- $id := "id" | index . -}}
 
-        {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
         {{- if $slug | index $data | not -}}
             {{- $data = $id | dict $slug | merge $data -}}
         {{- end -}}
@@ -17,7 +17,7 @@
         {{- range .specializations -}}
             {{- with . | string | index $specializations -}}
                 {{- if "elite" | index . -}}
-                    {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
+                    {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
                     {{- $data = $id | dict $slug | merge $data -}}
                 {{- end -}}
             {{- end -}}

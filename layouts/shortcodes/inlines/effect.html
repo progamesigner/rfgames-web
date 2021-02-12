@@ -1,1 +1,1 @@
-{{- dict "text" .Params.id | merge .Params | slice $ "effect" true | partial "elements/embed.html" -}}
+{{- "id" | index .Params | dict "text" | merge .Params | slice $ "effect" true | partial "elements/embed.html" -}}

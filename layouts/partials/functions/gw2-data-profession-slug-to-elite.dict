@@ -10,8 +10,8 @@
         {{- range .specializations -}}
             {{- with . | string | index $specializations -}}
                 {{- if "elite" | index . -}}
-                    {{- $slug := slice $context .name | partial "functions/gw2-data-slugify.string" -}}
-                    {{- $data = .id | dict $slug | merge $data -}}
+                    {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+                    {{- $data = "id" | index . | dict $slug | merge $data -}}
                 {{- end -}}
             {{- end -}}
         {{- end -}}
