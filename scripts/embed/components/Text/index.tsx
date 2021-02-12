@@ -6,7 +6,9 @@ import './Tooltip'
 
 import * as styles from './styles'
 
-type NameAttributes = m.Attributes
+interface NameAttributes extends m.Attributes {
+  __PADDING__?: undefined;
+}
 
 export class Text implements m.Component<NameAttributes> {
   public view({

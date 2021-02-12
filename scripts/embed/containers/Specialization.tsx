@@ -11,11 +11,12 @@ import {
 
 import { isFetchFinished, wrapAsyncAction } from './helpers'
 
-type SpecializationContainerAttributes =
-  m.Attributes &
-  HasEmptyTextAttributes &
-  HasIDAttributes<number> &
-  HasStoreAttributes
+interface SpecializationContainerAttributes extends
+  m.Attributes,
+  HasEmptyTextAttributes,
+  HasIDAttributes<number>,
+  HasStoreAttributes {
+}
 
 const fetch = wrapAsyncAction(fetchSpecialization)
 

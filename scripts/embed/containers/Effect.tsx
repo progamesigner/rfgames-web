@@ -7,11 +7,13 @@ import {
   HasStoreAttributes
 } from '../types'
 
-type EffectContainerAttributes =
-  m.Attributes &
-  HasEmptyTextAttributes &
-  HasIDAttributes<string> &
+interface EffectContainerAttributes extends
+  m.Attributes,
+  HasEmptyTextAttributes,
+  HasIDAttributes<string>,
   HasStoreAttributes
+{
+}
 
 export class EffectContainer implements m.Component<EffectContainerAttributes> {
   public view({
