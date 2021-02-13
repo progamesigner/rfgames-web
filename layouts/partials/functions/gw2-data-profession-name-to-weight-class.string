@@ -1,0 +1,8 @@
+{{- $context := 0 | index . -}}
+{{- $profession := 1 | index . | string | lower -}}
+
+{{- $professionWeightClasses := slice $context | partialCached "functions/gw2-data-profession-name-to-weight-class.dict" -}}
+
+{{- $weightClass := $profession | lower | index $professionWeightClasses -}}
+
+{{- return $weightClass -}}

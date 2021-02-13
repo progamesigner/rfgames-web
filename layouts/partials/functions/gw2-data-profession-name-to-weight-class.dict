@@ -1,0 +1,17 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $data = dict "guardian" "heavy" | merge $data -}}
+{{- $data = dict "revenant" "heavy" | merge $data -}}
+{{- $data = dict "warrior" "heavy" | merge $data -}}
+
+{{- $data = dict "engineer" "medium" | merge $data -}}
+{{- $data = dict "ranger" "medium" | merge $data -}}
+{{- $data = dict "thief" "medium" | merge $data -}}
+
+{{- $data = dict "elementalist" "light" | merge $data -}}
+{{- $data = dict "mesmer" "light" | merge $data -}}
+{{- $data = dict "necromancer" "light" | merge $data -}}
+
+{{- return $data -}}

@@ -1,0 +1,27 @@
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . -}}
+{{- $stat := 2 | index . -}}
+{{- $profession := 3 | index . | lower -}}
+
+{{- $data := slice -}}
+
+{{- $table := slice $context | partialCached "functions/gw2-data-item-table.dict" -}}
+
+{{- with $type | slice $context | partial "functions/gw2-data-slugify.string" | slice $context | partial "functions/gw2-data-item-type-to-type.string" -}}
+    {{- $items := where $table "type" . -}}
+
+    {{- with $stat | slice $context | partial "functions/gw2-data-slugify.string" -}}
+        {{- $items = where $items "statslug" . -}}
+    {{- end -}}
+
+    {{- with $profession | slice $context | partial "functions/gw2-data-profession-name-to-weight-class.string" -}}
+        {{- $items = where $items "weight" . -}}
+    {{- end -}}
+
+    {{- range $items -}}
+        {{- $id := "id" | index . -}}
+        {{- $data = $data | append $id -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}
