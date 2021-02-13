@@ -8,6 +8,7 @@ const {
   chunk,
   concat,
   filter,
+  flatten,
   flow,
   fromPairs,
   get,
@@ -208,6 +209,96 @@ const transformers = [
 
     return saveToPreloadData('legend-name-to-code', legendNameToCode)
       .then(() => console.log('Prepared "legend-name-to-code" done!'))
+  },
+  ({ itemstats }) => {
+    const slugToId = fromPairs(flow(
+      Object.values,
+      map(itemstat => [slugify(itemstat.name), itemstat.id]),
+    )(itemstats))
+
+    return saveToPreloadData('itemstat-slug-to-id', slugToId)
+      .then(() => console.log('Prepared "itemstat-slug-to-id" done!'))
+  },
+  ({ items, itemstats }) => {
+    const itemTable = flow(
+      Object.values,
+      map(item => {
+        const id = item.id
+        const name = item.name
+        const slug = slugify(item.name)
+        const type = slugify(item.type)
+        const details = item.details
+
+        const row = {
+          id,
+          name,
+          slug,
+          type
+        }
+
+        if (details) {
+          var subtype = type
+
+          const weight = details.weight_class ? slugify(details.weight_class) : null
+
+          if (details.type) {
+            subtype = slugify(details.type)
+          }
+
+          if (details.infusion_upgrade_flags) {
+            details.infusion_upgrade_flags.forEach(infusion => {
+              subtype = slugify(infusion)
+            })
+          }
+
+          if (details.infix_upgrade) {
+            if (details.infix_upgrade.attributes.length > 0) {
+              const stat = itemstats[details.infix_upgrade.id]
+
+              return [{
+                ...row,
+                stat: stat.id,
+                statslug: slugify(stat.name),
+                type: subtype,
+                weight,
+              }]
+            }
+
+            return [{
+              ...row,
+              type: subtype,
+            }]
+          }
+
+          if (details.stat_choices) {
+            return details.stat_choices.map(statId => {
+              const stat = itemstats[statId]
+
+              return {
+                ...row,
+                stat: stat.id,
+                statslug: slugify(stat.name),
+                type: subtype,
+                weight,
+              }
+            })
+          }
+
+          return [{
+            ...row,
+            type: subtype,
+          }]
+        }
+
+        return [{
+          ...row,
+        }]
+      }),
+      flatten,
+    )(items)
+
+    return saveToPreloadData('item-table', itemTable)
+      .then(() => console.log('Prepared "item-table" done!'))
   },
 ]
 
