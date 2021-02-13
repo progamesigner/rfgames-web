@@ -60,28 +60,37 @@
     {{- end -}}
 {{- end -}}
 
-{{- with "enrichments" | index $data -}}
+{{- with "enrichment-names" | index $data -}}
     {{- $enrichments := slice -}}
     {{- range split . "," -}}
-        {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $id := . -}}
+        {{- if $id | string | eq $id -}}
+            {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- end -}}
         {{- $enrichments = $enrichments | append $id -}}
     {{- end -}}
     {{- $data = delimit $enrichments "," | dict "enrichments" | merge $data -}}
 {{- end -}}
 
-{{- with "infusions" | index $data -}}
+{{- with "infusion-names" | index $data -}}
     {{- $infusions := slice -}}
     {{- range split . "," -}}
-        {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $id := . -}}
+        {{- if $id | string | eq $id -}}
+            {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- end -}}
         {{- $infusions = $infusions | append $id -}}
     {{- end -}}
     {{- $data = delimit $infusions "," | dict "infusions" | merge $data -}}
 {{- end -}}
 
-{{- with "upgrades" | index $data -}}
+{{- with "upgrade-names" | index $data -}}
     {{- $upgrades := slice -}}
     {{- range split . "," -}}
-        {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $id := . -}}
+        {{- if $id | string | eq $id -}}
+            {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- end -}}
         {{- $upgrades = $upgrades | append $id -}}
     {{- end -}}
     {{- $data = delimit $upgrades "," | dict "upgrades" | merge $data -}}
@@ -94,10 +103,11 @@
     {{- end -}}
 {{- end -}}
 
+{{- $blocklist := slice "name" "enrichment-names" "infusion-names" "upgrade-names" -}}
 {{- $attributes := dict -}}
 {{- $attributes = delimit $classes " " | dict "class" | merge $attributes -}}
 {{- range $key, $value := $data -}}
-    {{- if "name" | ne $key -}}
+    {{- if $key | in $blocklist | not -}}
         {{- $attribute := $key | printf "data-embed-%s" -}}
         {{- $attributes = $value | string | dict $attribute | merge $attributes -}}
     {{- end -}}
