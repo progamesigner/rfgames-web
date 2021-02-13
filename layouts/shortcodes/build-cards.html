@@ -318,6 +318,8 @@
     {{- with 2 | index . -}}
         {{- $id := "id" | index . -}}
         {{- $stat := "stat" | index . | default -1 -}}
+        {{- $enrichment := "enrichment" | index . -}}
+        {{- $enrichments := "enrichments" | index . | default slice -}}
         {{- $infusion := "infusion" | index . -}}
         {{- $infusions := "infusions" | index . | default slice -}}
         {{- $upgrade := "upgrade" | index . -}}
@@ -332,6 +334,10 @@
             {{- end -}}
         {{- end -}}
 
+        {{- with $enrichment -}}
+            {{- $enrichments = $enrichments | append . -}}
+        {{- end -}}
+
         {{- with $infusion -}}
             {{- $infusions = $infusions | append . -}}
         {{- end -}}
@@ -343,6 +349,7 @@
         {{- $item := dict -}}
         {{- $item = $id | dict "id" | merge $item -}}
         {{- $item = $stat | dict "stat" | merge $item -}}
+        {{- $item = delimit $enrichments "," | dict "enrichments" | merge $item -}}
         {{- $item = delimit $infusions "," | dict "infusions" | merge $item -}}
         {{- $item = delimit $upgrades "," | dict "upgrades" | merge $item -}}
 

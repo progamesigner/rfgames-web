@@ -60,6 +60,15 @@
     {{- end -}}
 {{- end -}}
 
+{{- with "enrichments" | index $data -}}
+    {{- $enrichments := slice -}}
+    {{- range split . "," -}}
+        {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $enrichments = $enrichments | append $id -}}
+    {{- end -}}
+    {{- $data = delimit $enrichments "," | dict "enrichments" | merge $data -}}
+{{- end -}}
+
 {{- with "infusions" | index $data -}}
     {{- $infusions := slice -}}
     {{- range split . "," -}}
