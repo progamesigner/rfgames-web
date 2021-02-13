@@ -7,6 +7,7 @@
 {{- $data = dict "mace" "mace" | merge $data -}}
 {{- $data = dict "pistol" "pistol" | merge $data -}}
 {{- $data = dict "scepter" "scepter" | merge $data -}}
+{{- $data = dict "sword" "sword" | merge $data -}}
 {{- $data = dict "focus" "focus" | merge $data -}}
 {{- $data = dict "shield" "shield" | merge $data -}}
 {{- $data = dict "torch" "torch" | merge $data -}}
