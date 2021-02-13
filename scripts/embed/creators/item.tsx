@@ -26,6 +26,7 @@ export function create(store: EmbedStore, element: Element): m.Component {
     overrideText: extractString(element, 'text', ''),
 
     stat: extractNumber(element, 'stat', -1),
+    enrichments: extractNumberList(element, 'enrichments'),
     infusions: extractNumberList(element, 'infusions'),
     upgradeCount: extractNumber(element, 'upgrade-count', 1),
     upgrades: extractNumberList(element, 'upgrades')

@@ -20,6 +20,7 @@ import {
   calculateStatAttribute,
   createTakeFlow,
   markup,
+  parseItemenrichmentSlots,
   parseItemFlags,
   parseItemInfusionSlots,
   parseItemStat,
@@ -40,6 +41,7 @@ declare module '../../types/tooltip' {
 }
 
 interface ItemTooltipAttributes extends m.Attributes {
+  enrichments: Array<number>;
   infusions: Array<number>;
   item: GW2Item;
   stat?: GW2ItemStat;
@@ -72,6 +74,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
   public view({
     attrs:
     {
+      enrichments,
       infusions,
       item,
       stat,
@@ -85,6 +88,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
 
     const takeUpgrades = createTakeFlow(upgrades, parseItemUpgradeSlots(item))
     const takeInfusions = createTakeFlow(infusions, parseItemInfusionSlots(item))
+    const takeEnrichments = createTakeFlow(enrichments, parseItemenrichmentSlots(item))
 
     return <TooltipContent type="item">
       <TooltipHead className={styles.tooltip.head}>
@@ -193,6 +197,15 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
             store={store}
             id={id}
             unusedText="Unused Infusion Slot"
+          />
+        )}
+
+        {takeEnrichments().map((id, index) =>
+          <UpgradeComponent
+            key={index}
+            store={store}
+            id={id}
+            unusedText="Unused Enrichment Slot"
           />
         )}
 

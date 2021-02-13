@@ -9,6 +9,7 @@ import {
   GW2ItemStat,
   GW2ItemTrinketType,
   GW2ItemType,
+  GW2ItemUpgradeComponentInfusionFlag,
   GW2ItemWeaponType
 } from '../../types'
 
@@ -189,13 +190,21 @@ export function parseItemFlags(item: GW2Item): ItemFlags {
   } as ItemFlags)
 }
 
+export function parseItemenrichmentSlots(item: GW2Item): number {
+  switch (item.type) {
+    case GW2ItemType.TRINKET:
+      return item.details.infusion_slots.filter(({ flags }) => flags.includes(GW2ItemUpgradeComponentInfusionFlag.ENRICHMENT)).length
+  }
+  return 0
+}
+
 export function parseItemInfusionSlots(item: GW2Item): number {
   switch (item.type) {
     case GW2ItemType.ARMOR:
     case GW2ItemType.WEAPON:
     case GW2ItemType.BACK:
     case GW2ItemType.TRINKET:
-      return item.details.infusion_slots.length
+      return item.details.infusion_slots.filter(({ flags }) => flags.includes(GW2ItemUpgradeComponentInfusionFlag.INFUSION)).length
   }
   return 0
 }

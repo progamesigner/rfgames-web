@@ -42,6 +42,7 @@ interface ItemAttributes extends
   HasTooltipAttributes
 {
   item: GW2Item;
+  enrichments?: Array<number>;
   infusions?: Array<number>;
   stat?: GW2ItemStat;
   upgradeCount?: number;
@@ -61,6 +62,7 @@ export class Item implements m.Component<ItemAttributes> {
       disableText,
       disableTextLink,
       disableTooltip,
+      enrichments,
       infusions,
       inline,
       item,
@@ -76,6 +78,7 @@ export class Item implements m.Component<ItemAttributes> {
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_ITEM, {
+        enrichments: enrichments || [],
         infusions: infusions || [],
         item,
         stat,
