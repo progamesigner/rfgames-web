@@ -1,0 +1,93 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := slice $context "item-table" | partial "functions/gw2-data-load.list" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $items := slice $context | partialCached "functions/gw2-api-get-items.dict" -}}
+    {{- $itemstats := slice $context | partialCached "functions/gw2-api-get-itemstats.dict" -}}
+
+    {{- range $items -}}
+        {{- $id := "id" | index . -}}
+        {{- $name := "name" | index . -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+        {{- $type := "type" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+
+        {{- with "details" | index . -}}
+            {{- $weight := "weight_class" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+
+            {{- with "type" | index . -}}
+                {{- $type = . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+            {{- end -}}
+
+            {{- range "infusion_upgrade_flags" | index . -}}
+                {{- $type = . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+            {{- end -}}
+
+            {{- with "infix_upgrade" | index . -}}
+                {{- if "attributes" | index . -}}
+                    {{- $item := dict -}}
+
+                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- $item = $name | dict "name" | merge $item -}}
+                    {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $type | dict "type" | merge $item -}}
+                    {{- $item = $weight | dict "weight" | merge $item -}}
+
+                    {{- with "id" | index . | string | index $itemstats -}}
+                        {{- $item = "id" | index . | dict "stat" | merge $item -}}
+                        {{- $item = "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" | dict "statslug" | merge $item -}}
+                    {{- end -}}
+
+                    {{- $data = $data | append $item -}}
+                {{- else -}}
+                    {{- $item := dict -}}
+
+                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- $item = $name | dict "name" | merge $item -}}
+                    {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $type | dict "type" | merge $item -}}
+
+                    {{- $data = $data | append $item -}}
+                {{- end -}}
+            {{- else -}}
+                {{- range "stat_choices" | index . -}}
+                    {{- $item := dict -}}
+
+                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- $item = $name | dict "name" | merge $item -}}
+                    {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $type | dict "type" | merge $item -}}
+                    {{- $item = $weight | dict "weight" | merge $item -}}
+
+                    {{- with . | string | index $itemstats -}}
+                        {{- $item = "id" | index . | dict "stat" | merge $item -}}
+                        {{- $item = "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" | dict "statslug" | merge $item -}}
+                    {{- end -}}
+
+                    {{- $data = $data | append $item -}}
+                {{- else -}}
+                    {{- $item := dict -}}
+
+                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- $item = $name | dict "name" | merge $item -}}
+                    {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $type | dict "type" | merge $item -}}
+                    {{- $item = $weight | dict "weight" | merge $item -}}
+
+                    {{- $data = $data | append $item -}}
+                {{- end -}}
+            {{- end -}}
+        {{- else -}}
+            {{- $item := dict -}}
+
+            {{- $item = $id | dict "id" | merge $item -}}
+            {{- $item = $name | dict "name" | merge $item -}}
+            {{- $item = $slug | dict "slug" | merge $item -}}
+            {{- $item = $type | dict "type" | merge $item -}}
+
+            {{- $data = $data | append $item -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}
