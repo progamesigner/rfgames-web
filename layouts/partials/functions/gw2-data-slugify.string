@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 {{- $name := 1 | index . -}}
 
-{{- $slug := $name | lower | urlize -}}
+{{- $slug := $name | replaceRE "(.+)'s$" "$1" | lower | urlize -}}
 
 {{- return $slug -}}
