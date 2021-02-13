@@ -1,8 +1,14 @@
 {{- $context := 0 | index . -}}
 {{- $type := 1 | index . -}}
 
-{{- $guildwars2 := "guildwars2" | index $context.Site.Data | default dict -}}
-{{- $prefetch := "prefetch" | index $guildwars2 | default dict -}}
-{{- $ids := $type | index $prefetch | default slice | uniq -}}
+{{- $ids := slice -}}
+
+{{- $prefetchs := "prefetchs" | index $context.Site.Data | default dict -}}
+
+{{- range $type | index $prefetchs | default slice | uniq -}}
+    {{- if . | string | ne . -}}
+        {{- $ids = $ids | append . -}}
+    {{- end -}}
+{{- end -}}
 
 {{- return $ids -}}
