@@ -1,13 +1,15 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := dict -}}
+{{- $data := slice $context "trait-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
 
-{{- $traits := slice $context | partialCached "functions/gw2-api-get-traits.dict" -}}
+{{- if $data | len | ge 0 -}}
+    {{- $traits := slice $context | partialCached "functions/gw2-api-get-traits.dict" -}}
 
-{{- range $traits -}}
-    {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
-    {{- if $slug | index $data | not -}}
-        {{- $data = "id" | index . | dict $slug | merge $data -}}
+    {{- range $traits -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+        {{- if $slug | index $data | not -}}
+            {{- $data = "id" | index . | dict $slug | merge $data -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 

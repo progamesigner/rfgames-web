@@ -1,13 +1,15 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := dict -}}
+{{- $data := slice $context "specialization-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
 
-{{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
+{{- if $data | len | ge 0 -}}
+    {{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
 
-{{- range $specializations -}}
-    {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
-    {{- if $slug | index $data | not -}}
-        {{- $data = "id" | index . | dict $slug | merge $data -}}
+    {{- range $specializations -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+        {{- if $slug | index $data | not -}}
+            {{- $data = "id" | index . | dict $slug | merge $data -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 

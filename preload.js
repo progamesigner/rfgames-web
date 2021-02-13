@@ -72,6 +72,24 @@ const transformers = [
     return saveToPreloadData('skill-slug-to-id', slugToId)
       .then(() => console.log('Prepared "skill-slug-to-id" done!'))
   },
+  ({ specializations }) => {
+    const slugToId = fromPairs(flow(
+      Object.values,
+      map(item => [slugify(item.name), item.id]),
+    )(specializations))
+
+    return saveToPreloadData('specialization-slug-to-id', slugToId)
+      .then(() => console.log('Prepared "specialization-slug-to-id" done!'))
+  },
+  ({ traits }) => {
+    const slugToId = fromPairs(flow(
+      Object.values,
+      map(item => [slugify(item.name), item.id]),
+    )(traits))
+
+    return saveToPreloadData('trait-slug-to-id', slugToId)
+      .then(() => console.log('Prepared "trait-slug-to-id" done!'))
+  },
   ({ professions, skills }) => {
     const professionSkillSlugToName = fromPairs(flow(
       Object.values,
