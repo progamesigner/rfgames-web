@@ -249,9 +249,7 @@ const transformers = [
             details.infusion_upgrade_flags.forEach(infusion => {
               subtype = slugify(infusion)
             })
-          }
-
-          if (details.infix_upgrade) {
+          } else if (details.infix_upgrade) {
             if (details.infix_upgrade.attributes.length > 0) {
               const stat = itemstats[details.infix_upgrade.id]
 
