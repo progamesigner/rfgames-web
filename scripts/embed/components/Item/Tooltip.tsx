@@ -111,9 +111,11 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         }
         {
           item.type === GW2ItemType.ARMOR || item.type === GW2ItemType.WEAPON ?
+          item.details.defense > 0 ?
           <div className={styles.tooltip.attribute}>
             Defense: <span className={styles.tooltip.statItem}>{item.details.defense}</span>
           </div> :
+          null :
           null
         }
         {
