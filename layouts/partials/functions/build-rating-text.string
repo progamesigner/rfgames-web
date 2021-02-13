@@ -4,6 +4,6 @@
 
 {{- $ratingTexts := slice $context | partialCached "functions/build-rating-text.dict" -}}
 
-{{- $text := printf "%s-%d" $type $rating | index $ratingTexts | default "Unrated" -}}
+{{- $text := $rating | printf "%s-%d" $type | index $ratingTexts | default "Unrated" -}}
 
 {{- return $text -}}
