@@ -335,6 +335,7 @@ function requestPagedAPI(url, page, pageSize) {
 
 function slugify(name) {
   return name.toLowerCase()
+    .replace(/(.+)'s$/, '$1')
     .replace(/\s+/g, '-')
     .replace(/[^\w\-]+/g, '')
     .replace(/\-\-+/g, '-')
