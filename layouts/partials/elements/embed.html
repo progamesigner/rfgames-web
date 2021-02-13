@@ -60,7 +60,7 @@
     {{- end -}}
 {{- end -}}
 
-{{- with "infusions" | index $data | default "" -}}
+{{- with "infusions" | index $data -}}
     {{- $infusions := slice -}}
     {{- range split . "," -}}
         {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
@@ -69,7 +69,7 @@
     {{- $data = delimit $infusions "," | dict "infusions" | merge $data -}}
 {{- end -}}
 
-{{- with "upgrades" | index $data | default "" -}}
+{{- with "upgrades" | index $data -}}
     {{- $upgrades := slice -}}
     {{- range split . "," -}}
         {{- $id := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}

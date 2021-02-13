@@ -75,7 +75,10 @@
 
         {{- with slice $context $type $stat $profession | partial "functions/gw2-data-item-lookup.list" -}}
             {{- if . | len | lt $itemSelection -}}
-                {{- $id = $itemSelection | index . -}}
+                {{- with $itemSelection | index . -}}
+                    {{- $id = "id" | index . -}}
+                    {{- $stat = "stat" | index . -}}
+                {{- end -}}
             {{- end -}}
         {{- end -}}
 
@@ -322,7 +325,10 @@
 
         {{- with slice $context $type $stat | partial "functions/gw2-data-item-lookup.list" -}}
             {{- if . | len | lt $itemSelection -}}
-                {{- $id = $itemSelection | index . -}}
+                {{- with $itemSelection | index . -}}
+                    {{- $id = "id" | index . -}}
+                    {{- $stat = "stat" | index . -}}
+                {{- end -}}
             {{- end -}}
         {{- end -}}
 
