@@ -1,6 +1,6 @@
 {{- $accessToken := getenv "GW2_ACCESS_TOKEN" -}}
 
-{{- $worlds := slice $ $accessToken | partialCached "functions/gw2-api-get-current-worlds.list" -}}
+{{- $worlds := slice $ $accessToken | partialCached "apis/gw2-get-current-worlds.list" -}}
 
 {{- $mainWorld := $worlds | first 1 -}}
 {{- $linkedWorlds := $worlds | after 1 -}}

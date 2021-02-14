@@ -3,7 +3,7 @@
 {{- $data := slice $context "specialization-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
+    {{- $specializations := slice $context | partialCached "apis/gw2-get-specializations.dict" -}}
 
     {{- range $specializations -}}
         {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}

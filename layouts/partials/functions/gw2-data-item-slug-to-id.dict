@@ -3,7 +3,7 @@
 {{- $data := slice $context "item-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $items := slice $context | partialCached "functions/gw2-api-get-items.dict" -}}
+    {{- $items := slice $context | partialCached "apis/gw2-get-items.dict" -}}
 
     {{- range $items -}}
         {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}

@@ -3,7 +3,7 @@
 {{- $data := slice $context "profession-name-to-code" | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
+    {{- $professions := slice $context | partialCached "apis/gw2-get-professions.dict" -}}
 
     {{- range $professions -}}
         {{- $professionName := "name" | index | lower -}}

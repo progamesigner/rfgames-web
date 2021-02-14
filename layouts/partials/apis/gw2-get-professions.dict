@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 
-{{- $prefetchIds := slice $context "professions" | partial "functions/gw2-data-prefetch-ids.list" -}}
+{{- $prefetchIds := slice $context "professions" | partial "data/gw2-prefetch-ids.list" -}}
 
 {{- $data := slice $context "professions" "/v2/professions" $prefetchIds | partial "functions/gw2-api-fetch-from-local.dict" -}}
 

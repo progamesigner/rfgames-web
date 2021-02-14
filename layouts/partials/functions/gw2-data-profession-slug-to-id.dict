@@ -3,8 +3,8 @@
 {{- $data := slice $context "profession-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
-    {{- $specializations := slice $context | partialCached "functions/gw2-api-get-specializations.dict" -}}
+    {{- $professions := slice $context | partialCached "apis/gw2-get-professions.dict" -}}
+    {{- $specializations := slice $context | partialCached "apis/gw2-get-specializations.dict" -}}
 
     {{- range $professions -}}
         {{- $id := "id" | index . -}}

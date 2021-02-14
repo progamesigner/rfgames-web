@@ -3,7 +3,7 @@
 {{- $data := slice $context "skill-slug-to-name" | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
+    {{- $skills := slice $context | partialCached "apis/gw2-get-skills.dict" -}}
 
     {{- range $skills -}}
         {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}

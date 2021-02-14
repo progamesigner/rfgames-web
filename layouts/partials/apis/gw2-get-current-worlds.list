@@ -4,8 +4,8 @@
 {{- $worlds := slice -}}
 
 {{- if $accessToken | ne "" -}}
-    {{- $accountData := slice $context $accessToken | partial "functions/gw2-api-get-account.dict" -}}
-    {{- $matchData := slice $context $accountData.world | partial "functions/gw2-api-get-wvw-matches-by-world-id.dict" -}}
+    {{- $accountData := slice $context $accessToken | partial "apis/gw2-get-account.dict" -}}
+    {{- $matchData := slice $context $accountData.world | partial "apis/gw2-get-wvw-matches-by-world-id.dict" -}}
 
     {{- $mainWorldIds := slice -}}
     {{- $linkedWorldIds := slice -}}
@@ -22,7 +22,7 @@
     {{- end -}}
 
     {{- $worldIds := $mainWorldIds | append $linkedWorldIds -}}
-    {{- $worldData := $worldIds | slice $context | partial "functions/gw2-api-get-worlds-by-world-ids.dict" -}}
+    {{- $worldData := $worldIds | slice $context | partial "apis/gw2-get-worlds-by-world-ids.dict" -}}
 
     {{- range $worldData -}}
         {{- $worldName := "name" | index . -}}

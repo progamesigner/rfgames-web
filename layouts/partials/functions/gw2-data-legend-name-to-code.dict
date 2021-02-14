@@ -3,8 +3,8 @@
 {{- $data := slice $context "legend-name-to-code" | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $legends := slice $context | partialCached "functions/gw2-api-get-legends.dict" -}}
-    {{- $skills := slice $context | partialCached "functions/gw2-api-get-skills.dict" -}}
+    {{- $legends := slice $context | partialCached "apis/gw2-get-legends.dict" -}}
+    {{- $skills := slice $context | partialCached "apis/gw2-get-skills.dict" -}}
 
     {{- range $legends -}}
         {{- $legendSwapSkill := "swap" | index . | string | index $skills -}}

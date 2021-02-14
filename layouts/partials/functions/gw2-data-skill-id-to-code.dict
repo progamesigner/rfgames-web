@@ -3,8 +3,8 @@
 {{- $data := slice $context "skill-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $legends := slice $context | partialCached "functions/gw2-api-get-legends.dict" -}}
-    {{- $professions := slice $context | partialCached "functions/gw2-api-get-professions.dict" -}}
+    {{- $legends := slice $context | partialCached "apis/gw2-get-legends.dict" -}}
+    {{- $professions := slice $context | partialCached "apis/gw2-get-professions.dict" -}}
 
     {{- range $professions -}}
         {{- range "skills_by_palette" | index . -}}

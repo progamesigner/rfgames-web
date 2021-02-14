@@ -3,8 +3,8 @@
 {{- $data := slice $context "item-table" | partial "functions/gw2-data-load.list" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $items := slice $context | partialCached "functions/gw2-api-get-items.dict" -}}
-    {{- $itemstats := slice $context | partialCached "functions/gw2-api-get-itemstats.dict" -}}
+    {{- $items := slice $context | partialCached "apis/gw2-api-items.dict" -}}
+    {{- $itemstats := slice $context | partialCached "apis/gw2-get-itemstats.dict" -}}
 
     {{- range $items -}}
         {{- $id := "id" | index . -}}
