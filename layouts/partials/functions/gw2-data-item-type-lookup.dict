@@ -1,0 +1,12 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $data = dict "harpoongun" "speargun" | merge $data -}}
+{{- $data = dict "spear" "harpoon" | merge $data -}}
+{{- $data = dict "accessory1" "accessory" | merge $data -}}
+{{- $data = dict "accessory2" "accessory" | merge $data -}}
+{{- $data = dict "ring1" "ring" | merge $data -}}
+{{- $data = dict "ring2" "ring" | merge $data -}}
+
+{{- return $data -}}

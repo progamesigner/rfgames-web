@@ -1,8 +1,0 @@
-{{- $context := 0 | index . -}}
-{{- $type := 1 | index . | string | lower -}}
-
-{{- $typeNames := slice $context | partialCached "functions/gw2-data-item-type-to-type.dict" -}}
-
-{{- $name := $type | index $typeNames | default $type -}}
-
-{{- return $name -}}

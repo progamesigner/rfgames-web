@@ -5,10 +5,11 @@
 
 {{- $data := slice -}}
 
-{{- $table := slice $context | partialCached "functions/gw2-data-item-table.dict" -}}
+{{- $itemTable := slice $context | partialCached "functions/gw2-data-item-table.dict" -}}
+{{- $typeTable := slice $context | partialCached "functions/gw2-data-item-type-lookup.dict" -}}
 
-{{- with $type | slice $context | partial "functions/gw2-data-slugify.string" | slice $context | partial "functions/gw2-data-item-type-to-type.string" -}}
-    {{- $items := where $table "type" . -}}
+{{- with $type | slice $context | partial "functions/gw2-data-slugify.string" | index $typeTable | default $type -}}
+    {{- $items := where $itemTable "type" . -}}
 
     {{- if $stat | string | eq $stat -}}
         {{- with $stat | slice $context | partial "functions/gw2-data-slugify.string" -}}
