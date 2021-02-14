@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := slice $context "profession-slug-to-elite" | partial "functions/gw2-data-load.dict" -}}
+{{- $data := slice $context "profession-slug-to-elite" | partial "data/preload.dict" -}}
 
 {{- if $data | len | ge 0 -}}
     {{- $professions := slice $context | partialCached "apis/gw2-get-professions.dict" -}}

@@ -1,7 +1,7 @@
 {{- $context := 0 | index . -}}
 {{- $bytes := 1 | index . | default slice -}}
 
-{{- $chatacters := partialCached "functions/base64.list" . -}}
+{{- $chatacters := partialCached "data/base64.list" . -}}
 
 {{- $divisor00 := math.Pow 2 0 | int -}}
 {{- $divisor06 := math.Pow 2 6 | int -}}

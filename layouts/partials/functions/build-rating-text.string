@@ -2,7 +2,7 @@
 {{- $type := 1 | index . | string | lower -}}
 {{- $rating := 2 | index . | int | default 0 -}}
 
-{{- $ratingTexts := slice $context | partialCached "functions/build-rating-text.dict" -}}
+{{- $ratingTexts := slice $context | partialCached "data/build-rating-texts.dict" -}}
 
 {{- $text := $rating | printf "%s-%d" $type | index $ratingTexts | default "Unrated" -}}
 

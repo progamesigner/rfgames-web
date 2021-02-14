@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := slice $context "specialization-slug-to-id" | partial "functions/gw2-data-load.dict" -}}
+{{- $data := slice $context "specialization-slug-to-id" | partial "data/preload.dict" -}}
 
 {{- if $data | len | ge 0 -}}
     {{- $specializations := slice $context | partialCached "apis/gw2-get-specializations.dict" -}}

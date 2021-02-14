@@ -1,3 +1,5 @@
+{{- $context := 0 | index . -}}
+
 {{- $data := dict -}}
 
 {{- $data = dict "survivability" "Survivability" | merge $data -}}
