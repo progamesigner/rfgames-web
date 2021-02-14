@@ -4,9 +4,7 @@
 
 {{- $data := dict -}}
 
-{{- $entities := slice $context $url $prefetchIds | partial "functions/gw2-api-fetch-paginated.list" -}}
-
-{{- range $entities -}}
+{{- range slice $context $url $prefetchIds | partial "apis/gw2-paginated-fetch.list" -}}
     {{- $id := "id" | index . | string -}}
     {{- $data = . | dict $id | merge $data -}}
 {{- end -}}

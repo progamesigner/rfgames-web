@@ -10,18 +10,18 @@
     {{- $offset := $page | mul $count -}}
     {{- $fetchIds := $ids | after $offset | first $count -}}
 
-    {{- $chunk := delimit $fetchIds "," | dict "ids" | slice $context $url | partial "functions/gw2-api-url.string" | getJSON | default slice -}}
+    {{- $chunk := delimit $fetchIds "," | dict "ids" | slice $context $url | partial "apis/gw2-url.string" | getJSON | default slice -}}
 
     {{- $data = $data | append $chunk -}}
 {{- else -}}
-    {{- $chunk := dict "page" $page "page_size" $count | slice $context $url | partial "functions/gw2-api-url.string" | getJSON | default slice -}}
+    {{- $chunk := dict "page" $page "page_size" $count | slice $context $url | partial "apis/gw2-url.string" | getJSON | default slice -}}
 
     {{- $data = $data | append $chunk -}}
 {{- end -}}
 
 {{- if $data | len | le $count -}}
     {{- $nextPage := 1 | add $page -}}
-    {{- $chunk := slice $context $url $ids $nextPage $count | partial "functions/gw2-api-fetch-paginated.list" -}}
+    {{- $chunk := slice $context $url $ids $nextPage $count | partial "apis/gw2-paginated-fetch.list" -}}
 
     {{- $data = $data | append $chunk -}}
 {{- end -}}

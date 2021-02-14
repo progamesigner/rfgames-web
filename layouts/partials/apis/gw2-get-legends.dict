@@ -2,6 +2,6 @@
 
 {{- $prefetchIds := slice $context "legends" | partial "data/prefetch-ids.list" -}}
 
-{{- $data := slice $context "legends" "/v2/legends" $prefetchIds | partial "functions/gw2-api-fetch-from-local.dict" -}}
+{{- $data := slice $context "legends" "/v2/legends" $prefetchIds | partial "apis/gw2-cached-fetch.dict" -}}
 
 {{- return $data -}}
