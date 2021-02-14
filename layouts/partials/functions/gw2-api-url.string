@@ -3,7 +3,7 @@
 {{- $accessToken := 2 | index . -}}
 {{- $query := 3 | index . | default dict -}}
 
-{{- if reflect.IsMap $accessToken -}}
+{{- if $accessToken | reflect.IsMap -}}
     {{- $query = $accessToken | default dict -}}
     {{- $accessToken = "" -}}
 {{- end -}}
