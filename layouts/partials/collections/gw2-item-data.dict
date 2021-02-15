@@ -1,30 +1,42 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := slice $context "item-table" | partial "functions/gw2-data-load.list" -}}
+{{- $data := "item-data" | slice $context | partial "data/preload.dict" -}}
 
 {{- if $data | len | ge 0 -}}
-    {{- $items := slice $context | partialCached "apis/gw2-api-items.dict" -}}
+    {{- $items := slice $context | partialCached "apis/gw2-get-items.dict" -}}
     {{- $itemstats := slice $context | partialCached "apis/gw2-get-itemstats.dict" -}}
 
     {{- range $items -}}
         {{- $id := "id" | index . -}}
         {{- $name := "name" | index . -}}
-        {{- $slug := "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
-        {{- $type := "type" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/slugify.string" -}}
+        {{- $type := "type" | index . | slice $context | partial "functions/slugify.string" -}}
+
+        {{- $key := $id | string -}}
 
         {{- with "details" | index . -}}
-            {{- $weight := "weight_class" | index . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+            {{- $weight := "weight_class" | index . | slice $context | partial "functions/slugify.string" -}}
 
             {{- with "type" | index . -}}
-                {{- $type = . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+                {{- $type = . | slice $context | partial "functions/slugify.string" -}}
             {{- end -}}
 
             {{- range "infusion_upgrade_flags" | index . -}}
-                {{- $type = . | slice $context | partial "functions/gw2-data-slugify.string" -}}
+                {{- $type = . | slice $context | partial "functions/slugify.string" -}}
             {{- end -}}
 
             {{- with "infix_upgrade" | index . -}}
                 {{- if "attributes" | index . -}}
+                    {{- $stats := "id" | index . | slice -}}
+
+                    {{- $statslugs := slice -}}
+                    {{- range $stats -}}
+                        {{- with . | string | index $itemstats -}}
+                            {{- $slug := "name" | index . | slice $context | partial "functions/slugify.string" -}}
+                            {{- $statslugs = $statslugs | append $slug -}}
+                        {{- end -}}
+                    {{- end -}}
+
                     {{- $item := dict -}}
 
                     {{- $item = $id | dict "id" | merge $item -}}
@@ -33,12 +45,12 @@
                     {{- $item = $type | dict "type" | merge $item -}}
                     {{- $item = $weight | dict "weight" | merge $item -}}
 
-                    {{- with "id" | index . | string | index $itemstats -}}
-                        {{- $item = "id" | index . | dict "stat" | merge $item -}}
-                        {{- $item = "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" | dict "statslug" | merge $item -}}
+                    {{- with $statslugs | len | lt 0 -}}
+                        {{- $item = $stats | dict "stats" | merge $item -}}
+                        {{- $item = $statslugs | dict "statslugs" | merge $item -}}
                     {{- end -}}
 
-                    {{- $data = $data | append $item -}}
+                    {{- $data = $item | dict $key | merge $data -}}
                 {{- else -}}
                     {{- $item := dict -}}
 
@@ -47,10 +59,20 @@
                     {{- $item = $slug | dict "slug" | merge $item -}}
                     {{- $item = $type | dict "type" | merge $item -}}
 
-                    {{- $data = $data | append $item -}}
+                    {{- $data = $item | dict $key | merge $data -}}
                 {{- end -}}
             {{- else -}}
-                {{- range "stat_choices" | index . -}}
+                {{- with "stat_choices" | index . -}}
+                    {{- $stats := . -}}
+
+                    {{- $statslugs := slice -}}
+                    {{- range $stats -}}
+                        {{- with . | string | index $itemstats -}}
+                            {{- $slug := "name" | index . | slice $context | partial "functions/slugify.string" -}}
+                            {{- $statslugs = $statslugs | append $slug -}}
+                        {{- end -}}
+                    {{- end -}}
+
                     {{- $item := dict -}}
 
                     {{- $item = $id | dict "id" | merge $item -}}
@@ -59,12 +81,12 @@
                     {{- $item = $type | dict "type" | merge $item -}}
                     {{- $item = $weight | dict "weight" | merge $item -}}
 
-                    {{- with . | string | index $itemstats -}}
-                        {{- $item = "id" | index . | dict "stat" | merge $item -}}
-                        {{- $item = "name" | index . | slice $context | partial "functions/gw2-data-slugify.string" | dict "statslug" | merge $item -}}
+                    {{- with $statslugs | len | lt 0 -}}
+                        {{- $item = $stats | dict "stats" | merge $item -}}
+                        {{- $item = $statslugs | dict "statslugs" | merge $item -}}
                     {{- end -}}
 
-                    {{- $data = $data | append $item -}}
+                    {{- $data = $item | dict $key | merge $data -}}
                 {{- else -}}
                     {{- $item := dict -}}
 
@@ -74,7 +96,7 @@
                     {{- $item = $type | dict "type" | merge $item -}}
                     {{- $item = $weight | dict "weight" | merge $item -}}
 
-                    {{- $data = $data | append $item -}}
+                    {{- $data = $item | dict $key | merge $data -}}
                 {{- end -}}
             {{- end -}}
         {{- else -}}
@@ -85,7 +107,7 @@
             {{- $item = $slug | dict "slug" | merge $item -}}
             {{- $item = $type | dict "type" | merge $item -}}
 
-            {{- $data = $data | append $item -}}
+            {{- $data = $item | dict $key | merge $data -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}

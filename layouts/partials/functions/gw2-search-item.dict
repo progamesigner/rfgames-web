@@ -1,0 +1,52 @@
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . -}}
+{{- $stat := 2 | index . -}}
+{{- $profession := 3 | index . -}}
+{{- $selection := 4 | index . | default 0 -}}
+
+{{- $item := dict -}}
+
+{{- $items := slice $context | partialCached "collections/gw2-item-data.list" -}}
+
+{{- $stats := slice $stat -}}
+{{- $statslugs := $stat | slice $context | partial "functions/gw2-itemstat-slugify.list" -}}
+
+{{- with $type | slice $context | partial "functions/gw2-item-slot-to-type.string" -}}
+    {{- $items = where $items "type" . -}}
+{{- end -}}
+
+{{- with $profession | slice $context | partial "functions/gw2-profession-to-weight-class.string" -}}
+    {{- $items = where $items "weight" . -}}
+{{- end -}}
+
+{{- if $stat | string | eq $stat -}}
+    {{- $items = where $items "statslugs" "intersect" $statslugs -}}
+{{- else -}}
+    {{- $items = where $items "stats" "intersect" $stats -}}
+{{- end -}}
+
+{{- if $items | len | lt $selection -}}
+    {{- $item = $selection | index $items -}}
+
+    {{- if $stat | string | eq $stat -}}
+        {{- range $index, $statslug := "statslugs" | index $item -}}
+            {{- if $statslug | in $statslugs -}}
+                {{- $stats := "stats" | index $item -}}
+
+                {{- $item = $index | index $stats | dict "stat" | merge $item -}}
+                {{- $item = $statslug | dict "statslug" | merge $item -}}
+            {{- end -}}
+        {{- end -}}
+    {{- else -}}
+        {{- range $index, $stat := "stats" | index . -}}
+            {{- if $stat | in $stats -}}
+                {{- $statslugs := "statslugs" | index $item -}}
+
+                {{- $item = $stats | dict "stat" | merge $item -}}
+                {{- $item = $index | index $statslugs | dict "statslug" | merge $item -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $item -}}

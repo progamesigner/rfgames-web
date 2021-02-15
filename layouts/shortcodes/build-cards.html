@@ -1,4 +1,4 @@
-{{- $armorParts := slice "head" "shoulders" "coat" "gloves" "leggings" "boots" -}}
+{{- $armorParts := slice "helm" "shoulders" "coat" "gloves" "leggings" "boots" -}}
 {{- $armorRuneCounts := dict -}}
 
 {{- $build := .Page.Params.build -}}
@@ -34,7 +34,7 @@
                 {{- $data = true | dict "disable-tooltip" | merge $data -}}
             {{- end -}}
 
-            {{- slice "build-card-icon" | slice $context $type false $data | partial "elements/embed.html" -}}
+            {{- slice "build-card-icon" | slice $context $type false $data | partial "components/embed.html" -}}
         {{- end -}}
 
         {{- if $showText -}}
@@ -46,7 +46,7 @@
                     {{- $data = true | dict "disable-text" | merge $data -}}
                 {{- end -}}
 
-                {{- slice "build-card-text" | slice $context $type false $data | partial "elements/embed.html" -}}
+                {{- slice "build-card-text" | slice $context $type false $data | partial "components/embed.html" -}}
             {{- end -}}
         {{- end -}}
 
@@ -70,7 +70,7 @@
         {{- with "id" | index . -}}
             {{- $upgradeId := . -}}
             {{- if . | string | eq . -}}
-                {{- $upgradeId = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+                {{- $upgradeId = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
             {{- end -}}
             {{- $upgrade = $upgradeId | dict "id" | merge $upgrade -}}
         {{- end -}}
@@ -88,24 +88,24 @@
         {{- $upgradeIds := slice -}}
 
         {{- range "enrichments" | index . -}}
-            {{- $enrichmentId := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $enrichmentId := . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
             {{- $enrichmentIds = $enrichmentIds | append $enrichmentId -}}
         {{- end -}}
 
         {{- range "infusions" | index . -}}
-            {{- $infusionId := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $infusionId := . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
             {{- $infusionIds = $infusionIds | append $infusionId -}}
         {{- end -}}
 
         {{- range "upgrades" | index . -}}
-            {{- $upgradeId := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $upgradeId := . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
             {{- $upgradeIds = $upgradeIds | append $upgradeId -}}
         {{- end -}}
 
         {{- with "id" | index . -}}
             {{- $id := . -}}
             {{- if . | string | eq . -}}
-                {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+                {{- $id = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
             {{- end -}}
             {{- $item = $id | dict "id" | merge $item -}}
         {{- end -}}
@@ -149,7 +149,7 @@
     {{- $profession := 1 | index . -}}
     {{- $type := 2 | index . -}}
     {{- $armorRuneCounts := 4 | index . -}}
-    {{- $itemSelection := 5 | index . -}}
+    {{- $selection := 5 | index . -}}
 
     {{- $classes := $type | printf "is-%s" | slice "is-armor" -}}
 
@@ -163,13 +163,9 @@
         {{- $runeId := "rune" | index . -}}
         {{- $upgradeCount := 0 -}}
 
-        {{- with slice $context $type $stat $profession | partial "functions/gw2-data-item-lookup.list" -}}
-            {{- if . | len | lt $itemSelection -}}
-                {{- with $itemSelection | index . -}}
-                    {{- $id = "id" | index . -}}
-                    {{- $stat = "stat" | index . -}}
-                {{- end -}}
-            {{- end -}}
+        {{- with slice $context $type $stat $profession $selection | partial "functions/gw2-search-item.dict" -}}
+            {{- $id = "id" | index . -}}
+            {{- $stat = "stat" | index . -}}
         {{- end -}}
 
         {{- with $runeId -}}
@@ -192,214 +188,176 @@
 {{- define "__rfgames_shortcode_includes__build_equipment_weapon__" -}}
     {{- $context := 0 | index . -}}
     {{- $classes := 1 | index . | printf "is-%s" | slice "is-weapon" -}}
+    {{- $selection := 3 | index . -}}
 
     {{- with 2 | index . -}}
-        {{- $kind := "kind" | index . -}}
+        {{- $id := "id" | index . -}}
+        {{- $type := "type" | index . -}}
+        {{- $stat := "stat" | index .  -}}
 
-        {{- $weapon := "weapon" | index . -}}
-        {{- $weapon1 := "weapon1" | index . -}}
-        {{- $weapon2 := "weapon2" | index . -}}
-        {{- $sigil1 := "sigil1" | index . -}}
-        {{- $sigil2 := "sigil2" | index . -}}
-        {{- $infusion1 := "infusion1" | index . -}}
-        {{- $infusion2 := "infusion2" | index . -}}
+        {{- $ids := "ids" | index . | default slice -}}
+        {{- $types := "types" | index . | default slice  -}}
+        {{- $stats := "stats" | index . | default slice -}}
 
-        {{- $infusionIds := slice -}}
-        {{- $sigilIds := slice -}}
+        {{- $sigils := "sigils" | index . | default slice -}}
+        {{- $infusions := "infusions" | index . | default slice -}}
 
-        {{- range slice $infusion1 $infusion2 -}}
-            {{- $infusionId := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-            {{- $infusionIds = $infusionIds | append $infusionId -}}
+        {{- $id1 := 0 | index $ids | default $id | default 0 -}}
+        {{- $id2 := 1 | index $ids | default 0 -}}
+        {{- $type1 := 0 | index $types | default $type -}}
+        {{- $type2 := 1 | index $types -}}
+        {{- $stat1 := 0 | index $stats | default $stat -}}
+        {{- $stat2 := 1 | index $stats -}}
+        {{- $sigil1 := 0 | index $sigils | default 0 -}}
+        {{- $sigil2 := 1 | index $sigils | default 0 -}}
+        {{- $infusion1 := 0 | index $infusions | default 0 -}}
+        {{- $infusion2 := 1 | index $infusions | default 0 -}}
+
+        {{- with slice $context $type1 $stat1 nil $selection | partial "functions/gw2-search-item.dict" -}}
+            {{- $id1 = "id" | index . -}}
+            {{- $stat1 = "stat" | index . -}}
+            {{- $type1 = "type" | index . -}}
         {{- end -}}
 
-        {{- range slice $sigil1 $sigil2 -}}
-            {{- $sigilId := . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-            {{- $sigilIds = $sigilIds | append $sigilId -}}
+        {{- with slice $context $type2 $stat2 nil $selection | partial "functions/gw2-search-item.dict" -}}
+            {{- $id2 = "id" | index . -}}
+            {{- $stat2 = "stat" | index . -}}
+            {{- $type2 = "type" | index . -}}
         {{- end -}}
 
         {{- with $infusion1 -}}
-            {{- $infusion1 = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-        {{- end -}}
-
-        {{- with $sigil1 -}}
-            {{- $sigil1 = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $infusion1 = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
         {{- end -}}
 
         {{- with $infusion2 -}}
-            {{- $infusion2 = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $infusion2 = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
+        {{- end -}}
+
+        {{- with $sigil1 -}}
+            {{- $sigil1 = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
         {{- end -}}
 
         {{- with $sigil2 -}}
-            {{- $sigil2 = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $sigil2 = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
         {{- end -}}
 
-        {{- if $kind | eq "DualWield" -}}
-            {{- $classes = $classes | append "is-dual-wield" -}}
+        {{- with slice $context $type1 $type2 | partial "functions/gw2-item-weapon-kind.string" -}}
+            {{- if . | eq "TwoHand" -}}
+                {{- $classes = $classes | append "is-two-hand" -}}
 
-            {{- with $weapon1 -}}
-                {{- $stat := "stat" | index . | default -1 -}}
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = $id1 | dict "id" | merge $item -}}
+                    {{- $item = $stat1 | dict "stat" | merge $item -}}
+                    {{- $item = slice $infusion1 $infusion2 | dict "infusions" | merge $item -}}
+                    {{- $item = slice $sigil1 $sigil2 | dict "upgrades" | merge $item -}}
 
-                {{- $item := dict -}}
-                {{- $item = $stat | dict "stat" | merge $item -}}
-                {{- $item = $infusion1 | dict "infusions" | merge $item -}}
-                {{- $item = $sigil1 | dict "upgrades" | merge $item -}}
+                    {{- $upgrade := dict -}}
+                    {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
 
-                {{- with "id" | index . -}}
-                    {{- $id := . -}}
-                    {{- if . | string | eq . -}}
-                        {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-                    {{- end -}}
-                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- $classes := $classes | append "is-main-hand-slot" -}}
+
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item $upgrade -}}
                 {{- end -}}
 
-                {{- $upgrade := dict -}}
-                {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = -1 | dict "id" | merge $item -}}
 
-                {{- $classes1 := $classes | append "is-main-hand-slot" -}}
+                    {{- $upgrade := dict -}}
+                    {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
 
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes1 $item $upgrade -}}
+                    {{- $classes := $classes | append "is-off-hand-slot" -}}
+
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item $upgrade -}}
+                {{- end -}}
             {{- end -}}
+            {{- if . | eq "DualWield" -}}
+                {{- $classes = $classes | append "is-dual-wield" -}}
 
-            {{- with $weapon2 -}}
-                {{- $stat := "stat" | index . | default -1 -}}
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = $id1 | dict "id" | merge $item -}}
+                    {{- $item = $stat1 | dict "stat" | merge $item -}}
+                    {{- $item = slice $infusion1 | dict "infusions" | merge $item -}}
+                    {{- $item = slice $sigil1 | dict "upgrades" | merge $item -}}
 
-                {{- $item := dict -}}
-                {{- $item = $stat | dict "stat" | merge $item -}}
-                {{- $item = $infusion2 | dict "infusions" | merge $item -}}
-                {{- $item = $sigil2 | dict "upgrades" | merge $item -}}
+                    {{- $upgrade := dict -}}
+                    {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
 
-                {{- with "id" | index . -}}
-                    {{- $id := . -}}
-                    {{- if . | string | eq . -}}
-                        {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-                    {{- end -}}
-                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- $classes := $classes | append "is-main-hand-slot" -}}
+
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item $upgrade -}}
                 {{- end -}}
 
-                {{- $upgrade := dict -}}
-                {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = $id2 | dict "id" | merge $item -}}
+                    {{- $item = $stat2 | dict "stat" | merge $item -}}
+                    {{- $item = slice $infusion2 | dict "infusions" | merge $item -}}
+                    {{- $item = slice $sigil2 | dict "upgrades" | merge $item -}}
 
-                {{- $classes2 := $classes | append "is-off-hand-slot" -}}
+                    {{- $upgrade := dict -}}
+                    {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
 
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes2 $item $upgrade -}}
+                    {{- $classes := $classes | append "is-off-hand-slot" -}}
+
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item $upgrade -}}
+                {{- end -}}
             {{- end -}}
-        {{- end -}}
-        {{- if $kind | eq "MainHandOnly" -}}
-            {{- $classes = $classes | append "is-main-hand-only" -}}
+            {{- if . | eq "MainHandOnly" -}}
+                {{- $classes = $classes | append "is-main-hand-only" -}}
 
-            {{- with $weapon1 -}}
-                {{- $stat := "stat" | index . | default -1 -}}
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = $id1 | dict "id" | merge $item -}}
+                    {{- $item = $stat1 | dict "stat" | merge $item -}}
+                    {{- $item = slice $infusion1 | dict "infusions" | merge $item -}}
+                    {{- $item = slice $sigil1 | dict "upgrades" | merge $item -}}
 
-                {{- $item := dict -}}
-                {{- $item = $stat | dict "stat" | merge $item -}}
-                {{- $item = $infusion1 | dict "infusions" | merge $item -}}
-                {{- $item = $sigil1 | dict "upgrades" | merge $item -}}
+                    {{- $upgrade := dict -}}
+                    {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
 
-                {{- with "id" | index . -}}
-                    {{- $id := . -}}
-                    {{- if . | string | eq . -}}
-                        {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-                    {{- end -}}
-                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- $classes := $classes | append "is-main-hand-slot" -}}
+
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item $upgrade -}}
                 {{- end -}}
 
-                {{- $upgrade := dict -}}
-                {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = -1 | dict "id" | merge $item -}}
 
-                {{- if $sigil1 | string | eq $sigil1 -}}
-                    {{- $upgrade = $sigil1 | dict "name" | merge $upgrade -}}
+                    {{- $classes := $classes | append "is-off-hand-slot" -}}
+
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if . | eq "OffHandOnly" -}}
+                {{- $classes = $classes | append "is-off-hand-only" -}}
+
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = -1 | dict "id" | merge $item -}}
+
+                    {{- $classes := $classes | append "is-main-hand-slot" -}}
+
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item -}}
                 {{- end -}}
 
-                {{- $classes1 := $classes | append "is-main-hand-slot" -}}
+                {{- with . -}}
+                    {{- $item := dict -}}
+                    {{- $item = $id2 | dict "id" | merge $item -}}
+                    {{- $item = $stat2 | dict "stat" | merge $item -}}
+                    {{- $item = slice $infusion2 | dict "infusions" | merge $item -}}
+                    {{- $item = slice $sigil2 | dict "upgrades" | merge $item -}}
 
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes1 $item $upgrade -}}
-            {{- end -}}
+                    {{- $upgrade := dict -}}
+                    {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
 
-            {{- with . -}}
-                {{- $item := dict "id" -1 -}}
+                    {{- $classes := $classes | append "is-off-hand-slot" -}}
 
-                {{- $classes2 := $classes | append "is-off-hand-slot" -}}
-
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes2 $item -}}
-            {{- end -}}
-        {{- end -}}
-        {{- if $kind | eq "OffHandOnly" -}}
-            {{- $classes = $classes | append "is-off-hand-only" -}}
-
-            {{- with . -}}
-                {{- $item := dict "id" -1 -}}
-
-                {{- $classes1 := $classes | append "is-main-hand-slot" -}}
-
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes1 $item -}}
-            {{- end -}}
-
-            {{- with $weapon2 -}}
-                {{- $stat := "stat" | index . | default -1 -}}
-
-                {{- $item := dict -}}
-                {{- $item = $stat | dict "stat" | merge $item -}}
-                {{- $item = $infusion2 | dict "infusions" | merge $item -}}
-                {{- $item = $sigil2 | dict "upgrades" | merge $item -}}
-
-                {{- with "id" | index . -}}
-                    {{- $id := . -}}
-                    {{- if . | string | eq . -}}
-                        {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-                    {{- end -}}
-                    {{- $item = $id | dict "id" | merge $item -}}
+                    {{- template "__rfgames_shortcode_includes__build_item_lookup__" slice $context $classes $item $upgrade -}}
                 {{- end -}}
-
-                {{- $upgrade := dict -}}
-                {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
-
-                {{- $classes2 := $classes | append "is-off-hand-slot" -}}
-
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes2 $item $upgrade -}}
-            {{- end -}}
-        {{- end -}}
-        {{- if $kind | eq "TwoHand" -}}
-            {{- $classes = $classes | append "is-two-hand" -}}
-
-            {{- with $weapon -}}
-                {{- $stat := "stat" | index . | default -1 -}}
-
-                {{- $sigils := slice $sigil1 $sigil2 -}}
-                {{- $infusions := slice $infusion1 $infusion2 -}}
-
-                {{- $item := dict -}}
-                {{- $item = $stat | dict "stat" | merge $item -}}
-                {{- $item = delimit $infusionIds "," | dict "infusions" | merge $item -}}
-                {{- $item = delimit $sigilIds "," | dict "upgrades" | merge $item -}}
-
-                {{- with "id" | index . -}}
-                    {{- $id := . -}}
-                    {{- if . | string | eq . -}}
-                        {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
-                    {{- end -}}
-                    {{- $item = $id | dict "id" | merge $item -}}
-                {{- end -}}
-
-                {{- $upgrade := dict -}}
-                {{- $upgrade = $sigil1 | dict "id" | merge $upgrade -}}
-
-                {{- $classes1 := $classes | append "is-main-hand-slot" -}}
-
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes1 $item $upgrade -}}
-            {{- end -}}
-
-            {{- with . -}}
-                {{- $item := dict -}}
-                {{- $item = -1 | dict "id" | merge $item -}}
-                {{- $item = delimit $infusionIds "," | dict "infusions" | merge $item -}}
-                {{- $item = delimit $sigilIds "," | dict "upgrades" | merge $item -}}
-
-                {{- $upgrade := dict -}}
-                {{- $upgrade = $sigil2 | dict "id" | merge $upgrade -}}
-
-                {{- $classes2 := $classes | append "is-off-hand-slot" -}}
-
-                {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes2 $item $upgrade -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
@@ -408,7 +366,7 @@
 {{- define "__rfgames_shortcode_includes__build_equipment_trinket__" -}}
     {{- $context := 0 | index . -}}
     {{- $type := 1 | index . -}}
-    {{- $itemSelection := 3 | index . -}}
+    {{- $selection := 3 | index . -}}
 
     {{- $classes := $type | printf "is-%s" | slice "is-trinket" -}}
 
@@ -424,13 +382,9 @@
         {{- $upgrade := "upgrade" | index . -}}
         {{- $upgrades := "upgrades" | index . | default slice -}}
 
-        {{- with slice $context $type $stat | partial "functions/gw2-data-item-lookup.list" -}}
-            {{- if . | len | lt $itemSelection -}}
-                {{- with $itemSelection | index . -}}
-                    {{- $id = "id" | index . -}}
-                    {{- $stat = "stat" | index . -}}
-                {{- end -}}
-            {{- end -}}
+        {{- with slice $context $type $stat nil $selection | partial "functions/gw2-search-item.dict" -}}
+            {{- $id = "id" | index . -}}
+            {{- $stat = "stat" | index . -}}
         {{- end -}}
 
         {{- with $enrichment -}}
@@ -464,7 +418,7 @@
     {{- with 2 | index . -}}
         {{- $id := . -}}
         {{- if . | string | eq . -}}
-            {{- $id = . | slice $context "item" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $id = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
         {{- end -}}
         {{- $item = $id | dict "id" | merge $item -}}
     {{- end -}}
@@ -482,7 +436,7 @@
 
     {{- $activeTraitlines := slice -}}
     {{- range $traitlines -}}
-        {{- $specializationId := 0 | index . | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $specializationId := 0 | index . | slice $context | partial "functions/gw2-specialization-to-id.integer" -}}
         {{- $traitSelections := . | after 1 -}}
         {{- $traitline := $specializationId | slice | append $traitSelections -}}
         {{- $activeTraitline := delimit $traitline "|" -}}
@@ -492,7 +446,7 @@
     {{- with 2 | index . -}}
         {{- $id := . -}}
         {{- if . | string | eq . -}}
-            {{- $id = . | slice $context "skill" | partial "functions/gw2-data-name-to-id.integer" -}}
+            {{- $id = . | slice $context | partial "functions/gw2-skill-to-id.integer" -}}
         {{- end -}}
         {{- $skill = $id | dict "id" | merge $skill -}}
     {{- end -}}
@@ -516,7 +470,7 @@
 
     {{- $activeTraitlines := slice -}}
     {{- range $traitlines -}}
-        {{- $specializationId := 0 | index . | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" -}}
+        {{- $specializationId := 0 | index . | slice $context | partial "functions/gw2-specialization-to-id.integer" -}}
         {{- $traitSelections := . | after 1 -}}
         {{- $traitline := $specializationId | slice | append $traitSelections -}}
         {{- $activeTraitline := delimit $traitline "|" -}}
@@ -527,7 +481,7 @@
         {{- with 0 | index . -}}
             {{- $id := . -}}
             {{- if . | string | eq . -}}
-                {{- $id = . | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" -}}
+                {{- $id = . | slice $context | partial "functions/gw2-specialization-to-id.integer" -}}
             {{- end -}}
             {{- $traitline = $id | dict "id" | merge $traitline -}}
         {{- end -}}
@@ -551,7 +505,7 @@
 <div class="build-card is-armors">
     <h5 class="title">Armors</h5>
     <div class="build-card-content">
-        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice $ $template.profession "head" $equipments.head $armorRuneCounts 0 -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice $ $template.profession "helm" $equipments.helm $armorRuneCounts 0 -}}
         {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice $ $template.profession "shoulders" $equipments.shoulders $armorRuneCounts 0 -}}
         {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice $ $template.profession "coat" $equipments.coat $armorRuneCounts 0 -}}
         {{- template "__rfgames_shortcode_includes__build_equipment_armor__" slice $ $template.profession "gloves" $equipments.gloves $armorRuneCounts 0 -}}
@@ -627,13 +581,13 @@
 <div class="build-card is-weapons">
     <h5 class="title">Weapons</h5>
     <div class="build-card-content">
-        {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice $ "weapon1" $equipments.weapon1 -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice $ "weapon1" $equipments.weapon1 0 -}}
         <div class="gw2-embed-wrapper">
             {{- range $equipments.weapon1.skills -}}
                 {{- template "__rfgames_shortcode_includes__build_skill__" slice $ "weapon-skill" . $template.traits false -}}
             {{- end -}}
         </div>
-        {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice $ "weapon2" $equipments.weapon2 -}}
+        {{- template "__rfgames_shortcode_includes__build_equipment_weapon__" slice $ "weapon2" $equipments.weapon2 0 -}}
         <div class="gw2-embed-wrapper">
             {{- range $equipments.weapon2.skills -}}
                 {{- template "__rfgames_shortcode_includes__build_skill__" slice $ "weapon-skill" . $template.traits false -}}

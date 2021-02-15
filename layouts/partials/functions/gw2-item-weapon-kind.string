@@ -1,0 +1,13 @@
+{{- $context := 0 | index . -}}
+{{- $type1 := 1 | index . -}}
+{{- $type2 := 2 | index . -}}
+
+{{- $kinds := slice $context | partialCached "data/gw2-item-weapon-kinds.dict" -}}
+{{- $types := slice $context | partialCached "data/gw2-item-weapon-types.dict" -}}
+
+{{- $kind1 := $type1 | slice $context | partial "functions/gw2-item-slot-to-type.string" | index $types | string -}}
+{{- $kind2 := $type2 | slice $context | partial "functions/gw2-item-slot-to-type.string" | index $types | string -}}
+
+{{- $kind := printf "%s|%s" $kind1 $kind2 | index $kinds -}}
+
+{{- return $kind -}}

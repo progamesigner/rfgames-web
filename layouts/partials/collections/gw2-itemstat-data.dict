@@ -1,0 +1,24 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "itemstat-data" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $itemstats := slice $context | partialCached "apis/gw2-get-itemstats.dict" -}}
+
+    {{- range $itemstats -}}
+        {{- $id := "id" | index . -}}
+        {{- $name := "name" | index . -}}
+        {{- $slug := "name" | index . | slice $context | partial "functions/slugify.string" -}}
+
+        {{- $key := $id | string -}}
+
+        {{- $itemstat := dict -}}
+        {{- $itemstat = $id | dict "id" | merge $itemstat -}}
+        {{- $itemstat = $name | dict "name" | merge $itemstat -}}
+        {{- $itemstat = $slug | dict "slug" | merge $itemstat -}}
+
+        {{- $data = $itemstat | dict $key | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

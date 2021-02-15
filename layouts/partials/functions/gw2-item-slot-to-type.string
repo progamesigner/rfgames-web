@@ -1,0 +1,8 @@
+{{- $context := 0 | index . -}}
+{{- $slot := 1 | index . | lower -}}
+
+{{- $data := slice $context | partialCached "data/gw2-item-types.dict" -}}
+
+{{- $type := $slot | index $data | default $slot | lower -}}
+
+{{- return $type -}}

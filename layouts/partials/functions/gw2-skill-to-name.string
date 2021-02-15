@@ -1,0 +1,12 @@
+{{- $context := 0 | index . -}}
+{{- $idOrName := 1 | index . -}}
+
+{{- $table := slice $context | partialCached "collections/gw2-skill-data.dict" -}}
+
+{{- $id := $idOrName | slice $context | partial "functions/gw2-skill-to-id.integer" -}}
+
+{{- $data := $id | string | index $table | default dict -}}
+
+{{- $name := "name" | index $data | default 0 -}}
+
+{{- return $name -}}

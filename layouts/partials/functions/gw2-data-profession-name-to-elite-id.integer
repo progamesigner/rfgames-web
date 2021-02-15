@@ -1,9 +1,0 @@
-{{- $context := 0 | index . -}}
-{{- $name := 1 | index . -}}
-
-{{- $slugToEliteIdMap := slice $context | partialCached "functions/gw2-data-profession-slug-to-elite.dict" -}}
-{{- $slug := $name | slice $context | partial "functions/gw2-data-slugify.string" -}}
-
-{{- $id := $slug | index $slugToEliteIdMap | default 0 | int -}}
-
-{{- return $id -}}

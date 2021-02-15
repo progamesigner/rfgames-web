@@ -4,11 +4,11 @@
 
     <main class="main is-page has-theme-{{ "theme" | .Param | default "default" }}">
         <div class="page-background">
-            {{- slice $ $background "1280,1920,3840" "jpg" .Title | partial "functions/responsive-image.html" -}}
+            {{- slice $ $background "1280,1920,3840" "jpg" .Title | partial "components/responsive-image.html" -}}
         </div>
 
         <div class="page-overlay">
-            {{- slice $ $overlay "1280,1920,3840" "png" .Title false | partial "functions/responsive-image.html" -}}
+            {{- slice $ $overlay "1280,1920,3840" "png" .Title false | partial "components/responsive-image.html" -}}
         </div>
 
         <div class="container">

@@ -1,0 +1,49 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "profession-data" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $professions := slice $context | partialCached "apis/gw2-get-professions.dict" -}}
+    {{- $specializations := slice $context | partialCached "apis/gw2-get-specializations.dict" -}}
+
+    {{- range $professions -}}
+        {{- $id := "id" | index . -}}
+        {{- $code := "code" | index . -}}
+
+        {{- with . -}}
+            {{- $name := "name" | index . -}}
+
+            {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+            {{- $profession := dict -}}
+            {{- $profession = $id | dict "id" | merge $profession -}}
+            {{- $profession = $slug | dict "slug" | merge $profession -}}
+            {{- $profession = $name | dict "name" | merge $profession -}}
+            {{- $profession = $code | dict "code" | merge $profession -}}
+
+            {{- $data = $profession | dict $name | merge $data -}}
+        {{- end -}}
+
+        {{- range "specializations" | index . -}}
+            {{- with . | string | index $specializations -}}
+                {{- if "elite" | index . -}}
+                    {{- $name := "name" | index . -}}
+                    {{- $elite := "id" | index . -}}
+
+                    {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+                    {{- $profession := dict -}}
+                    {{- $profession = $id | dict "id" | merge $profession -}}
+                    {{- $profession = $slug | dict "slug" | merge $profession -}}
+                    {{- $profession = $name | dict "name" | merge $profession -}}
+                    {{- $profession = $code | dict "code" | merge $profession -}}
+                    {{- $profession = $elite | dict "elite" | merge $profession -}}
+
+                    {{- $data = $profession | dict $name | merge $data -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

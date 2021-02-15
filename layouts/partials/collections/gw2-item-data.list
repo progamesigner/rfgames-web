@@ -1,0 +1,11 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := slice -}}
+
+{{- $items := slice $context | partialCached "collections/gw2-item-data.dict" -}}
+
+{{- range $items -}}
+    {{- $data = $data | append . -}}
+{{- end -}}
+
+{{- return $data -}}

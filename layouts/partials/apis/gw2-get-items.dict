@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 
-{{- $prefetchIds := slice $context "items" | partial "data/prefetch-ids.list" -}}
+{{- $prefetchIds := "items" | slice $context | partial "data/prefetch-ids.list" -}}
 
 {{- $data := slice $context "items" "/v2/items" $prefetchIds | partial "apis/gw2-cached-fetch.dict" -}}
 

@@ -1,8 +1,0 @@
-{{- $context := 0 | index . -}}
-{{- $position := 1 | index . | string | lower -}}
-
-{{- $positionCodes := slice $context | partialCached "functions/gw2-data-trait-position-to-code.dict" -}}
-
-{{- $code := $position | index $positionCodes | default 0 | int -}}
-
-{{- return $code -}}

@@ -1,0 +1,24 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "trait-data" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $traits := slice $context | partialCached "apis/gw2-get-traits.dict" -}}
+
+    {{- range $traits -}}
+        {{- $id := "id" | index . -}}
+        {{- $name := "name" | index . -}}
+
+        {{- $key := $id | string -}}
+        {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+        {{- $trait := dict -}}
+        {{- $trait = $id | dict "id" | merge $trait -}}
+        {{- $trait = $slug | dict "slug" | merge $trait -}}
+        {{- $trait = $name | dict "name" | merge $trait -}}
+
+        {{- $data = $trait | dict $key | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

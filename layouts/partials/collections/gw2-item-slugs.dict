@@ -1,0 +1,15 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "item-slugs" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $items := slice $context | partialCached "collections/gw2-item-data.dict" -}}
+
+    {{- range $items -}}
+        {{- $id := "id" | index . -}}
+        {{- $slug := "slug" | index . -}}
+        {{- $data = $id | dict $slug | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

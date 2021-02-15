@@ -1,0 +1,15 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "skill-slugs" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $skills := slice $context | partialCached "collections/gw2-skill-data.dict" -}}
+
+    {{- range $skills -}}
+        {{- $id := "id" | index . -}}
+        {{- $slug := "slug" | index . -}}
+        {{- $data = $id | dict $slug | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

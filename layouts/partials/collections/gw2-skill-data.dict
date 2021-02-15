@@ -1,0 +1,194 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "skill-data" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $legends := slice $context | partialCached "apis/gw2-get-legends.dict" -}}
+    {{- $professions := slice $context | partialCached "apis/gw2-get-professions.dict" -}}
+    {{- $skills := slice $context | partialCached "apis/gw2-get-skills.dict" -}}
+
+    {{- $legendSkillMaxIds := dict "heal" 0 "utility1" 0 "utility2" 0 "utility3" 0 "elite" 0 -}}
+
+    {{- range $professions -}}
+        {{- range "skills_by_palette" | index . -}}
+            {{- $code := 0 | index . -}}
+
+            {{- with 1 | index . | string | index $skills -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+
+                {{- $key := $id | string -}}
+                {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+                {{- $skill := dict -}}
+                {{- $skill = $id | dict "id" | merge $skill -}}
+                {{- $skill = $name | dict "name" | merge $skill -}}
+                {{- $skill = $slug | dict "slug" | merge $skill -}}
+                {{- $skill = $code | dict "code" | merge $skill -}}
+
+                {{- $data = $skill | dict $key | merge $data -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- range $legends -}}
+        {{- with "heal" | index . -}}
+            {{- if "heal" | index $legendSkillMaxIds | gt . -}}
+                {{- $legendSkillMaxIds = . | dict "heal" | merge $legendSkillMaxIds -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with "utilities" | index . -}}
+            {{- with 0 | index . -}}
+                {{- if "utility1" | index $legendSkillMaxIds | gt . -}}
+                    {{- $legendSkillMaxIds = . | dict "utility1" | merge $legendSkillMaxIds -}}
+                {{- end -}}
+            {{- end -}}
+            {{- with 1 | index . -}}
+                {{- if "utility2" | index $legendSkillMaxIds | gt . -}}
+                    {{- $legendSkillMaxIds = . | dict "utility2" | merge $legendSkillMaxIds -}}
+                {{- end -}}
+            {{- end -}}
+            {{- with 2 | index . -}}
+                {{- if "utility3" | index $legendSkillMaxIds | gt . -}}
+                    {{- $legendSkillMaxIds = . | dict "utility3" | merge $legendSkillMaxIds -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with "elite" | index . -}}
+            {{- if "elite" | index $legendSkillMaxIds | gt . -}}
+                {{- $legendSkillMaxIds = . | dict "elite" | merge $legendSkillMaxIds -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- range $legends -}}
+        {{- with "heal" | index . -}}
+            {{- $legendSkill := "heal" | index $legendSkillMaxIds | string | index $data -}}
+
+            {{- $code := "code" | index $legendSkill -}}
+
+            {{- with . | string | index $skills -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+
+                {{- $key := $id | string -}}
+                {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+                {{- $skill := dict -}}
+                {{- $skill = $id | dict "id" | merge $skill -}}
+                {{- $skill = $name | dict "name" | merge $skill -}}
+                {{- $skill = $slug | dict "slug" | merge $skill -}}
+                {{- $skill = $code | dict "code" | merge $skill -}}
+
+                {{- $data = $skill | dict $key | merge $data -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with "utilities" | index . -}}
+            {{- with 0 | index . -}}
+                {{- $legendSkill := "utility1" | index $legendSkillMaxIds | string | index $data -}}
+
+                {{- $code := "code" | index $legendSkill -}}
+
+                {{- with . | string | index $skills -}}
+                    {{- $id := "id" | index . -}}
+                    {{- $name := "name" | index . -}}
+
+                    {{- $key := $id | string -}}
+                    {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+                    {{- $skill := dict -}}
+                    {{- $skill = $id | dict "id" | merge $skill -}}
+                    {{- $skill = $name | dict "name" | merge $skill -}}
+                    {{- $skill = $slug | dict "slug" | merge $skill -}}
+                    {{- $skill = $code | dict "code" | merge $skill -}}
+
+                    {{- $data = $skill | dict $key | merge $data -}}
+                {{- end -}}
+            {{- end -}}
+            {{- with 1 | index . -}}
+                {{- $legendSkill := "utility2" | index $legendSkillMaxIds | string | index $data -}}
+
+                {{- $code := "code" | index $legendSkill -}}
+
+                {{- with . | string | index $skills -}}
+                    {{- $id := "id" | index . -}}
+                    {{- $name := "name" | index . -}}
+
+                    {{- $key := $id | string -}}
+                    {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+                    {{- $skill := dict -}}
+                    {{- $skill = $id | dict "id" | merge $skill -}}
+                    {{- $skill = $name | dict "name" | merge $skill -}}
+                    {{- $skill = $slug | dict "slug" | merge $skill -}}
+                    {{- $skill = $code | dict "code" | merge $skill -}}
+
+                    {{- $data = $skill | dict $key | merge $data -}}
+                {{- end -}}
+            {{- end -}}
+            {{- with 2 | index . -}}
+                {{- $legendSkill := "utility3" | index $legendSkillMaxIds | string | index $data -}}
+
+                {{- $code := "code" | index $legendSkill -}}
+
+                {{- with . | string | index $skills -}}
+                    {{- $id := "id" | index . -}}
+                    {{- $name := "name" | index . -}}
+
+                    {{- $key := $id | string -}}
+                    {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+                    {{- $skill := dict -}}
+                    {{- $skill = $id | dict "id" | merge $skill -}}
+                    {{- $skill = $name | dict "name" | merge $skill -}}
+                    {{- $skill = $slug | dict "slug" | merge $skill -}}
+                    {{- $skill = $code | dict "code" | merge $skill -}}
+
+                    {{- $data = $skill | dict $key | merge $data -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with "elite" | index . -}}
+            {{- $legendSkill := "elite" | index $legendSkillMaxIds | string | index $data -}}
+
+            {{- $code := "code" | index $legendSkill -}}
+
+            {{- with . | string | index $skills -}}
+                {{- $id := "id" | index . -}}
+                {{- $name := "name" | index . -}}
+
+                {{- $key := $id | string -}}
+                {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+                {{- $skill := dict -}}
+                {{- $skill = $id | dict "id" | merge $skill -}}
+                {{- $skill = $name | dict "name" | merge $skill -}}
+                {{- $skill = $slug | dict "slug" | merge $skill -}}
+                {{- $skill = $code | dict "code" | merge $skill -}}
+
+                {{- $data = $skill | dict $key | merge $data -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- range $skills -}}
+        {{- $name := "name" | index . -}}
+
+        {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
+
+        {{- if $slug | index $data | not -}}
+            {{- $id := "id" | index . -}}
+
+            {{- $key := $id | string -}}
+
+            {{- $skill := dict -}}
+            {{- $skill = $id | dict "id" | merge $skill -}}
+            {{- $skill = $name | dict "name" | merge $skill -}}
+            {{- $skill = $slug | dict "slug" | merge $skill -}}
+
+            {{- $data = $skill | dict $key | merge $data -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

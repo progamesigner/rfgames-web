@@ -1,0 +1,11 @@
+{{- $context := 0 | index . -}}
+{{- $idOrName := 1 | index . -}}
+
+{{- $id := $idOrName -}}
+{{- if $id | string | eq $id -}}
+    {{- $data := slice $context | partialCached "collections/gw2-legend-slugs.dict" -}}
+    {{- $slug := $idOrName | slice $context | partial "functions/slugify.string" -}}
+    {{- $id = $slug | index $data | string -}}
+{{- end -}}
+
+{{- return $id -}}

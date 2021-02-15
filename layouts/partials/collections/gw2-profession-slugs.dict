@@ -1,0 +1,15 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "profession-slugs" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $professions := slice $context | partialCached "collections/gw2-profession-data.dict" -}}
+
+    {{- range $professions -}}
+        {{- $id := "id" | index . -}}
+        {{- $slug := "slug" | index . -}}
+        {{- $data = $id | dict $slug | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

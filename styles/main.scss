@@ -16,7 +16,6 @@
 @import "elements/consent";
 @import "elements/container";
 @import "elements/content";
-@import "elements/embed";
 @import "elements/form";
 @import "elements/gw2embed";
 @import "elements/icon";
@@ -31,6 +30,7 @@
  * Components                                                                 *
 \* ========================================================================== */
 @import "components/column";
+@import "components/embed";
 @import "components/member";
 @import "components/message";
 @import "components/modal";

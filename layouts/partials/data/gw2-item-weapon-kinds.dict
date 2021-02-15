@@ -1,0 +1,35 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $data = dict "|" "Nothing" | merge $data -}}
+{{- $data = dict "|main-hand" "OffHandOnly" | merge $data -}}
+{{- $data = dict "|off-hand" "OffHandOnly" | merge $data -}}
+{{- $data = dict "|two-handed" "Nothing" | merge $data -}}
+{{- $data = dict "|aquatic" "Nothing" | merge $data -}}
+
+{{- $data = dict "main-hand|" "MainHandOnly" | merge $data -}}
+{{- $data = dict "main-hand|main-hand" "DualWield" | merge $data -}}
+{{- $data = dict "main-hand|off-hand" "DualWield" | merge $data -}}
+{{- $data = dict "main-hand|two-handed" "MainHandOnly" | merge $data -}}
+{{- $data = dict "main-hand|aquatic" "MainHandOnly" | merge $data -}}
+
+{{- $data = dict "off-hand|" "Nothing" | merge $data -}}
+{{- $data = dict "off-hand|main-hand" "Nothing" | merge $data -}}
+{{- $data = dict "off-hand|off-hand" "Nothing" | merge $data -}}
+{{- $data = dict "off-hand|two-handed" "Nothing" | merge $data -}}
+{{- $data = dict "off-hand|aquatic" "Nothing" | merge $data -}}
+
+{{- $data = dict "two-handed|" "TwoHand" | merge $data -}}
+{{- $data = dict "two-handed|main-hand" "TwoHand" | merge $data -}}
+{{- $data = dict "two-handed|off-hand" "TwoHand" | merge $data -}}
+{{- $data = dict "two-handed|two-handed" "TwoHand" | merge $data -}}
+{{- $data = dict "two-handed|aquatic" "TwoHand" | merge $data -}}
+
+{{- $data = dict "aquatic|" "TwoHand" | merge $data -}}
+{{- $data = dict "aquatic|main-hand" "TwoHand" | merge $data -}}
+{{- $data = dict "aquatic|off-hand" "TwoHand" | merge $data -}}
+{{- $data = dict "aquatic|two-handed" "TwoHand" | merge $data -}}
+{{- $data = dict "aquatic|aquatic" "TwoHand" | merge $data -}}
+
+{{- return $data -}}

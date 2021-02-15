@@ -32,7 +32,7 @@
         {{- if $effects | len | lt 0 -}}
             <div class="rating-effects">
                 {{- range $effects -}}
-                    {{- . | title | dict "disable-text" true "id" | slice $context "effect" false | partial "elements/embed.html" -}}
+                    {{- . | title | dict "disable-text" true "id" | slice $context "effect" false | partial "components/embed.html" -}}
                 {{- end -}}
             </div>
         {{- end -}}
@@ -44,7 +44,7 @@
     {{- $id := 1 | index . -}}
     {{- $traits := . | after 2 -}}
 
-    {{- $id | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" | dict "disable-text" true "id" | slice $context "specialization" false | partial "elements/embed.html" -}}
+    {{- $id | slice $context | partial "functions/gw2-specialization-to-id.integer" | dict "disable-text" true "id" | slice $context "specialization" false | partial "components/embed.html" -}}
 {{- end -}}
 
 <div class="page-section-build-overview">

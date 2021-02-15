@@ -1,0 +1,11 @@
+{{- $context := 0 | index . -}}
+{{- $stat := 1 | index . -}}
+
+{{- $slug1 := $stat | slice $context | partial "functions/slugify.string" -}}
+{{- $slug2 := $slug1 | printf "%ss" -}}
+{{- $slug3 := $slug1 | replaceRE "(.+)-and-(.+)" "$1s-and-$2s" -}}
+{{- $slug4 := $slug1 | replaceRE "(.+)-and-(.+)" "$1s-and-$2" -}}
+
+{{- $slugs := slice $slug1 $slug2 $slug3 $slug4 | uniq -}}
+
+{{- return $slugs -}}

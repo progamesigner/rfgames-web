@@ -1,0 +1,8 @@
+{{- $context := 0 | index . -}}
+{{- $position := 1 | index . | string | lower -}}
+
+{{- $data := slice $context | partialCached "data/gw2-trait-position-codes.dict" -}}
+
+{{- $code := $position | index $data | default 0 | int -}}
+
+{{- return $code -}}

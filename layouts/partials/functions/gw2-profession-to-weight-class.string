@@ -1,0 +1,10 @@
+{{- $context := 0 | index . -}}
+{{- $idOrName := 1 | index . -}}
+
+{{- $data := slice $context | partialCached "data/gw2-profession-weight-classes.dict" -}}
+
+{{- $id := $idOrName | slice $context | partial "functions/gw2-profession-to-id.string" -}}
+
+{{- $weightClass := $id | string | lower | index $data -}}
+
+{{- return $weightClass -}}

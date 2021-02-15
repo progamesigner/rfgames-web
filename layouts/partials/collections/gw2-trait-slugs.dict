@@ -1,0 +1,15 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := "trait-slugs" | slice $context | partial "data/preload.dict" -}}
+
+{{- if $data | len | ge 0 -}}
+    {{- $traits := slice $context | partialCached "collections/gw2-trait-data.dict" -}}
+
+    {{- range $traits -}}
+        {{- $id := "id" | index . -}}
+        {{- $slug := "slug" | index . -}}
+        {{- $data = $id | dict $slug | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}

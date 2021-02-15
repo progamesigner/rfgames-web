@@ -37,18 +37,18 @@
         {{- $traits := "traits" | index . | default slice | append $defaultTrait $defaultTrait $defaultTrait -}}
 
         {{- $code = $code | append 13 -}}
-        {{- $code = $code | append ($profession | slice $context | partial "functions/gw2-chat-link-profession-code.integer") -}}
+        {{- $code = $code | append ($profession | slice $context | partial "functions/gw2-profession-to-code.integer") -}}
         {{- range $traits | first 3 -}}
-            {{- $specializtion := 0 | index . | slice $context "specialization" | partial "functions/gw2-data-name-to-id.integer" -}}
-            {{- $trait1 := 1 | index . | slice $context | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
-            {{- $trait2 := 2 | index . | slice $context | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
-            {{- $trait3 := 3 | index . | slice $context | partial "functions/gw2-chat-link-trait-position-code.integer" -}}
+            {{- $specializtion := 0 | index . | slice $context | partial "functions/gw2-specialization-to-id.integer" -}}
+            {{- $trait1 := 1 | index . | slice $context | partial "functions/gw2-trait-position-to-code.integer" -}}
+            {{- $trait2 := 2 | index . | slice $context | partial "functions/gw2-trait-position-to-code.integer" -}}
+            {{- $trait3 := 3 | index . | slice $context | partial "functions/gw2-trait-position-to-code.integer" -}}
 
             {{- $code = $code | append $specializtion ($trait1 | add (mul $trait2 4) | add (mul $trait3 16)) -}}
         {{- end -}}
         {{- range $skills | first 5 -}}
-            {{- $terrestrialSkill := 0 | index . | slice $context "skill" | partial "functions/gw2-data-name-to-id.integer" | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $aquaticSkill := 1 | index . | slice $context "skill" | partial "functions/gw2-data-name-to-id.integer" | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $terrestrialSkill := 0 | index . | slice $context | partial "functions/gw2-skill-to-id.integer" | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $aquaticSkill := 1 | index . | slice $context | partial "functions/gw2-skill-to-id.integer" | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
 
             {{- $code = $code | append (mod $terrestrialSkill 256) (div $terrestrialSkill 256) -}}
             {{- $code = $code | append (mod $aquaticSkill 256) (div $aquaticSkill 256) -}}
@@ -65,16 +65,16 @@
         {{- end -}}
 
         {{- if $profession | eq "revenant" -}}
-            {{- $terrestrialLegend1 := 0 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $terrestrialLegend2 := 1 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $aquaticLegend1 := 2 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $aquaticLegend2 := 3 | index $legends | slice $context | partial "functions/gw2-chat-link-legend-code.integer" -}}
-            {{- $inactiveTerrestrialSkill1 := 4 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveTerrestrialSkill2 := 5 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveTerrestrialSkill3 := 6 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveAquaticSkill1 := 7 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveAquaticSkill2 := 8 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
-            {{- $inactiveAquaticSkill3 := 9 | index $legends | slice $context | partial "functions/gw2-chat-link-skill-code.integer" -}}
+            {{- $terrestrialLegend1 := 0 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
+            {{- $terrestrialLegend2 := 1 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
+            {{- $aquaticLegend1 := 2 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
+            {{- $aquaticLegend2 := 3 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
+            {{- $inactiveTerrestrialSkill1 := 4 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $inactiveTerrestrialSkill2 := 5 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $inactiveTerrestrialSkill3 := 6 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $inactiveAquaticSkill1 := 7 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $inactiveAquaticSkill2 := 8 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $inactiveAquaticSkill3 := 9 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
 
             {{- $code = $code | append (mod $terrestrialLegend1 256) (mod $terrestrialLegend2 256) (mod $aquaticLegend1 256) (mod $aquaticLegend2 256) -}}
             {{- $code = $code | append (mod $inactiveTerrestrialSkill1 256) (div $inactiveTerrestrialSkill1 256) (mod $inactiveTerrestrialSkill2 256) (div $inactiveTerrestrialSkill2 256) (mod $inactiveTerrestrialSkill3 256) (div $inactiveTerrestrialSkill3 256) -}}

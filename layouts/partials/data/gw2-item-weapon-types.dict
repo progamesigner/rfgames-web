@@ -1,0 +1,28 @@
+{{- $context := 0 | index . -}}
+
+{{- $data := dict -}}
+
+{{- $data = dict "axe" "main-hand" | merge $data -}}
+{{- $data = dict "dagger" "main-hand" | merge $data -}}
+{{- $data = dict "mace" "main-hand" | merge $data -}}
+{{- $data = dict "pistol" "main-hand" | merge $data -}}
+{{- $data = dict "scepter" "main-hand" | merge $data -}}
+{{- $data = dict "sword" "main-hand" | merge $data -}}
+
+{{- $data = dict "focus" "off-hand" | merge $data -}}
+{{- $data = dict "shield" "off-hand" | merge $data -}}
+{{- $data = dict "torch" "off-hand" | merge $data -}}
+{{- $data = dict "warhorn" "off-hand" | merge $data -}}
+
+{{- $data = dict "greatsword" "two-handed" | merge $data -}}
+{{- $data = dict "hammer" "two-handed" | merge $data -}}
+{{- $data = dict "longbow" "two-handed" | merge $data -}}
+{{- $data = dict "rifle" "two-handed" | merge $data -}}
+{{- $data = dict "shortbow" "two-handed" | merge $data -}}
+{{- $data = dict "staff" "two-handed" | merge $data -}}
+
+{{- $data = dict "harpoongun" "aquatic" | merge $data -}}
+{{- $data = dict "spear" "aquatic" | merge $data -}}
+{{- $data = dict "trident" "aquatic" | merge $data -}}
+
+{{- return $data -}}
