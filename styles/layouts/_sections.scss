@@ -85,6 +85,7 @@
             .gw2-embed-wrapper {
                 @include block(var(--build-content-card-item-spacing));
 
+                flex-wrap: wrap;
                 justify-content: flex-start;
 
                 .is-weapon-skill {

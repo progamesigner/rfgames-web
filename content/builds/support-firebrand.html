@@ -24,33 +24,16 @@ build:
         designer: YangJieShiou.3859
     equipments:
         weapon1:
-            kind: TwoHand
-            weapon: { id: Maklain's Spire }
-            sigil1: Superior Sigil of Transference
-            sigil2: Superior Sigil of Energy
-            infusion1: Healing WvW Infusion
-            infusion2: Healing WvW Infusion
-            skills:
-            - Bolt of Wrath
-            - Holy Strike
-            - Symbol of Swiftness
-            - Empower
-            - Line of Warding
+            type: Staff
+            stat: Minstrel
+            sigils: [Superior Sigil of Transference, Superior Sigil of Energy]
+            infusions: [Healing WvW Infusion, Healing WvW Infusion]
         weapon2:
-            kind: DualWield
-            weapon1: { id: Maklain's Flanged Mace }
-            weapon2: { id: Maklain's Bastion }
-            sigil1: Superior Sigil of Transference
-            sigil2: Superior Sigil of Energy
-            infusion1: Healing WvW Infusion
-            infusion2: Healing WvW Infusion
-            skills:
-            - True Strike
-            - Symbol of Faith
-            - Protector's Strike
-            - Shield of Judgment
-            - Shield of Absorption
-        head:
+            types: [Mace, Shield]
+            stats: [Minstrel, Minstrel]
+            sigils: [Superior Sigil of Transference, Superior Sigil of Energy]
+            infusions: [Healing WvW Infusion, Healing WvW Infusion]
+        helm:
             stat: Harrier
             rune: Superior Rune of Durability
             infusion: Healing WvW Infusion
@@ -105,16 +88,16 @@ build:
         utility: Bountiful Maintenance Oil
     template:
         profession: Guardian
-        traits:
-        - [Honor, top, middle, bottom]
-        - [Virtues, middle, middle, middle]
-        - [Firebrand, middle, top, bottom]
         skills:
         - [Mantra of Solace, Mantra of Solace]
         - [Stand Your Ground!, Stand Your Ground!]
         - [Mantra of Lore, Mantra of Lore]
         - [Signet of Mercy, Signet of Mercy]
         - [Mantra of Liberation, Mantra of Liberation]
+        traits:
+        - [Honor, top, middle, bottom]
+        - [Virtues, middle, middle, middle]
+        - [Firebrand, middle, top, bottom]
     ratings:
     - { type: survivability, rating: 4 }
     - { type: damage-low, rating: 1 }
