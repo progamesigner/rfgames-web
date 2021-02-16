@@ -1,0 +1,22 @@
+{{- $context := 0 | index . -}}
+{{- $id := 1 | index . | default 0 -}}
+{{- $stat := 2 | index . | default 0 -}}
+
+{{- $slots := slice $context | partialCached "data/gw2-item-slots.dict" -}}
+{{- $table := slice $context | partialCached "collections/gw2-item-data.dict" -}}
+
+{{- $data := $id | string | index $table | default dict -}}
+
+{{- $slotName := "type" | index $data | string -}}
+{{- $statName := $stat | slice $context | partial "functions/gw2-itemstat-to-name.string" -}}
+
+{{- $name := "name" | index $data -}}
+{{- with $statName -}}
+    {{- $name = $statName -}}
+
+    {{- with $slotName | index $slots | default $slotName -}}
+        {{- $name = . | string | title | printf "%s %s" $name -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $name -}}

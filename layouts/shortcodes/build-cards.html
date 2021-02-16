@@ -105,6 +105,10 @@
             {{- end -}}
         {{- end -}}
 
+        {{- with "text" | index . -}}
+            {{- $item = . | dict "text" | merge $item -}}
+        {{- end -}}
+
         {{- with "enrichments" | index . -}}
             {{- if . | len | lt 0 -}}
                 {{- $item = delimit . "," | dict "enrichments" | merge $item -}}
@@ -167,8 +171,11 @@
             {{- $infusionId =  . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
         {{- end -}}
 
+        {{- $text := $id | slice $context | partial "functions/gw2-item-to-display-name.string" -}}
+
         {{- $item = $id | dict "id" | merge $item -}}
         {{- $item = $stat | dict "stat" | merge $item -}}
+        {{- $item = $text | dict "text" | merge $item -}}
         {{- $item = slice $infusionId | dict "infusions" | merge $item -}}
         {{- $item = slice $runeId | dict "upgrades" | merge $item -}}
         {{- $item = $upgradeCount | dict "upgrade-count" | merge $item -}}
@@ -242,6 +249,9 @@
         {{- $infusion1 := 0 | index $infusions -}}
         {{- $infusion2 := 1 | index $infusions -}}
 
+        {{- $text1 := slice $context $id1 $stat1 | partial "functions/gw2-item-to-display-name.string" -}}
+        {{- $text2 := slice $context $id2 $stat2 | partial "functions/gw2-item-to-display-name.string" -}}
+
         {{- with slice $context $type1 $type2 | partial "functions/gw2-item-weapon-kind.string" -}}
             {{- if . | eq "TwoHand" -}}
                 {{- $classes = $classes | append "is-two-hand" -}}
@@ -250,6 +260,7 @@
                     {{- $item := dict -}}
                     {{- $item = $id1 | dict "id" | merge $item -}}
                     {{- $item = $stat1 | dict "stat" | merge $item -}}
+                    {{- $item = $text1 | dict "text" | merge $item -}}
                     {{- $item = slice $infusion1 $infusion2 | dict "infusions" | merge $item -}}
                     {{- $item = slice $sigil1 $sigil2 | dict "upgrades" | merge $item -}}
 
@@ -280,6 +291,7 @@
                     {{- $item := dict -}}
                     {{- $item = $id1 | dict "id" | merge $item -}}
                     {{- $item = $stat1 | dict "stat" | merge $item -}}
+                    {{- $item = $text1 | dict "text" | merge $item -}}
                     {{- $item = slice $infusion1 | dict "infusions" | merge $item -}}
                     {{- $item = slice $sigil1 | dict "upgrades" | merge $item -}}
 
@@ -295,6 +307,7 @@
                     {{- $item := dict -}}
                     {{- $item = $id2 | dict "id" | merge $item -}}
                     {{- $item = $stat2 | dict "stat" | merge $item -}}
+                    {{- $item = $text2 | dict "text" | merge $item -}}
                     {{- $item = slice $infusion2 | dict "infusions" | merge $item -}}
                     {{- $item = slice $sigil2 | dict "upgrades" | merge $item -}}
 
@@ -313,6 +326,7 @@
                     {{- $item := dict -}}
                     {{- $item = $id1 | dict "id" | merge $item -}}
                     {{- $item = $stat1 | dict "stat" | merge $item -}}
+                    {{- $item = $text1 | dict "text" | merge $item -}}
                     {{- $item = slice $infusion1 | dict "infusions" | merge $item -}}
                     {{- $item = slice $sigil1 | dict "upgrades" | merge $item -}}
 
@@ -349,6 +363,7 @@
                     {{- $item := dict -}}
                     {{- $item = $id2 | dict "id" | merge $item -}}
                     {{- $item = $stat2 | dict "stat" | merge $item -}}
+                    {{- $item = $text2 | dict "text" | merge $item -}}
                     {{- $item = slice $infusion2 | dict "infusions" | merge $item -}}
                     {{- $item = slice $sigil2 | dict "upgrades" | merge $item -}}
 
@@ -419,8 +434,11 @@
             {{- $upgradeIds = $upgradeIds | append $id -}}
         {{- end -}}
 
+        {{- $text := slice $context $id $stat | partial "functions/gw2-item-to-display-name.string" -}}
+
         {{- $item = $id | dict "id" | merge $item -}}
         {{- $item = $stat | dict "stat" | merge $item -}}
+        {{- $item = $text | dict "text" | merge $item -}}
         {{- $item = $enrichmentIds | dict "enrichments" | merge $item -}}
         {{- $item = $infusionIds | dict "infusions" | merge $item -}}
         {{- $item = $upgradeIds | dict "upgrades" | merge $item -}}
