@@ -171,7 +171,7 @@
             {{- $infusionId =  . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
         {{- end -}}
 
-        {{- $text := $id | slice $context | partial "functions/gw2-item-to-display-name.string" -}}
+        {{- $text := slice $context $id $stat | partial "functions/gw2-item-to-display-name.string" -}}
 
         {{- $item = $id | dict "id" | merge $item -}}
         {{- $item = $stat | dict "stat" | merge $item -}}
@@ -434,7 +434,7 @@
             {{- $upgradeIds = $upgradeIds | append $id -}}
         {{- end -}}
 
-        {{- $text := slice $context $id $stat | partial "functions/gw2-item-to-display-name.string" -}}
+        {{- $text := slice $context nil $stat | partial "functions/gw2-item-to-display-name.string" -}}
 
         {{- $item = $id | dict "id" | merge $item -}}
         {{- $item = $stat | dict "stat" | merge $item -}}
