@@ -10,12 +10,19 @@
     {{- $professions := slice $context | partialCached "apis/gw2-get-professions.dict" -}}
     {{- $skills := slice $context | partialCached "apis/gw2-get-skills.dict" -}}
 
-    {{- $weaponSkills := slice -}}
     {{- range $professions -}}
         {{- $profession := "id" | index . -}}
 
+        {{- $weapons := dict -}}
+        {{- $weaponSkills := slice -}}
+
         {{- range $type, $weapon := "weapons" | index . -}}
             {{- $slottedSkills := dict -}}
+
+            {{- range "flags" | index . -}}
+                {{- $flagWeapons := . | index $weapons | default slice | append $type -}}
+                {{- $weapons = $flagWeapons | dict . | merge $weapons -}}
+            {{- end -}}
 
             {{- range "skills" | index . -}}
                 {{- $id := "id" | index . -}}
@@ -57,22 +64,8 @@
                 {{- $weaponSkills = $weaponSkills | append . -}}
             {{- end -}}
         {{- end -}}
-    {{- end -}}
 
-    {{- range $professions -}}
-        {{- $id := "id" | index . -}}
-
-        {{- $weapons := dict -}}
         {{- $weaponSkillData := dict -}}
-
-        {{- range $type, $weapon := "weapons" | index . -}}
-            {{- range "flags" | index . -}}
-                {{- $flagWeapons := . | index $weapons | default slice | append $type -}}
-                {{- $weapons = $flagWeapons | dict . | merge $weapons -}}
-            {{- end -}}
-        {{- end -}}
-
-        {{- $weaponSkills := where $weaponSkills "profession" $id -}}
 
         {{- range "TwoHand" | index $weapons -}}
             {{- $key := . | lower | printf "%s|" -}}
@@ -85,7 +78,7 @@
             {{- $dualSkills := where $weaponSkills "slot" "in" $weaponDualSlots -}}
             {{- $tailSkills := where $weaponSkills "slot" "in" $weaponTailSlots -}}
 
-            {{- if $id | lower | eq "elementalist" -}}
+            {{- if $profession | lower | eq "elementalist" -}}
                 {{- range $attunement := slice "Fire" "Water" "Air" "Earth" -}}
                     {{- range where $headSkills "attunement" $attunement -}}
                         {{- $id := "id" | index . -}}
@@ -124,7 +117,7 @@
             {{- $headSkills := where $weaponSkills "slot" "in" $weaponHeadSlots -}}
             {{- $dualSkills := where $weaponSkills "slot" "in" $weaponDualSlots -}}
 
-            {{- if $id | lower | eq "elementalist" -}}
+            {{- if $profession | lower | eq "elementalist" -}}
                 {{- range $attunement := slice "Fire" "Water" "Air" "Earth" -}}
                     {{- range where $headSkills "attunement" $attunement -}}
                         {{- $id := "id" | index . -}}
@@ -139,7 +132,7 @@
                 {{- end -}}
             {{- end -}}
 
-            {{- if $id | lower | eq "thief" -}}
+            {{- if $profession | lower | eq "thief" -}}
                 {{- range $headSkills -}}
                     {{- $id := "id" | index . -}}
                     {{- $skills = $skills | append $id -}}
@@ -150,7 +143,7 @@
                 {{- end -}}
             {{- end -}}
 
-            {{- if and ($id | lower | ne "elementalist") ($id | lower | ne "thief") -}}
+            {{- if and ($profession | lower | ne "elementalist") ($profession | lower | ne "thief") -}}
                 {{- range $headSkills | append $dualSkills -}}
                     {{- $id := "id" | index . -}}
                     {{- $skills = $skills | append $id -}}
@@ -171,7 +164,7 @@
 
             {{- $tailSkills := where $weaponSkills "slot" "in" $weaponTailSlots -}}
 
-            {{- if $id | lower | eq "elementalist" -}}
+            {{- if $profession | lower | eq "elementalist" -}}
                 {{- range $attunement := slice "Fire" "Water" "Air" "Earth" -}}
                     {{- range where $tailSkills "attunement" $attunement -}}
                         {{- $id := "id" | index . -}}
@@ -190,7 +183,6 @@
             {{- end -}}
         {{- end -}}
 
-
         {{- range $mainhand := "Mainhand" | index $weapons -}}
             {{- range $offhand := "Offhand" | index $weapons -}}
                 {{- $key := $offhand | printf "%s|%s" $mainhand | lower -}}
@@ -204,7 +196,7 @@
                 {{- $dualSkills := where $mainhandWeaponSkills "slot" "in" $weaponDualSlots -}}
                 {{- $tailSkills := where $offhandWeaponSkills "slot" "in" $weaponTailSlots -}}
 
-                {{- if $id | lower | eq "elementalist" -}}
+                {{- if $profession | lower | eq "elementalist" -}}
                     {{- range $attunement := slice "Fire" "Water" "Air" "Earth" -}}
                         {{- range where $headSkills "attunement" $attunement -}}
                             {{- $id := "id" | index . -}}
@@ -223,7 +215,7 @@
                     {{- end -}}
                 {{- end -}}
 
-                {{- if $id | lower | eq "thief" -}}
+                {{- if $profession | lower | eq "thief" -}}
                     {{- range $headSkills -}}
                         {{- $id := "id" | index . -}}
                         {{- $skills = $skills | append $id -}}
@@ -238,7 +230,7 @@
                     {{- end -}}
                 {{- end -}}
 
-                {{- if and ($id | lower | ne "elementalist") ($id | lower | ne "thief") -}}
+                {{- if and ($profession | lower | ne "elementalist") ($profession | lower | ne "thief") -}}
                     {{- range $headSkills | append $dualSkills | append $tailSkills -}}
                         {{- $id := "id" | index . -}}
                         {{- $skills = $skills | append $id -}}
@@ -251,7 +243,7 @@
             {{- end -}}
         {{- end -}}
 
-        {{- $data = $weaponSkillData | dict $id | merge $data -}}
+        {{- $data = $weaponSkillData | dict $profession | merge $data -}}
     {{- end -}}
 {{- end -}}
 
