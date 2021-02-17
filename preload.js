@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { readFile, writeFile } = require('fs')
+const { mkdir, readFile, writeFile } = require('fs')
 const { stringify } = require('querystring')
 const { promisify } = require('util')
 
@@ -25,6 +25,7 @@ const GW2_API_ACCESS_TOKEN = process.env.GW2_ACCESS_TOKEN
 const GW2_API_LANGUAGE = 'en'
 const GW2_API_SCHEMA_VERSION = '2021-01-01T00:00:00Z'
 
+const ensure = promisify(mkdir)
 const read = promisify(readFile)
 const write = promisify(writeFile)
 
@@ -36,11 +37,8 @@ function request(api, params) {
     ...params
   })
 
-  const url = `https://api.guildwars2.com${api}?${query}`
-
-  console.info(`Request to ${url}`)
-
-  return fetch(url).then(response => response.json())
+  return fetch(`https://api.guildwars2.com${api}?${query}`)
+    .then(response => response.json())
 }
 
 function requestPagedAPI(url, page, pageSize) {
@@ -79,14 +77,15 @@ function loadPrefetchData(name) {
 }
 
 function saveToPreloadData(name, data) {
-  return write(`data/preloads/${name}.json`, JSON.stringify(data))
-    .then(() => {
-      console.info(`File "${name}.json" Saved`)
-      return {
-        [name]: data,
-      }
-    })
-    .catch(() => null)
+  return ensure('data/preloads', { recursive: true })
+    .then(() => write(`data/preloads/${name}.json`, JSON.stringify(data))
+      .then(() => {
+        console.info(`File "${name}.json" Saved`)
+        return {
+          [name]: data,
+        }
+      })
+    )
 }
 
 const transformers = [
@@ -390,7 +389,7 @@ const transformers = [
   },
 ]
 
-const preloadPipeline = flow(
+const pipeline = flow(
   map(async ([type, url]) => {
     const pageSize = 200
 
@@ -446,7 +445,7 @@ const preloadPipeline = flow(
     .catch(console.error),
 )
 
-return preloadPipeline([
+return pipeline([
   ['items', '/v2/items'],
   ['itemstats', '/v2/itemstats'],
   ['legends', '/v2/legends'],
