@@ -28,7 +28,7 @@ const GW2_API_SCHEMA_VERSION = '2021-01-01T00:00:00Z'
 const read = promisify(readFile)
 const write = promisify(writeFile)
 
-function request(url, params) {
+function request(api, params) {
   const query = stringify({
     access_token: GW2_API_ACCESS_TOKEN,
     lang: GW2_API_LANGUAGE,
@@ -36,8 +36,11 @@ function request(url, params) {
     ...params
   })
 
-  return fetch(`https://api.guildwars2.com${url}?${query}`)
-    .then(response => response.json())
+  const url = `https://api.guildwars2.com${api}?${query}`
+
+  console.info(`Request to ${url}`)
+
+  return fetch(url).then(response => response.json())
 }
 
 function requestPagedAPI(url, page, pageSize) {
@@ -78,7 +81,7 @@ function loadPrefetchData(name) {
 function saveToPreloadData(name, data) {
   return write(`data/preloads/${name}.json`, JSON.stringify(data))
     .then(() => {
-      console.log(`File "${name}.json" Saved`)
+      console.info(`File "${name}.json" Saved`)
       return {
         [name]: data,
       }
@@ -439,7 +442,7 @@ const preloadPipeline = flow(
     })
   }, promise)(transformers),
   async promise => promise
-    .then(() => console.log('Preloading Finished!'))
+    .then(() => console.info('Preloading Finished!'))
     .catch(console.error),
 )
 
