@@ -15,11 +15,10 @@ const {
   map,
   max,
   reduce,
-  tap,
-  zip
+  zip,
 } = require('lodash/fp')
 const {
-  default: fetch
+  default: fetch,
 } = require('node-fetch')
 
 const GW2_API_ACCESS_TOKEN = process.env.GW2_ACCESS_TOKEN
@@ -28,295 +27,6 @@ const GW2_API_SCHEMA_VERSION = '2021-01-01T00:00:00Z'
 
 const read = promisify(readFile)
 const write = promisify(writeFile)
-
-const apis = [
-  ['items', '/v2/items'],
-  ['itemstats', '/v2/itemstats'],
-  ['legends', '/v2/legends'],
-  ['professions', '/v2/professions'],
-  ['skills', '/v2/skills'],
-  ['specializations', '/v2/specializations'],
-  ['traits', '/v2/traits'],
-]
-
-const transformers = [
-  ({ items }) => {
-    const slugToId = fromPairs(flow(
-      Object.values,
-      map(item => [slugify(item.name), item.id]),
-    )(items))
-
-    return saveToPreloadData('item-slug-to-id', slugToId)
-      .then(() => console.log('Prepared "item-slug-to-id" done!'))
-  },
-  ({ professions, skills }) => {
-    const professionSkillSlugToId = fromPairs(flow(
-      Object.values,
-      map(get('skills_by_palette')),
-      map(map(([_, skillId]) => get(skillId))),
-      reduce(concat, []),
-      map(getter => getter(skills)),
-      map(skill => [slugify(skill.name), skill.id]),
-    )(professions))
-
-    const skillSlugToId = fromPairs(flow(
-      Object.values,
-      map(skill => [slugify(skill.name), skill.id]),
-    )(skills))
-
-    const slugToId = {
-      ...skillSlugToId,
-      ...professionSkillSlugToId,
-    }
-
-    return saveToPreloadData('skill-slug-to-id', slugToId)
-      .then(() => console.log('Prepared "skill-slug-to-id" done!'))
-  },
-  ({ specializations }) => {
-    const slugToId = fromPairs(flow(
-      Object.values,
-      map(item => [slugify(item.name), item.id]),
-    )(specializations))
-
-    return saveToPreloadData('specialization-slug-to-id', slugToId)
-      .then(() => console.log('Prepared "specialization-slug-to-id" done!'))
-  },
-  ({ traits }) => {
-    const slugToId = fromPairs(flow(
-      Object.values,
-      map(item => [slugify(item.name), item.id]),
-    )(traits))
-
-    return saveToPreloadData('trait-slug-to-id', slugToId)
-      .then(() => console.log('Prepared "trait-slug-to-id" done!'))
-  },
-  ({ professions, skills }) => {
-    const professionSkillSlugToName = fromPairs(flow(
-      Object.values,
-      map(get('skills_by_palette')),
-      map(map(([_, skillId]) => get(skillId))),
-      reduce(concat, []),
-      map(getter => getter(skills)),
-      map(skill => [slugify(skill.name), skill.name]),
-    )(professions))
-
-    const skillSlugToName = fromPairs(flow(
-      Object.values,
-      map(skill => [slugify(skill.name), skill.name]),
-    )(skills))
-
-    const slugToName = {
-      ...skillSlugToName,
-      ...professionSkillSlugToName,
-    }
-
-    return saveToPreloadData('skill-slug-to-name', slugToName)
-      .then(() => console.log('Prepared "skill-slug-to-name" done!'))
-  },
-  ({ legends, professions }) => {
-    const revenantSkillMaxIds = flow(
-      map(path => flow(
-        flow(
-          Object.values,
-          map(get(path)),
-        ),
-        max,
-        id => [path, id]
-      )),
-      map(getter => getter(legends)),
-    )([
-      'heal',
-      'utilities[0]',
-      'utilities[1]',
-      'utilities[2]',
-      'elite'
-    ])
-
-    const professionSkillIdToCode = fromPairs(flow(
-      Object.values,
-      map(flow(
-        get('skills_by_palette'),
-        map(([code, skillId]) => [skillId, code])
-      )),
-      reduce(concat, [])
-    )(professions))
-
-    const legendSkillIdToCode = fromPairs(flow(
-      Object.values,
-      map(legend => map(([path, codeSkillId]) => {
-        return [get(path)(legend), professionSkillIdToCode[codeSkillId]]
-      })(revenantSkillMaxIds)),
-      reduce(concat, [])
-    )(legends))
-
-    const idToCode = {
-      ...professionSkillIdToCode,
-      ...legendSkillIdToCode,
-    }
-
-    return saveToPreloadData('skill-id-to-code', idToCode)
-      .then(() => console.log('Prepared "skill-id-to-code" done!'))
-  },
-  ({ professions, specializations }) => {
-    const corePofessionSlugToId = fromPairs(flow(
-      Object.values,
-      map(profession => [slugify(profession.name), profession.id]),
-    )(professions))
-
-    const eliteProfessionSlugToId = fromPairs(flow(
-      Object.values,
-      map(get('specializations')),
-      map(map(get)),
-      reduce(concat, []),
-      map(getter => getter(specializations)),
-      filter(({ elite }) => elite),
-      map(eliteSpecialization => [
-        slugify(eliteSpecialization.name),
-        professions[eliteSpecialization.profession].name
-      ])
-    )(professions))
-
-    const professionSlugToId = {
-      ...corePofessionSlugToId,
-      ...eliteProfessionSlugToId,
-    }
-
-    return saveToPreloadData('profession-slug-to-id', professionSlugToId)
-      .then(() => console.log('Prepared "profession-slug-to-id" done!'))
-  },
-  ({ professions }) => {
-    const professionNameToCode = fromPairs(flow(
-      Object.values,
-      map(profession => [slugify(profession.name), profession.code]),
-    )(professions))
-
-    return saveToPreloadData('profession-name-to-code', professionNameToCode)
-      .then(() => console.log('Prepared "profession-name-to-code" done!'))
-  },
-  ({ professions, specializations }) => {
-    const professionSlugToElite = fromPairs(flow(
-      Object.values,
-      map(get('specializations')),
-      map(map(get)),
-      reduce(concat, []),
-      map(getter => getter(specializations)),
-      filter(({ elite }) => elite),
-      map(eliteSpecialization => [
-        slugify(eliteSpecialization.name),
-        eliteSpecialization.id
-      ])
-    )(professions))
-
-    return saveToPreloadData('profession-slug-to-elite', professionSlugToElite)
-      .then(() => console.log('Prepared "profession-slug-to-elite" done!'))
-  },
-  ({ legends, skills }) => {
-    const legendNameToCode = fromPairs(zip(
-      flow(
-        Object.values,
-        map(get('swap')),
-        map(get),
-        map(getter => getter(skills)),
-        map(legendSwapSkill => slugify(legendSwapSkill.name.replace(/Legendary (.+) Stance/, '$1')))
-      )(legends),
-      flow(
-        Object.values,
-        map(get('code')),
-      )(legends)
-    ))
-
-    return saveToPreloadData('legend-name-to-code', legendNameToCode)
-      .then(() => console.log('Prepared "legend-name-to-code" done!'))
-  },
-  ({ itemstats }) => {
-    const slugToId = fromPairs(flow(
-      Object.values,
-      map(itemstat => [slugify(itemstat.name), itemstat.id]),
-    )(itemstats))
-
-    return saveToPreloadData('itemstat-slug-to-id', slugToId)
-      .then(() => console.log('Prepared "itemstat-slug-to-id" done!'))
-  },
-  ({ items, itemstats }) => {
-    const itemTable = flow(
-      Object.values,
-      map(item => {
-        const id = item.id
-        const name = item.name
-        const slug = slugify(item.name)
-        const type = slugify(item.type)
-        const details = item.details
-
-        const row = {
-          id,
-          name,
-          slug,
-          type
-        }
-
-        if (details) {
-          var subtype = type
-
-          const weight = details.weight_class ? slugify(details.weight_class) : null
-
-          if (details.type) {
-            subtype = slugify(details.type)
-          }
-
-          if (details.infusion_upgrade_flags) {
-            details.infusion_upgrade_flags.forEach(infusion => {
-              subtype = slugify(infusion)
-            })
-          } else if (details.infix_upgrade) {
-            if (details.infix_upgrade.attributes.length > 0) {
-              const stat = itemstats[details.infix_upgrade.id]
-
-              return [{
-                ...row,
-                stat: stat.id,
-                statslug: slugify(stat.name),
-                type: subtype,
-                weight,
-              }]
-            }
-
-            return [{
-              ...row,
-              type: subtype,
-            }]
-          }
-
-          if (details.stat_choices) {
-            return details.stat_choices.map(statId => {
-              const stat = itemstats[statId]
-
-              return {
-                ...row,
-                stat: stat.id,
-                statslug: slugify(stat.name),
-                type: subtype,
-                weight,
-              }
-            })
-          }
-
-          return [{
-            ...row,
-            type: subtype,
-          }]
-        }
-
-        return [{
-          ...row,
-        }]
-      }),
-      flatten,
-    )(items)
-
-    return saveToPreloadData('item-table', itemTable)
-      .then(() => console.log('Prepared "item-table" done!'))
-  },
-]
 
 function request(url, params) {
   const query = stringify({
@@ -340,12 +50,10 @@ function requestPagedAPI(url, page, pageSize) {
     .then(response => {
       if (response.length >= pageSize) {
         return requestPagedAPI(url, page + 1, pageSize)
-          .then(data => {
-            return [
-              ...response,
-              ...data
-            ]
-          })
+          .then(data => [
+            ...response,
+            ...data
+          ])
       }
       return response
     })
@@ -353,7 +61,6 @@ function requestPagedAPI(url, page, pageSize) {
 
 function slugify(name) {
   return name.toLowerCase()
-    .replace(/(.+)'s$/, '$1')
     .replace(/\s+/g, '-')
     .replace(/[^\w\-]+/g, '')
     .replace(/\-\-+/g, '-')
@@ -370,57 +77,375 @@ function loadPrefetchData(name) {
 
 function saveToPreloadData(name, data) {
   return write(`data/preloads/${name}.json`, JSON.stringify(data))
-    .then(() => data)
+    .then(() => {
+      console.log(`File "${name}.json" Saved`)
+      return {
+        [name]: data,
+      }
+    })
     .catch(() => null)
 }
 
-const requests = apis
-  .map(([type, url]) => {
+const transformers = [
+  ({ items, itemstats }) => {
+    const getItemType = item => {
+      if (item.details) {
+        if (item.details.infusion_upgrade_flags) {
+          if (item.details.infusion_upgrade_flags.length > 0) {
+            for (const type of item.details.infusion_upgrade_flags) {
+              return type
+            }
+          }
+        }
+
+        if (item.details.type) {
+          return item.details.type
+        }
+      }
+
+      return item.type
+    }
+    const pipeline = flow(
+      Object.values,
+      map(item => {
+        const id = item.id
+        const name = item.name
+
+        const slug = slugify(item.name)
+        const type = slugify(getItemType(item))
+
+        if (item.details) {
+          const weight = item.details.weight_class ? slugify(item.details.weight_class) : null
+
+          if (item.details.infix_upgrade) {
+            if (item.details.infix_upgrade.attributes) {
+              if (item.details.infix_upgrade.attributes.length > 0) {
+                const stat = item.details.infix_upgrade.id
+                const statslug = itemstats[stat] ? slugify(itemstats[stat].name) : null
+
+                return {
+                  id,
+                  name,
+                  slug,
+                  type,
+                  weight,
+                  stats: statslug ? [stat] : [],
+                  statslugs: statslug ? [statslug] : [],
+                }
+              }
+            }
+          }
+
+          if (item.details.stat_choices) {
+            const stats = item.details.stat_choices
+            const statslugs = flow(
+              map(stat => itemstats[stat]),
+              map(get('name')),
+              map(slugify),
+            )(stats)
+
+            return {
+              id,
+              name,
+              slug,
+              type,
+              weight,
+              stats,
+              statslugs,
+            }
+          }
+
+          return {
+            id,
+            name,
+            slug,
+            type,
+            weight,
+          }
+        }
+
+        return {
+          id,
+          name,
+          slug,
+          type,
+        }
+      }),
+      map(item => [item.id, item]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('item-data', pipeline(items))
+  },
+  ({ 'item-data': data }) => {
+    const pipeline = flow(
+      Object.values,
+      map(item => [item.slug, item.id]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('item-slugs', pipeline(data))
+  },
+  ({ itemstats }) => {
+    const pipeline = flow(
+      map(stat => ({
+        id: stat.id,
+        name: stat.name,
+        slug: slugify(stat.name),
+      })),
+      map(stat => [stat.id, stat]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('itemstat-data', pipeline(itemstats))
+  },
+  ({ legends, skills }) => {
+    const pipeline = flow(
+      map(legend => {
+        const name = skills[legend.swap].name.replace(/Legendary (.+) Stance/, '$1')
+        return {
+          id: legend.id,
+          name: name,
+          slug: slugify(name),
+          code: legend.code
+        }
+      }),
+      map(legend => [legend.id, legend]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('legend-data', pipeline(legends))
+  },
+  ({ 'legend-data': data }) => {
+    const pipeline = flow(
+      Object.values,
+      map(legend => [legend.slug, legend.id]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('legend-slugs', pipeline(data))
+  },
+  ({ professions, specializations }) => {
+    const pipeline = flow(
+      reduce((data, profession) => [
+        ...data,
+        {
+          id: profession.id,
+          code: profession.code,
+          name: profession.name,
+          slug: slugify(profession.name),
+        },
+        ...flow(
+          map(specialization => specializations[specialization]),
+          filter(specialization => specialization.elite),
+          reduce((data, specialization) => [
+            ...data,
+            {
+              id: profession.id,
+              code: profession.code,
+              name: specialization.name,
+              slug: slugify(specialization.name),
+              elite: specialization.id,
+            }
+          ], []),
+        )(profession.specializations)
+      ], []),
+      map(profession => [profession.name, profession]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('profession-data', pipeline(professions))
+  },
+  ({ 'profession-data': data }) => {
+    const pipeline = flow(
+      Object.values,
+      map(profession => [profession.slug, profession.name]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('profession-slugs', pipeline(data))
+  },
+  ({ legends, professions, skills }) => {
+    const revenantMaxSkillIds = flow(
+      Object.values,
+      map(legend => [legend.heal, ...legend.utilities, legend.elite]),
+      reduce(zip, [0, 0, 0, 0, 0]),
+      map(flow(flatten, flatten, flatten, flatten, flatten, max)),
+      skills => zip(['heal', 'utility1', 'utility2', 'utility3', 'elite'], skills),
+      fromPairs,
+    )(legends)
+
+    const professionSkills = flow(
+      Object.values,
+      map(get('skills_by_palette')),
+      map(map(([code, id]) => {
+        const skill = skills[id]
+        return {
+          id: skill.id,
+          name: skill.name,
+          slug: slugify(skill.name),
+          code: code,
+        }
+      })),
+      reduce(concat, []),
+      map(skill => [skill.id, skill]),
+      fromPairs,
+    )(professions)
+
+    const legendSkills = flow(
+      Object.values,
+      map(legend => [
+        ['heal', legend.heal],
+        ['utility1', legend.utilities[0]],
+        ['utility2', legend.utilities[1]],
+        ['utility3', legend.utilities[2]],
+        ['elite', legend.elite],
+      ]),
+      map(map(([maxSkillIndex, skillId]) => {
+        const skill = skills[skillId]
+        return {
+          id: skill.id,
+          name: skill.name,
+          slug: slugify(skill.name),
+          code: professionSkills[revenantMaxSkillIds[maxSkillIndex]].code,
+        }
+      })),
+      map(skill => [skill.id, skill]),
+      fromPairs,
+    )(legends)
+
+    const allSkills = flow(
+      Object.values,
+      map(skill => ({
+        id: skill.id,
+        name: skill.name,
+        slug: slugify(skill.name),
+      })),
+      map(skill => [skill.id, skill]),
+      fromPairs,
+    )(skills)
+
+    return saveToPreloadData('skill-data', {
+      ...allSkills,
+      ...legendSkills,
+      ...professionSkills,
+    })
+  },
+  ({ 'skill-data': data }) => {
+    const pipeline = flow(
+      Object.values,
+      map(skill => [skill.slug, skill.id]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('skill-slugs', pipeline(data))
+  },
+  ({ specializations }) => {
+    const pipeline = flow(
+      map(specialization => ({
+        id: specialization.id,
+        name: specialization.name,
+        slug: slugify(specialization.name),
+      })),
+      map(specialization => [specialization.id, specialization]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('specialization-data', pipeline(specializations))
+  },
+  ({ 'specialization-data': data }) => {
+    const pipeline = flow(
+      Object.values,
+      map(specialization => [specialization.slug, specialization.id]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('specialization-slugs', pipeline(data))
+  },
+  ({ traits }) => {
+    const pipeline = flow(
+      map(trait => ({
+        id: trait.id,
+        name: trait.name,
+        slug: slugify(trait.name),
+      })),
+      map(trait => [trait.id, trait]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('trait-data', pipeline(traits))
+  },
+  ({ 'trait-data': data }) => {
+    const pipeline = flow(
+      Object.values,
+      map(trait => [trait.slug, trait.id]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('trait-slugs', pipeline(data))
+  },
+]
+
+const preloadPipeline = flow(
+  map(async ([type, url]) => {
     const pageSize = 200
 
     const pipeline = flow(
       filter(item => item.name === undefined || item.name !== ''),
-      items => items.map(item => [item.id, item]),
-      fromPairs
+      map(item => [item.id, item]),
+      fromPairs,
+    )
+
+    const requestAPIPrefetched = flow(
+      chunk(pageSize),
+      map(ids => request(url, {
+        ids: ids.join(',')
+      })),
     )
 
     return loadPrefetchData(type)
       .then(prefetchIds => {
-        console.info(`Preloading "${type}" started!`)
-        return prefetchIds
-      })
-      .then(prefetchIds => {
         if (prefetchIds.length > 0) {
-          const requests = flow(
-            chunk(pageSize),
-            map(ids => {
-              const params = {
-                ids: ids.join(',')
-              }
-
-              return request(url, params)
-            }),
-          )(prefetchIds)
-
           return Promise
-            .all(requests)
-            .then(responses => reduce((data, items) => ({
+            .all(requestAPIPrefetched(prefetchIds))
+            .then(reduce((data, items) => ({
               ...data,
               ...pipeline(items),
-            }), {})(responses))
-        } else {
-          return requestPagedAPI(url, 0, pageSize)
-            .then(pipeline)
+            }), {}))
         }
+
+        return requestPagedAPI(url, 0, pageSize)
+            .then(pipeline)
       })
       .then(data => saveToPreloadData(type, data))
-      .then(data => {
-        console.info(`Preloading "${type}" finished!`)
-        return [type, data]
+  }),
+  reduce(async (promise, request) => {
+    return promise.then(async payload => {
+      return request.then(async response => {
+        return {
+          ...payload,
+          ...response,
+        }
       })
-  })
+    })
+  }, Promise.resolve({})),
+  async promise => reduce(async (promise, transformer) => {
+    return promise.then(async payload => {
+      return transformer(payload).then(data => ({
+        ...payload,
+        ...data,
+      }))
+    })
+  }, promise)(transformers),
+  async promise => promise.then(() => console.log('Preloading Finished!')),
+)
 
-return Promise
-  .all(requests)
-  .then(fromPairs)
-  .then(data => transformers.map(transformer => tap(transformer)(data)))
+return preloadPipeline([
+  ['items', '/v2/items'],
+  ['itemstats', '/v2/itemstats'],
+  ['legends', '/v2/legends'],
+  ['professions', '/v2/professions'],
+  ['skills', '/v2/skills'],
+  ['specializations', '/v2/specializations'],
+  ['traits', '/v2/traits'],
+])
