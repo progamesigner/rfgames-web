@@ -1,6 +1,6 @@
 {{- $context := 0 | index . -}}
 
-{{- $data := "gw2-weapon-skills" | slice $context | partial "data/preload.dict" -}}
+{{- $data := "weapon-skills" | slice $context | partial "data/preload.dict" -}}
 
 {{- if $data | len | ge 0 -}}
     {{- $weaponHeadSlots := slice "Weapon_1" "Weapon_2" -}}
