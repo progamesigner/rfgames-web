@@ -105,6 +105,7 @@ const transformers = [
 
       return item.type
     }
+
     const pipeline = flow(
       Object.values,
       map(item => {
@@ -437,7 +438,9 @@ const preloadPipeline = flow(
       }))
     })
   }, promise)(transformers),
-  async promise => promise.then(() => console.log('Preloading Finished!')),
+  async promise => promise
+    .then(() => console.log('Preloading Finished!'))
+    .catch(console.error),
 )
 
 return preloadPipeline([
