@@ -262,7 +262,7 @@ const transformers = [
   ({ 'profession-data': data }) => {
     const pipeline = flow(
       Object.values,
-      map(profession => [profession.slug, profession.name]),
+      map(profession => [profession.slug, profession.id]),
       fromPairs,
     )
 
