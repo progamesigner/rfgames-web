@@ -12,12 +12,12 @@
         {{- $key := $id | string -}}
         {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
 
-        {{- $trait := dict -}}
-        {{- $trait = $id | dict "id" | merge $trait -}}
-        {{- $trait = $slug | dict "slug" | merge $trait -}}
-        {{- $trait = $name | dict "name" | merge $trait -}}
+        {{- $specialization := dict -}}
+        {{- $specialization = $id | dict "id" | merge $specialization -}}
+        {{- $specialization = $slug | dict "slug" | merge $specialization -}}
+        {{- $specialization = $name | dict "name" | merge $specialization -}}
 
-        {{- $data = $trait | dict $key | merge $data -}}
+        {{- $data = $specialization | dict $key | merge $data -}}
     {{- end -}}
 {{- end -}}
 
