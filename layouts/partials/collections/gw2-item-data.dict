@@ -58,6 +58,7 @@
                     {{- $item = $name | dict "name" | merge $item -}}
                     {{- $item = $slug | dict "slug" | merge $item -}}
                     {{- $item = $type | dict "type" | merge $item -}}
+                    {{- $item = $weight | dict "weight" | merge $item -}}
 
                     {{- $data = $item | dict $key | merge $data -}}
                 {{- end -}}
