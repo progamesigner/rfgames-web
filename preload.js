@@ -14,6 +14,7 @@ const {
   fromPairs,
   get,
   includes,
+  keyBy,
   map,
   mapKeys,
   mapValues,
@@ -25,6 +26,7 @@ const {
   times,
   toLower,
   toPairs,
+  values,
   zip,
 } = require('lodash/fp')
 const {
@@ -438,7 +440,11 @@ const transformers = [
     )
     const weaponOffhandFilter = offhand => filter(skill => skill.offhand === offhand || skill.offhand === null)
     const weaponProfessionFilter = profession => filter(skill => skill.profession === profession)
-    const weaponSlotFilter = slots => filter(skill => includes(skill.slot)(slots))
+    const weaponSlotFilter = slots => flow(
+      filter(skill => includes(skill.slot)(slots)),
+      keyBy(skill => `${skill.slot}|${skill.attunement}|${skill.offhand}`),
+      values,
+    )
     const weaponTypeFilter = type => filter(skill => skill.type === type)
 
     const pipeline = flow(
