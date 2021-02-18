@@ -121,7 +121,7 @@ const transformers = [
     }
 
     const pipeline = flow(
-      Object.values,
+      values,
       map(item => {
         const id = item.id
         const name = item.name
@@ -194,7 +194,7 @@ const transformers = [
   },
   ({ 'item-data': data }) => {
     const pipeline = flow(
-      Object.values,
+      values,
       map(item => [item.slug, item.id]),
       fromPairs,
     )
@@ -233,7 +233,7 @@ const transformers = [
   },
   ({ 'legend-data': data }) => {
     const pipeline = flow(
-      Object.values,
+      values,
       map(legend => [legend.slug, legend.id]),
       fromPairs,
     )
@@ -273,7 +273,7 @@ const transformers = [
   },
   ({ 'profession-data': data }) => {
     const pipeline = flow(
-      Object.values,
+      values,
       map(profession => [profession.slug, profession.id]),
       fromPairs,
     )
@@ -282,7 +282,7 @@ const transformers = [
   },
   ({ legends, professions, skills }) => {
     const revenantMaxSkillIds = flow(
-      Object.values,
+      values,
       map(legend => [legend.heal, ...legend.utilities, legend.elite]),
       reduce(zip, [0, 0, 0, 0, 0]),
       map(flow(flatten, flatten, flatten, flatten, flatten, max)),
@@ -291,7 +291,7 @@ const transformers = [
     )(legends)
 
     const professionSkills = flow(
-      Object.values,
+      values,
       map(get('skills_by_palette')),
       map(map(([code, id]) => {
         const skill = skills[id]
@@ -308,7 +308,7 @@ const transformers = [
     )(professions)
 
     const legendSkills = flow(
-      Object.values,
+      values,
       map(legend => [
         ['heal', legend.heal],
         ['utility1', legend.utilities[0]],
@@ -330,7 +330,7 @@ const transformers = [
     )(legends)
 
     const allSkills = flow(
-      Object.values,
+      values,
       map(skill => ({
         id: skill.id,
         name: skill.name,
@@ -348,7 +348,7 @@ const transformers = [
   },
   ({ 'skill-data': data }) => {
     const pipeline = flow(
-      Object.values,
+      values,
       map(skill => [skill.slug, skill.id]),
       fromPairs,
     )
@@ -370,7 +370,7 @@ const transformers = [
   },
   ({ 'specialization-data': data }) => {
     const pipeline = flow(
-      Object.values,
+      values,
       map(specialization => [specialization.slug, specialization.id]),
       fromPairs,
     )
@@ -392,7 +392,7 @@ const transformers = [
   },
   ({ 'trait-data': data }) => {
     const pipeline = flow(
-      Object.values,
+      values,
       map(trait => [trait.slug, trait.id]),
       fromPairs,
     )
