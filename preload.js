@@ -7,14 +7,24 @@ const { promisify } = require('util')
 const {
   chunk,
   concat,
+  constant,
   filter,
   flatten,
   flow,
   fromPairs,
   get,
+  includes,
   map,
+  mapKeys,
+  mapValues,
   max,
+  merge,
+  over,
   reduce,
+  reverse,
+  times,
+  toLower,
+  toPairs,
   zip,
 } = require('lodash/fp')
 const {
@@ -386,6 +396,244 @@ const transformers = [
     )
 
     return saveToPreloadData('trait-slugs', pipeline(data))
+  },
+  ({ professions, skills }) => {
+    const isMainhandWeapon = includes('Mainhand')
+    const isOffhandWeapon = includes('Offhand')
+    const isTwohandWeapon = includes('TwoHand')
+
+    const weaponAttunements = ['Fire', 'Water', 'Air', 'Earth']
+
+    const weaponHeadSlots = ['Weapon_1', 'Weapon_2']
+    const weaponDualSlots = ['Weapon_3']
+    const weaponTailSlots = ['Weapon_4', 'Weapon_5']
+
+    const weaponSkills = flow(
+      mapValues(flow(
+        get('weapons'),
+        mapKeys(toLower),
+        mapValues(get('skills')),
+        mapValues(map(skill => {
+          const dual_attunement = skills[skill.id].dual_attunement
+          return {
+            id: skill.id,
+            slot: skill.slot,
+            offhand: skill.offhand ? skill.offhand.toLowerCase() : null,
+            attunement: skill.attunement ?? null,
+            dual_attunement: dual_attunement ?? skill.attunement ?? null,
+          }
+        })),
+        toPairs,
+        map(([type, skills]) => map(merge({ type }))(skills)),
+        reduce(concat, []),
+      )),
+      toPairs,
+      map(([profession, skills]) => map(merge({ profession }))(skills)),
+      reduce(concat, []),
+    )(professions)
+
+    const weaponAttunementFilter = attunement => flow(
+      filter(skill => skill.attunement === null || skill.attunement === attunement),
+      filter(skill => skill.dual_attunement === null || skill.dual_attunement === attunement),
+    )
+    const weaponOffhandFilter = offhand => filter(skill => skill.offhand === offhand || skill.offhand === null)
+    const weaponProfessionFilter = profession => filter(skill => skill.profession === profession)
+    const weaponSlotFilter = slots => filter(skill => includes(skill.slot)(slots))
+    const weaponTypeFilter = type => filter(skill => skill.type === type)
+
+    const pipeline = flow(
+      toPairs,
+      map(([profession, { weapons }]) => [profession, flow(
+        mapKeys(toLower),
+        toPairs,
+        map(([type, weapon]) => {
+          if (isMainhandWeapon(weapon.flags)) {
+            const key = `${type}|`
+
+            const dualWieldSkills = flow(
+              mapKeys(toLower),
+              toPairs,
+              filter(([, weapon]) => isOffhandWeapon(weapon.flags)),
+              map(([type, ]) => type),
+              map(offhandType => {
+                const key = `${type}|${offhandType}`
+
+                if (profession.toLowerCase() === 'elementalist') {
+                  const skills = flow(
+                    weaponProfessionFilter(profession),
+                    over(map((weaponAttunementFilter))(weaponAttunements)),
+                    reduce(concat, []),
+                    over([
+                      flow(
+                        weaponTypeFilter(type),
+                        weaponSlotFilter(weaponHeadSlots),
+                      ),
+                      flow(
+                        weaponTypeFilter(type),
+                        weaponSlotFilter(weaponDualSlots),
+                      ),
+                      flow(
+                        weaponTypeFilter(offhandType),
+                        weaponSlotFilter(weaponTailSlots),
+                      ),
+                    ]),
+                    reduce(concat, []),
+                    map(get('id')),
+                  )(weaponSkills)
+
+                  return [key, skills]
+                }
+
+                const skills = flow(
+                  weaponProfessionFilter(profession),
+                  over([
+                    flow(
+                      weaponTypeFilter(type),
+                      weaponSlotFilter(weaponHeadSlots),
+                    ),
+                    flow(
+                      weaponTypeFilter(type),
+                      weaponOffhandFilter(offhandType),
+                      weaponSlotFilter(weaponDualSlots),
+                    ),
+                    flow(
+                      weaponTypeFilter(offhandType),
+                      weaponSlotFilter(weaponTailSlots),
+                    ),
+                  ]),
+                  reduce(concat, []),
+                  map(get('id')),
+                )(weaponSkills)
+
+                return [key, skills]
+              }),
+            )(weapons)
+
+            if (profession.toLowerCase() === 'elementalist') {
+              const skills = flow(
+                weaponProfessionFilter(profession),
+                weaponTypeFilter(type),
+                over(map((weaponAttunementFilter))(weaponAttunements)),
+                reduce(concat, []),
+                over([
+                  weaponSlotFilter(weaponHeadSlots),
+                  weaponSlotFilter(weaponDualSlots),
+                ]),
+                reduce(concat, []),
+                chunk(weaponHeadSlots.length + weaponDualSlots.length),
+                map(skills => concat(skills)),
+                map(append => append(times(constant({ id: 0 }), weaponTailSlots.length))),
+                reduce(concat, []),
+                map(get('id')),
+              )(weaponSkills)
+
+              return [
+                [key, skills],
+                ...dualWieldSkills,
+              ]
+            }
+
+            const skills = flow(
+              weaponProfessionFilter(profession),
+              weaponTypeFilter(type),
+              weaponOffhandFilter('nothing'),
+              over([
+                weaponSlotFilter(weaponHeadSlots),
+                weaponSlotFilter(weaponDualSlots),
+                () => times(constant({ id: 0 }), weaponTailSlots.length),
+              ]),
+              reduce(concat, []),
+              map(get('id')),
+            )(weaponSkills)
+
+            return [
+              [key, skills],
+              ...dualWieldSkills,
+            ]
+          }
+
+          if (isOffhandWeapon(weapon.flags)) {
+            const key = `|${type}`
+
+            if (profession.toLowerCase() === 'elementalist') {
+              const skills = flow(
+                weaponProfessionFilter(profession),
+                weaponTypeFilter(type),
+                over(map((weaponAttunementFilter))(weaponAttunements)),
+                reduce(concat, []),
+                weaponSlotFilter(weaponTailSlots),
+                chunk(weaponTailSlots.length),
+                map(reverse),
+                map(skills => concat(skills)),
+                map(append => append(times(constant({ id: 0 }), weaponHeadSlots.length + weaponDualSlots.length))),
+                map(reverse),
+                reduce(concat, []),
+                map(get('id')),
+              )(weaponSkills)
+
+              return [[key, skills]]
+            }
+
+            const skills = flow(
+              weaponProfessionFilter(profession),
+              weaponTypeFilter(type),
+              over([
+                () => times(constant({ id: 0 }), weaponHeadSlots.length + weaponDualSlots.length),
+                weaponSlotFilter(weaponTailSlots),
+              ]),
+              reduce(concat, []),
+              map(get('id')),
+            )(weaponSkills)
+
+            return [[key, skills]]
+          }
+
+          if (isTwohandWeapon(weapon.flags)) {
+            const key = `${type}|`
+
+            if (profession.toLowerCase() === 'elementalist') {
+              const skills = flow(
+                map(attunement => flow(
+                  weaponProfessionFilter(profession),
+                  weaponTypeFilter(type),
+                  weaponAttunementFilter(attunement),
+                  over([
+                    weaponSlotFilter(weaponHeadSlots),
+                    weaponSlotFilter(weaponDualSlots),
+                    weaponSlotFilter(weaponTailSlots),
+                  ]),
+                  reduce(concat, []),
+                )),
+                map(filter => filter(weaponSkills)),
+                reduce(concat, []),
+                map(get('id')),
+              )(weaponAttunements)
+
+              return [[key, skills]]
+            }
+
+            const skills = flow(
+              weaponProfessionFilter(profession),
+              weaponTypeFilter(type),
+              over([
+                weaponSlotFilter(weaponHeadSlots),
+                weaponSlotFilter(weaponDualSlots),
+                weaponSlotFilter(weaponTailSlots),
+              ]),
+              reduce(concat, []),
+              map(get('id')),
+            )(weaponSkills)
+
+            return [[key, skills]]
+          }
+        }),
+        reduce(concat, []),
+        fromPairs,
+      )(weapons)]),
+      fromPairs,
+    )
+
+    return saveToPreloadData('weapon-skills', pipeline(professions))
   },
 ]
 
