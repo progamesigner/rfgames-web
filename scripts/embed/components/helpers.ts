@@ -1,6 +1,6 @@
 import { Store } from 'redux'
-import { debounce } from 'lodash/fp'
 import { omit, sortBy } from 'rambda'
+import { debounce } from 'throttle-debounce'
 
 import { hideTooltip, showTooltip, updateHidability } from '../actions'
 import { config } from '../config'
@@ -88,7 +88,7 @@ export function bindTooltipEvents<T extends TooltipType>(
   type: T,
   data: ExtractTooltipDataType<T>
 ): TooltipEvents {
-  const debounced = debounce(config.tooltipDebouncedWait)(() => {
+  const debounced = debounce(config.tooltipDebouncedWait, () => {
     const {
       tooltipHidable,
     } = store.getState()

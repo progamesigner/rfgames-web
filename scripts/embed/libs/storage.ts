@@ -1,5 +1,5 @@
-import { debounce } from 'lodash/fp'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
+import { debounce } from 'throttle-debounce'
 
 import { config } from '../config'
 import { GW2Resources } from '../types'
@@ -12,7 +12,7 @@ const EMPTY_CACHE = JSON.stringify({})
 
 const makeKey = (key: string) => `GW2:EMBED:${key.toUpperCase()}`
 
-const markForceClared = debounce(config.cacheClearBatchWait)(clear.bind(null, FORCE_CLEAR_CACHE_KEY))
+const markForceClared = debounce(config.cacheClearBatchWait, clear.bind(null, FORCE_CLEAR_CACHE_KEY))
 
 export function checkBuildIdUpdated(id: number): boolean {
   const currentBuildId = `${id}`

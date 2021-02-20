@@ -1,4 +1,4 @@
-import { debounce, throttle } from 'lodash/fp'
+import { debounce, throttle } from 'throttle-debounce'
 
 type ScrollEventCallback = (x: number, y: number) => void
 
@@ -37,9 +37,9 @@ export function bindScrollEvent(
         scrollEventCallbacks.forEach(callback => callback(x, y))
     }
 
-    window.addEventListener('scroll', throttle(100)(onScrollEvent))
-    window.addEventListener('resize', debounce(50)(onScrollEvent))
-    window.addEventListener('orientationchange', debounce(50)(onScrollEvent))
+    window.addEventListener('scroll', throttle(100, onScrollEvent))
+    window.addEventListener('resize', debounce(50, onScrollEvent))
+    window.addEventListener('orientationchange', debounce(50, onScrollEvent))
 
     scrollEventInstalled = true
   }

@@ -1,4 +1,4 @@
-import { debounce } from 'lodash/fp'
+import { debounce } from 'throttle-debounce'
 
 type Deferred<R, E> = {
   promise: Promise<R>;
@@ -39,7 +39,7 @@ export function batch<T, R, A extends Array<unknown>>(
     defer = deferred<R>()
   }
 
-  const debouncedFunc = debounce(wait)(runAndReset)
+  const debouncedFunc = debounce(wait, runAndReset)
 
   return (id: T, ...args: Array<unknown>): Promise<R> => {
     debouncedIds = [...debouncedIds, id]
