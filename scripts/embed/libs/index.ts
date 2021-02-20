@@ -1,4 +1,5 @@
 export * from './batch'
 export * from './dom'
+export * from './math'
 export * from './storage'
 export * from './style'

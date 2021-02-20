@@ -1,5 +1,5 @@
-import { toPairs, values } from 'lodash/fp'
 import { Reducer } from 'redux'
+import { toPairs } from 'rambda'
 
 import {
   GW2ErrorAction,
@@ -115,7 +115,7 @@ const responseReducer = <T extends GW2Resources>(
     const storedData = data as Record<ExtractGW2KeyType<T>, ExtractStoreRecord<T>> | undefined
 
     if (storedData) {
-      const save = values<ExtractStoreRecord<T>>(storedData)
+      const save = Object.values<ExtractStoreRecord<T>>(storedData)
         .reduce((saved, { data }) => {
           return {
             ...saved,

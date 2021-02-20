@@ -1,6 +1,5 @@
-import { chunk, isInteger, isString, uniq } from 'lodash/fp'
-
 import { Dispatch } from 'redux'
+import { splitEvery, uniq } from 'rambda'
 
 import { apis, GW2Fetcher } from '../apis'
 import { config } from '../config'
@@ -17,7 +16,7 @@ import {
 
 type GetState = () => EmbedState
 type GW2Action<T extends GW2Resources> = (dispatch: Dispatch, getState: GetState) => (id: ExtractGW2KeyType<T>) => void
-type GW2BatchFunction<T extends GW2Resources> = (ids: Array<ExtractGW2KeyType<T>>, dispatch: Dispatch, getState: GetState) => Promise<GW2ResourceRecord<T>>
+type GW2BatchFunction<T extends GW2Resources> = (ids: ReadonlyArray<ExtractGW2KeyType<T>>, dispatch: Dispatch, getState: GetState) => Promise<GW2ResourceRecord<T>>
 type GW2ErrorRecord<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, ExtractGW2ErrorType<T>>
 type GW2PostProcessor<T extends GW2Resources> = (dispatch: Dispatch, items: GW2ResourceRecord<T>) => GW2ResourceRecord<T>
 type GW2RefreshAction = (dispatch: Dispatch, getState: GetState) => (language: string) => void
@@ -35,7 +34,7 @@ interface GW2ErrorPayload<T extends GW2Resources> {
 }
 
 interface GW2RequestPayload<T extends GW2Resources> {
-  ids: Array<ExtractGW2KeyType<T>>;
+  ids: ReadonlyArray<ExtractGW2KeyType<T>>;
 }
 
 interface GW2ResponsePayload<T extends GW2Resources> {
@@ -53,7 +52,7 @@ function actionFactory<T extends GW2Resources>(
     failure
   } = makeActionNames(resource)
 
-  const makeChunks = chunk(config.gw2ApiRequestLimit)
+  const makeChunks = splitEvery(config.gw2ApiRequestLimit)
 
   const debounced = batchFactory<T>(async (ids, dispatch, getState) => {
     const {
@@ -64,7 +63,7 @@ function actionFactory<T extends GW2Resources>(
     const item = data as ExtractGW2State<T> | undefined
 
     const idsToFetch = uniq(ids.filter(id => {
-      if (!!id && (isInteger(id) && id > 0 || isString(id) && id !== '')) {
+      if (!!id && (`${id}` === id && id !== '' || id > 0)) {
         return !item || !item[id] || !!item[id].error
       }
       return false
@@ -138,7 +137,7 @@ function refreshActionFactory<T extends GW2Resources>(
     } = makeActionNames(resource)
 
     const localStorageKey = makeResourceKey(resource, language)
-    const items = parse<Array<ExtractGW2ResourceType<T>>>(localStorageKey)
+    const items = parse<ReadonlyArray<ExtractGW2ResourceType<T>>>(localStorageKey)
 
     dispatch({
       type: refresh
@@ -152,7 +151,7 @@ function refreshActionFactory<T extends GW2Resources>(
 }
 
 function flattenResponses<T extends GW2Resources>(
-  responses: Array<GW2ResourceRecord<T>>
+  responses: ReadonlyArray<GW2ResourceRecord<T>>
 ): GW2ResourceRecord<T> {
   return responses.reduce((response, items) => {
     return {

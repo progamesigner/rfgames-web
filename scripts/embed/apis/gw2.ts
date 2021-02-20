@@ -12,7 +12,7 @@ interface GW2Build {
 }
 
 function reduceById<T extends GW2Resources>(
-  responses: Array<ExtractGW2ResourceType<T>>
+  responses: ReadonlyArray<ExtractGW2ResourceType<T>>
 ): Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>> {
   return responses.reduce((data, item) => ({
     ...data,
@@ -23,8 +23,8 @@ function reduceById<T extends GW2Resources>(
 function fetchGW2ApiFactory<T extends GW2Resources>(
   resource: string
 ): GW2Fetcher<T> {
-  return async (language: string, ids: Array<ExtractGW2KeyType<T>>) => {
-    const response = await request<Array<ExtractGW2ResourceType<T>>>({
+  return async (language: string, ids: ReadonlyArray<ExtractGW2KeyType<T>>) => {
+    const response = await request<ReadonlyArray<ExtractGW2ResourceType<T>>>({
       background: true,
       params: {
         ids: ids.join(','),
@@ -40,7 +40,7 @@ export type GW2Fetcher<
   T extends GW2Resources
 > = (
   language: string,
-  ids: Array<ExtractGW2KeyType<T>>
+  ids: ReadonlyArray<ExtractGW2KeyType<T>>
 ) => Promise<Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>>>
 
 export async function fetchGW2Build(): Promise<GW2Build> {

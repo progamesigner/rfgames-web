@@ -1,5 +1,3 @@
-import { values } from 'lodash/fp'
-
 import { clearCacheIfRequested, makeResourceKey, parse } from '../libs'
 import {
   ExtractGW2ResourceType,
@@ -13,7 +11,7 @@ type GW2InitialState = Record<string, ExtractGW2State<GW2Resources>>
 function mapCacheToStore<T extends GW2Resources>(
   items: Array<ExtractGW2ResourceType<T>>
 ) {
-  return values(items).reduce((state, item) => ({
+  return Object.values(items).reduce((state, item) => ({
     ...state,
     [item.id]: {
       data: item,

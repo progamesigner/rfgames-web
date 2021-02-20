@@ -1,5 +1,5 @@
-import { tap } from 'lodash/fp'
 import { redraw } from 'mithril'
+import { pipe, tap } from 'rambda'
 import {
   Action,
   applyMiddleware,
@@ -13,9 +13,7 @@ import { initializeReducer } from './reducers'
 import { initializeState } from './states'
 import { EmbedOptions, EmbedState } from './types'
 
-const mithril: Middleware = () => dispatch => action => {
-  return tap<EmbedState>(() => redraw())(dispatch(action))
-}
+const mithril: Middleware = () => dispatch => pipe(dispatch, tap(() => redraw()))
 
 function parseOptions(window: Window): EmbedOptions {
   return {

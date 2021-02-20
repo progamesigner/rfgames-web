@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { slice } from 'lodash/fp'
+import { slice } from 'rambda'
 
 import { GW2Trait, TooltipType } from '../../types'
 

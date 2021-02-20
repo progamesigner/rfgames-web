@@ -1,5 +1,6 @@
 import { Store } from 'redux'
-import { debounce, omit, sortBy } from 'lodash/fp'
+import { debounce } from 'lodash/fp'
+import { omit, sortBy } from 'rambda'
 
 import { hideTooltip, showTooltip, updateHidability } from '../actions'
 import { config } from '../config'
@@ -136,8 +137,8 @@ export function buildWikiLink(store: Store, to: string): string {
 }
 
 export function sortFacts<T>(
-  facts: Array<T>,
+  facts: ReadonlyArray<T>,
   typer: (fact: T) => GW2FactType
-): Array<T> {
+): ReadonlyArray<T> {
   return sortBy((fact: T) => factOrders[typer(fact)])(facts)
 }

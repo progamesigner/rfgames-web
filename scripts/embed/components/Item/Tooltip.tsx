@@ -86,9 +86,9 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
     const currentStat = parseItemStat(item, stat)
     const flags = parseItemFlags(item)
 
-    const takeUpgrades = createTakeFlow(upgrades, parseItemUpgradeSlots(item))
-    const takeInfusions = createTakeFlow(infusions, parseItemInfusionSlots(item))
-    const takeEnrichments = createTakeFlow(enrichments, parseItemenrichmentSlots(item))
+    const takeUpgrades = createTakeFlow(parseItemUpgradeSlots(item))
+    const takeInfusions = createTakeFlow(parseItemInfusionSlots(item))
+    const takeEnrichments = createTakeFlow(parseItemenrichmentSlots(item))
 
     return <TooltipContent type="item">
       <TooltipHead className={styles.tooltip.head}>
@@ -183,7 +183,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           null
         }
 
-        {takeUpgrades().map((id, index) =>
+        {takeUpgrades(upgrades).map((id, index) =>
           <UpgradeComponent
             key={index}
             store={store}
@@ -193,7 +193,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           />
         )}
 
-        {takeInfusions().map((id, index) =>
+        {takeInfusions(infusions).map((id, index) =>
           <UpgradeComponent
             key={index}
             store={store}
@@ -202,7 +202,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           />
         )}
 
-        {takeEnrichments().map((id, index) =>
+        {takeEnrichments(enrichments).map((id, index) =>
           <UpgradeComponent
             key={index}
             store={store}

@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { chunk, range } from 'lodash/fp'
+import { range, splitEvery } from 'rambda'
 
 import { Trait } from '../../containers'
 import { cx } from '../../libs'
@@ -23,7 +23,7 @@ import {
 import * as styles from './styles'
 
 interface TraitIconAttributes extends m.Attributes {
-  activeTraits?: Array<number>;
+  activeTraits?: ReadonlyArray<number>;
 }
 
 interface TraitLineAttributes extends
@@ -33,12 +33,12 @@ interface TraitLineAttributes extends
   HasTooltipAttributes
 {
   data: GW2Specialization;
-  selectedTraits: Array<number>;
+  selectedTraits: ReadonlyArray<number>;
 }
 
 function mapFromMajorClassName(
-  traitIdsInTier: Array<number>,
-  selectedTraitIds: Array<number>
+  traitIdsInTier: ReadonlyArray<number>,
+  selectedTraitIds: ReadonlyArray<number>
 ): string | null {
   switch (traitIdsInTier.findIndex(id => selectedTraitIds.includes(id))) {
     case 0:
@@ -52,8 +52,8 @@ function mapFromMajorClassName(
 }
 
 function mapFromMinorClassName(
-  traitIdsInTier: Array<number>,
-  selectedTraitIds: Array<number>
+  traitIdsInTier: ReadonlyArray<number>,
+  selectedTraitIds: ReadonlyArray<number>
 ): string | null {
   switch (traitIdsInTier.findIndex(id => selectedTraitIds.includes(id))) {
     case 0:
@@ -110,7 +110,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
       store
     }
   }: m.Vnode<TraitLineAttributes>): m.Children {
-    const majorTraitChunks = chunk(3)(data.major_traits)
+    const majorTraitChunks = splitEvery(3)(data.major_traits)
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {

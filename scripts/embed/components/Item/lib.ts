@@ -1,4 +1,4 @@
-import { concat, constant, flow, take, times } from 'lodash/fp'
+import { always, append, pipe, take, times } from 'rambda'
 
 import { cx } from '../../libs'
 import {
@@ -145,10 +145,12 @@ export function calculateStatAttribute(
 }
 
 export function createTakeFlow(
-  items: Array<number>,
   slots: number
-): () => Array<number> {
-  return flow(constant(slots), times(constant(0)), concat(items), take(slots))
+): (items: ReadonlyArray<number>) => ReadonlyArray<number> {
+  return pipe<ReadonlyArray<number>, ReadonlyArray<number>, ReadonlyArray<number>>(
+    append(times(always(0), slots)),
+    take(slots)
+  )
 }
 
 export function parseItemClassNames(item: GW2Item): string {

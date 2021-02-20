@@ -1,16 +1,16 @@
-import { random } from 'lodash/fp'
 import { mount } from 'mithril'
 
 import { refreshIfNewBuild } from './actions'
 import {
   forceClearCacheOnNextLoad,
   makeAttributeName,
-  makeClassName
+  makeClassName,
+  random
 } from './libs'
 import { getStore } from './store'
 import { EmbedStore } from './types'
 
-const tooltipContainerId = makeClassName(`tooltip-${random(1000)(9999)}`)
+const tooltipContainerId = makeClassName(`tooltip-${random(1000, 9999)}`)
 
 function bootstrapCache(store: EmbedStore): Promise<void> {
   refreshIfNewBuild(store.dispatch, store.getState)
