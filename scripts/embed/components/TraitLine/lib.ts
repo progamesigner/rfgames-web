@@ -5,7 +5,7 @@ export { bindTooltipEvents } from '../helpers'
 
 export function isTraitActive(
   traitId: number,
-  selectedTraitIds: Array<number>
+  selectedTraitIds: ReadonlyArray<number>
 ): boolean {
   return selectedTraitIds.includes(traitId)
 }
