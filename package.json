@@ -17,7 +17,6 @@
   "license": "MIT",
   "devDependencies": {
     "@types/clipboard": "^2.0.1",
-    "@types/lodash": "^4.14.168",
     "@types/lz-string": "^1.3.34",
     "@types/mithril": "^2.0.6",
     "@types/throttle-debounce": "^2.1.0",
@@ -29,7 +28,6 @@
     "csx": "^10.0.2",
     "eslint": "^7.19.0",
     "eslint-plugin-mithril": "^0.2.0",
-    "lodash": "^4.17.20",
     "lz-string": "^1.4.4",
     "mini-css-extract-plugin": "^1.3.5",
     "mithril": "^2.0.4",

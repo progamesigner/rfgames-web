@@ -5,33 +5,33 @@ const { stringify } = require('querystring')
 const { promisify } = require('util')
 
 const {
-  chunk,
+  default: fetch,
+} = require('node-fetch')
+const {
+  adjust,
+  always,
   concat,
-  constant,
+  converge,
+  curry,
   filter,
   flatten,
-  flow,
   fromPairs,
-  get,
+  identity,
   includes,
-  keyBy,
+  indexBy,
   map,
-  mapKeys,
-  mapValues,
   max,
   merge,
-  over,
+  pipe,
+  prop,
   reduce,
   reverse,
+  splitEvery,
   times,
   toLower,
   toPairs,
-  values,
   zip,
-} = require('lodash/fp')
-const {
-  default: fetch,
-} = require('node-fetch')
+} = require('rambda')
 
 const GW2_API_ACCESS_TOKEN = process.env.GW2_ACCESS_TOKEN
 const GW2_API_LANGUAGE = 'en'
@@ -40,6 +40,11 @@ const GW2_API_SCHEMA_VERSION = '2021-01-01T00:00:00Z'
 const ensure = promisify(mkdir)
 const read = promisify(readFile)
 const write = promisify(writeFile)
+
+const mapKeys = curry((func, obj) => fromPairs(map(adjust(0, func), toPairs(obj))))
+const unapply = curry(func => function () {
+  return func(Array.prototype.slice.call(arguments, 0))
+})
 
 function request(api, params) {
   const query = stringify({
@@ -120,8 +125,8 @@ const transformers = [
       return item.type
     }
 
-    const pipeline = flow(
-      values,
+    const pipeline = pipe(
+      Object.values,
       map(item => {
         const id = item.id
         const name = item.name
@@ -153,9 +158,9 @@ const transformers = [
 
           if (item.details.stat_choices) {
             const stats = item.details.stat_choices
-            const statslugs = flow(
+            const statslugs = pipe(
               map(stat => itemstats[stat]),
-              map(get('name')),
+              map(prop('name')),
               map(slugify),
             )(stats)
 
@@ -193,8 +198,8 @@ const transformers = [
     return saveToPreloadData('item-data', pipeline(items))
   },
   ({ 'item-data': data }) => {
-    const pipeline = flow(
-      values,
+    const pipeline = pipe(
+      Object.values,
       map(item => [item.slug, item.id]),
       fromPairs,
     )
@@ -202,7 +207,8 @@ const transformers = [
     return saveToPreloadData('item-slugs', pipeline(data))
   },
   ({ itemstats }) => {
-    const pipeline = flow(
+    const pipeline = pipe(
+      Object.values,
       map(stat => ({
         id: stat.id,
         name: stat.name,
@@ -215,7 +221,8 @@ const transformers = [
     return saveToPreloadData('itemstat-data', pipeline(itemstats))
   },
   ({ legends, skills }) => {
-    const pipeline = flow(
+    const pipeline = pipe(
+      Object.values,
       map(legend => {
         const name = skills[legend.swap].name.replace(/Legendary (.+) Stance/, '$1')
         return {
@@ -232,8 +239,8 @@ const transformers = [
     return saveToPreloadData('legend-data', pipeline(legends))
   },
   ({ 'legend-data': data }) => {
-    const pipeline = flow(
-      values,
+    const pipeline = pipe(
+      Object.values,
       map(legend => [legend.slug, legend.id]),
       fromPairs,
     )
@@ -241,7 +248,8 @@ const transformers = [
     return saveToPreloadData('legend-slugs', pipeline(data))
   },
   ({ professions, specializations }) => {
-    const pipeline = flow(
+    const pipeline = pipe(
+      Object.values,
       reduce((data, profession) => [
         ...data,
         {
@@ -250,7 +258,7 @@ const transformers = [
           name: profession.name,
           slug: slugify(profession.name),
         },
-        ...flow(
+        ...pipe(
           map(specialization => specializations[specialization]),
           filter(specialization => specialization.elite),
           reduce((data, specialization) => [
@@ -272,8 +280,8 @@ const transformers = [
     return saveToPreloadData('profession-data', pipeline(professions))
   },
   ({ 'profession-data': data }) => {
-    const pipeline = flow(
-      values,
+    const pipeline = pipe(
+      Object.values,
       map(profession => [profession.slug, profession.id]),
       fromPairs,
     )
@@ -281,18 +289,18 @@ const transformers = [
     return saveToPreloadData('profession-slugs', pipeline(data))
   },
   ({ legends, professions, skills }) => {
-    const revenantMaxSkillIds = flow(
-      values,
+    const revenantMaxSkillIds = pipe(
+      Object.values,
       map(legend => [legend.heal, ...legend.utilities, legend.elite]),
       reduce(zip, [0, 0, 0, 0, 0]),
-      map(flow(flatten, flatten, flatten, flatten, flatten, max)),
-      skills => zip(['heal', 'utility1', 'utility2', 'utility3', 'elite'], skills),
+      map(pipe(flatten, reduce(max, 0))),
+      zip(['heal', 'utility1', 'utility2', 'utility3', 'elite']),
       fromPairs,
     )(legends)
 
-    const professionSkills = flow(
-      values,
-      map(get('skills_by_palette')),
+    const professionSkills = pipe(
+      Object.values,
+      map(prop('skills_by_palette')),
       map(map(([code, id]) => {
         const skill = skills[id]
         return {
@@ -307,8 +315,8 @@ const transformers = [
       fromPairs,
     )(professions)
 
-    const legendSkills = flow(
-      values,
+    const legendSkills = pipe(
+      Object.values,
       map(legend => [
         ['heal', legend.heal],
         ['utility1', legend.utilities[0]],
@@ -329,8 +337,8 @@ const transformers = [
       fromPairs,
     )(legends)
 
-    const allSkills = flow(
-      values,
+    const allSkills = pipe(
+      Object.values,
       map(skill => ({
         id: skill.id,
         name: skill.name,
@@ -347,8 +355,8 @@ const transformers = [
     })
   },
   ({ 'skill-data': data }) => {
-    const pipeline = flow(
-      values,
+    const pipeline = pipe(
+      Object.values,
       map(skill => [skill.slug, skill.id]),
       fromPairs,
     )
@@ -356,7 +364,8 @@ const transformers = [
     return saveToPreloadData('skill-slugs', pipeline(data))
   },
   ({ specializations }) => {
-    const pipeline = flow(
+    const pipeline = pipe(
+      Object.values,
       map(specialization => ({
         id: specialization.id,
         name: specialization.name,
@@ -369,8 +378,8 @@ const transformers = [
     return saveToPreloadData('specialization-data', pipeline(specializations))
   },
   ({ 'specialization-data': data }) => {
-    const pipeline = flow(
-      values,
+    const pipeline = pipe(
+      Object.values,
       map(specialization => [specialization.slug, specialization.id]),
       fromPairs,
     )
@@ -378,7 +387,8 @@ const transformers = [
     return saveToPreloadData('specialization-slugs', pipeline(data))
   },
   ({ traits }) => {
-    const pipeline = flow(
+    const pipeline = pipe(
+      Object.values,
       map(trait => ({
         id: trait.id,
         name: trait.name,
@@ -391,8 +401,8 @@ const transformers = [
     return saveToPreloadData('trait-data', pipeline(traits))
   },
   ({ 'trait-data': data }) => {
-    const pipeline = flow(
-      values,
+    const pipeline = pipe(
+      Object.values,
       map(trait => [trait.slug, trait.id]),
       fromPairs,
     )
@@ -410,12 +420,12 @@ const transformers = [
     const weaponDualSlots = ['Weapon_3']
     const weaponTailSlots = ['Weapon_4', 'Weapon_5']
 
-    const weaponSkills = flow(
-      mapValues(flow(
-        get('weapons'),
+    const weaponSkills = pipe(
+      map(pipe(
+        prop('weapons'),
         mapKeys(toLower),
-        mapValues(get('skills')),
-        mapValues(map(skill => {
+        map(prop('skills')),
+        map(map(skill => {
           const dual_attunement = skills[skill.id].dual_attunement
           return {
             id: skill.id,
@@ -434,29 +444,29 @@ const transformers = [
       reduce(concat, []),
     )(professions)
 
-    const weaponAttunementFilter = attunement => flow(
+    const weaponAttunementFilter = attunement => pipe(
       filter(skill => skill.attunement === null || skill.attunement === attunement),
       filter(skill => skill.dual_attunement === null || skill.dual_attunement === attunement),
     )
     const weaponOffhandFilter = offhand => filter(skill => skill.offhand === offhand || skill.offhand === null)
     const weaponProfessionFilter = profession => filter(skill => skill.profession === profession)
-    const weaponSlotFilter = slots => flow(
+    const weaponSlotFilter = slots => pipe(
       filter(skill => includes(skill.slot)(slots)),
-      keyBy(skill => `${skill.slot}|${skill.attunement}|${skill.offhand}`),
-      values,
+      indexBy(skill => `${skill.slot}|${skill.attunement}|${skill.offhand}`),
+      Object.values,
     )
     const weaponTypeFilter = type => filter(skill => skill.type === type)
 
-    const pipeline = flow(
+    const pipeline = pipe(
       toPairs,
-      map(([profession, { weapons }]) => [profession, flow(
+      map(([profession, { weapons }]) => [profession, pipe(
         mapKeys(toLower),
         toPairs,
         map(([type, weapon]) => {
           if (isMainhandWeapon(weapon.flags)) {
             const key = `${type}|`
 
-            const dualWieldSkills = flow(
+            const dualWieldSkills = pipe(
               mapKeys(toLower),
               toPairs,
               filter(([, weapon]) => isOffhandWeapon(weapon.flags)),
@@ -465,50 +475,50 @@ const transformers = [
                 const key = `${type}|${offhandType}`
 
                 if (profession.toLowerCase() === 'elementalist') {
-                  const skills = flow(
+                  const skills = pipe(
                     weaponProfessionFilter(profession),
-                    over(map((weaponAttunementFilter))(weaponAttunements)),
+                    converge(unapply(identity), map((weaponAttunementFilter))(weaponAttunements)),
                     reduce(concat, []),
-                    over([
-                      flow(
+                    converge(unapply(identity), [
+                      pipe(
                         weaponTypeFilter(type),
                         weaponSlotFilter(weaponHeadSlots),
                       ),
-                      flow(
+                      pipe(
                         weaponTypeFilter(type),
                         weaponSlotFilter(weaponDualSlots),
                       ),
-                      flow(
+                      pipe(
                         weaponTypeFilter(offhandType),
                         weaponSlotFilter(weaponTailSlots),
                       ),
                     ]),
                     reduce(concat, []),
-                    map(get('id')),
+                    map(prop('id')),
                   )(weaponSkills)
 
                   return [key, skills]
                 }
 
-                const skills = flow(
+                const skills = pipe(
                   weaponProfessionFilter(profession),
-                  over([
-                    flow(
+                  converge(unapply(identity), [
+                    pipe(
                       weaponTypeFilter(type),
                       weaponSlotFilter(weaponHeadSlots),
                     ),
-                    flow(
+                    pipe(
                       weaponTypeFilter(type),
                       weaponOffhandFilter(offhandType),
                       weaponSlotFilter(weaponDualSlots),
                     ),
-                    flow(
+                    pipe(
                       weaponTypeFilter(offhandType),
                       weaponSlotFilter(weaponTailSlots),
                     ),
                   ]),
                   reduce(concat, []),
-                  map(get('id')),
+                  map(prop('id')),
                 )(weaponSkills)
 
                 return [key, skills]
@@ -516,21 +526,21 @@ const transformers = [
             )(weapons)
 
             if (profession.toLowerCase() === 'elementalist') {
-              const skills = flow(
+              const skills = pipe(
                 weaponProfessionFilter(profession),
                 weaponTypeFilter(type),
-                over(map((weaponAttunementFilter))(weaponAttunements)),
+                converge(unapply(identity), map((weaponAttunementFilter))(weaponAttunements)),
                 reduce(concat, []),
-                over([
+                converge(unapply(identity), [
                   weaponSlotFilter(weaponHeadSlots),
                   weaponSlotFilter(weaponDualSlots),
                 ]),
                 reduce(concat, []),
-                chunk(weaponHeadSlots.length + weaponDualSlots.length),
-                map(skills => concat(skills)),
-                map(append => append(times(constant({ id: 0 }), weaponTailSlots.length))),
+                splitEvery(weaponHeadSlots.length + weaponDualSlots.length),
+                map(concat),
+                map(append => append(times(always({ id: 0 }), weaponTailSlots.length))),
                 reduce(concat, []),
-                map(get('id')),
+                map(prop('id')),
               )(weaponSkills)
 
               return [
@@ -539,17 +549,17 @@ const transformers = [
               ]
             }
 
-            const skills = flow(
+            const skills = pipe(
               weaponProfessionFilter(profession),
               weaponTypeFilter(type),
               weaponOffhandFilter('nothing'),
-              over([
+              converge(unapply(identity), [
                 weaponSlotFilter(weaponHeadSlots),
                 weaponSlotFilter(weaponDualSlots),
-                () => times(constant({ id: 0 }), weaponTailSlots.length),
+                () => times(always({ id: 0 }), weaponTailSlots.length),
               ]),
               reduce(concat, []),
-              map(get('id')),
+              map(prop('id')),
             )(weaponSkills)
 
             return [
@@ -562,33 +572,33 @@ const transformers = [
             const key = `|${type}`
 
             if (profession.toLowerCase() === 'elementalist') {
-              const skills = flow(
+              const skills = pipe(
                 weaponProfessionFilter(profession),
                 weaponTypeFilter(type),
-                over(map((weaponAttunementFilter))(weaponAttunements)),
+                converge(unapply(identity), map((weaponAttunementFilter))(weaponAttunements)),
                 reduce(concat, []),
                 weaponSlotFilter(weaponTailSlots),
-                chunk(weaponTailSlots.length),
+                splitEvery(weaponTailSlots.length),
                 map(reverse),
                 map(skills => concat(skills)),
-                map(append => append(times(constant({ id: 0 }), weaponHeadSlots.length + weaponDualSlots.length))),
+                map(append => append(times(always({ id: 0 }), weaponHeadSlots.length + weaponDualSlots.length))),
                 map(reverse),
                 reduce(concat, []),
-                map(get('id')),
+                map(prop('id')),
               )(weaponSkills)
 
               return [[key, skills]]
             }
 
-            const skills = flow(
+            const skills = pipe(
               weaponProfessionFilter(profession),
               weaponTypeFilter(type),
-              over([
-                () => times(constant({ id: 0 }), weaponHeadSlots.length + weaponDualSlots.length),
+              converge(unapply(identity), [
+                () => times(always({ id: 0 }), weaponHeadSlots.length + weaponDualSlots.length),
                 weaponSlotFilter(weaponTailSlots),
               ]),
               reduce(concat, []),
-              map(get('id')),
+              map(prop('id')),
             )(weaponSkills)
 
             return [[key, skills]]
@@ -598,12 +608,12 @@ const transformers = [
             const key = `${type}|`
 
             if (profession.toLowerCase() === 'elementalist') {
-              const skills = flow(
-                map(attunement => flow(
+              const skills = pipe(
+                map(attunement => pipe(
                   weaponProfessionFilter(profession),
                   weaponTypeFilter(type),
                   weaponAttunementFilter(attunement),
-                  over([
+                  converge(unapply(identity), [
                     weaponSlotFilter(weaponHeadSlots),
                     weaponSlotFilter(weaponDualSlots),
                     weaponSlotFilter(weaponTailSlots),
@@ -612,22 +622,22 @@ const transformers = [
                 )),
                 map(filter => filter(weaponSkills)),
                 reduce(concat, []),
-                map(get('id')),
+                map(prop('id')),
               )(weaponAttunements)
 
               return [[key, skills]]
             }
 
-            const skills = flow(
+            const skills = pipe(
               weaponProfessionFilter(profession),
               weaponTypeFilter(type),
-              over([
+              converge(unapply(identity), [
                 weaponSlotFilter(weaponHeadSlots),
                 weaponSlotFilter(weaponDualSlots),
                 weaponSlotFilter(weaponTailSlots),
               ]),
               reduce(concat, []),
-              map(get('id')),
+              map(prop('id')),
             )(weaponSkills)
 
             return [[key, skills]]
@@ -643,18 +653,18 @@ const transformers = [
   },
 ]
 
-const pipeline = flow(
+const pipeline = pipe(
   map(async ([type, url]) => {
     const pageSize = 200
 
-    const pipeline = flow(
+    const pipeline = pipe(
       filter(item => item.name === undefined || item.name !== ''),
       map(item => [item.id, item]),
       fromPairs,
     )
 
-    const requestAPIPrefetched = flow(
-      chunk(pageSize),
+    const requestAPIPrefetched = pipe(
+      splitEvery(pageSize),
       map(ids => request(url, {
         ids: ids.join(',')
       })),
