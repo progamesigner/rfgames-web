@@ -1,0 +1,14 @@
+spec:
+  name: rfgames-web
+  static_sites:
+  - build_command: npm run deploy:prod
+    environment_slug: hugo
+    envs:
+    - key: GW2_ACCESS_TOKEN
+      scope: BUILD_TIME
+      type: SECRET
+    - key: HUGO_VERSION
+      value: 0.81.0
+    github:
+      branch: master
+      repo: progamesigner/rfgames-web
