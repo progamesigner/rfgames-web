@@ -1,0 +1,7 @@
+name: rfgames-web
+static_sites:
+- build_command: npm run deploy:prod
+  environment_slug: hugo
+  github:
+    branch: master
+    repo: progamesigner/rfgames-web
