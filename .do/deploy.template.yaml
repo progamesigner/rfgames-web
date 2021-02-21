@@ -1,7 +1,8 @@
 spec:
   name: rfgames-web
   static_sites:
-  - build_command: npm run deploy:prod
+  - name: web
+    build_command: npm run deploy:prod
     environment_slug: hugo
     envs:
     - key: GW2_ACCESS_TOKEN
