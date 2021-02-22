@@ -13,6 +13,7 @@ const {
   concat,
   converge,
   curry,
+  defaultTo,
   filter,
   flatten,
   fromPairs,
@@ -25,11 +26,12 @@ const {
   pipe,
   prop,
   reduce,
+  replace,
   reverse,
   splitEvery,
   times,
   toLower,
-  toPairs,
+  transpose,
   zip,
 } = require('rambda')
 
@@ -41,10 +43,16 @@ const ensure = promisify(mkdir)
 const read = promisify(readFile)
 const write = promisify(writeFile)
 
-const mapKeys = curry((func, obj) => fromPairs(map(adjust(0, func), toPairs(obj))))
-const unapply = curry(func => function () {
-  return func(Array.prototype.slice.call(arguments, 0))
-})
+const unapply = curry(func => (...args) => func(args))
+
+const slugify = pipe(
+  toLower,
+  replace(/\s+/g, '-'),
+  replace(/[^\w\-]+/g, ''),
+  replace(/\-\-+/g, '-'),
+  replace(/^-+/, ''),
+  replace(/-+$/, ''),
+)
 
 function request(api, params) {
   const query = stringify({
@@ -77,32 +85,23 @@ function requestPagedAPI(url, page, pageSize) {
     })
 }
 
-function slugify(name) {
-  return name.toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '')
-}
-
 function loadPrefetchData(name) {
   return read('data/prefetchs.json', 'utf8')
     .then(data => JSON.parse(data))
-    .then(data => data[name] || [])
-    .then(filter(id => Number.isInteger(id)))
+    .then(prop(name))
+    .then(defaultTo([]))
+    .then(filter(Number.isInteger))
 }
 
 function saveToPreloadData(name, data) {
   return ensure('data/preloads', { recursive: true })
-    .then(() => write(`data/preloads/${name}.json`, JSON.stringify(data))
-      .then(() => {
-        console.info(`File "${name}.json" Saved`)
-        return {
-          [name]: data,
-        }
-      })
-    )
+    .then(() => write(`data/preloads/${name}.json`, JSON.stringify(data)))
+    .then(() => {
+      console.info(`File "${name}.json" Saved`)
+      return {
+        [name]: data,
+      }
+    })
 }
 
 const transformers = [
@@ -125,6 +124,60 @@ const transformers = [
       return item.type
     }
 
+    const mapArmorWeight = item => {
+      if (item.details) {
+        const weight = item.details.weight_class ? slugify(item.details.weight_class) : null
+
+        return {
+          weight,
+        }
+      }
+
+      return {}
+    }
+
+    const mapPredefinedItem = item => {
+      // @note: predefined armors, backs, trinkets, upgrade components, weapons
+
+      if (item.details) {
+        if (item.details.infix_upgrade) {
+          if (item.details.infix_upgrade.attributes) {
+            if (item.details.infix_upgrade.attributes.length > 0) {
+              const stat = item.details.infix_upgrade.id
+              const statslug = itemstats[stat] ? slugify(itemstats[stat].name) : null
+
+              return {
+                stats: statslug ? [stat] : [],
+                statslugs: statslug ? [statslug] : [],
+              }
+            }
+          }
+        }
+      }
+
+      return {}
+    }
+
+    const mapSelectableItem = item => {
+      if (item.details) {
+        if (item.details.stat_choices) {
+          const stats = item.details.stat_choices
+          const statslugs = pipe(
+            map(stat => itemstats[stat]),
+            map(prop('name')),
+            map(slugify),
+          )(stats)
+
+          return {
+            stats,
+            statslugs,
+          }
+        }
+      }
+
+      return {}
+    }
+
     const pipeline = pipe(
       Object.values,
       map(item => {
@@ -134,61 +187,14 @@ const transformers = [
         const slug = slugify(item.name)
         const type = slugify(getItemType(item))
 
-        if (item.details) {
-          const weight = item.details.weight_class ? slugify(item.details.weight_class) : null
-
-          if (item.details.infix_upgrade) {
-            if (item.details.infix_upgrade.attributes) {
-              if (item.details.infix_upgrade.attributes.length > 0) {
-                const stat = item.details.infix_upgrade.id
-                const statslug = itemstats[stat] ? slugify(itemstats[stat].name) : null
-
-                return {
-                  id,
-                  name,
-                  slug,
-                  type,
-                  weight,
-                  stats: statslug ? [stat] : [],
-                  statslugs: statslug ? [statslug] : [],
-                }
-              }
-            }
-          }
-
-          if (item.details.stat_choices) {
-            const stats = item.details.stat_choices
-            const statslugs = pipe(
-              map(stat => itemstats[stat]),
-              map(prop('name')),
-              map(slugify),
-            )(stats)
-
-            return {
-              id,
-              name,
-              slug,
-              type,
-              weight,
-              stats,
-              statslugs,
-            }
-          }
-
-          return {
-            id,
-            name,
-            slug,
-            type,
-            weight,
-          }
-        }
-
         return {
           id,
           name,
           slug,
           type,
+          ...mapArmorWeight(item),
+          ...mapPredefinedItem(item),
+          ...mapSelectableItem(item),
         }
       }),
       map(item => [item.id, item]),
@@ -209,10 +215,10 @@ const transformers = [
   ({ itemstats }) => {
     const pipeline = pipe(
       Object.values,
-      map(stat => ({
-        id: stat.id,
-        name: stat.name,
-        slug: slugify(stat.name),
+      map(({ id, name }) => ({
+        id,
+        name,
+        slug: slugify(name),
       })),
       map(stat => [stat.id, stat]),
       fromPairs,
@@ -223,13 +229,13 @@ const transformers = [
   ({ legends, skills }) => {
     const pipeline = pipe(
       Object.values,
-      map(legend => {
-        const name = skills[legend.swap].name.replace(/Legendary (.+) Stance/, '$1')
+      map(({ code, id, swap }) => {
+        const name = skills[swap].name.replace(/Legendary (.+) Stance/, '$1')
         return {
-          id: legend.id,
+          id,
           name: name,
           slug: slugify(name),
-          code: legend.code
+          code,
         }
       }),
       map(legend => [legend.id, legend]),
@@ -260,7 +266,7 @@ const transformers = [
         },
         ...pipe(
           map(specialization => specializations[specialization]),
-          filter(specialization => specialization.elite),
+          filter(prop('elite')),
           reduce((data, specialization) => [
             ...data,
             {
@@ -289,12 +295,15 @@ const transformers = [
     return saveToPreloadData('profession-slugs', pipeline(data))
   },
   ({ legends, professions, skills }) => {
+    const revenantSkillSlots = ['heal', 'utility1', 'utility2', 'utility3', 'elite']
+
     const revenantMaxSkillIds = pipe(
       Object.values,
-      map(legend => [legend.heal, ...legend.utilities, legend.elite]),
-      reduce(zip, [0, 0, 0, 0, 0]),
-      map(pipe(flatten, reduce(max, 0))),
-      zip(['heal', 'utility1', 'utility2', 'utility3', 'elite']),
+      map(converge(unapply(identity), [prop('heal'), prop('utilities'), prop('elite')])),
+      map(flatten),
+      transpose,
+      map(reduce(max, 0)),
+      zip(revenantSkillSlots),
       fromPairs,
     )(legends)
 
@@ -302,12 +311,12 @@ const transformers = [
       Object.values,
       map(prop('skills_by_palette')),
       map(map(([code, id]) => {
-        const skill = skills[id]
+        const { name } = skills[id]
         return {
-          id: skill.id,
-          name: skill.name,
-          slug: slugify(skill.name),
-          code: code,
+          id,
+          name,
+          slug: slugify(name),
+          code,
         }
       })),
       reduce(concat, []),
@@ -317,19 +326,15 @@ const transformers = [
 
     const legendSkills = pipe(
       Object.values,
-      map(legend => [
-        ['heal', legend.heal],
-        ['utility1', legend.utilities[0]],
-        ['utility2', legend.utilities[1]],
-        ['utility3', legend.utilities[2]],
-        ['elite', legend.elite],
-      ]),
-      map(map(([maxSkillIndex, skillId]) => {
-        const skill = skills[skillId]
+      map(converge(unapply(identity), [prop('heal'), prop('utilities'), prop('elite')])),
+      map(flatten),
+      map(zip(revenantSkillSlots)),
+      map(map(([maxSkillIndex, id]) => {
+        const { name } = skills[id]
         return {
-          id: skill.id,
-          name: skill.name,
-          slug: slugify(skill.name),
+          id,
+          name,
+          slug: slugify(name),
           code: professionSkills[revenantMaxSkillIds[maxSkillIndex]].code,
         }
       })),
@@ -339,10 +344,10 @@ const transformers = [
 
     const allSkills = pipe(
       Object.values,
-      map(skill => ({
-        id: skill.id,
-        name: skill.name,
-        slug: slugify(skill.name),
+      map(({ id, name }) => ({
+        id,
+        name,
+        slug: slugify(name),
       })),
       map(skill => [skill.id, skill]),
       fromPairs,
@@ -366,10 +371,10 @@ const transformers = [
   ({ specializations }) => {
     const pipeline = pipe(
       Object.values,
-      map(specialization => ({
-        id: specialization.id,
-        name: specialization.name,
-        slug: slugify(specialization.name),
+      map(({ id, name }) => ({
+        id,
+        name,
+        slug: slugify(name),
       })),
       map(specialization => [specialization.id, specialization]),
       fromPairs,
@@ -389,10 +394,10 @@ const transformers = [
   ({ traits }) => {
     const pipeline = pipe(
       Object.values,
-      map(trait => ({
-        id: trait.id,
-        name: trait.name,
-        slug: slugify(trait.name),
+      map(({ id, name }) => ({
+        id,
+        name,
+        slug: slugify(name),
       })),
       map(trait => [trait.id, trait]),
       fromPairs,
@@ -423,32 +428,31 @@ const transformers = [
     const weaponSkills = pipe(
       map(pipe(
         prop('weapons'),
-        mapKeys(toLower),
         map(prop('skills')),
-        map(map(skill => {
-          const dual_attunement = skills[skill.id].dual_attunement
+        map(map(({ attunement, id, offhand, slot }) => {
+          const { dual_attunement } = skills[id]
           return {
-            id: skill.id,
-            slot: skill.slot,
-            offhand: skill.offhand ? skill.offhand.toLowerCase() : null,
-            attunement: skill.attunement ?? null,
-            dual_attunement: dual_attunement ?? skill.attunement ?? null,
+            id,
+            slot,
+            offhand: offhand,
+            attunement: attunement,
+            dual_attunement: dual_attunement ?? attunement,
           }
         })),
-        toPairs,
-        map(([type, skills]) => map(merge({ type }))(skills)),
+        map((skills, type) => map(merge({ type }))(skills)),
+        Object.values,
         reduce(concat, []),
       )),
-      toPairs,
-      map(([profession, skills]) => map(merge({ profession }))(skills)),
+      map((skills, profession) => map(merge({ profession }))(skills)),
+      Object.values,
       reduce(concat, []),
     )(professions)
 
     const weaponAttunementFilter = attunement => pipe(
-      filter(skill => skill.attunement === null || skill.attunement === attunement),
-      filter(skill => skill.dual_attunement === null || skill.dual_attunement === attunement),
+      filter(skill => skill.attunement === undefined || skill.attunement === attunement),
+      filter(skill => skill.dual_attunement === undefined || skill.dual_attunement === attunement),
     )
-    const weaponOffhandFilter = offhand => filter(skill => skill.offhand === offhand || skill.offhand === null)
+    const weaponOffhandFilter = offhand => filter(skill => skill.offhand === offhand || skill.offhand === undefined)
     const weaponProfessionFilter = profession => filter(skill => skill.profession === profession)
     const weaponSlotFilter = slots => pipe(
       filter(skill => includes(skill.slot)(slots)),
@@ -458,19 +462,14 @@ const transformers = [
     const weaponTypeFilter = type => filter(skill => skill.type === type)
 
     const pipeline = pipe(
-      toPairs,
-      map(([profession, { weapons }]) => [profession, pipe(
-        mapKeys(toLower),
-        toPairs,
-        map(([type, weapon]) => {
+      map(({ weapons }, profession) => [profession, pipe(
+        map((weapon, type) => {
           if (isMainhandWeapon(weapon.flags)) {
             const key = `${type}|`
 
             const dualWieldSkills = pipe(
-              mapKeys(toLower),
-              toPairs,
-              filter(([, weapon]) => isOffhandWeapon(weapon.flags)),
-              map(([type, ]) => type),
+              filter(weapon => isOffhandWeapon(weapon.flags)),
+              Object.keys,
               map(offhandType => {
                 const key = `${type}|${offhandType}`
 
@@ -552,7 +551,7 @@ const transformers = [
             const skills = pipe(
               weaponProfessionFilter(profession),
               weaponTypeFilter(type),
-              weaponOffhandFilter('nothing'),
+              weaponOffhandFilter('Nothing'),
               converge(unapply(identity), [
                 weaponSlotFilter(weaponHeadSlots),
                 weaponSlotFilter(weaponDualSlots),
@@ -643,9 +642,12 @@ const transformers = [
             return [[key, skills]]
           }
         }),
+        Object.values,
         reduce(concat, []),
+        map(adjust(0, toLower)),
         fromPairs,
       )(weapons)]),
+      Object.values,
       fromPairs,
     )
 
