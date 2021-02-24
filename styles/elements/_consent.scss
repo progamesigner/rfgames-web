@@ -13,8 +13,10 @@
     z-index: var(--consent-z-index);
 
     @include tablet() {
+        background-color: var(--consent-alternative-background-color);
         flex-direction: row;
         justify-content: space-between;
+        padding: var(--consent-alternative-padding);
     }
 
     @include print() {
@@ -32,7 +34,7 @@
 }
 
 .consent-button {
-    margin-top: 1.25rem;
+    margin-top: 0.25rem;
 
     @include tablet() {
         margin-top: 0;

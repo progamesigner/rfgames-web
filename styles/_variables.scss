@@ -236,9 +236,11 @@ $speed: 86ms !default;
     --box-shadow: 0 0.5rem 1rem -0.125rem #{rgba($background-alternative-color, 0.1)}, 0 0px 0 1px #{rgba($background-alternative-color, 0.02)};
     --box-text-color: #{$foreground-color};
 
-    --consent-background-color: #{rgba($background-color, 0.75)};
+    --consent-alternative-background-color: #{rgba($background-color, 0.75)};
+    --consent-alternative-padding: 1.25rem 3.5rem;
+    --consent-background-color: #{$background-color};
     --consent-border-color: #{$background-alternative-color};
-    --consent-padding: 1.25rem 3.5rem;
+    --consent-padding: 0.5rem 0.75rem;
     --consent-z-index: 150;
 
     --content-block-spacing: 0.75rem;
