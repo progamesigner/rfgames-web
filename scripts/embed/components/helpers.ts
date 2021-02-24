@@ -1,5 +1,5 @@
+import { concat, map, omit, pipe, sortBy } from 'rambda'
 import { Store } from 'redux'
-import { omit, sortBy } from 'rambda'
 import { debounce } from 'throttle-debounce'
 
 import { hideTooltip, showTooltip, updateHidability } from '../actions'
@@ -41,6 +41,13 @@ type TooltipEvents = {
   ontouchend(event: TouchEvent): void;
 }
 
+const mapUntratedFacts = pipe(
+  concat<GW2Fact>([]),
+  map<GW2Fact, TraitedFact>(fact => ({
+    fact,
+    traited: false
+  }))
+)
 const omitTraitedFactFields = omit(['overrides', 'requires_trait'])
 
 interface TraitedFact {
@@ -49,17 +56,11 @@ interface TraitedFact {
 }
 
 export function applyTraitedFacts(
-  facts: Array<GW2Fact>,
-  traits: Array<number>,
-  traitedFacts: Array<GW2TraitedFact> = [],
-): Array<TraitedFact> {
-  const untratedFacts = Array.prototype.concat(
-    [],
-    facts.map<TraitedFact>(fact => ({
-      fact,
-      traited: false
-    }))
-  )
+  facts: ReadonlyArray<GW2Fact>,
+  traits: ReadonlyArray<number>,
+  traitedFacts: ReadonlyArray<GW2TraitedFact> = [],
+): ReadonlyArray<TraitedFact> {
+  const untratedFacts = mapUntratedFacts(facts)
 
   return traitedFacts
     .filter(fact => traits.includes(fact.requires_trait))
@@ -80,7 +81,7 @@ export function applyTraitedFacts(
       }
 
       return facts
-    }, untratedFacts)
+    }, [...untratedFacts])
 }
 
 export function bindTooltipEvents<T extends TooltipType>(

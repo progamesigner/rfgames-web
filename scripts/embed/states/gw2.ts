@@ -1,5 +1,6 @@
 import { clearCacheIfRequested, makeResourceKey, parse } from '../libs'
 import {
+  ExtractGW2KeyType,
   ExtractGW2ResourceType,
   ExtractGW2State,
   GW2AsyncState,
@@ -9,29 +10,33 @@ import {
 type GW2InitialState = Record<string, ExtractGW2State<GW2Resources>>
 
 function mapCacheToStore<T extends GW2Resources>(
-  items: Array<ExtractGW2ResourceType<T>>
-) {
-  return Object.values(items).reduce((state, item) => ({
-    ...state,
-    [item.id]: {
-      data: item,
-      error: null,
-      state: GW2AsyncState.DONE
-    }
-  }), {} as ExtractGW2State<T>)
+  resources: Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>>
+): ExtractGW2State<T> {
+  return Object
+    .values<ExtractGW2ResourceType<T>>(resources)
+    .reduce((state, resource) => ({
+      ...state,
+      [resource.id]: {
+        data: resource,
+        error: null,
+        state: GW2AsyncState.DONE
+      }
+    }), {} as ExtractGW2State<T>)
 }
 
 function stateFactory<T extends GW2Resources>(
   resource: T,
   language: string
 ): Record<string, ExtractGW2State<T>> {
+  type ResourceRecord = Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>>
+
   const localStorageKey = makeResourceKey(resource, language)
 
   clearCacheIfRequested(localStorageKey)
 
   return {
     [resource]: {
-      ...mapCacheToStore(parse<Array<ExtractGW2ResourceType<T>>>(localStorageKey))
+      ...mapCacheToStore(parse<ResourceRecord>(localStorageKey))
     }
   }
 }

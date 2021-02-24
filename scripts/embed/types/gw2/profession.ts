@@ -17,7 +17,7 @@ interface GW2ProfessionSkill extends GW2Record<number> {
 interface GW2ProfessionTraining extends GW2Record<number> {
   category: GW2ProfessionTrainingCategory;
   name: string;
-  track: Array<GW2ProfessionTrainingTrack>;
+  track: ReadonlyArray<GW2ProfessionTrainingTrack>;
 }
 
 interface GW2ProfessionTrainingTrack {
@@ -29,8 +29,8 @@ interface GW2ProfessionTrainingTrack {
 
 interface GW2ProfessionWeapon {
   specialization: number;
-  flag: Array<GW2ProfessionWeaponFlag>;
-  skills: Array<GW2ProfessionSkill>
+  flag: ReadonlyArray<GW2ProfessionWeaponFlag>;
+  skills: ReadonlyArray<GW2ProfessionSkill>
 }
 
 export const enum GW2ProfessionFlag {
@@ -60,9 +60,9 @@ export interface GW2Profession extends GW2Record<string> {
   name: string;
   icon: string;
   icon_big: string;
-  specializations: Array<number>;
-  training: Array<GW2ProfessionTraining>;
+  specializations: ReadonlyArray<number>;
+  training: ReadonlyArray<GW2ProfessionTraining>;
   weapons: GW2ProfessionWeaponList;
-  flags: Array<GW2ProfessionFlag>;
-  skills: Array<GW2ProfessionSkill>;
+  flags: ReadonlyArray<GW2ProfessionFlag>;
+  skills: ReadonlyArray<GW2ProfessionSkill>;
 }

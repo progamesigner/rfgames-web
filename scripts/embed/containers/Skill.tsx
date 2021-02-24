@@ -22,7 +22,7 @@ interface SkillContainerAttributes extends
   HasIDAttributes<number>,
   HasStoreAttributes
 {
-  activeTraitlines?: Record<number, Array<TraitSelection>>;
+  activeTraitlines?: Record<number, ReadonlyArray<TraitSelection>>;
 }
 
 const fetch = wrapAsyncAction(fetchSkill)

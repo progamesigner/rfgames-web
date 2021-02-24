@@ -10,6 +10,8 @@ export function parseSpecializationClassNames(
     'is-specialization',
     `is-${specialization.name.toLowerCase()}`,
     `is-specialization-by-${specialization.profession.toLowerCase()}`,
-    { 'is-elite-specialization': specialization.elite }
+    {
+      'is-elite-specialization': specialization.elite
+    }
   )
 }

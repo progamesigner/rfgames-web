@@ -28,7 +28,7 @@ declare module '../../types/tooltip' {
 }
 
 interface TraitTooltipAttributes extends m.Attributes {
-  activeTraits?: Array<number>;
+  activeTraits?: ReadonlyArray<number>;
   trait: GW2Trait;
   index?: number;
 }

@@ -38,7 +38,7 @@ interface SkillAttributes extends
   HasTextLinkAttributes,
   HasTooltipAttributes
 {
-  activeTraits?: Array<number>;
+  activeTraits?: ReadonlyArray<number>;
   skill: GW2Skill;
 }
 

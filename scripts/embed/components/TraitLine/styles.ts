@@ -69,7 +69,7 @@ function calculateHexagonPoints(
   d: number, // hexagon diameter
   x: number, // margin left of hexagon container
   h: number // container height
-): Array<string> {
+): ReadonlyArray<string> {
   const y = (h - d * 2) / 2
 
   return [

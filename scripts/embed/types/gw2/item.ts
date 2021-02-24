@@ -263,11 +263,11 @@ interface GW2ItemBase<
   level: number;
   vendor_value: number;
   default_skin: number;
-  flags: Array<GW2ItemFlag>;
-  game_types: Array<GW2ItemGameType>;
-  restrictions: Array<GW2ItemRestriction>;
-  upgrades_into: Array<GW2ItemUpgradeInfo>;
-  upgrades_from: Array<GW2ItemUpgradeInfo>;
+  flags: ReadonlyArray<GW2ItemFlag>;
+  game_types: ReadonlyArray<GW2ItemGameType>;
+  restrictions: ReadonlyArray<GW2ItemRestriction>;
+  upgrades_into: ReadonlyArray<GW2ItemUpgradeInfo>;
+  upgrades_from: ReadonlyArray<GW2ItemUpgradeInfo>;
   details: D;
 }
 
@@ -278,19 +278,19 @@ interface GW2ItemDetailWithType<T> {
 interface GW2ItemDetailArmor extends GW2ItemDetailWithType<GW2ItemArmorType> {
   weight_class: GW2ItemArmorWeightClass;
   defense: number;
-  infusion_slots: Array<GW2ItemInfusionSlot>;
+  infusion_slots: ReadonlyArray<GW2ItemInfusionSlot>;
   infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
-  stat_choices: Array<number>;
+  stat_choices: ReadonlyArray<number>;
 }
 
 interface GW2ItemDetailBack {
-  infusion_slots: Array<GW2ItemInfusionSlot>;
+  infusion_slots: ReadonlyArray<GW2ItemInfusionSlot>;
   infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
-  stat_choices: Array<number>;
+  stat_choices: ReadonlyArray<number>;
 }
 
 interface GW2ItemDetailBag {
@@ -306,15 +306,15 @@ interface GW2ItemDetailConsumable extends GW2ItemDetailWithType<GW2ItemConsumabl
   unlock_type?: GW2ItemConsumableUnlockType;
   color_id?: number;
   recipe_id?: number;
-  extra_recipe_ids?: Array<number>;
+  extra_recipe_ids?: ReadonlyArray<number>;
   guild_upgrade_id?: number;
   apply_count: number;
-  skins?: Array<number>;
+  skins?: ReadonlyArray<number>;
 }
 
 interface GW2ItemDetailGizmo extends GW2ItemDetailWithType<GW2ItemGizmoType> {
   guild_upgrade_id: number;
-  vendor_ids: Array<number>;
+  vendor_ids: ReadonlyArray<number>;
 }
 
 interface GW2ItemDetailMiniPet {
@@ -326,19 +326,19 @@ interface GW2ItemDetailTool extends GW2ItemDetailWithType<GW2ItemToolType> {
 }
 
 interface GW2ItemDetailTrinket extends GW2ItemDetailWithType<GW2ItemTrinketType> {
-  infusion_slots: Array<GW2ItemInfusionSlot>;
+  infusion_slots: ReadonlyArray<GW2ItemInfusionSlot>;
   infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
-  stat_choices: Array<number>;
+  stat_choices: ReadonlyArray<number>;
 }
 
 interface GW2ItemDetailUpgradeComponent extends GW2ItemDetailWithType<GW2ItemUpgradeComponentType> {
-  flags: Array<GW2ItemUpgradeComponentFlag>;
-  infusion_upgrade_flags: Array<GW2ItemUpgradeComponentInfusionFlag>;
+  flags: ReadonlyArray<GW2ItemUpgradeComponentFlag>;
+  infusion_upgrade_flags: ReadonlyArray<GW2ItemUpgradeComponentInfusionFlag>;
   suffix: string;
   infix_upgrade?: GW2ItemInfixUpgrade;
-  bonuses?: Array<string>;
+  bonuses?: ReadonlyArray<string>;
 }
 
 interface GW2ItemDetailWeapon extends GW2ItemDetailWithType<GW2ItemWeaponType> {
@@ -346,15 +346,15 @@ interface GW2ItemDetailWeapon extends GW2ItemDetailWithType<GW2ItemWeaponType> {
   min_power: number;
   max_power: number;
   defense: number;
-  infusion_slots: Array<GW2ItemInfusionSlot>;
+  infusion_slots: ReadonlyArray<GW2ItemInfusionSlot>;
   infix_upgrade?: GW2ItemInfixUpgrade;
   suffix_item_id: number;
   secondary_suffix_item_id: number | '';
-  stat_choices: Array<number>;
+  stat_choices: ReadonlyArray<number>;
 }
 
 interface GW2ItemInfixUpgrade extends GW2Record<number> {
-  attributes: Array<GW2ItemInfixUpgradeAttribute>;
+  attributes: ReadonlyArray<GW2ItemInfixUpgradeAttribute>;
   buff?: GW2ItemInfixUpgradeBuff;
 }
 
@@ -369,7 +369,7 @@ interface GW2ItemInfixUpgradeBuff {
 }
 
 interface GW2ItemInfusionSlot {
-  flags: Array<GW2ItemUpgradeComponentInfusionFlag>;
+  flags: ReadonlyArray<GW2ItemUpgradeComponentInfusionFlag>;
   item_id?: number;
 }
 

@@ -25,7 +25,7 @@ declare module '../../types/tooltip' {
 }
 
 interface SkillTooltipAttributes extends m.Attributes {
-  activeTraits?: Array<number>;
+  activeTraits?: ReadonlyArray<number>;
   skill: GW2Skill;
 }
 

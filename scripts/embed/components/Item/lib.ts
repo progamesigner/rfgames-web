@@ -144,10 +144,14 @@ export function calculateStatAttribute(
   return Math.floor(getHiddenItemNumber(item) * multiplier + value)
 }
 
-export function createTakeFlow(
+export function createTakePipe(
   slots: number
 ): (items: ReadonlyArray<number>) => ReadonlyArray<number> {
-  return pipe<ReadonlyArray<number>, ReadonlyArray<number>, ReadonlyArray<number>>(
+  return pipe<
+    ReadonlyArray<number>,
+    ReadonlyArray<number>,
+    ReadonlyArray<number>
+  >(
     append(times(always(0), slots)),
     take(slots)
   )

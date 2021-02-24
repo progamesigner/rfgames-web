@@ -1,5 +1,7 @@
 import * as m from 'mithril'
 
+import { forEach, keys, map, pipe } from 'rambda'
+
 import { fetchSpecialization, fetchTrait } from '../actions'
 import { Empty, Loader, Trait } from '../components'
 import {
@@ -22,7 +24,7 @@ interface TraitContainerAttributes extends
   HasIDAttributes<number>,
   HasStoreAttributes
 {
-  activeTraitlines?: Record<number, Array<TraitSelection>>;
+  activeTraitlines?: Record<number, ReadonlyArray<TraitSelection>>;
 }
 
 const fetch = wrapAsyncAction(fetchTrait)
@@ -37,10 +39,11 @@ export class TraitContainer implements m.Component<TraitContainerAttributes> {
     } = attrs
     fetch(store, id)
     if (activeTraitlines) {
-      Object
-        .keys(activeTraitlines)
-        .map(parseInt)
-        .map(fetchSpec.bind(null, store))
+      pipe(
+        keys,
+        map(parseInt),
+        forEach(fetchSpec.bind(null, store))
+      )(activeTraitlines)
     }
   }
 

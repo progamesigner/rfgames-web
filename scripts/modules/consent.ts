@@ -2,7 +2,7 @@ import { bindEventListener, loadScript } from '../libs'
 
 declare global {
   interface Window {
-    gtag: (...arguments: Array<GAData>) => void;
+    gtag: (...arguments: ReadonlyArray<GAData>) => void;
     dataLayer: Array<GAData>;
     [key: string]: boolean;
   }

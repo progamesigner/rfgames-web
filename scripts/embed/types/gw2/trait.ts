@@ -5,8 +5,8 @@ interface GW2TraitSkill extends GW2Record<number> {
   name: string;
   description: string;
   icon: string;
-  facts: Array<GW2Fact>;
-  traited_facts: Array<GW2TraitedFact>;
+  facts: ReadonlyArray<GW2Fact>;
+  traited_facts: ReadonlyArray<GW2TraitedFact>;
 }
 
 export const enum GW2TraitTier {
@@ -28,7 +28,7 @@ export interface GW2Trait extends GW2Record<number> {
   specialization: number;
   tier: GW2TraitTier;
   slot: GW2TraitSlot;
-  facts?: Array<GW2Fact>;
-  traited_facts?: Array<GW2TraitedFact>;
-  skills?: Array<GW2TraitSkill>;
+  facts?: ReadonlyArray<GW2Fact>;
+  traited_facts?: ReadonlyArray<GW2TraitedFact>;
+  skills?: ReadonlyArray<GW2TraitSkill>;
 }

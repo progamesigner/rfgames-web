@@ -6,8 +6,8 @@ type Deferred<R, E> = {
   reject?: (error: E) => void
 }
 
-type NormalizedFunction<T, R, A extends Array<unknown>> = (arg: T, ...args: A) => R
-type BatchedFunction<T, R, A extends Array<unknown>> = NormalizedFunction<Array<T>, R, A>
+type NormalizedFunction<T, R, A extends ReadonlyArray<unknown>> = (arg: T, ...args: A) => R
+type BatchedFunction<T, R, A extends ReadonlyArray<unknown>> = NormalizedFunction<ReadonlyArray<T>, R, A>
 
 function deferred<R, E = Error>(): Deferred<R, E> {
   let resolve
@@ -21,14 +21,14 @@ function deferred<R, E = Error>(): Deferred<R, E> {
   return { promise, resolve, reject }
 }
 
-export function batch<T, R, A extends Array<unknown>>(
+export function batch<T, R, A extends ReadonlyArray<unknown>>(
   func: BatchedFunction<T, R, A>,
   wait: number
 ): NormalizedFunction<T, Promise<R>, A> {
-  let debouncedIds = [] as Array<T>
+  let debouncedIds = [] as ReadonlyArray<T>
   let defer = deferred<R>()
 
-  const runAndReset = (ids: Array<T>, ...args: Array<unknown>) => {
+  const runAndReset = (ids: ReadonlyArray<T>, ...args: ReadonlyArray<unknown>) => {
     try {
       defer.resolve && defer.resolve(func(ids, ...args as A))
     } catch (error) {
@@ -41,7 +41,7 @@ export function batch<T, R, A extends Array<unknown>>(
 
   const debouncedFunc = debounce(wait, runAndReset)
 
-  return (id: T, ...args: Array<unknown>): Promise<R> => {
+  return (id: T, ...args: ReadonlyArray<unknown>): Promise<R> => {
     debouncedIds = [...debouncedIds, id]
     debouncedFunc(debouncedIds, ...args as A)
     return defer.promise

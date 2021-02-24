@@ -11,5 +11,5 @@ interface GW2ItemStatAttribute {
 
 export interface GW2ItemStat extends GW2Record<number> {
   name: string;
-  attributes: Array<GW2ItemStatAttribute>;
+  attributes: ReadonlyArray<GW2ItemStatAttribute>;
 }

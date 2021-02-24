@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { toPairs } from 'rambda'
+import { pipe, reduce, toPairs } from 'rambda'
 
 import {
   GW2ErrorAction,
@@ -75,20 +75,18 @@ const requestReducer = <T extends GW2Resources>(
     ids
   } = action as GW2RequestAction<T>
 
-  const data = ids.reduce((items, id) => {
-    return {
-      ...items,
-      [id]: {
-        data: null,
-        error: null,
-        state: GW2AsyncState.PENDING
-      }
+  const reducer = reduce<ExtractGW2KeyType<T>, EmbedState[T]>((state, id) => ({
+    ...state,
+    [id]: {
+      data: null,
+      error: null,
+      state: GW2AsyncState.PENDING
     }
-  }, state[resource])
+  }), state[resource])
 
   return {
     ...state,
-    [resource]: data
+    [resource]: reducer(ids)
   }
 }
 
@@ -115,17 +113,17 @@ const responseReducer = <T extends GW2Resources>(
     const storedData = data as Record<ExtractGW2KeyType<T>, ExtractStoreRecord<T>> | undefined
 
     if (storedData) {
-      const save = Object.values<ExtractStoreRecord<T>>(storedData)
-        .reduce((saved, { data }) => {
-          return {
-            ...saved,
-            ...data ? {
-              [data.id]: data
-            } : null
-          }
-        }, {})
+      const cacheReducer = pipe(
+        Object.values,
+        reduce<ExtractStoreRecord<T>, EmbedState[T]>((saved, { data }) => ({
+          ...saved,
+          ...data ? {
+            [data.id]: data
+          } : null
+        }), {})
+      )
 
-      set(localStorageKey, JSON.stringify(save))
+      set(localStorageKey, JSON.stringify(cacheReducer(storedData)))
     }
   }
 

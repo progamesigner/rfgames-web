@@ -20,7 +20,7 @@ function bootstrapCache(store: EmbedStore): Promise<void> {
 function bootstrapEmbeds(
   window: Window,
   store: EmbedStore
-): Array<Promise<void>> {
+): ReadonlyArray<Promise<void>> {
   const {
     document
   } = window

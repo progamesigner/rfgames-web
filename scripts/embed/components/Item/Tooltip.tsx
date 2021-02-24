@@ -18,7 +18,7 @@ import {
   attributeToName,
   buildItemName,
   calculateStatAttribute,
-  createTakeFlow,
+  createTakePipe,
   markup,
   parseItemenrichmentSlots,
   parseItemFlags,
@@ -41,12 +41,12 @@ declare module '../../types/tooltip' {
 }
 
 interface ItemTooltipAttributes extends m.Attributes {
-  enrichments: Array<number>;
-  infusions: Array<number>;
+  enrichments: ReadonlyArray<number>;
+  infusions: ReadonlyArray<number>;
   item: GW2Item;
   stat?: GW2ItemStat;
   upgradeCount: number;
-  upgrades: Array<number>;
+  upgrades: ReadonlyArray<number>;
 }
 
 function mapRarityToColor(rarity: GW2ItemRarity): string | null {
@@ -86,9 +86,9 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
     const currentStat = parseItemStat(item, stat)
     const flags = parseItemFlags(item)
 
-    const takeUpgrades = createTakeFlow(parseItemUpgradeSlots(item))
-    const takeInfusions = createTakeFlow(parseItemInfusionSlots(item))
-    const takeEnrichments = createTakeFlow(parseItemenrichmentSlots(item))
+    const takeUpgrades = createTakePipe(parseItemUpgradeSlots(item))
+    const takeInfusions = createTakePipe(parseItemInfusionSlots(item))
+    const takeEnrichments = createTakePipe(parseItemenrichmentSlots(item))
 
     return <TooltipContent type="item">
       <TooltipHead className={styles.tooltip.head}>

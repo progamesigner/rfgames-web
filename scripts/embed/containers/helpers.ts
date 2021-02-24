@@ -22,8 +22,8 @@ export const enum TraitPosition {
 }
 
 type GetState = () => EmbedState
-type AsyncAction<A extends Array<unknown>> = (dispatch: Dispatch, getState: GetState) => (...args: A) => void
-type WrappedAsyncAction<S, A extends Array<unknown>> = (store: S, ...args: A) => void
+type AsyncAction<A extends ReadonlyArray<unknown>> = (dispatch: Dispatch, getState: GetState) => (...args: A) => void
+type WrappedAsyncAction<S, A extends ReadonlyArray<unknown>> = (store: S, ...args: A) => void
 
 export type TraitSelection = [TraitMode, TraitPosition | number]
 
@@ -33,8 +33,8 @@ export function isFetchFinished(state: GW2AsyncState): boolean {
 
 export function mapActiveTraitlinesToTraitIds(
   specializations: ExtractGW2State<GW2Resources.SPECIALIZATION>,
-  activeTraitlines?: Record<number, Array<TraitSelection>>
-): Array<number> {
+  activeTraitlines?: Record<number, ReadonlyArray<TraitSelection>>
+): ReadonlyArray<number> {
   return Object.values(specializations).reduce((ids, specialization) => {
     if (specialization.data) {
       const {
@@ -54,13 +54,13 @@ export function mapActiveTraitlinesToTraitIds(
       }
     }
     return ids
-  }, [] as Array<number>)
+  }, [] as ReadonlyArray<number>)
 }
 
 export function mapTraitSelectionToTraitIds(
   specialization: GW2Specialization,
-  traitSelections: Array<TraitSelection>
-): Array<number> {
+  traitSelections: ReadonlyArray<TraitSelection>
+): ReadonlyArray<number> {
   return traitSelections.map(([mode, value], tier) => {
     switch (mode) {
       case TraitMode.POSITION:
@@ -76,7 +76,7 @@ export function mapTraitSelectionToTraitIds(
   })
 }
 
-export function wrapAsyncAction<A extends Array<unknown>>(
+export function wrapAsyncAction<A extends ReadonlyArray<unknown>>(
   action: AsyncAction<A>
 ): WrappedAsyncAction<EmbedStore, A> {
   return (store: EmbedStore, ...args): void => {

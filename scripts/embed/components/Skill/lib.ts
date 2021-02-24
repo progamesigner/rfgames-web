@@ -1,3 +1,5 @@
+import { replace } from 'rambda'
+
 import { cx } from '../../libs'
 import { GW2Skill } from '../../types'
 
@@ -9,11 +11,10 @@ export {
   sortFacts
 } from '../helpers'
 
-const regexSkillType = /^([a-zA-Z\u00C0-\u017F]+ ?[a-zA-Z\u00C0-\u017F]*.?[:.])/gm
-
-export function addSkillTypeTags(description: string): string {
-  return description.replace(regexSkillType, '<c=@skilltype>$1</c>')
-}
+export const addSkillTypeTags = replace(
+  /^([a-zA-Z\u00C0-\u017F]+ ?[a-zA-Z\u00C0-\u017F]*.?[:.])/gm,
+  '<c=@skilltype>$1</c>'
+)
 
 export function parseSkillClassNames(skill: GW2Skill): string {
   return cx(

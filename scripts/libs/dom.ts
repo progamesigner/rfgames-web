@@ -5,7 +5,7 @@ type ScrollEventCallback = (x: number, y: number) => void
 export type UnbindEventListener = () => void
 
 let scrollEventInstalled = false
-let scrollEventCallbacks = [] as Array<ScrollEventCallback>
+let scrollEventCallbacks = [] as ReadonlyArray<ScrollEventCallback>
 
 export function currentScrollX(): number {
   return window.scrollX || window.pageXOffset || 0
@@ -32,9 +32,9 @@ export function bindScrollEvent(
 
   if (!scrollEventInstalled) {
     const onScrollEvent = () => {
-        const x = currentScrollX()
-        const y = currentScrollY()
-        scrollEventCallbacks.forEach(callback => callback(x, y))
+      const x = currentScrollX()
+      const y = currentScrollY()
+      scrollEventCallbacks.forEach(callback => callback(x, y))
     }
 
     window.addEventListener('scroll', throttle(100, onScrollEvent))

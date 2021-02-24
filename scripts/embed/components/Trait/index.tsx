@@ -43,7 +43,7 @@ interface TraitAttributes extends
   HasTextLinkAttributes,
   HasTooltipAttributes
 {
-  activeTraits?: Array<number>;
+  activeTraits?: ReadonlyArray<number>;
   trait: GW2Trait;
 }
 

@@ -17,6 +17,8 @@ export function parseTraitlineClassNames(
     'is-traitline',
     `is-${specialization.name.toLowerCase()}`,
     `is-specialization-by-${specialization.profession.toLowerCase()}`,
-    { 'is-elite-specialization': specialization.elite }
+    {
+      'is-elite-specialization': specialization.elite
+    }
   )
 }

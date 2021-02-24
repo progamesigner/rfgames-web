@@ -6,5 +6,5 @@ export interface GW2Pet extends GW2Record<number> {
   name: string;
   description: string;
   icon: string;
-  skills: Array<GW2PetSkill>;
+  skills: ReadonlyArray<GW2PetSkill>;
 }

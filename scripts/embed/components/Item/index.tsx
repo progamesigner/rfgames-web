@@ -42,11 +42,11 @@ interface ItemAttributes extends
   HasTooltipAttributes
 {
   item: GW2Item;
-  enrichments?: Array<number>;
-  infusions?: Array<number>;
+  enrichments?: ReadonlyArray<number>;
+  infusions?: ReadonlyArray<number>;
   stat?: GW2ItemStat;
   upgradeCount?: number;
-  upgrades?: Array<number>;
+  upgrades?: ReadonlyArray<number>;
 }
 
 export class Item implements m.Component<ItemAttributes> {

@@ -52,11 +52,11 @@ export interface GW2Skill extends GW2Record<number> {
   chat_link: string;
   type?: GW2SkillType;
   weapon_type?: string;
-  professions: Array<string>;
+  professions: ReadonlyArray<string>;
   slot?: GW2SkillSlot;
-  facts?: Array<GW2Fact>;
-  traited_facts?: Array<GW2TraitedFact>;
-  categories?: Array<GW2SkillCategory | string>;
+  facts?: ReadonlyArray<GW2Fact>;
+  traited_facts?: ReadonlyArray<GW2TraitedFact>;
+  categories?: ReadonlyArray<GW2SkillCategory | string>;
   attunement?: GW2SkillAttunement;
   cost?: number;
   dual_wield?: string;
@@ -64,7 +64,7 @@ export interface GW2Skill extends GW2Record<number> {
   initiative?: number;
   next_chain?: number;
   prev_chain?: number;
-  transform_skills?: Array<number>;
-  bundle_skills?: Array<number>;
+  transform_skills?: ReadonlyArray<number>;
+  bundle_skills?: ReadonlyArray<number>;
   toolbelt_skill?: number;
 }

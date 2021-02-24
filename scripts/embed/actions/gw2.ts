@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { splitEvery, uniq } from 'rambda'
+import { concat, filter, forEach, map, pipe, splitEvery, uniq } from 'rambda'
 
 import { apis, GW2Fetcher } from '../apis'
 import { config } from '../config'
@@ -52,8 +52,6 @@ function actionFactory<T extends GW2Resources>(
     failure
   } = makeActionNames(resource)
 
-  const makeChunks = splitEvery(config.gw2ApiRequestLimit)
-
   const debounced = batchFactory<T>(async (ids, dispatch, getState) => {
     const {
       [resource]: data,
@@ -62,29 +60,37 @@ function actionFactory<T extends GW2Resources>(
 
     const item = data as ExtractGW2State<T> | undefined
 
-    const idsToFetch = uniq(ids.filter(id => {
-      if (!!id && (`${id}` === id && id !== '' || id > 0)) {
-        return !item || !item[id] || !!item[id].error
-      }
-      return false
-    }))
+    const fetchIdsFilter = pipe(
+      filter<ExtractGW2KeyType<T>>(id => {
+        if (!!id && (`${id}` === id && id !== '' || id > 0)) {
+          return !item || !item[id] || !!item[id].error
+        }
+        return false
+      }),
+      uniq
+    )
+
+    const idsToFetch = fetchIdsFilter(ids)
 
     if (idsToFetch.length > 0) {
-      const fetcher = fetch.bind(null, language || config.gw2ApiDefaultLanguage)
-      const idsToSlice = Array.prototype.concat([], idsToFetch)
-      const requests = new Array<Promise<GW2ResourceRecord<T>>>()
+      const fetcher = pipe(
+        concat<ExtractGW2KeyType<T>>([]),
+        splitEvery(config.gw2ApiRequestLimit),
+        map(fetch.bind(null, language || config.gw2ApiDefaultLanguage))
+      )
 
       dispatch({
         type: request,
         ids: idsToFetch
       })
 
-      requests.push(...makeChunks(idsToSlice).map(fetcher))
-
       try {
-        const responses = await Promise.all(requests)
+        const responses = await Promise.all(fetcher(idsToFetch))
         const items = flattenResponses(responses)
-        const missedIds = idsToFetch.filter(id => !items[id])
+
+        const missedIdsFilter = filter<ExtractGW2KeyType<T>>(id => !items[id])
+
+        const missedIds = missedIdsFilter(idsToFetch)
 
         dispatch({
           type: success,
@@ -96,10 +102,10 @@ function actionFactory<T extends GW2Resources>(
 
           dispatch({
             type: failure,
-            errors: missedIds.reduce((errors, id) => {
-              errors[id] = error
-              return errors
-            }, {} as GW2ErrorRecord<T>)
+            errors: missedIds.reduce((errors, id) => ({
+              ...errors,
+              [id]: error
+            }), {} as GW2ErrorRecord<T>)
           })
         }
 
@@ -107,10 +113,10 @@ function actionFactory<T extends GW2Resources>(
       } catch (error) {
         dispatch({
           type: failure,
-          errors: idsToFetch.reduce((errors, id) => {
-            errors[id] = error
-            return errors
-          }, {} as GW2ErrorRecord<T>)
+          errors: idsToFetch.reduce((errors, id) => ({
+            ...errors,
+            [id]: error
+          }), {} as GW2ErrorRecord<T>)
         })
 
         throw error
@@ -131,34 +137,36 @@ function refreshActionFactory<T extends GW2Resources>(
   resource: T,
   fetcher: GW2Action<T>
 ): GW2RefreshAction {
+  type ResourceRecord = Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>>
+
   return (dispatch, getState) => language => {
     const {
       refresh
     } = makeActionNames(resource)
 
     const localStorageKey = makeResourceKey(resource, language)
-    const items = parse<ReadonlyArray<ExtractGW2ResourceType<T>>>(localStorageKey)
+    const resources = parse<ResourceRecord>(localStorageKey)
 
     dispatch({
       type: refresh
     })
 
-    Object
-      .values(items)
-      .map(item => item.id as ExtractGW2KeyType<T>)
-      .map(fetcher(dispatch, getState))
+
+    pipe(
+      Object.values,
+      map(resource => resource.id as ExtractGW2KeyType<T>),
+      forEach(fetcher(dispatch, getState))
+    )(resources)
   }
 }
 
 function flattenResponses<T extends GW2Resources>(
   responses: ReadonlyArray<GW2ResourceRecord<T>>
 ): GW2ResourceRecord<T> {
-  return responses.reduce((response, items) => {
-    return {
-      ...response,
-      ...items
-    }
-  }, {} as GW2ResourceRecord<T>)
+  return responses.reduce((response, items) => ({
+    ...response,
+    ...items
+  }), {} as GW2ResourceRecord<T>)
 }
 
 export type GW2ErrorAction<T extends GW2Resources> = BaseAction<GW2ErrorPayload<T>>

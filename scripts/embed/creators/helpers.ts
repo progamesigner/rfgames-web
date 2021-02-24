@@ -15,11 +15,11 @@ export function extractString(element: Element, name: string, defaultValue: stri
   return element.getAttribute(makeAttributeName(name)) || defaultValue
 }
 
-export function extractNumberList(element: Element, name: string): Array<number> {
+export function extractNumberList(element: Element, name: string): ReadonlyArray<number> {
   return extractStringList(element, name).map(value => parseInt(value, 10))
 }
 
-export function extractStringList(element: Element, name: string): Array<string> {
+export function extractStringList(element: Element, name: string): ReadonlyArray<string> {
   const value = element.getAttribute(makeAttributeName(name))
   return value ? value.split(',').map(value => value.trim()) : []
 }
@@ -55,8 +55,8 @@ export function parseSelectedTrait(trait: string): TraitSelection {
 }
 
 export function parseTraitlines(
-  traitlines: Array<string>
-): Record<number, Array<TraitSelection>> {
+  traitlines: ReadonlyArray<string>
+): Record<number, ReadonlyArray<TraitSelection>> {
   return traitlines.reduce((traitlines, traitline) => {
     const [id, ...selections] = traitline.split('|')
     return {
