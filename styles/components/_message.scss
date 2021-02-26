@@ -1,27 +1,27 @@
 .message {
-  @include block(var(--message-block-spacing));
+    @include block(var(--message-block-spacing));
 
-  background-color: var(--message-background-color);
-  border-radius: var(--message-border-radius);
-  padding: var(--message-padding);
+    background-color: var(--message-background-color);
+    border-radius: var(--message-border-radius);
+    padding: var(--message-padding);
 
-  strong {
-    color: currentColor;
-  }
+    strong {
+        color: currentColor;
+    }
 }
 
 .message-head {
-  color: var(--message-head-text-color);
-  font-size: var(--message-head-font-size);
-  margin: var(--message-head-margin);
+    color: var(--message-head-text-color);
+    font-size: var(--message-head-font-size);
+    margin: var(--message-head-margin);
 }
 
 .message-body {
-  color: var(--message-body-text-color);
-  font-size: var(--message-body-font-size);
-  margin: 0;
-
-  p {
+    color: var(--message-body-text-color);
+    font-size: var(--message-body-font-size);
     margin: 0;
-  }
+
+    p {
+        margin: 0;
+    }
 }
