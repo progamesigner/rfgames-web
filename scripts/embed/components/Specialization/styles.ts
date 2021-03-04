@@ -1,12 +1,4 @@
-import {
-  colors,
-  em,
-  percent,
-  polygon,
-  sizes,
-  style,
-  stylesheet
-} from '../styles'
+import { em, percent, polygon, sizes, style, stylesheet } from '../styles'
 
 const hexagonPoints = [
   [50, 0],
@@ -34,9 +26,3 @@ export const icon = stylesheet({
 export const name = style()
 
 export const link = style()
-
-export const tooltip = stylesheet({
-  head: {
-    color: colors.tooltipSkillTitle.toString()
-  }
-})

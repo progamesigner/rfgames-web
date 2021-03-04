@@ -1,10 +1,10 @@
 import * as m from 'mithril'
 
-import { cx, makeClassName } from '../../libs'
+import { cx, makeClassName } from '../../../libs'
 
 import * as styles from './styles'
 
-export class TooltipBody implements m.Component<m.Attributes> {
+export class TooltipFoot implements m.Component<m.Attributes> {
   public view({
     attrs: {
       className,
@@ -13,7 +13,7 @@ export class TooltipBody implements m.Component<m.Attributes> {
     children
   }: m.Vnode<m.Attributes>): m.Children {
     return <div
-      className={cx(styles.body, className, makeClassName('tooltip-body'))}
+      className={cx(styles.root, className, makeClassName('tooltip-foot'))}
       {...attrs}
     >{children}</div>
   }

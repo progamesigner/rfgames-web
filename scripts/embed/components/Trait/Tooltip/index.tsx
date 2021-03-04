@@ -2,22 +2,22 @@ import * as m from 'mithril'
 
 import { slice } from 'rambda'
 
-import { GW2Trait, TooltipType } from '../../types'
+import { GW2Trait, TooltipType } from '../../../types'
 
-import { SkillTooltip } from '../Skill/Tooltip'
+import { SkillTooltip } from '../../Skill/Tooltip'
 import {
   Tooltip,
   TooltipBody,
   TooltipContent,
   TooltipFact,
   TooltipHead
-} from '../Tooltip'
+} from '../../Tooltip'
 
 import { applyTraitedFacts, markup, sortFacts } from './lib'
 
 import * as styles from './styles'
 
-declare module '../../types/tooltip' {
+declare module '../../../types/tooltip' {
   const enum TooltipType {
     GW2_TRAIT = 'GW2Trait'
   }
@@ -57,7 +57,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
         []
       ),
       <TooltipContent key="trait" type="trait">
-        <TooltipHead className={styles.tooltip.head}>{trait.name}</TooltipHead>
+        <TooltipHead className={styles.head}>{trait.name}</TooltipHead>
         <TooltipBody>
           {m.trust(markup(trait.description, styles.flavors))}
         </TooltipBody>

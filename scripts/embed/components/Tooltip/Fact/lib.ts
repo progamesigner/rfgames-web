@@ -1,4 +1,4 @@
-export { attributeToName, markup } from '../format'
+export { attributeToName, markup } from '../../format'
 
 const baseDamage = 266.00
 

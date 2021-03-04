@@ -1,9 +1,9 @@
 import * as m from 'mithril'
 
-import { cx, makeClassName } from '../../libs'
-import { GW2Fact, GW2FactType } from '../../types'
+import { cx, makeClassName } from '../../../libs'
+import { GW2Fact, GW2FactType } from '../../../types'
 
-import { Icon } from '../Icon'
+import { Icon } from '../../Icon'
 
 import { attributeToName, calculateFactDamage, markup } from './lib'
 
@@ -31,7 +31,7 @@ class FactContainer implements m.Component<m.Attributes> {
     children
   }: m.Vnode<m.Attributes>) {
     return <div
-      className={cx(styles.fact.root, className, makeClassName('tooltip-fact'))}
+      className={cx(styles.root, className, makeClassName('tooltip-fact'))}
       {...attrs}
     >{children}</div>
   }
@@ -47,8 +47,8 @@ class FactIcon implements m.Component<FactIconAttributes> {
     children
   }: m.Vnode<FactIconAttributes>) {
     return <Icon
-      className={cx(styles.fact.icon, className)}
-      classSize={styles.fact.iconSize}
+      className={cx(styles.icon, className)}
+      classSize={styles.iconSize}
       disablePlaceholder={true}
       src={src}
       {...attrs}
@@ -67,8 +67,8 @@ class FactText implements m.Component<FactTextAttributes> {
   }: m.Vnode<FactTextAttributes>) {
     return <span
       className={cx(
-        styles.fact.text,
-        { [styles.fact.traited]: traited },
+        styles.text,
+        { [styles.traited]: traited },
         className
       )}
       {...attrs}
@@ -182,9 +182,9 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
           <FactText traited={traited}>{markup(fact.text)}: {fact.value.toLocaleString()}</FactText>
         </FactContainer>
       case GW2FactType.RECHARGE:
-        return <FactContainer className={styles.fact.recharge}>
+        return <FactContainer className={styles.recharge}>
           <FactText traited={traited}>{fact.value}</FactText>
-          <FactIcon className={styles.fact.rechargeIcon} src={fact.icon} />
+          <FactIcon className={styles.rechargeIcon} src={fact.icon} />
         </FactContainer>
       case GW2FactType.STUN_BREAK:
         return <FactContainer>

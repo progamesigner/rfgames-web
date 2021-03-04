@@ -1,4 +1,4 @@
-import { borderColor, color, cssRaw, px, url, em } from '../libs'
+import { borderColor, color, cssRaw, em, px, stylesheet, url } from '../libs'
 
 export * from '../libs'
 
@@ -130,6 +130,21 @@ export const zIndices = {
   traitlineOverlay: 20,
   traitlineTrait: 50
 }
+
+export const flavors = stylesheet({
+  abilitytype: {
+    color: colors.formatAbilityType.toString()
+  },
+  flavor: {
+    color: colors.formatFlavor.toString()
+  },
+  reminder: {
+    color: colors.formatReminder.toString()
+  },
+  skilltype: {
+    color: colors.formatSkill.toString()
+  }
+})
 
 export function boxShadow(color: string): string {
   return `${em(0.0625)} ${em(0.0625)} ${em(0.1875)} ${color}`

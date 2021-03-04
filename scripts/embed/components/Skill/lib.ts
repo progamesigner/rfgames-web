@@ -1,20 +1,7 @@
-import { replace } from 'rambda'
-
 import { cx } from '../../libs'
 import { GW2Skill } from '../../types'
 
-export { markup } from '../format'
-export {
-  applyTraitedFacts,
-  bindTooltipEvents,
-  buildWikiLink,
-  sortFacts
-} from '../helpers'
-
-export const addSkillTypeTags = replace(
-  /^([a-zA-Z\u00C0-\u017F]+ ?[a-zA-Z\u00C0-\u017F]*.?[:.])/gm,
-  '<c=@skilltype>$1</c>'
-)
+export { bindTooltipEvents, buildWikiLink } from '../helpers'
 
 export function parseSkillClassNames(skill: GW2Skill): string {
   return cx(

@@ -1,18 +1,18 @@
 import * as m from 'mithril'
 
-import { UpgradeComponent } from '../../containers'
-import { cx } from '../../libs'
+import { UpgradeComponent } from '../../../containers'
+import { cx } from '../../../libs'
 import {
   GW2Item,
   GW2ItemRarity,
   GW2ItemStat,
   GW2ItemType,
   TooltipType
-} from '../../types'
+} from '../../../types'
 
-import { Coin } from '../Coin'
-import { Icon } from '../Icon'
-import { Tooltip, TooltipContent, TooltipHead, TooltipBody } from '../Tooltip'
+import { Coin } from '../../Coin'
+import { Icon } from '../../Icon'
+import { Tooltip, TooltipContent, TooltipHead, TooltipBody } from '../../Tooltip'
 
 import {
   attributeToName,
@@ -30,7 +30,7 @@ import {
 
 import * as styles from './styles'
 
-declare module '../../types/tooltip' {
+declare module '../../../types/tooltip' {
   const enum TooltipType {
     GW2_ITEM = 'GW2Item'
   }
@@ -91,29 +91,29 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
     const takeEnrichments = createTakePipe(parseItemenrichmentSlots(item))
 
     return <TooltipContent type="item">
-      <TooltipHead className={styles.tooltip.head}>
+      <TooltipHead className={styles.head}>
         <Icon
-          className={styles.tooltip.icon}
-          classSize={styles.tooltip.iconSize}
+          className={styles.icon}
+          classSize={styles.iconSize}
           src={item.icon}
         />
         <span
-          className={cx(styles.tooltip.name, mapRarityToColor(item.rarity))}
+          className={cx(styles.name, mapRarityToColor(item.rarity))}
       >{buildItemName(item, stat)}</span>
       </TooltipHead>
       <TooltipBody>
         {
           item.type === GW2ItemType.WEAPON ?
-          <div className={styles.tooltip.attribute}>
-            Weapon Strength: <span className={styles.tooltip.statItem}>{item.details.min_power} - {item.details.max_power}</span>
+          <div className={styles.attribute}>
+            Weapon Strength: <span className={styles.stat.item}>{item.details.min_power} - {item.details.max_power}</span>
           </div> :
           null
         }
         {
           item.type === GW2ItemType.ARMOR || item.type === GW2ItemType.WEAPON ?
           item.details.defense > 0 ?
-          <div className={styles.tooltip.attribute}>
-            Defense: <span className={styles.tooltip.statItem}>{item.details.defense}</span>
+          <div className={styles.attribute}>
+            Defense: <span className={styles.stat.item}>{item.details.defense}</span>
           </div> :
           null :
           null
@@ -123,24 +123,24 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           item.details.infix_upgrade && item.details.infix_upgrade.attributes.length > 0 ?
           item.details.infix_upgrade.attributes.map(({ attribute, modifier }) => <div
             key={`${attribute}-${modifier}`}
-            className={styles.tooltip.attribute}
+            className={styles.attribute}
           >
             <span
-              className={item.type === GW2ItemType.UPGRADE_COMPONENT ? styles.tooltip.statBuff : styles.tooltip.statAttribute}
+              className={item.type === GW2ItemType.UPGRADE_COMPONENT ? styles.stat.buff : styles.stat.attribute}
             >+{modifier} {attributeToName(attribute)}</span>
           </div>) :
           currentStat ?
           currentStat.attributes.map(({ attribute, multiplier, value }) => <div
             key={`${attribute}-${multiplier}-${value}`}
-            className={styles.tooltip.attribute}
+            className={styles.attribute}
           >
             <span
-              className={styles.tooltip.statAttribute}
+              className={styles.stat.attribute}
             >+{calculateStatAttribute(item, multiplier, value)} {attributeToName(attribute)}</span>
           </div>) :
           item.details.infix_upgrade && item.details.infix_upgrade.buff ?
           <div
-            className={styles.tooltip.statBuff}
+            className={styles.stat.buff}
           >
             {m.trust(markup(item.details.infix_upgrade.buff.description, styles.flavors))}
           </div> :
@@ -153,8 +153,8 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
             <div
               key={bonus}
               className={cx(
-                { [styles.tooltip.bonusActive]: upgradeCount > index },
-                { [styles.tooltip.bonusInactive]: upgradeCount <= index }
+                { [styles.bonus.active]: upgradeCount > index },
+                { [styles.bonus.inactive]: upgradeCount <= index }
               )}
             >
               <span>({index + 1}): {m.trust(markup(bonus, styles.flavors))}</span>
@@ -164,10 +164,10 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         }
         {
           item.type === GW2ItemType.CONSUMABLE ?
-          <div className={styles.tooltip.consumable}>
+          <div className={styles.consumable}>
             <Icon
-              className={styles.tooltip.effectIcon}
-              classSize={styles.tooltip.effectIconSize}
+              className={styles.effect.icon}
+              classSize={styles.effect.iconSize}
               disablePlaceholder={true}
               src={item.details.icon}
             />
@@ -211,7 +211,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
           />
         )}
 
-        <span className={styles.tooltip.spacing}></span>
+        <span className={styles.spacing}></span>
 
         {
           item.type === GW2ItemType.ARMOR ||item.type === GW2ItemType.BACK || item.type === GW2ItemType.TRINKET || item.type === GW2ItemType.WEAPON ?
@@ -264,7 +264,7 @@ export class ItemTooltip implements m.Component<ItemTooltipAttributes> {
         }
         {
           item.rarity !== GW2ItemRarity.LEGENDARY && item.vendor_value > 0 ?
-          <Coin className={styles.tooltip.coin} value={item.vendor_value} /> :
+          <Coin className={styles.coin} value={item.vendor_value} /> :
           null
         }
       </TooltipBody>

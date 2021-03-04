@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { GW2Skill, TooltipType } from '../../types'
+import { GW2Skill, TooltipType } from '../../../types'
 
 import {
   Tooltip,
@@ -8,13 +8,13 @@ import {
   TooltipContent,
   TooltipFact,
   TooltipHead
-} from '../Tooltip'
+} from '../../Tooltip'
 
 import { addSkillTypeTags, applyTraitedFacts, markup, sortFacts } from './lib'
 
 import * as styles from './styles'
 
-declare module '../../types/tooltip' {
+declare module '../../../types/tooltip' {
   const enum TooltipType {
     GW2_SKILL = 'GW2Skill'
   }
@@ -44,10 +44,10 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
       []
 
     return <TooltipContent type="skill">
-      <TooltipHead className={styles.tooltip.head}>{skill.name}</TooltipHead>
+      <TooltipHead className={styles.head}>{skill.name}</TooltipHead>
       {
         skill.description ?
-        <TooltipBody className={styles.tooltip.body}>
+        <TooltipBody className={styles.body}>
           {m.trust(markup(addSkillTypeTags(skill.description), styles.flavors))}
         </TooltipBody> :
         null

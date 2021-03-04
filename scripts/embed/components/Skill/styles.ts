@@ -1,4 +1,4 @@
-import { colors, em, sizes, style, stylesheet } from '../styles'
+import { em, sizes, style, stylesheet } from '../styles'
 
 export const icon = stylesheet({
   root: {
@@ -16,23 +16,3 @@ export const icon = stylesheet({
 export const name = style()
 
 export const link = style()
-
-export const tooltip = stylesheet({
-  head: {
-    color: colors.tooltipSkillTitle.toString()
-  },
-  body: {
-  }
-})
-
-export const flavors = stylesheet({
-  abilitytype: {
-    color: colors.formatAbilityType.toString()
-  },
-  reminder: {
-    color: colors.formatReminder.toString()
-  },
-  skilltype: {
-    color: colors.formatSkill.toString()
-  }
-})

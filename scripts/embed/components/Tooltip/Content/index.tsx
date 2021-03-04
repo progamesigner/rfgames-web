@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { cx, makeClassName } from '../../libs'
+import { cx, makeClassName } from '../../../libs'
 
 import * as styles from './styles'
 
@@ -19,7 +19,7 @@ export class TooltipContent implements m.Component<TooltipContainerAttributes> {
   }: m.Vnode<TooltipContainerAttributes>): m.Children {
     return <div
       className={cx(
-        styles.container,
+        styles.root,
         className,
         makeClassName('tooltip-content'),
         `is-${type}`

@@ -1,10 +1,10 @@
 import * as m from 'mithril'
 
-import { TooltipType } from '../../types'
+import { TooltipType } from '../../../types'
 
-import { Tooltip, TooltipContent, TooltipBody } from '../Tooltip'
+import { Tooltip, TooltipContent, TooltipBody } from '../../Tooltip'
 
-declare module '../../types/tooltip' {
+declare module '../../../types/tooltip' {
   const enum TooltipType {
     TEXT = 'Text'
   }

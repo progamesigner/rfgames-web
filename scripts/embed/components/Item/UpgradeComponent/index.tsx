@@ -1,9 +1,9 @@
 import * as m from 'mithril'
 
-import { cx } from '../../libs'
-import { GW2Item, GW2ItemType } from '../../types'
+import { cx } from '../../../libs'
+import { GW2Item, GW2ItemType } from '../../../types'
 
-import { Icon } from '../Icon'
+import { Icon } from '../../Icon'
 
 import { markup } from './lib'
 
@@ -26,19 +26,19 @@ export class UpgradeComponent implements m.Component<UpgradeComponentAttributes>
   }: m.Vnode<UpgradeComponentAttributes>): m.Children {
     if (item) {
       if (item.type === GW2ItemType.UPGRADE_COMPONENT) {
-        return <div className={styles.tooltip.upgrade}>
+        return <div className={styles.root}>
           <Icon
-            className={styles.tooltip.upgradeIcon}
-            classSize={styles.tooltip.upgradeIconSize}
+            className={styles.icon}
+            classSize={styles.iconSize}
             disablePlaceholder={true}
             src={item.icon}
           />
-          <span className={styles.tooltip.upgradeName}>
+          <span className={styles.name}>
             {item.name}
             {
               item.details.bonuses ?
               <span
-                className={styles.tooltip.upgradeCount}
+                className={styles.count}
               >({upgradeCount}/{item.details.bonuses.length})</span> :
               null
             }
@@ -49,8 +49,8 @@ export class UpgradeComponent implements m.Component<UpgradeComponentAttributes>
               <div
                 key={bonus}
                 className={cx(
-                  { [styles.tooltip.bonusActive]: upgradeCount > index },
-                  { [styles.tooltip.bonusInactive]: upgradeCount <= index }
+                  { [styles.bonus.active]: upgradeCount > index },
+                  { [styles.bonus.inactive]: upgradeCount <= index }
                 )}
               >
                 <span>({index + 1}): {m.trust(markup(bonus, styles.flavors))}</span>
@@ -61,7 +61,7 @@ export class UpgradeComponent implements m.Component<UpgradeComponentAttributes>
           {
             item.details.infix_upgrade && item.details.infix_upgrade.buff ?
             <div
-              className={styles.tooltip.statBuff}
+              className={styles.stat}
             >
               {m.trust(markup(item.details.infix_upgrade.buff.description, styles.flavors))}
             </div> :
@@ -73,10 +73,10 @@ export class UpgradeComponent implements m.Component<UpgradeComponentAttributes>
       return null
     }
 
-    return <div className={styles.tooltip.upgrade}>
+    return <div className={styles.root}>
       <Icon
-        className={styles.tooltip.upgradeIcon}
-        classSize={styles.tooltip.upgradeIconSize}
+        className={styles.icon}
+        classSize={styles.iconSize}
         disablePlaceholder={false}
       />
       <span>{unusedText}</span>
