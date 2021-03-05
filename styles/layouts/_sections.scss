@@ -246,6 +246,7 @@
         border-bottom-left-radius: unset;
         border-top-left-radius: unset;
         cursor: pointer;
+        transition: background-color var(--easing) var(--speed);
 
         @include has-hover() {
             background-color: var(--build-hover-background-color);
