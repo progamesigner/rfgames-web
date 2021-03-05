@@ -285,6 +285,20 @@ const transformers = [
 
     return saveToPreloadData('profession-data', pipeline(professions))
   },
+  ({ professions, specializations }) => {
+    const pipeline = pipe(
+      Object.values,
+      map(pipe(
+        prop('specializations'),
+        map(id => specializations[id]),
+        filter(({ elite }) => elite),
+        map(({ id, name }) => [slugify(name), id]),
+      )),
+      reduce(concat, []),
+      fromPairs,
+    )
+    return saveToPreloadData('profession-elites', pipeline(professions))
+  },
   ({ 'profession-data': data }) => {
     const pipeline = pipe(
       Object.values,
