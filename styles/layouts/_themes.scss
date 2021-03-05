@@ -79,6 +79,17 @@ $warrior-palette: (
 ) !default;
 
 @mixin theme($palette: $default-palette) {
+    --button-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
+    --button-background-hover-color: #{rgba(map-get($palette, 'darker'), 0.75)};
+    --link-color: #{map-get($palette, 'medium')};
+    --link-hover-color: #{map-get($palette, 'lighter')};
+    --nav-dropdown-arrow-color: #{map-get($palette, 'medium')};
+    --nav-dropdown-arrow-hover-color: #{map-get($palette, 'lighter')};
+    --nav-text-color: #{map-get($palette, 'medium')};
+    --nav-text-hover-color: #{map-get($palette, 'lighter')};
+}
+
+@mixin gw2-theme($palette: $default-palette) {
     --build-alternative-background-color: #{rgba(map-get($palette, 'darker'), 0.25)};
     --build-hover-background-color: #{rgba(map-get($palette, 'darker'), 0.75)};
     --build-link-alternative-color: #{rgba(map-get($palette, 'medium'), 0.75)};
@@ -96,42 +107,51 @@ $warrior-palette: (
     }
 }
 
-.main {
-    @include theme();
+body {
+    @include gw2-theme();
 
     &.has-theme-elementalist {
         @include theme($elementalist-palette);
+        @include gw2-theme($elementalist-palette);
     }
 
     &.has-theme-engineer {
         @include theme($engineer-palette);
+        @include gw2-theme($engineer-palette);
     }
 
     &.has-theme-guardian {
         @include theme($guardian-palette);
+        @include gw2-theme($guardian-palette);
     }
 
     &.has-theme-mesmer {
         @include theme($mesmer-palette);
+        @include gw2-theme($mesmer-palette);
     }
 
     &.has-theme-ranger {
         @include theme($ranger-palette);
+        @include gw2-theme($ranger-palette);
     }
 
     &.has-theme-necromancer {
         @include theme($necromancer-palette);
+        @include gw2-theme($necromancer-palette);
     }
 
     &.has-theme-revenant {
         @include theme($revenant-palette);
+        @include gw2-theme($revenant-palette);
     }
 
     &.has-theme-thief {
         @include theme($thief-palette);
+        @include gw2-theme($thief-palette);
     }
 
     &.has-theme-warrior {
         @include theme($warrior-palette);
+        @include gw2-theme($warrior-palette);
     }
 }

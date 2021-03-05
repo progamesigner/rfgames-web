@@ -71,7 +71,7 @@
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin>
 </head>
 
-<body>
+<body class="has-theme-{{ "theme" | .Param | default "default" }}">
     <span class="back-to-top">
         {{- $ | partialCached "svgs/arrow-up.svg" -}}
     </span>
