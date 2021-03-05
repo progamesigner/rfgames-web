@@ -1,12 +1,10 @@
 {{- $context := 0 | index . -}}
 {{- $idOrName := 1 | index . -}}
 
-{{- $table := slice $context | partialCached "collections/gw2-profession-data.dict" -}}
+{{- $table := slice $context | partialCached "collections/gw2-profession-elites.dict" -}}
 
-{{- $id := $idOrName | slice $context | partial "functions/gw2-profession-to-id.string" -}}
+{{- $slug := $idOrName | slice $context | partial "functions/slugify.string" -}}
 
-{{- $data := $id | string | index $table | default dict -}}
-
-{{- $elite := "elite" | index $data | default 0 -}}
+{{- $elite := $slug | index $table | default 0 | int -}}
 
 {{- return $elite -}}
