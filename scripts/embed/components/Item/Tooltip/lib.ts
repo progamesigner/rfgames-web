@@ -12,8 +12,12 @@ import {
   GW2ItemWeaponType
 } from '../../../types'
 
-export { attributeToName, markup } from '../../format'
-export { bindTooltipEvents, buildWikiLink } from '../../helpers'
+export {
+  attributeToName,
+  bindTooltipEvents,
+  buildWikiLink,
+  markup
+} from '../../lib'
 
 interface ItemFlags {
   accountbound: boolean;

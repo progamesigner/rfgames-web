@@ -1,8 +1,7 @@
 import { cx } from '../../libs'
 import { GW2Profession } from '../../types'
 
-export { markup } from '../format'
-export { buildWikiLink } from '../helpers'
+export { buildWikiLink, markup } from '../lib'
 
 export function parseProfessionClassNames(profession: GW2Profession): string {
   return cx(

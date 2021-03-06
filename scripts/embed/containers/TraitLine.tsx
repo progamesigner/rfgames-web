@@ -17,7 +17,7 @@ import {
   mapTraitSelectionToTraitIds,
   TraitSelection,
   wrapAsyncAction
-} from './helpers'
+} from './lib'
 
 interface TraitLineContainerAttributes extends
   m.Attributes,

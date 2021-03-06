@@ -4,7 +4,7 @@ import {
   GW2ItemType,
 } from '../../types'
 
-export { bindTooltipEvents, buildWikiLink } from '../helpers'
+export { bindTooltipEvents, buildWikiLink } from '../lib'
 
 function getDetailType(item: GW2Item): string | null {
   switch (item.type) {

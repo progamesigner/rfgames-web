@@ -9,7 +9,7 @@ import {
   HasStoreAttributes
 } from '../types'
 
-import { isFetchFinished, wrapAsyncAction } from './helpers'
+import { isFetchFinished, wrapAsyncAction } from './lib'
 
 interface SpecializationContainerAttributes extends
   m.Attributes,

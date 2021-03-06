@@ -1,1 +1,1 @@
-export { markup } from '../../format'
+export { markup } from '../../lib'

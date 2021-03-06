@@ -1,7 +1,7 @@
 import { cx } from '../../libs'
 import { GW2Skill } from '../../types'
 
-export { bindTooltipEvents, buildWikiLink } from '../helpers'
+export { bindTooltipEvents, buildWikiLink } from '../lib'
 
 export function parseSkillClassNames(skill: GW2Skill): string {
   return cx(

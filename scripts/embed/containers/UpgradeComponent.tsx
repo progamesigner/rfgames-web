@@ -4,7 +4,7 @@ import { fetchItem } from '../actions'
 import { LoadingStrip, UpgradeComponent } from '../components'
 import { GW2Resources, HasIDAttributes, HasStoreAttributes } from '../types'
 
-import { isFetchFinished, wrapAsyncAction } from './helpers'
+import { isFetchFinished, wrapAsyncAction } from './lib'
 
 interface UpgradeComponentContainerAttributes extends
   m.Attributes,

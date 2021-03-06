@@ -1,7 +1,7 @@
 import { cx } from '../../libs'
 import { GW2Specialization } from '../../types'
 
-export { bindTooltipEvents } from '../helpers'
+export { bindTooltipEvents } from '../lib'
 
 export function isTraitActive(
   traitId: number,

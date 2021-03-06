@@ -4,6 +4,7 @@ import { debounce } from 'throttle-debounce'
 
 import { hideTooltip, showTooltip, updateHidability } from '../actions'
 import { config } from '../config'
+import { cx, makeClassName } from '../libs'
 import {
   ExtractTooltipDataType,
   GW2Fact,
@@ -11,6 +12,21 @@ import {
   GW2TraitedFact,
   TooltipType
 } from '../types'
+
+interface MarkupFlavorMap {
+  [className: string]: string | null;
+}
+
+interface TooltipEvents {
+  onmouseenter(event: MouseEvent): void;
+  onmouseleave(event: MouseEvent): void;
+  ontouchend(event: TouchEvent): void;
+}
+
+interface TraitedFact {
+  fact: GW2Fact;
+  traited: boolean;
+}
 
 const factOrders = {
   [GW2FactType.RECHARGE]: 0,
@@ -35,11 +51,17 @@ const factOrders = {
   [GW2FactType.RANGE]: 19
 }
 
-type TooltipEvents = {
-  onmouseenter(event: MouseEvent): void;
-  onmouseleave(event: MouseEvent): void;
-  ontouchend(event: TouchEvent): void;
-}
+const tagClose = '~~~CLOSE~TAG~~~'
+const tagOpen = '~~~OPEN~TAG~~~'
+
+const regexTagClose = new RegExp(tagClose, 'g')
+const regexTagOpen = new RegExp(tagOpen, 'g')
+
+const regexColorHex = /<c=#([^>]+)>([^]*?)(<\/?c>|$)/g
+const regexColorName = /<c[=@][@=]?([^>]+)>([^]*?)(<\/?c>|$)/g
+const regexNewLine = /<br\/?>|\n/g
+const regexSymbolGreaterThan = />/g
+const regexSymbolLessThan = /</g
 
 const mapUntratedFacts = pipe(
   concat<GW2Fact>([]),
@@ -49,11 +71,6 @@ const mapUntratedFacts = pipe(
   }))
 )
 const omitTraitedFactFields = omit(['overrides', 'requires_trait'])
-
-interface TraitedFact {
-  fact: GW2Fact;
-  traited: boolean;
-}
 
 export function applyTraitedFacts(
   facts: ReadonlyArray<GW2Fact>,
@@ -82,6 +99,25 @@ export function applyTraitedFacts(
 
       return facts
     }, [...untratedFacts])
+}
+
+export function attributeToName(attribute: string): string {
+  switch (attribute) {
+    case 'AgonyResistance':
+      return 'Agony Resistance'
+    case 'BoonDuration':
+      return 'Concentration'
+    case 'ConditionDamage':
+      return 'Condition Damage'
+    case 'ConditionDuration':
+      return 'Expertise'
+    case 'CritDamage':
+    case 'CriticalDamage':
+      return 'Ferocity'
+    case 'Healing':
+      return 'Healing Power'
+  }
+  return attribute
 }
 
 export function bindTooltipEvents<T extends TooltipType>(
@@ -135,6 +171,21 @@ export function buildWikiLink(store: Store, to: string): string {
   } = store.getState()
 
   return `https://wiki-${language || config.gw2ApiDefaultLanguage}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
+}
+
+export function markup(text = '', flavors: MarkupFlavorMap = {}): string {
+  return text
+    .replace(regexColorHex, (_, color, text) => {
+      return `${tagOpen}span class="${makeClassName('color-format')}" style="color:${color}"${tagClose}${text}${tagOpen}/span${tagClose}`
+    })
+    .replace(regexColorName, (_, flavor, text) => {
+      return `${tagOpen}span class="${cx(flavors[flavor] || flavor, makeClassName('color-format'))} is-${flavor}"${tagClose}${text}${tagOpen}/span${tagClose}`
+    })
+    .replace(regexNewLine, `${tagOpen}br${tagClose}`)
+    .replace(regexSymbolLessThan, '&lt;')
+    .replace(regexSymbolGreaterThan, '&gt;')
+    .replace(regexTagOpen, '<')
+    .replace(regexTagClose, '>')
 }
 
 export function sortFacts<T>(

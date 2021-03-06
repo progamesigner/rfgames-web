@@ -10,7 +10,7 @@ import {
   extractStringList,
   parseSelectedTrait,
   parseTraitlines
-} from './helpers'
+} from './lib'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {

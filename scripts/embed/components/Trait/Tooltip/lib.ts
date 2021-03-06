@@ -1,2 +1,1 @@
-export { markup } from '../../format'
-export { applyTraitedFacts, sortFacts } from '../../helpers'
+export { applyTraitedFacts, markup, sortFacts } from '../../lib'
