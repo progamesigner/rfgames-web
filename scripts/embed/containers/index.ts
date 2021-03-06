@@ -2,6 +2,7 @@ export * from './lib'
 
 export { EffectContainer as Effect } from './Effect'
 export { ItemContainer as Item } from './Item'
+export { ListContainer as List } from './List'
 export { ProfessionContainer as Profession } from './Profession'
 export { SkillContainer as Skill } from './Skill'
 export { SpecializationContainer as Specialization } from './Specialization'

@@ -15,7 +15,8 @@ interface SpecializationContainerAttributes extends
   m.Attributes,
   HasEmptyTextAttributes,
   HasIDAttributes<number>,
-  HasStoreAttributes {
+  HasStoreAttributes
+{
 }
 
 const fetch = wrapAsyncAction(fetchSpecialization)

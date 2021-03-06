@@ -15,7 +15,8 @@ const tooltipOffset = styles.layouts.tooltipOffset * 16
 interface TooltipContainerAttributes extends
   m.Attributes,
   HasStoreAttributes,
-  HasWindowAttributes {
+  HasWindowAttributes
+{
 }
 
 function calculateStyle(
