@@ -1,12 +1,17 @@
+{{- $level := slice $ .Name | partial "functions/get-shortcode-nest-level.integer" -}}
+
 <section class="section">
-    {{- if .Parent -}}
-        {{- if .Parent.Parent -}}
-            <h6 class="title">{{ .Get "title" }}</h6>
-        {{- else -}}
-            <h5 class="title">{{ .Get "title" }}</h5>
-        {{- end -}}
-    {{- else -}}
+    {{- if $level | eq 0 -}}
         <h4 class="title">{{ .Get "title" }}</h4>
     {{- end -}}
+
+    {{- if $level | eq 1 -}}
+        <h5 class="title">{{ .Get "title" }}</h5>
+    {{- end -}}
+
+    {{- if $level | le 2 -}}
+        <h6 class="title">{{ .Get "title" }}</h6>
+    {{- end -}}
+
     {{- .Inner -}}
 </section>

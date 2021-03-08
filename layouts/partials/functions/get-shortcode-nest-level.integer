@@ -1,0 +1,14 @@
+{{- $context := 0 | index . -}}
+{{- $name := 1 | index . -}}
+
+{{- $level := 0 -}}
+
+{{- with $context.Parent -}}
+    {{- if .Name | eq $name -}}
+        {{- $level = slice . $name | partial "functions/get-shortcode-nest-level.integer" | add 1 -}}
+    {{- else -}}
+        {{- $level = slice . $name | partial "functions/get-shortcode-nest-level.integer" | add 0 -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $level -}}
