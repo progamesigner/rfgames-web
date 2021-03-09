@@ -123,7 +123,7 @@
 
         .list-item {
             border-radius: var(--list-item-radius);
-            border: var(--list-item-border);
+            border: var(--list-item-border-width) solid var(--list-item-border-color);
             display: flex;
             max-width: 32rem;
             min-width: 12rem;

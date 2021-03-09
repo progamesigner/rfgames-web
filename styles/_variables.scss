@@ -399,7 +399,8 @@ $speed: 86ms !default;
     --home-section-left-overlay-background-image: linear-gradient(to right, #{$background-color} 0%, #{rgba($background-color, 0.75)} 40%, #{rgba($background-color, 0.5)} 50%, rgba(0, 0, 0, 0) 60%);
     --home-section-right-overlay-background-image: linear-gradient(to left, #{$background-color} 0%, #{rgba($background-color, 0.75)} 40%, #{rgba($background-color, 0.5)} 50%, rgba(0, 0, 0, 0) 60%);
 
-    --list-item-border: 0.125rem solid transparent;
+    --list-item-border-color: transparent;
+    --list-item-border-width: 0.125rem;
     --list-item-radius: #{$radius};
     --list-title-background-color: #{rgba($background-color, 0.75)};
     --list-title-background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #{rgba($background-color, 0.5)} 30%, #{rgba($background-color, 0.5)} 70%, rgba(0, 0, 0, 0) 100%);
