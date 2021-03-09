@@ -8,6 +8,7 @@ import {
   bootstrapLinkModule,
   bootstrapModalModule,
   bootstrapSelectionModule,
+  bootstrapTabModule,
   bootstrapTogglerModule,
   bootstrapTopModule
 } from './modules'
@@ -22,6 +23,7 @@ export function bootstrap(window: Window): void {
   bootstrapLinkModule(window)
   bootstrapModalModule(window)
   bootstrapSelectionModule(window)
+  bootstrapTabModule(window)
   bootstrapTogglerModule(window)
   bootstrapTopModule(window)
 }

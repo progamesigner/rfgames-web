@@ -1,0 +1,79 @@
+.tabs {
+    @include block(var(--tab-block-spacing));
+}
+
+.tab-nav {
+    @include block(var(--tab-nav-spacing));
+    @include overflow-touch();
+    @include unselectable();
+
+    align-items: stretch;
+    display: flex;
+    font-family: var(--tab-nav-font-family);
+    font-size: var(--tab-nav-font-size);
+    font-weight: var(--tab-nav-font-weight);
+    justify-content: space-between;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-shadow: var(--tab-nav-text-shadow);
+    white-space: nowrap;
+
+    ul {
+        align-items: center;
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        border-bottom: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
+        display: block;
+        flex-grow: 1;
+        flex-shrink: 0;
+
+        & + li {
+            margin: 0;
+        }
+
+        @include has-hover() {
+            border-bottom-color: var(--tab-nav-border-hover-color);
+
+            a {
+                color: var(--tab-nav-text-hover-color);
+            }
+        }
+
+        @include has-active() {
+            border-bottom-color: var(--tab-nav-border-active-color);
+
+            a {
+                color: var(--tab-nav-text-active-color);
+            }
+        }
+    }
+
+    a {
+        align-items: center;
+        color: var(--tab-nav-text-color);
+        display: flex;
+        justify-content: center;
+        padding: var(--tab-nav-padding);
+    }
+}
+
+.tab-content {
+    display: flex;
+}
+
+.tab {
+    visibility: hidden;
+    margin-right: -100%;
+    width: 100%;
+
+    &.is-active {
+        visibility: visible;
+    }
+}

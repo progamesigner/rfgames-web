@@ -1,0 +1,11 @@
+{{- .Get "title" | slice | .Parent.Scratch.Add "tab-list" -}}
+
+{{- if .Ordinal | eq 0 -}}
+    <div class="tab is-active">
+        {{ .Inner }}
+    </div>
+{{- else -}}
+    <div class="tab">
+        {{ .Inner }}
+    </div>
+{{- end -}}

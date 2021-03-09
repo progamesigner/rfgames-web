@@ -146,6 +146,10 @@
     width: $dimensions;
 }
 
+@mixin overflow-touch() {
+    -webkit-overflow-scrolling: touch
+}
+
 @mixin overlay($offset: 0) {
     bottom: $offset;
     left: $offset;
