@@ -309,6 +309,7 @@ $speed: 86ms !default;
     --title-font-weight: #{$font-weight-semibold};
     --title-line-height: #{$font-size-3};
     --title-negative-margin: 0.25rem;
+    --title-spacing: #{$block-spacing};
     --title-text-color: #{$foreground-alternative-color};
     --title-text-shadow: 0.1875rem 0.1875rem 0.25rem #{rgba($background-color, 0.5)};
 

@@ -1,6 +1,6 @@
 .title,
 .subtitle {
-    @include block();
+    @include block(var(--title-spacing));
 
     margin: 0;
     overflow-wrap: break-word;
