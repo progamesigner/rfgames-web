@@ -87,6 +87,8 @@ $warrior-palette: (
     --nav-dropdown-arrow-hover-color: #{map-get($palette, 'lighter')};
     --nav-text-color: #{map-get($palette, 'medium')};
     --nav-text-hover-color: #{map-get($palette, 'lighter')};
+    --tab-nav-border-color: #{map-get($palette, 'medium')};
+    --tab-nav-text-color: #{map-get($palette, 'medium')};
 }
 
 @mixin gw2-theme($palette: $default-palette) {

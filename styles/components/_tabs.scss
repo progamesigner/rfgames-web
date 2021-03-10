@@ -39,27 +39,30 @@
         }
 
         @include has-hover() {
-            border-bottom-color: var(--tab-nav-border-hover-color);
-
             a {
-                color: var(--tab-nav-text-hover-color);
+                color: var(--tab-nav-text-color);
             }
         }
 
-        @include has-active() {
-            border-bottom-color: var(--tab-nav-border-active-color);
+        @include has-active(false) {
+            border-bottom-color: transparent;
 
             a {
-                color: var(--tab-nav-text-active-color);
+                color: var(--tab-nav-text-color);
+                border-color: var(--tab-nav-border-color);
             }
         }
     }
 
     a {
         align-items: center;
+        border-radius: var(--tab-nav-radius) var(--tab-nav-radius) 0 0;
+        border: var(--tab-nav-border-width) solid transparent;
+        border-bottom: none;
         color: var(--tab-nav-text-color);
         display: flex;
         justify-content: center;
+        margin-bottom: calc(-1 * var(--tab-nav-border-width));
         padding: var(--tab-nav-padding);
     }
 }
