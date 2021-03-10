@@ -362,15 +362,18 @@ $speed: 86ms !default;
     --nav-text-hover-color: #{$link-hover-color};
 
     --tab-block-spacing: #{$block-spacing};
-    --tab-nav-border-color: #{$link-color};
-    --tab-nav-border-width: 0.0625rem;
+    --tab-content-background-color: #{rgba($background-color, 0.25)};
+    --tab-content-radius: #{$radius};
+    --tab-content-spacing: 0.5rem;
+    --tab-nav-background-active-color: #{$background-alternative-color};
+    --tab-nav-background-color: #{rgba($background-color, 0.25)};
     --tab-nav-font-family: #{$font-family-title};
-    --tab-nav-font-size: #{$font-size-4};
+    --tab-nav-font-size: #{$font-size-5};
     --tab-nav-font-weight: #{$font-weight-bold};
     --tab-nav-padding: 0.75rem 1rem;
     --tab-nav-radius: #{$radius};
-    --tab-nav-spacing: 0.75rem;
-    --tab-nav-text-color: #{$link-color};
+    --tab-nav-spacing: 0.125rem;
+    --tab-nav-text-color: #{$foreground-alternative-color};
     --tab-nav-text-shadow: 0.1875rem 0.1875rem 0.25rem #{rgba($background-color, 0.5)};
 
     // Layouts

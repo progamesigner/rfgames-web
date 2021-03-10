@@ -3,7 +3,7 @@
 }
 
 .tab-nav {
-    @include block(var(--tab-nav-spacing));
+    @include block(0);
     @include overflow-touch();
     @include unselectable();
 
@@ -15,7 +15,6 @@
     justify-content: space-between;
     overflow-x: auto;
     overflow-y: hidden;
-    text-shadow: var(--tab-nav-text-shadow);
     white-space: nowrap;
 
     ul {
@@ -29,54 +28,55 @@
     }
 
     li {
-        border-bottom: var(--tab-nav-border-width) solid var(--tab-nav-border-color);
+        background-color: var(--tab-nav-background-color);
+        border-radius: var(--tab-nav-radius) var(--tab-nav-radius) 0 0;
         display: block;
         flex-grow: 1;
         flex-shrink: 0;
+        transition: background-color var(--easing) var(--speed);
 
         & + li {
             margin: 0;
         }
 
-        @include has-hover() {
-            a {
-                color: var(--tab-nav-text-color);
-            }
+        &:not(:first-child) {
+            margin-left: var(--tab-nav-spacing);
         }
 
-        @include has-active(false) {
-            border-bottom-color: transparent;
+        &:not(:last-child) {
+            margin-right: var(--tab-nav-spacing);
+        }
 
-            a {
-                color: var(--tab-nav-text-color);
-                border-color: var(--tab-nav-border-color);
-            }
+        @include has-active() {
+            background-color: var(--tab-nav-background-active-color);
         }
     }
 
     a {
         align-items: center;
-        border-radius: var(--tab-nav-radius) var(--tab-nav-radius) 0 0;
-        border: var(--tab-nav-border-width) solid transparent;
-        border-bottom: none;
         color: var(--tab-nav-text-color);
         display: flex;
         justify-content: center;
-        margin-bottom: calc(-1 * var(--tab-nav-border-width));
         padding: var(--tab-nav-padding);
+        text-shadow: var(--tab-nav-text-shadow);
+
+        @include has-hover() {
+            color: var(--tab-nav-text-color);
+        }
     }
 }
 
 .tab-content {
+    background-color: var(--tab-content-background-color);
+    border-radius: 0 0 var(--tab-content-radius) var(--tab-content-radius);
     display: flex;
+    padding: var(--tab-content-spacing);
 }
 
 .tab {
-    visibility: hidden;
-    margin-right: -100%;
-    width: 100%;
+    display: none;
 
     &.is-active {
-        visibility: visible;
+        display: block;
     }
 }
