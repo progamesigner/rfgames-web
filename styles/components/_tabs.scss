@@ -31,8 +31,9 @@
         background-color: var(--tab-nav-background-color);
         border-radius: var(--tab-nav-radius) var(--tab-nav-radius) 0 0;
         display: block;
+        flex-basis: 100%;
         flex-grow: 1;
-        flex-shrink: 0;
+        flex-shrink: 1;
         transition: background-color var(--easing) var(--speed);
 
         & + li {
