@@ -56,5 +56,22 @@
             "account": "Mordecai.4356",
             "discord": "domo#2757"
         }
+    },
+    {
+        "name": "Moon",
+        "avatar": "moon",
+        "accounts": {
+            "account": "ivan.6521",
+            "discord": "Sing#9910",
+            "youtube": "UCPo7swmaWRSdEYzq4R26tCA"
+        }
+    },
+    {
+        "name": "Slime",
+        "avatar": "slime",
+        "accounts": {
+            "account": "keith.6243",
+            "discord": "Slime#3410"
+        }
     }
 ]
