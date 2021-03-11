@@ -13,7 +13,7 @@ import {
   TooltipHead
 } from '../../Tooltip'
 
-import { applyTraitedFacts, markup, sortFacts } from './lib'
+import { applyTraitedFacts, markup, sortFacts } from './libs'
 
 import * as styles from './styles'
 

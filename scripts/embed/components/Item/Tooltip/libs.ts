@@ -17,7 +17,7 @@ export {
   bindTooltipEvents,
   buildWikiLink,
   markup
-} from '../../lib'
+} from '../../libs'
 
 interface ItemFlags {
   accountbound: boolean;

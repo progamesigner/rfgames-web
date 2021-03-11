@@ -5,7 +5,7 @@ import { GW2Item, GW2ItemType } from '../../../types'
 
 import { Icon } from '../../Icon'
 
-import { markup } from './lib'
+import { markup } from './libs'
 
 import * as styles from './styles'
 

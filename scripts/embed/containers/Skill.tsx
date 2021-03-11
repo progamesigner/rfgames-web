@@ -14,7 +14,7 @@ import {
   mapActiveTraitlinesToTraitIds,
   TraitSelection,
   wrapAsyncAction
-} from './lib'
+} from './libs'
 
 interface SkillContainerAttributes extends
   m.Attributes,

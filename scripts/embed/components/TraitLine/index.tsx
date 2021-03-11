@@ -18,7 +18,7 @@ import {
   bindTooltipEvents,
   isTraitActive,
   parseTraitlineClassNames
-} from './lib'
+} from './libs'
 
 import * as styles from './styles'
 

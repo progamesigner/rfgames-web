@@ -10,7 +10,7 @@ import {
   TooltipHead
 } from '../../Tooltip'
 
-import { addSkillTypeTags, applyTraitedFacts, markup, sortFacts } from './lib'
+import { addSkillTypeTags, applyTraitedFacts, markup, sortFacts } from './libs'
 
 import * as styles from './styles'
 

@@ -1,4 +1,4 @@
-export * from './lib'
+export * from './libs'
 
 export { EffectContainer as Effect } from './Effect'
 export { ItemContainer as Item } from './Item'

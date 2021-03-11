@@ -1,7 +1,7 @@
 import { cx } from '../../libs'
 import { GW2Trait, GW2TraitSlot, GW2TraitTier } from '../../types'
 
-export { bindTooltipEvents, buildWikiLink } from '../lib'
+export { bindTooltipEvents, buildWikiLink } from '../libs'
 
 export function parseTraitClassNames(trait: GW2Trait): string {
   return cx(

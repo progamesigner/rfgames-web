@@ -5,7 +5,7 @@ import { GW2Fact, GW2FactType } from '../../../types'
 
 import { Icon } from '../../Icon'
 
-import { attributeToName, calculateFactDamage, markup } from './lib'
+import { attributeToName, calculateFactDamage, markup } from './libs'
 
 import * as styles from './styles'
 

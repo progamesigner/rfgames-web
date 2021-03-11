@@ -23,7 +23,7 @@ import { Text } from '../Text'
 
 import './Tooltip'
 
-import { bindTooltipEvents, buildWikiLink, parseItemClassNames } from './lib'
+import { bindTooltipEvents, buildWikiLink, parseItemClassNames } from './libs'
 
 import * as styles from './styles'
 

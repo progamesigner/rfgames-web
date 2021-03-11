@@ -21,7 +21,7 @@ import { Text } from '../Text'
 
 import './Tooltip'
 
-import { bindTooltipEvents, buildWikiLink, parseSkillClassNames } from './lib'
+import { bindTooltipEvents, buildWikiLink, parseSkillClassNames } from './libs'
 
 import * as styles from './styles'
 import { cx } from '../../libs'

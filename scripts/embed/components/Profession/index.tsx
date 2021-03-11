@@ -18,7 +18,7 @@ import { Icon } from '../Icon'
 import { Link } from '../Link'
 import { Text } from '../Text'
 
-import { buildWikiLink, parseProfessionClassNames } from './lib'
+import { buildWikiLink, parseProfessionClassNames } from './libs'
 
 import * as styles from './styles'
 

@@ -1,4 +1,4 @@
-export { attributeToName, markup } from '../../lib'
+export { attributeToName, markup } from '../../libs'
 
 const baseDamage = 266.00
 

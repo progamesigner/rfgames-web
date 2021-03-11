@@ -17,7 +17,7 @@ import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Text } from '../Text'
 
-import { bindTooltipEvents } from '../lib'
+import { bindTooltipEvents } from '../libs'
 
 import * as styles from './styles'
 

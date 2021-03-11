@@ -7,7 +7,7 @@ import {
   extractBoolean,
   extractNumberList,
   extractString
-} from './lib'
+} from './libs'
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const commonAttrs = {

@@ -1,7 +1,7 @@
 import { cx } from '../../libs'
 import { GW2Specialization } from '../../types'
 
-export { bindTooltipEvents, buildWikiLink } from '../lib'
+export { bindTooltipEvents, buildWikiLink } from '../libs'
 
 export function parseSpecializationClassNames(
   specialization: GW2Specialization

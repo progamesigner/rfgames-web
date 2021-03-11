@@ -27,7 +27,7 @@ import {
   bindTooltipEvents,
   buildWikiLink,
   parseTraitClassNames
-} from './lib'
+} from './libs'
 
 import * as styles from './styles'
 
