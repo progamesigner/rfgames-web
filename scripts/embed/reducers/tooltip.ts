@@ -2,9 +2,11 @@ import { Reducer } from 'redux'
 
 import {
   UPDATE_TOOLTIP_HIDABILITY,
+  UPDATE_TOOLTIP_STYLES,
   UPDATE_TOOLTIP,
   UpdateTooltipAction,
-  UpdateTooltipHidabilityAction
+  UpdateTooltipHidabilityAction,
+  UpdateTooltipStyleAction
 } from '../actions'
 import { EmbedState } from '../types'
 
@@ -36,7 +38,22 @@ function updateTooltipHidability(
   }
 }
 
+function updateTooltipStyles(
+  state: EmbedState = {},
+  action: UpdateTooltipStyleAction
+): EmbedState {
+  const {
+    styles
+  } = action
+
+  return {
+    ...state,
+    tooltipStyles: styles
+  }
+}
+
 export const tooltipReducers = {
   [UPDATE_TOOLTIP]: updateTooltip as Reducer<EmbedState>,
-  [UPDATE_TOOLTIP_HIDABILITY]: updateTooltipHidability as Reducer<EmbedState>
+  [UPDATE_TOOLTIP_HIDABILITY]: updateTooltipHidability as Reducer<EmbedState>,
+  [UPDATE_TOOLTIP_STYLES]: updateTooltipStyles as Reducer<EmbedState>
 }

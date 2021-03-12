@@ -1,3 +1,5 @@
+import { types } from 'typestyle'
+
 import {
   BaseAction,
   ExtractTooltipDataType,
@@ -13,11 +15,17 @@ interface UpdateTooltipHidabilityPayload {
   hidable: boolean;
 }
 
+interface UpdateTooltipStylePayload {
+  styles: types.CSSProperties;
+}
+
 export const UPDATE_TOOLTIP = 'UPDATE_TOOLTIP'
 export const UPDATE_TOOLTIP_HIDABILITY = 'UPDATE_TOOLTIP_HIDABILITY'
+export const UPDATE_TOOLTIP_STYLES = 'UPDATE_TOOLTIP_STYLES'
 
 export type UpdateTooltipAction = BaseAction<UpdateTooltipPayload>
 export type UpdateTooltipHidabilityAction = BaseAction<UpdateTooltipHidabilityPayload>
+export type UpdateTooltipStyleAction = BaseAction<UpdateTooltipStylePayload>
 
 export function hideTooltip(): UpdateTooltipAction {
   return {
@@ -48,5 +56,12 @@ export function updateHidability(hidable: boolean): UpdateTooltipHidabilityActio
   return {
     type: UPDATE_TOOLTIP_HIDABILITY,
     hidable
+  }
+}
+
+export function updateStyles(styles: types.CSSProperties): UpdateTooltipStyleAction {
+  return {
+    type: UPDATE_TOOLTIP_STYLES,
+    styles
   }
 }

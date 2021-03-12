@@ -1,4 +1,5 @@
 import { Action, Store } from 'redux'
+import { types } from 'typestyle'
 
 import { ExtractGW2State, GW2Resources } from './gw2'
 import { TooltipState } from './tooltip'
@@ -19,6 +20,7 @@ export interface EmbedState extends Partial<EmbedOptions> {
   [GW2Resources.TRAIT]?: ExtractGW2State<GW2Resources.TRAIT>;
   tooltip?: TooltipState;
   tooltipHidable?: boolean;
+  tooltipStyles?: types.CSSProperties;
   [key: string]: unknown;
 }
 

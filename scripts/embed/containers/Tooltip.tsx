@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { hideTooltip } from '../actions'
+import { hideTooltip, updateStyles } from '../actions'
 import { Tooltip } from '../components'
 import { EmbedStore, HasStoreAttributes, HasWindowAttributes } from '../types'
 import { px, transform, translate3d, types } from '../libs'
@@ -52,7 +52,6 @@ function isTouchDevice(window: Window): boolean {
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
   protected container: Element | null = null;
-  protected style: types.CSSProperties = {};
   protected unbindMouseMoveEvent: UnbindEventListener | null = null;
 
   public oncreate({
@@ -61,14 +60,18 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       window
     }
   }: m.VnodeDOM<TooltipContainerAttributes>): void {
+    const {
+      tooltipStyles
+    } = store.getState()
+
     const listener = this.handleMouseMove.bind(this, window, store)
 
     // @note: show tooltip by default on small-screen devices
     if (isSmallScreen(window)) {
-      this.style = {
-        ...this.style,
+      store.dispatch(updateStyles({
+        ...tooltipStyles,
         opacity: 1
-      }
+      }))
     }
 
     this.unbindMouseMoveEvent =  (): void => {
@@ -97,7 +100,8 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
     }
   }: m.Vnode<TooltipContainerAttributes>): m.Children {
     const {
-      tooltip
+      tooltip,
+      tooltipStyles
     } = store.getState()
 
     const hide = (event: TouchEvent) => {
@@ -110,7 +114,7 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
       data={tooltip && tooltip.data}
       ontouchend={hide}
       store={store}
-      style={this.style}
+      style={tooltipStyles}
       type={tooltip && tooltip.type}
     ></Tooltip>
   }
@@ -122,13 +126,14 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
   ): void {
     window.requestAnimationFrame(() => {
       const {
-        tooltip
+        tooltip,
+        tooltipStyles
       } = store.getState()
 
-      this.style = {
-        ...this.style,
+      store.dispatch(updateStyles({
+        ...tooltipStyles,
         opacity: 0 // @note: reset opacity to avoid blinks
-      }
+      }))
 
       if (this.container) {
         if (
@@ -145,14 +150,12 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
             event as MouseEvent
           )
 
-          this.style = {
-            ...this.style,
+          store.dispatch(updateStyles({
+            ...tooltipStyles,
             ...style,
             opacity: 1
-          }
+          }))
         }
-
-        m.redraw()
       }
     })
   }
