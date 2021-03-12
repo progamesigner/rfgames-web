@@ -74,12 +74,13 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
         />
       }
 
-      return <Loader {...attrs} />
+      return <Loader type="skill" {...attrs} />
     }
 
     return <Empty
       overrideEmptyText={overrideEmptyText}
       store={store}
+      type="skill"
       {...attrs}
     />
   }

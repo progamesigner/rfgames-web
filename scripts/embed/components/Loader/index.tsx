@@ -12,6 +12,8 @@ import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { LoadingStrip } from '../LoadingStrip'
 
+import { TypeWithIconSize } from './libs'
+
 import * as styles from './styles'
 
 interface LoaderAttributes extends
@@ -22,6 +24,7 @@ interface LoaderAttributes extends
   HasTextAttributes
 {
   classLoader?: string;
+  type: TypeWithIconSize;
 }
 
 export class Loader implements m.Component<LoaderAttributes> {
@@ -36,7 +39,8 @@ export class Loader implements m.Component<LoaderAttributes> {
       disableIconPlaceholder,
       disableText,
       inline,
-      overrideText
+      overrideText,
+      type
     }
   }: m.Vnode<LoaderAttributes>): m.Children {
     return <Container className={cx('is-loader', className)} type="loader">
@@ -45,7 +49,7 @@ export class Loader implements m.Component<LoaderAttributes> {
         <Icon
           className={cx(styles.icon.root, classIcon)}
           classSize={cx(
-            { [styles.icon.block] : !inline },
+            { [styles.icon[type]] : !inline },
             { [styles.icon.inline] : inline },
             classSize
           )}

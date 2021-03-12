@@ -63,12 +63,13 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
         />
       }
 
-      return <Loader {...attrs} />
+      return <Loader type="item" {...attrs} />
     }
 
     return <Empty
       overrideEmptyText={overrideEmptyText}
       store={store}
+      type="item"
       {...attrs}
     />
   }

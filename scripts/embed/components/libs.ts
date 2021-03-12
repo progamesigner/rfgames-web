@@ -72,6 +72,13 @@ const mapUntratedFacts = pipe(
 )
 const omitTraitedFactFields = omit(['overrides', 'requires_trait'])
 
+export type TypeWithIconSize =
+  'item' |
+  'profession' |
+  'skill' |
+  'specialization' |
+  'trait'
+
 export function applyTraitedFacts(
   facts: ReadonlyArray<GW2Fact>,
   traits: ReadonlyArray<number>,

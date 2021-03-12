@@ -53,12 +53,13 @@ export class SpecializationContainer implements m.Component<SpecializationContai
         />
       }
 
-      return <Loader {...attrs} />
+      return <Loader type="specialization" {...attrs} />
     }
 
     return <Empty
       overrideEmptyText={overrideEmptyText}
       store={store}
+      type="specialization"
       {...attrs}
     />
   }

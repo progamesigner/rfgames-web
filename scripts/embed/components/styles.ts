@@ -103,7 +103,6 @@ export const layouts = {
 
 export const sizes = {
   coinIcon: 1,
-  emptyIcon: 4,
   factIcon: 2,
   inlineIcon: 1,
   itemIcon: 4,

@@ -63,12 +63,13 @@ export class ProfessionContainer implements m.Component<ProfessionContainerAttri
         />
       }
 
-      return <Loader {...attrs} />
+      return <Loader type="profession" {...attrs} />
     }
 
     return <Empty
       overrideEmptyText={overrideEmptyText}
       store={store}
+      type="profession"
       {...attrs}
     />
   }

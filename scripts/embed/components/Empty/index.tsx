@@ -17,7 +17,7 @@ import { Container } from '../Container'
 import { Icon } from '../Icon'
 import { Text } from '../Text'
 
-import { bindTooltipEvents } from '../libs'
+import { bindTooltipEvents, TypeWithIconSize } from './libs'
 
 import * as styles from './styles'
 
@@ -32,6 +32,7 @@ interface EmptyAttributes extends
   HasTooltipAttributes,
   HasTooltipTextAttributes
 {
+  type: TypeWithIconSize;
 }
 
 export class Empty implements m.Component<EmptyAttributes> {
@@ -49,7 +50,8 @@ export class Empty implements m.Component<EmptyAttributes> {
       overrideEmptyText,
       overrideText,
       overrideTooltipText,
-      store
+      store,
+      type
     }
   }: m.Vnode<EmptyAttributes>): m.Children {
     const text = overrideEmptyText || overrideText || 'Not Found'
@@ -66,7 +68,7 @@ export class Empty implements m.Component<EmptyAttributes> {
         <Icon
           className={cx(styles.icon.root, classIcon)}
           classSize={cx(
-            { [styles.icon.block] : !inline },
+            { [styles.icon[type]] : !inline },
             { [styles.icon.inline] : inline },
             classSize
           )}

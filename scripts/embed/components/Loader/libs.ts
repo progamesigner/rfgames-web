@@ -1,0 +1,1 @@
+export { TypeWithIconSize } from '../libs'

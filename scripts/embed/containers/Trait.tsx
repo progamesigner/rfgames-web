@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { forEach, keys, map, pipe } from 'rambda'
+import { forEach, isEmpty, keys, map, pipe } from 'rambda'
 
 import { fetchSpecialization, fetchTrait } from '../actions'
 import { Empty, Loader, Trait } from '../components'
@@ -77,12 +77,13 @@ export class TraitContainer implements m.Component<TraitContainerAttributes> {
         />
       }
 
-      return <Loader {...attrs} />
+      return <Loader type="trait" {...attrs} />
     }
 
     return <Empty
       overrideEmptyText={overrideEmptyText}
       store={store}
+      type="trait"
       {...attrs}
     />
   }
