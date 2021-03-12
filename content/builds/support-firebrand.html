@@ -104,7 +104,7 @@ build:
     - { type: healing-brust, rating: 5 }
     - { type: cleansing-brust, rating: 4 }
     - { type: striping-low, rating: 1 }
-    - { type: supports, effects: [ Aegis, Might, Protection, Regeneration, Protection, Stability, Quickness ] }
+    - { type: supports, effects: [ Aegis, Might, Protection, Regeneration, Resistance, Stability, Quickness ] }
     - { type: pressures, effects: [ Burning ] }
 ---
 
@@ -216,20 +216,20 @@ build:
                     </ul>
                 {{< /tab >}}
                 {{< tab title="Traits" >}}
-                    <p>One of important purposes is to maintain allies' sustainability. Your {{% inlines/skill name="Virtue of Resolve" %}} passive is shared to allies because of {{% inlines/trait name="Battle Presence" %}}.</p>
-                    <ul>
-                        <li>{{% inlines/trait name="Selfless Daring" %}} heals on dodging.</li>
-                        <li>{{% inlines/trait name="Force of Will" %}} increases your vitality and improves your healing based on your vitality.</li>
-                        <li>Most skills in your {{% inlines/skill name="Tome of Resolve" %}} grant {{% inlines/effect name="Regeneration" %}} and heal allies.</li>
-                    </ul>
-                {{< /tab >}}
-                {{< tab title="Skills" >}}
                     <ul>
                         <li>Swap {{% inlines/trait name="Force of Will" %}} with {{% inlines/trait name="Pure of Voice" %}} if you heavily depends on {{% inlines/skill name="Stand Your Ground!" %}} and change {{% inlines/skill name="Signet of Mercy" %}} with {{% inlines/skill name="Retreat!" %}} or {{% inlines/skill name="Hold the Line!" %}}.</li>
                         <li>Swap {{% inlines/trait name="Force of Will" %}} with {{% inlines/trait name="Writ of Persistence" %}} if you need more direct healing.</li>
                         <li>Swap {{% inlines/trait name="Liberator's Vow" %}} with {{% inlines/trait name="Archivist of Whispers" %}} if you need more tome pages but we encourage that cast only necessary skills and stow a tome as fast as possible.</li>
                         <li>Swap {{% inlines/trait name="Weighty Terms" %}} with {{% inlines/trait name="Legendary Lore" %}} if {{% inlines/effect name="Regeneration" %}} and {{% inlines/effect name="Protection" %}} uptime is an issue, or you are the only support in your party.</li>
                         <li>Swap {{% inlines/specialization name="Virtues" %}} with {{% inlines/specialization name="Valor" %}} for personal sustain and {{% inlines/skill name="Tome of Courage" %}} availability. Only viable as second {{% inlines/profession name="Firebrand" %}} in a party.</li>
+                    </ul>
+                {{< /tab >}}
+                {{< tab title="Skills" >}}
+                    <ul>
+                        <li>Swap {{% inlines/skill name="Mantra of Solace" %}} with {{% inlines/skill name="Receive the Light!" %}} as a viable burst heal skill.</li>
+                        <li>Swap {{% inlines/skill name="Signet of Mercy" %}} with {{% inlines/skill name="Mantra of Potence" %}} if {{% inlines/effect name="Quickness" %}} uptime is required.</li>
+                        <li>Swap {{% inlines/skill name="Signet of Mercy" %}} with {{% inlines/skill name="Bow of Truth" %}} for AoE pulsing healing.</li>
+                        <li>Swap {{% inlines/skill name="Signet of Mercy" %}} with {{% inlines/skill name="Hallowed Ground" %}} for AoE pulsing {{% inlines/effect name="Stability" %}}.</li>
                     </ul>
                 {{< /tab >}}
                 {{< tab title="Runes" >}}
