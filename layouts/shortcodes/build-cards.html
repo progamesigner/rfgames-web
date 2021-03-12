@@ -80,7 +80,9 @@
             {{- if . | string | eq . -}}
                 {{- $upgradeId = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
             {{- end -}}
+            {{- $upgradeText := slice $context $upgradeId | partial "functions/gw2-item-to-display-name.string" -}}
             {{- $upgrade = $upgradeId | dict "id" | merge $upgrade -}}
+            {{- $upgrade = $upgradeText | dict "text" | merge $upgrade -}}
         {{- end -}}
 
         {{- with "upgrade-count" | index . -}}
@@ -212,7 +214,9 @@
         {{- if . | string | eq . -}}
             {{- $id = . | slice $context | partial "functions/gw2-item-to-id.integer" -}}
         {{- end -}}
+        {{- $text := slice $context $id | partial "functions/gw2-item-to-display-name.string" -}}
         {{- $item = $id | dict "id" | merge $item -}}
+        {{- $item = $text | dict "text" | merge $item -}}
     {{- end -}}
 
     {{- template "__rfgames_shortcode_includes__build_embed__" slice $context "item" $classes $item -}}
