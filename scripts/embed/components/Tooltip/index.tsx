@@ -11,13 +11,15 @@ export { TooltipFact } from './Fact'
 export { TooltipFoot } from './Foot'
 export { TooltipHead } from './Head'
 
+type TooltipRenderer = Record<TooltipType, (attrs: m.Attributes) => m.Children>
+
 interface TooltipAttributes extends m.Attributes, HasStoreAttributes {
   data: ExtractTooltipDataType<TooltipType>;
   type: TooltipType;
 }
 
 export class Tooltip implements m.Component<TooltipAttributes> {
-  protected static renderers = {} as Record<TooltipType, (attrs: m.Attributes) => m.Children>;
+  protected static renderers = {} as TooltipRenderer
 
   public static bindTooltipRenderer<
     T extends TooltipType,

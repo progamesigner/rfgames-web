@@ -99,11 +99,9 @@ $warrior-palette: (
     --build-link-hover-color: #{map-get($palette, 'lighter')};
     --build-main-background-color: #{rgba(map-get($palette, 'dark'), 0.75)};
 
-    & ~ [id^="gw2-embed-tooltip"] {
-        & > .gw2-embed-tooltip {
-            .gw2-embed-tooltip-content {
-                border-color: #{rgba(map-get($palette, 'darker'), 0.5)};
-            }
+    div[id^="gw2-embed-tooltip"] {
+        .gw2-embed-tooltip-content {
+            border-color: #{rgba(map-get($palette, 'darker'), 0.5)};
         }
     }
 }
