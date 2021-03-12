@@ -51,8 +51,9 @@ function isTouchDevice(window: Window): boolean {
 }
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
-  protected container: Element | null = null;
-  protected unbindMouseMoveEvent: UnbindEventListener | null = null;
+  protected container: Element | null = null
+  protected requestedAnimationFrame: number | null = null
+  protected unbindMouseMoveEvent: UnbindEventListener | null = null
 
   public oncreate({
     attrs: {
@@ -124,19 +125,24 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
     store: EmbedStore,
     event: Event
   ): void {
-    window.requestAnimationFrame(() => {
-      const {
-        tooltip,
-        tooltipStyles
-      } = store.getState()
+    if (this.container) {
+      if (this.requestedAnimationFrame) {
+        window.cancelAnimationFrame(this.requestedAnimationFrame)
+      }
 
-      store.dispatch(updateStyles({
-        ...tooltipStyles,
-        opacity: 0 // @note: reset opacity to avoid blinks
-      }))
+      this.requestedAnimationFrame = window.requestAnimationFrame(() => {
+        const {
+          tooltip,
+          tooltipStyles
+        } = store.getState()
 
-      if (this.container) {
+        store.dispatch(updateStyles({
+          ...tooltipStyles,
+          opacity: 0 // @note: reset opacity to avoid blinks
+        }))
+
         if (
+          this.container &&
           tooltip &&
           tooltip.show &&
           (
@@ -156,7 +162,7 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
             opacity: 1
           }))
         }
-      }
-    })
+      })
+    }
   }
 }
