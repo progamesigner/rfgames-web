@@ -32,7 +32,7 @@ export function isFetchFinished(state: GW2AsyncState): boolean {
 }
 
 export function mapActiveTraitlinesToTraitIds(
-  specializations: ExtractGW2State<GW2Resources.SPECIALIZATION>,
+  specializations: ExtractGW2State<GW2Resources.SPECIALIZATIONS>,
   activeTraitlines?: Record<number, ReadonlyArray<TraitSelection>>
 ): ReadonlyArray<number> {
   return Object.values(specializations).reduce((ids, specialization) => {

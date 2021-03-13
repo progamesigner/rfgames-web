@@ -43,12 +43,12 @@ function stateFactory<T extends GW2Resources>(
 
 export function gw2InitialState(language: string): GW2InitialState {
   return {
-    ...stateFactory(GW2Resources.ITEM, language),
-    ...stateFactory(GW2Resources.ITEM_STAT, language),
-    ...stateFactory(GW2Resources.PET, language),
-    ...stateFactory(GW2Resources.PROFESSION, language),
-    ...stateFactory(GW2Resources.SKILL, language),
-    ...stateFactory(GW2Resources.SPECIALIZATION, language),
-    ...stateFactory(GW2Resources.TRAIT, language)
+    ...stateFactory(GW2Resources.ITEMS, language),
+    ...stateFactory(GW2Resources.ITEM_STATS, language),
+    ...stateFactory(GW2Resources.PETS, language),
+    ...stateFactory(GW2Resources.PROFESSIONS, language),
+    ...stateFactory(GW2Resources.SKILLS, language),
+    ...stateFactory(GW2Resources.SPECIALIZATIONS, language),
+    ...stateFactory(GW2Resources.TRAITS, language)
   }
 }

@@ -36,7 +36,7 @@ export class UpgradeComponentContainer implements m.Component<UpgradeComponentCo
     }
   }: m.Vnode<UpgradeComponentContainerAttributes>): m.Children {
     const {
-      [GW2Resources.ITEM]: items
+      [GW2Resources.ITEMS]: items
     } = store.getState()
 
     if (id > 0 && items) {

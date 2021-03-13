@@ -54,8 +54,8 @@ export class SkillContainer implements m.Component<SkillContainerAttributes> {
     }
   }: m.Vnode<SkillContainerAttributes>): m.Children {
     const {
-      [GW2Resources.SKILL]: skills,
-      [GW2Resources.SPECIALIZATION]: specializations
+      [GW2Resources.SKILLS]: skills,
+      [GW2Resources.SPECIALIZATIONS]: specializations
     } = store.getState()
 
     if (id > 0 && skills) {

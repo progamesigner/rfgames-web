@@ -47,8 +47,8 @@ export class ProfessionContainer implements m.Component<ProfessionContainerAttri
     }
   }: m.Vnode<ProfessionContainerAttributes>): m.Children {
     const {
-      [GW2Resources.PROFESSION]: professions,
-      [GW2Resources.SPECIALIZATION]: specializations
+      [GW2Resources.PROFESSIONS]: professions,
+      [GW2Resources.SPECIALIZATIONS]: specializations
     } = store.getState()
 
     if (id && professions) {

@@ -47,8 +47,8 @@ export class ItemContainer implements m.Component<ItemContainerAttributes> {
     }
   }: m.Vnode<ItemContainerAttributes>): m.Children {
     const {
-      [GW2Resources.ITEM_STAT]: itemStats,
-      [GW2Resources.ITEM]: items
+      [GW2Resources.ITEM_STATS]: itemStats,
+      [GW2Resources.ITEMS]: items
     } = store.getState()
 
     if (id > 0 && items) {

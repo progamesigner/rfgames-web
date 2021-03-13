@@ -1,6 +1,6 @@
 import * as m from 'mithril'
 
-import { forEach, isEmpty, keys, map, pipe } from 'rambda'
+import { forEach, keys, map, pipe } from 'rambda'
 
 import { fetchSpecialization, fetchTrait } from '../actions'
 import { Empty, Loader, Trait } from '../components'
@@ -57,8 +57,8 @@ export class TraitContainer implements m.Component<TraitContainerAttributes> {
     }
   }: m.Vnode<TraitContainerAttributes>): m.Children {
     const {
-      [GW2Resources.SPECIALIZATION]: specializations,
-      [GW2Resources.TRAIT]: traits
+      [GW2Resources.SPECIALIZATIONS]: specializations,
+      [GW2Resources.TRAITS]: traits
     } = store.getState()
 
     if (id > 0 && traits) {

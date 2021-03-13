@@ -11,13 +11,13 @@ export interface EmbedOptions {
 }
 
 export interface EmbedState extends Partial<EmbedOptions> {
-  [GW2Resources.ITEM]?: ExtractGW2State<GW2Resources.ITEM>;
-  [GW2Resources.ITEM_STAT]?: ExtractGW2State<GW2Resources.ITEM_STAT>;
-  [GW2Resources.PET]?: ExtractGW2State<GW2Resources.PET>;
-  [GW2Resources.PROFESSION]?: ExtractGW2State<GW2Resources.PROFESSION>;
-  [GW2Resources.SKILL]?: ExtractGW2State<GW2Resources.SKILL>;
-  [GW2Resources.SPECIALIZATION]?: ExtractGW2State<GW2Resources.SPECIALIZATION>;
-  [GW2Resources.TRAIT]?: ExtractGW2State<GW2Resources.TRAIT>;
+  [GW2Resources.ITEMS]?: ExtractGW2State<GW2Resources.ITEMS>;
+  [GW2Resources.ITEM_STATS]?: ExtractGW2State<GW2Resources.ITEM_STATS>;
+  [GW2Resources.PETS]?: ExtractGW2State<GW2Resources.PETS>;
+  [GW2Resources.PROFESSIONS]?: ExtractGW2State<GW2Resources.PROFESSIONS>;
+  [GW2Resources.SKILLS]?: ExtractGW2State<GW2Resources.SKILLS>;
+  [GW2Resources.SPECIALIZATIONS]?: ExtractGW2State<GW2Resources.SPECIALIZATIONS>;
+  [GW2Resources.TRAITS]?: ExtractGW2State<GW2Resources.TRAITS>;
   tooltip?: TooltipState;
   tooltipHidable?: boolean;
   tooltipStyles?: types.CSSProperties;

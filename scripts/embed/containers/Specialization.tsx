@@ -39,7 +39,7 @@ export class SpecializationContainer implements m.Component<SpecializationContai
     }
   }: m.Vnode<SpecializationContainerAttributes>): m.Children {
     const {
-      [GW2Resources.SPECIALIZATION]: specializations
+      [GW2Resources.SPECIALIZATIONS]: specializations
     } = store.getState()
 
     if (id > 0 && specializations) {

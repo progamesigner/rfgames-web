@@ -23,13 +23,13 @@ interface GW2AsyncRecord<R, E> {
 }
 
 interface GW2ResourceMapping {
-  [GW2Resources.ITEM]: [number, GW2Item, Error];
-  [GW2Resources.ITEM_STAT]: [number, GW2ItemStat, Error];
-  [GW2Resources.PET]: [number, GW2Pet, Error];
-  [GW2Resources.PROFESSION]: [string, GW2Profession, Error];
-  [GW2Resources.SKILL]: [number, GW2Skill, Error];
-  [GW2Resources.SPECIALIZATION]: [number, GW2Specialization, Error];
-  [GW2Resources.TRAIT]: [number, GW2Trait, Error]
+  [GW2Resources.ITEMS]: [number, GW2Item, Error];
+  [GW2Resources.ITEM_STATS]: [number, GW2ItemStat, Error];
+  [GW2Resources.PETS]: [number, GW2Pet, Error];
+  [GW2Resources.PROFESSIONS]: [string, GW2Profession, Error];
+  [GW2Resources.SKILLS]: [number, GW2Skill, Error];
+  [GW2Resources.SPECIALIZATIONS]: [number, GW2Specialization, Error];
+  [GW2Resources.TRAITS]: [number, GW2Trait, Error]
 }
 
 export const enum GW2AsyncState {
@@ -39,22 +39,22 @@ export const enum GW2AsyncState {
 }
 
 export const enum GW2Resources {
-  ITEM = 'GW2_ITEM',
-  ITEM_STAT = 'GW2_ITEM_STAT',
-  PET = 'GW2_PET',
-  PROFESSION = 'GW2_PROFESSION',
-  SKILL = 'GW2_SKILL',
-  SPECIALIZATION = 'GW2_SPECIALIZATION',
-  TRAIT = 'GW2_TRAIT'
+  ITEMS = 'GW2_ITEMS',
+  ITEM_STATS = 'GW2_ITEM_STATS',
+  PETS = 'GW2_PETS',
+  PROFESSIONS = 'GW2_PROFESSIONS',
+  SKILLS = 'GW2_SKILLS',
+  SPECIALIZATIONS = 'GW2_SPECIALIZATIONS',
+  TRAITS = 'GW2_TRAITS'
 }
 
-export type GW2ItemsState = ExtractGW2State<GW2Resources.ITEM>
-export type GW2ItemStatsState = ExtractGW2State<GW2Resources.ITEM_STAT>
-export type GW2PetsState = ExtractGW2State<GW2Resources.PET>
-export type GW2ProfessionsState = ExtractGW2State<GW2Resources.PROFESSION>
-export type GW2SkillsState = ExtractGW2State<GW2Resources.SKILL>
-export type GW2SpecializationsState = ExtractGW2State<GW2Resources.SPECIALIZATION>
-export type GW2TraitsState = ExtractGW2State<GW2Resources.TRAIT>
+export type GW2ItemsState = ExtractGW2State<GW2Resources.ITEMS>
+export type GW2ItemStatsState = ExtractGW2State<GW2Resources.ITEM_STATS>
+export type GW2PetsState = ExtractGW2State<GW2Resources.PETS>
+export type GW2ProfessionsState = ExtractGW2State<GW2Resources.PROFESSIONS>
+export type GW2SkillsState = ExtractGW2State<GW2Resources.SKILLS>
+export type GW2SpecializationsState = ExtractGW2State<GW2Resources.SPECIALIZATIONS>
+export type GW2TraitsState = ExtractGW2State<GW2Resources.TRAITS>
 
 export type ExtractGW2State<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, GW2AsyncRecord<ExtractGW2ResourceType<T>, ExtractGW2ErrorType<T>>>
 

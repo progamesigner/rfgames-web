@@ -51,11 +51,11 @@ export async function fetchGW2Build(): Promise<GW2Build> {
 
 export const apis = {
   fetchGW2Build: fetchGW2Build,
-  fetchGW2Items: fetchGW2ApiFactory<GW2Resources.ITEM>('items'),
-  fetchGW2ItemStats: fetchGW2ApiFactory<GW2Resources.ITEM_STAT>('itemstats'),
-  fetchGW2Pets: fetchGW2ApiFactory<GW2Resources.PET>('pets'),
-  fetchGW2Professions: fetchGW2ApiFactory<GW2Resources.PROFESSION>('professions'),
-  fetchGW2Skills: fetchGW2ApiFactory<GW2Resources.SKILL>('skills'),
-  fetchGW2Specializations: fetchGW2ApiFactory<GW2Resources.SPECIALIZATION>('specializations'),
-  fetchGW2Traits: fetchGW2ApiFactory<GW2Resources.TRAIT>('traits')
+  fetchGW2Items: fetchGW2ApiFactory<GW2Resources.ITEMS>('items'),
+  fetchGW2ItemStats: fetchGW2ApiFactory<GW2Resources.ITEM_STATS>('itemstats'),
+  fetchGW2Pets: fetchGW2ApiFactory<GW2Resources.PETS>('pets'),
+  fetchGW2Professions: fetchGW2ApiFactory<GW2Resources.PROFESSIONS>('professions'),
+  fetchGW2Skills: fetchGW2ApiFactory<GW2Resources.SKILLS>('skills'),
+  fetchGW2Specializations: fetchGW2ApiFactory<GW2Resources.SPECIALIZATIONS>('specializations'),
+  fetchGW2Traits: fetchGW2ApiFactory<GW2Resources.TRAITS>('traits')
 }

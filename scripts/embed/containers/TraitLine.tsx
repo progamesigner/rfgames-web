@@ -59,7 +59,7 @@ export class TraitLineContainer implements m.Component<TraitLineContainerAttribu
     }
   }: m.Vnode<TraitLineContainerAttributes>): m.Children {
     const {
-      [GW2Resources.SPECIALIZATION]: specializations
+      [GW2Resources.SPECIALIZATIONS]: specializations
     } = store.getState()
 
     if (id > 0 && specializations) {

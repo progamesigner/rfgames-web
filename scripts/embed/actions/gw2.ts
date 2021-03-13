@@ -173,21 +173,21 @@ export type GW2ErrorAction<T extends GW2Resources> = BaseAction<GW2ErrorPayload<
 export type GW2RequestAction<T extends GW2Resources> = BaseAction<GW2RequestPayload<T>>
 export type GW2ResponseAction<T extends GW2Resources> = BaseAction<GW2ResponsePayload<T>>
 
-export const fetchItem = actionFactory(GW2Resources.ITEM, apis.fetchGW2Items)
-export const fetchItemStat = actionFactory(GW2Resources.ITEM_STAT, apis.fetchGW2ItemStats)
-export const fetchPet = actionFactory(GW2Resources.PET, apis.fetchGW2Pets)
-export const fetchProfession = actionFactory(GW2Resources.PROFESSION, apis.fetchGW2Professions)
-export const fetchSkill = actionFactory(GW2Resources.SKILL, apis.fetchGW2Skills)
-export const fetchSpecialization = actionFactory(GW2Resources.SPECIALIZATION, apis.fetchGW2Specializations)
-export const fetchTrait = actionFactory(GW2Resources.TRAIT, apis.fetchGW2Traits)
+export const fetchItem = actionFactory(GW2Resources.ITEMS, apis.fetchGW2Items)
+export const fetchItemStat = actionFactory(GW2Resources.ITEM_STATS, apis.fetchGW2ItemStats)
+export const fetchPet = actionFactory(GW2Resources.PETS, apis.fetchGW2Pets)
+export const fetchProfession = actionFactory(GW2Resources.PROFESSIONS, apis.fetchGW2Professions)
+export const fetchSkill = actionFactory(GW2Resources.SKILLS, apis.fetchGW2Skills)
+export const fetchSpecialization = actionFactory(GW2Resources.SPECIALIZATIONS, apis.fetchGW2Specializations)
+export const fetchTrait = actionFactory(GW2Resources.TRAITS, apis.fetchGW2Traits)
 
-export const refreshItems = refreshActionFactory(GW2Resources.ITEM, fetchItem)
-export const refreshItemStats = refreshActionFactory(GW2Resources.ITEM_STAT, fetchItemStat)
-export const refreshPets = refreshActionFactory(GW2Resources.PET, fetchPet)
-export const refreshProfessions = refreshActionFactory(GW2Resources.PROFESSION, fetchProfession)
-export const refreshSkills = refreshActionFactory(GW2Resources.SKILL, fetchSkill)
-export const refreshSpecializations = refreshActionFactory(GW2Resources.SPECIALIZATION, fetchSpecialization)
-export const refreshTraits = refreshActionFactory(GW2Resources.TRAIT, fetchTrait)
+export const refreshItems = refreshActionFactory(GW2Resources.ITEMS, fetchItem)
+export const refreshItemStats = refreshActionFactory(GW2Resources.ITEM_STATS, fetchItemStat)
+export const refreshPets = refreshActionFactory(GW2Resources.PETS, fetchPet)
+export const refreshProfessions = refreshActionFactory(GW2Resources.PROFESSIONS, fetchProfession)
+export const refreshSkills = refreshActionFactory(GW2Resources.SKILLS, fetchSkill)
+export const refreshSpecializations = refreshActionFactory(GW2Resources.SPECIALIZATIONS, fetchSpecialization)
+export const refreshTraits = refreshActionFactory(GW2Resources.TRAITS, fetchTrait)
 
 export async function refreshIfNewBuild(
   dispatch: Dispatch,

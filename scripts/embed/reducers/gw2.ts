@@ -115,8 +115,8 @@ const responseReducer = <T extends GW2Resources>(
     if (storedData) {
       const cacheReducer = pipe(
         Object.values,
-        reduce<ExtractStoreRecord<T>, EmbedState[T]>((saved, { data }) => ({
-          ...saved,
+        reduce<ExtractStoreRecord<T>, EmbedState[T]>((stored, { data }) => ({
+          ...stored,
           ...data ? {
             [data.id]: data
           } : null
@@ -154,12 +154,12 @@ function reducerFactory<T extends GW2Resources>(
 
 export function gw2Reducers(language: string): GW2Reducers {
   return {
-    ...reducerFactory(GW2Resources.ITEM, language),
-    ...reducerFactory(GW2Resources.ITEM_STAT, language),
-    ...reducerFactory(GW2Resources.PET, language),
-    ...reducerFactory(GW2Resources.SKILL, language),
-    ...reducerFactory(GW2Resources.SPECIALIZATION, language),
-    ...reducerFactory(GW2Resources.TRAIT, language),
-    ...reducerFactory(GW2Resources.PROFESSION, language)
+    ...reducerFactory(GW2Resources.ITEMS, language),
+    ...reducerFactory(GW2Resources.ITEM_STATS, language),
+    ...reducerFactory(GW2Resources.PETS, language),
+    ...reducerFactory(GW2Resources.SKILLS, language),
+    ...reducerFactory(GW2Resources.SPECIALIZATIONS, language),
+    ...reducerFactory(GW2Resources.TRAITS, language),
+    ...reducerFactory(GW2Resources.PROFESSIONS, language)
   }
 }
