@@ -19,6 +19,7 @@ function parseOptions(window: Window): EmbedOptions {
   return {
     cacheVersion: '__INITIAL__',
     language: config.gw2ApiDefaultLanguage,
+    resources: {},
     useLocalStorageAsCache: true,
     ...window.GW2_EMBED_OPTIONS
   }

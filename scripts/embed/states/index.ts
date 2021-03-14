@@ -6,7 +6,7 @@ import { tooltipInitialState } from './tooltip'
 export function initializeState(options: EmbedOptions): EmbedState {
   return {
     ...options,
-    ...gw2InitialState(options.language),
+    ...gw2InitialState(options),
     ...tooltipInitialState()
   }
 }

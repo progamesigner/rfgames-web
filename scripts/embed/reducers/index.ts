@@ -6,8 +6,12 @@ import { tooltipReducers } from './tooltip'
 import { EmbedState, EmbedOptions } from '../types'
 
 export function initializeReducer(options: EmbedOptions): Reducer {
+  const {
+    language
+  } = options
+
   const reducers = {
-    ...gw2Reducers(options.language),
+    ...gw2Reducers(language),
     ...tooltipReducers
   } as Record<string, Reducer<EmbedState>>
 
