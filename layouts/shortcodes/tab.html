@@ -2,10 +2,10 @@
 
 {{- if .Ordinal | eq 0 -}}
     <div class="tab is-active">
-        {{ .Inner }}
+        {{- .Inner -}}
     </div>
 {{- else -}}
     <div class="tab">
-        {{ .Inner }}
+        {{- .Inner -}}
     </div>
 {{- end -}}
