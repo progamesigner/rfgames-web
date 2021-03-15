@@ -47,43 +47,41 @@
     {{- $id | slice $context | partial "functions/gw2-specialization-to-id.integer" | dict "disable-text" true "id" | slice $context "specialization" false | partial "components/embed.html" -}}
 {{- end -}}
 
-<div class="page-section-build-overview">
-    <div class="build-overview">
-        {{ .Inner }}
-    </div>
+<div class="build-overview">
+    {{- .Inner -}}
+</div>
 
-    <div class="build-specializations">
-        {{- range $traits -}}
-            {{- template "__rfgames_shortcode__build_overview_specialization__" slice $ | append . -}}
-        {{- end -}}
-    </div>
+<div class="build-specializations">
+    {{- range $traits -}}
+        {{- template "__rfgames_shortcode__build_overview_specialization__" slice $ | append . -}}
+    {{- end -}}
+</div>
 
-    <div class="build-summary">
-        {{- range $ratings -}}
-            {{- template "__rfgames_shortcode__build_overview_summary_rating__" slice $ . -}}
-        {{- end -}}
-    </div>
+<div class="build-summary">
+    {{- range $ratings -}}
+        {{- template "__rfgames_shortcode__build_overview_summary_rating__" slice $ . -}}
+    {{- end -}}
+</div>
 
-    <div class="build-tags">
-        <div class="tags">
-            <div class="tags has-addons">
-                <span class="tag">Credit</span>
-                <span class="tag">{{ $credits.designer }}</span>
-            </div>
-            <div class="tags has-addons">
-                <span class="tag">Updated</span>
-                <span class="tag">{{ .Page.Lastmod.Format "2006 / 01 / 02" }}</span>
-            </div>
-            <div class="tags has-addons">
-                <span class="tag">Source</span>
-                <span class="tag">
-                    {{- with .Page.GitInfo -}}
-                        <a href="{{ $.Site.Params.gitRepository }}/blob/{{ .AbbreviatedHash }}/content/{{ $.Page.File.Path }}">{{ .AbbreviatedHash }}</a>
-                    {{- else -}}
-                        dev
-                    {{- end -}}
-                </span>
-            </div>
+<div class="build-tags">
+    <div class="tags">
+        <div class="tags has-addons">
+            <span class="tag">Credit</span>
+            <span class="tag">{{ $credits.designer }}</span>
+        </div>
+        <div class="tags has-addons">
+            <span class="tag">Updated</span>
+            <span class="tag">{{ .Page.Lastmod.Format "2006 / 01 / 02" }}</span>
+        </div>
+        <div class="tags has-addons">
+            <span class="tag">Source</span>
+            <span class="tag">
+                {{- with .Page.GitInfo -}}
+                    <a href="{{ $.Site.Params.gitRepository }}/blob/{{ .AbbreviatedHash }}/content/{{ $.Page.File.Path }}">{{ .AbbreviatedHash }}</a>
+                {{- else -}}
+                    dev
+                {{- end -}}
+            </span>
         </div>
     </div>
 </div>
