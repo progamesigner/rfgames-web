@@ -18,10 +18,18 @@
 
 .message-body {
     color: var(--message-body-text-color);
+    display: flex;
     font-size: var(--message-body-font-size);
     margin: 0;
 
     p {
         margin: 0;
+    }
+
+    svg {
+        fill: currentColor;
+        height: var(--message-body-icon-size);
+        margin: var(--message-body-icon-margin);
+        width: var(--message-body-icon-size);
     }
 }
