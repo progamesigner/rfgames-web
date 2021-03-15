@@ -233,7 +233,7 @@ $speed: 86ms !default;
     --box-block-spacing: #{$block-spacing};
     --box-padding: 0.75rem 0.5rem;
     --box-radius: #{$radius};
-    --box-shadow: 0 0.5rem 1rem -0.125rem #{rgba($background-alternative-color, 0.1)}, 0 0px 0 1px #{rgba($background-alternative-color, 0.02)};
+    --box-shadow: 0 0.25rem 0.5rem -0.125rem #{rgba($background-alternative-color, 0.25)}, 0 0 0 0.125rem #{rgba($background-alternative-color, 0.15)};
     --box-text-color: #{$foreground-color};
 
     --consent-alternative-background-color: #{rgba($background-color, 0.75)};
