@@ -1,10 +1,15 @@
 .columns {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     margin-bottom: calc(var(--block-spacing) - var(--column-gap));
     margin-left: calc(-1 * var(--column-gap));
     margin-right: calc(-1 * var(--column-gap));
     margin-top: calc(-1 * var(--column-gap));
+
+    &:last-child {
+        margin-bottom: calc(-1 * var(--column-gap));;
+    }
 
     &.is-centered {
         justify-content: center;
@@ -12,10 +17,6 @@
 
     @include tablet() {
         flex-direction: row;
-
-        &.is-multiline {
-            flex-wrap: wrap;
-        }
     }
 }
 

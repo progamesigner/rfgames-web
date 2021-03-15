@@ -44,7 +44,7 @@
                 <div class="content">
                     {{- .Content -}}
 
-                    <div class="columns is-multiline">
+                    <div class="columns">
                         {{- range .Pages -}}
                             {{- $menu := or ("menu" | .Param) ("menus" | .Param) | default dict -}}
                             {{- $nav := "nav" | index $menu | default dict -}}
