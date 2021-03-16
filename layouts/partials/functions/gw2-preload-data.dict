@@ -1,0 +1,22 @@
+{{- $context := 0 | index . -}}
+{{- $data := 1 | index . -}}
+{{- $key := 2 | index . -}}
+{{- $identity := 3 | index . -}}
+{{- $store := 4 | index . -}}
+{{- $ids := 5 | index . -}}
+
+{{- $table := slice $context | partialCached $store -}}
+
+{{- $preloads := dict -}}
+{{- range $ids | uniq -}}
+    {{- $id := . | slice $context | partial $identity | string -}}
+    {{- $preloads = $id | index $table | dict $id | merge $preloads -}}
+{{- end -}}
+
+{{- with $key | index $data -}}
+    {{- $preloads = $preloads | merge . -}}
+{{- end -}}
+
+{{- $data = $preloads | dict $key | merge $data -}}
+
+{{- return $data -}}

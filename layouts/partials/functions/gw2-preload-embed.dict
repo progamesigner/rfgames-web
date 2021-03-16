@@ -1,0 +1,29 @@
+{{- $context := 0 | index . -}}
+{{- $embeds := 1 | index . | default dict -}}
+
+{{- $data := dict -}}
+{{- range $type, $ids := $embeds -}}
+    {{- if $type | eq "item" -}}
+        {{- $data = $ids | slice $context $data "GW2_ITEMS" "functions/gw2-item-to-id.integer" "apis/gw2-get-items.dict" | partial "functions/gw2-preload-data.dict" -}}
+    {{- end -}}
+    {{- if $type | eq "itemstat" -}}
+        {{- $data = $ids | slice $context $data "GW2_ITEM_STATS" "functions/gw2-item-to-id.integer" "apis/gw2-get-itemstats.dict" | partial "functions/gw2-preload-data.dict" -}}
+    {{- end -}}
+    {{- if $type | eq "profession" -}}
+        {{- $data = $ids | slice $context $data "GW2_PROFESSIONS" "functions/gw2-profession-to-id.string" "apis/gw2-get-professions.dict" | partial "functions/gw2-preload-data.dict" -}}
+    {{- end -}}
+    {{- if $type | eq "skill" -}}
+        {{- $data = $ids | slice $context $data "GW2_SKILLS" "functions/gw2-skill-to-id.integer" "apis/gw2-get-skills.dict" | partial "functions/gw2-preload-data.dict" -}}
+    {{- end -}}
+    {{- if $type | eq "specialization" -}}
+        {{- $data = $ids | slice $context $data "GW2_SPECIALIZATIONS" "functions/gw2-specialization-to-id.integer" "apis/gw2-get-specializations.dict" | partial "functions/gw2-preload-data.dict" -}}
+    {{- end -}}
+    {{- if $type | eq "trait" -}}
+        {{- $data = $ids | slice $context $data "GW2_TRAITS" "functions/gw2-trait-to-id.integer" "apis/gw2-get-traits.dict" | partial "functions/gw2-preload-data.dict" -}}
+    {{- end -}}
+    {{- if $type | eq "traitline" -}}
+        {{- $data = $ids | slice $context $data "GW2_SPECIALIZATIONS" "functions/gw2-specialization-to-id.integer" "apis/gw2-get-specializations.dict" | partial "functions/gw2-preload-data.dict" -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return $data -}}
