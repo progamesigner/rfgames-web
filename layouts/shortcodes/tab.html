@@ -1,4 +1,6 @@
-{{- .Get "title" | slice | .Parent.Scratch.Add "tab-list" -}}
+{{- $title := "title" | .Get -}}
+
+{{- $title | slice | .Parent.Scratch.Add "tab-list" -}}
 
 {{- if .Ordinal | eq 0 -}}
     <div class="tab is-active">
