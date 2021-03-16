@@ -5,7 +5,7 @@ import { EmbedStore } from '../types'
 
 import {
   extractNumberList,
-  extractString,
+  extractOptionalString,
   extractStringList,
   parseSelectedTrait,
   parseTraitlines
@@ -13,8 +13,8 @@ import {
 
 export function create(store: EmbedStore, element: Element): m.Component {
   const commonAttrs = {
-    overrideEmptyText: extractString(element, 'empty-text', ''),
-    overrideText: extractString(element, 'text', '')
+    overrideEmptyText: extractOptionalString(element, 'empty-text'),
+    overrideText: extractOptionalString(element, 'text')
   }
 
   return {

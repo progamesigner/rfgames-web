@@ -6,7 +6,7 @@ import { EmbedStore } from '../types'
 import {
   extractBoolean,
   extractNumber,
-  extractString,
+  extractOptionalString,
   extractStringList,
   parseTraitlines
 } from './libs'
@@ -22,9 +22,9 @@ export function create(store: EmbedStore, element: Element): m.Component {
     disableTextLink: extractBoolean(element, 'disable-text-link', false),
     disableTooltip: extractBoolean(element, 'disable-tooltip', false),
     inline: extractBoolean(element, 'inline', false),
-    link: extractString(element, 'link', ''),
-    overrideEmptyText: extractString(element, 'empty-text', ''),
-    overrideText: extractString(element, 'text', ''),
+    link: extractOptionalString(element, 'link'),
+    overrideEmptyText: extractOptionalString(element, 'empty-text'),
+    overrideText: extractOptionalString(element, 'text'),
 
     activeTraitlines: parseTraitlines(extractStringList(element, 'active-traitlines'))
   }

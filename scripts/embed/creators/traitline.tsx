@@ -6,6 +6,7 @@ import { EmbedStore } from '../types'
 import {
   extractBoolean,
   extractNumber,
+  extractOptionalString,
   extractString,
   extractStringList,
   parseSelectedTrait,
@@ -16,7 +17,7 @@ export function create(store: EmbedStore, element: Element): m.Component {
   const attrs = {
     id: extractNumber(element, 'id', -1),
 
-    overrideEmptyText: extractString(element, 'empty-text', ''),
+    overrideEmptyText: extractOptionalString(element, 'empty-text'),
     disableTooltip: extractBoolean(element, 'disable-tooltip', false),
 
     activeTraitlines: parseTraitlines(extractStringList(element, 'active-traitlines')),

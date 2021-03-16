@@ -11,8 +11,12 @@ export function extractNumber(element: Element, name: string, defaultValue: numb
   return value ? parseInt(value, 10) : defaultValue
 }
 
+export function extractOptionalString(element: Element, name: string): string | null {
+  return element.getAttribute(makeAttributeName(name))
+}
+
 export function extractString(element: Element, name: string, defaultValue: string): string {
-  return element.getAttribute(makeAttributeName(name)) ?? defaultValue
+  return extractOptionalString(element, name) ?? defaultValue
 }
 
 export function extractNumberList(element: Element, name: string): ReadonlyArray<number> {

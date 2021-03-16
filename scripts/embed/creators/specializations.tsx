@@ -6,7 +6,7 @@ import { EmbedStore } from '../types'
 import {
   extractBoolean,
   extractNumberList,
-  extractString
+  extractOptionalString
 } from './libs'
 
 export function create(store: EmbedStore, element: Element): m.Component {
@@ -14,8 +14,8 @@ export function create(store: EmbedStore, element: Element): m.Component {
     disableIconLink: extractBoolean(element, 'disable-icon-link', true),
     disableIconPlaceholder: extractBoolean(element, 'disable-icon-placeholder', false),
     disableTooltip: extractBoolean(element, 'disable-tooltip', false),
-    overrideEmptyText: extractString(element, 'empty-text', ''),
-    overrideText: extractString(element, 'text', '')
+    overrideEmptyText: extractOptionalString(element, 'empty-text'),
+    overrideText: extractOptionalString(element, 'text')
   }
 
   return {
@@ -30,7 +30,7 @@ export function create(store: EmbedStore, element: Element): m.Component {
               disableText: true,
               disableTextLink: true,
 
-              link: extractString(element, `${id}-link`, '')
+              link: extractOptionalString(element, `${id}-link`)
             }
 
             return <Specialization key={id} {...attrs} store={store}></Specialization>
