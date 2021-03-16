@@ -22,9 +22,11 @@ interface EmbedResources {
 }
 
 export interface EmbedOptions {
+  accessToken?: string;
   cacheVersion: string;
   language: string;
   resources: Partial<EmbedResources>;
+  schemaVersion: string;
   useLocalStorageAsCache: boolean;
 }
 

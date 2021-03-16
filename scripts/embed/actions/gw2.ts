@@ -55,10 +55,18 @@ function actionFactory<T extends GW2Resources>(
   const debounced = batchFactory<T>(async (ids, dispatch, getState) => {
     const {
       [resource]: data,
-      language
+      accessToken,
+      language,
+      schemaVersion
     } = getState()
 
     const item = data as ExtractGW2State<T> | undefined
+
+    const options = {
+      accessToken,
+      language,
+      schemaVersion
+    }
 
     const fetchIdsFilter = pipe(
       filter<ExtractGW2KeyType<T>>(id => {
@@ -76,7 +84,7 @@ function actionFactory<T extends GW2Resources>(
       const fetcher = pipe(
         concat<ExtractGW2KeyType<T>>([]),
         splitEvery(config.gw2ApiRequestLimit),
-        map(fetch.bind(null, language || config.gw2ApiDefaultLanguage))
+        map(fetch.bind(null, options))
       )
 
       dispatch({
@@ -150,7 +158,6 @@ function refreshActionFactory<T extends GW2Resources>(
     dispatch({
       type: refresh
     })
-
 
     pipe(
       Object.values,

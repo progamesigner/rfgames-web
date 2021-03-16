@@ -177,7 +177,7 @@ export function buildWikiLink(store: Store, to: string): string {
     language
   } = store.getState()
 
-  return `https://wiki-${language || config.gw2ApiDefaultLanguage}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
+  return `https://wiki-${language || config.gw2WikiDefaultLanguage}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
 }
 
 export function markup(text = '', flavors: MarkupFlavorMap = {}): string {

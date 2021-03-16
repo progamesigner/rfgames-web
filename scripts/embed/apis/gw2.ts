@@ -23,12 +23,20 @@ function reduceById<T extends GW2Resources>(
 function fetchGW2ApiFactory<T extends GW2Resources>(
   resource: string
 ): GW2Fetcher<T> {
-  return async (language: string, ids: ReadonlyArray<ExtractGW2KeyType<T>>) => {
+  return async (options: GW2APIOptions, ids: ReadonlyArray<ExtractGW2KeyType<T>>) => {
+    const params = {
+      ...(options.accessToken ? {
+        access_token: options.accessToken,
+      } : {}),
+      lang: options.language ?? config.gw2ApiDefaultLanguage,
+      v: options.schemaVersion ?? config.gw2ApiDefaultSchemaVersion
+    }
+
     const response = await request<ReadonlyArray<ExtractGW2ResourceType<T>>>({
       background: true,
       params: {
         ids: ids.join(','),
-        lang: language
+        ...params
       },
       url: `${config.gw2ApiEndpoint}/v2/${resource}`
     })
@@ -39,9 +47,15 @@ function fetchGW2ApiFactory<T extends GW2Resources>(
 export type GW2Fetcher<
   T extends GW2Resources
 > = (
-  language: string,
+  options: GW2APIOptions,
   ids: ReadonlyArray<ExtractGW2KeyType<T>>
 ) => Promise<Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>>>
+
+export interface GW2APIOptions {
+  accessToken?: string;
+  language?: string;
+  schemaVersion?: string;
+}
 
 export async function fetchGW2Build(): Promise<GW2Build> {
   return request<GW2Build>({
