@@ -63,7 +63,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
       elite.name :
       profession.name
 
-    const text = overrideText || name
+    const text = overrideText ?? name
 
     return <Container
       className={cx(parseProfessionClassNames(profession), className)}
@@ -83,7 +83,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(store, name)} /> :
+            <Link href={link ?? buildWikiLink(store, name)} /> :
             null
           }
         </Icon> :
@@ -96,7 +96,7 @@ export class Profession implements m.Component<ProfessionAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(store, name)}
+              href={link ?? buildWikiLink(store, name)}
             >{text}</Link> :
             text
           }</Text> :

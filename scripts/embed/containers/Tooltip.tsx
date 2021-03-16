@@ -91,7 +91,7 @@ export class TooltipContainer implements m.Component<TooltipContainerAttributes>
   }
 
   public onupdate({ dom }: m.VnodeDOM<TooltipContainerAttributes>): void {
-    this.container = dom || null
+    this.container = dom
   }
 
   public view({

@@ -65,7 +65,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       store
     }
   }: m.Vnode<SpecializationAttributes>): m.Children {
-    const name = overrideText || specialization.name
+    const name = overrideText ?? specialization.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {
@@ -92,7 +92,7 @@ export class Specialization implements m.Component<SpecializationAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(store, specialization.name)} />:
+            <Link href={link ?? buildWikiLink(store, specialization.name)} />:
             null
           }
         </Icon> :
@@ -100,14 +100,16 @@ export class Specialization implements m.Component<SpecializationAttributes> {
       }
       {
         !disableText ?
-        <Text className={cx(styles.name, classText)}
-        {...disableTextLink && tooltipEvents}>
+        <Text
+          className={cx(styles.name, classText)}
+          {...disableTextLink && tooltipEvents}
+        >
           {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(store, specialization.name)}
-              {...!disableTextLink && tooltipEvents}
+              href={link ?? buildWikiLink(store, specialization.name)}
+              {...tooltipEvents}
             >{name}</Link> :
             name
           }

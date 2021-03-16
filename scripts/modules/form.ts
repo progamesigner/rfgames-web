@@ -22,35 +22,35 @@ type ContactFormData = {
 type FormTransformer<T> = (data: FormData) => T
 
 function formApplicationTransformer(data: FormData): ApplicationFormData {
-  const account = data.get('account') as string
-  const alt = data.get('alt') as string
-  const discord = data.get('discord') as string
-  const main = data.get('main') as string
-  const message = data.get('message') as string
+  const account = data.get('account') as string | null
+  const alt = data.get('alt') as string | null
+  const discord = data.get('discord') as string | null
+  const main = data.get('main') as string | null
+  const message = data.get('message') as string | null
 
   return {
-    account: account || null,
+    account: account ?? null,
     age: data.get('age') === 'true',
-    alt: alt.toLowerCase(),
+    alt: alt ? alt.toLowerCase() : '',
     commands: data.get('commands') === 'true',
-    discord: discord || null,
+    discord: discord ?? null,
     goals: data.get('goals') === 'true',
-    main: main.toLowerCase(),
-    message: message || null,
+    main: main ? main.toLowerCase() : '',
+    message: message ?? null,
     microphone: data.get('microphone') === 'true',
     times: data.get('times') === 'true'
   }
 }
 
 function formContactTransformer(data: FormData): ContactFormData {
-  const email = data.get('email') as string
-  const message = data.get('message') as string
-  const name = data.get('name') as string
+  const email = data.get('email') as string | null
+  const message = data.get('message') as string | null
+  const name = data.get('name') as string | null
 
   return {
-    email: email || null,
-    message: message || null,
-    name: name || null
+    email: email ?? null,
+    message: message ?? null,
+    name: name ?? null
   }
 }
 
@@ -93,8 +93,8 @@ function bind<T>(form: HTMLFormElement, transformer: FormTransformer<T>) {
 
     onSubmitBegin(form)
     try {
-      await request(form.getAttribute('action') || '', {
-        method: form.getAttribute('method') || 'POST',
+      await request(form.getAttribute('action') ?? '', {
+        method: form.getAttribute('method') ?? 'POST',
         headers: {
           'Content-Type': 'application/json'
         },

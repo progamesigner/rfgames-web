@@ -52,7 +52,7 @@ export function bootstrap(window: Window): void {
     unbindEvent()
   })
 
-  window.dataLayer = window.dataLayer || []
+  window.dataLayer = window.dataLayer ?? []
 
   window[`ga-disable-${id}`] = (dnt === '1' || dnt === 'yes')
 

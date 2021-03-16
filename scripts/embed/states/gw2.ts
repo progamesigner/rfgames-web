@@ -1,3 +1,5 @@
+import { filter, identity, pipe, reduce } from 'rambda'
+
 import { clearCacheIfRequested, makeResourceKey, parse } from '../libs'
 import {
   EmbedOptions,
@@ -14,9 +16,10 @@ type GW2ResourceRecord<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, Ex
 function mapCacheToStore<T extends GW2Resources>(
   resources?: GW2ResourceRecord<T>
 ): ExtractGW2State<T> {
-  return Object
-    .values<ExtractGW2ResourceType<T>>(resources || {})
-    .reduce((state, resource) => ({
+  return pipe(
+    Object.values,
+    filter(identity),
+    reduce((state, resource) => ({
       ...state,
       [resource.id]: {
         data: resource,
@@ -24,6 +27,7 @@ function mapCacheToStore<T extends GW2Resources>(
         state: GW2AsyncState.DONE
       }
     }), {} as ExtractGW2State<T>)
+  )(resources ?? {})
 }
 
 function stateFactory<T extends GW2Resources>(

@@ -26,8 +26,8 @@ export function bootstrap(window: Window): void {
   } = window
 
   const buttons = document.querySelectorAll('.back-to-top')
-  const duration = scrollTopDuration || 500
-  const offset = scrollTopOffset || 300
+  const duration = scrollTopDuration ?? 500
+  const offset = scrollTopOffset ?? 300
 
   bindScrollEvent(window, (_, y) => {
     if (y > offset) {

@@ -43,7 +43,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
   }: m.Vnode<TraitTooltipAttributes>): m.Children {
     const facts = trait.facts ?
       sortFacts(
-        applyTraitedFacts(trait.facts, activeTraits || [], trait.traited_facts),
+        applyTraitedFacts(trait.facts, activeTraits ?? [], trait.traited_facts),
         traitedFact => traitedFact.fact.type
       ) :
       []
@@ -51,7 +51,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
     return m.fragment({}, [
       ...(
         trait.skills ?
-        slice(index || 0, 1)(trait.skills).map(skill =>
+        slice(index ?? 0, 1)(trait.skills).map(skill =>
           <SkillTooltip key={skill.id} activeTraits={activeTraits} skill={skill} />
         ) :
         []

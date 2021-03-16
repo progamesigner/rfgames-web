@@ -21,7 +21,7 @@ function renderIcon(
   image: string
 ): m.Children {
   return <span className={className}>
-    <span>{value.toLocaleString()}</span>
+    <span>{value}</span>
     <Icon
       className={styles.icon.root}
       classSize={styles.icon.size}

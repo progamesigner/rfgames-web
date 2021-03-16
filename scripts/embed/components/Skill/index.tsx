@@ -63,7 +63,7 @@ export class Skill implements m.Component<SkillAttributes> {
       store
     }
   }: m.Vnode<SkillAttributes>): m.Children {
-    const name = overrideText || skill.name
+    const name = overrideText ?? skill.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SKILL, {
@@ -91,7 +91,7 @@ export class Skill implements m.Component<SkillAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(store, skill.name)} /> :
+            <Link href={link ?? buildWikiLink(store, skill.name)} /> :
             null
           }
         </Icon> :
@@ -107,8 +107,8 @@ export class Skill implements m.Component<SkillAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(store, skill.name)}
-              {...!disableTextLink && tooltipEvents}
+              href={link ?? buildWikiLink(store, skill.name)}
+              {...tooltipEvents}
             >{name}</Link> :
             name
           }

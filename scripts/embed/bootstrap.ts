@@ -84,7 +84,7 @@ export async function bootstrap(window: Window): Promise<Array<void>> {
     cacheVersion
   } = store.getState()
 
-  forceClearCacheOnNextLoad(cacheVersion || '__DEFAULT__')
+  forceClearCacheOnNextLoad(cacheVersion ?? '__DEFAULT__')
 
   return Promise
     .all([

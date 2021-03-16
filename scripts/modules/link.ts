@@ -6,7 +6,7 @@ export function bootstrap(window: Window): void {
   document
     .querySelectorAll('a[href^="http"]')
     .forEach(element => {
-      const url = element.getAttribute('href') || window.location.href
+      const url = element.getAttribute('href') ?? window.location.href
 
       element.addEventListener('click', event => {
         open(url, '_blank', 'noopener noreferrer')

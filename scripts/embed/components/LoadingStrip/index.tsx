@@ -26,6 +26,6 @@ export class LoadingStrip implements m.Component<LoadingStripAttributes> {
     return <Text
       className={cx(styles.root, className, makeClassName('loading'))}
       {...attrs}
-    >{text || 'Loading ...'}</Text>
+    >{text ?? 'Loading ...'}</Text>
   }
 }

@@ -90,7 +90,7 @@ export function applyTraitedFacts(
     .filter(fact => traits.includes(fact.requires_trait))
     .map(fact => ({
       fact: omitTraitedFactFields(fact) as GW2Fact,
-      index: fact.overrides || -1
+      index: fact.overrides ?? -1
     }))
     .reduce((facts, { fact, index }) => {
       const traitedFact = {
@@ -177,7 +177,7 @@ export function buildWikiLink(store: Store, to: string): string {
     language
   } = store.getState()
 
-  return `https://wiki-${language || config.gw2WikiDefaultLanguage}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
+  return `https://wiki-${language ?? config.gw2WikiDefaultLanguage}.guildwars2.com/wiki/Special:Search/${encodeURIComponent(to)}`
 }
 
 export function markup(text = '', flavors: MarkupFlavorMap = {}): string {
@@ -186,7 +186,7 @@ export function markup(text = '', flavors: MarkupFlavorMap = {}): string {
       return `${tagOpen}span class="${makeClassName('color-format')}" style="color:${color}"${tagClose}${text}${tagOpen}/span${tagClose}`
     })
     .replace(regexColorName, (_, flavor, text) => {
-      return `${tagOpen}span class="${cx(flavors[flavor] || flavor, makeClassName('color-format'))} is-${flavor}"${tagClose}${text}${tagOpen}/span${tagClose}`
+      return `${tagOpen}span class="${cx(flavors[flavor] ?? flavor, makeClassName('color-format'))} is-${flavor}"${tagClose}${text}${tagOpen}/span${tagClose}`
     })
     .replace(regexNewLine, `${tagOpen}br${tagClose}`)
     .replace(regexSymbolLessThan, '&lt;')

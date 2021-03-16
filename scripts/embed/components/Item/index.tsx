@@ -74,16 +74,16 @@ export class Item implements m.Component<ItemAttributes> {
       upgrades
     }
   }: m.Vnode<ItemAttributes>): m.Children {
-    const name = overrideText || item.name
+    const name = overrideText ?? item.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_ITEM, {
-        enrichments: enrichments || [],
-        infusions: infusions || [],
+        enrichments: enrichments ?? [],
+        infusions: infusions ?? [],
         item,
         stat,
-        upgradeCount: upgradeCount || 1,
-        upgrades: upgrades || []
+        upgradeCount: upgradeCount ?? 1,
+        upgrades: upgrades ?? []
       }) :
       {}
 
@@ -106,7 +106,7 @@ export class Item implements m.Component<ItemAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(store, item.name)} /> :
+            <Link href={link ?? buildWikiLink(store, item.name)} /> :
             null
           }
         </Icon> :
@@ -122,8 +122,8 @@ export class Item implements m.Component<ItemAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(store, item.name)}
-              {...!disableTextLink && tooltipEvents}
+              href={link ?? buildWikiLink(store, item.name)}
+              {...tooltipEvents}
             >{name}</Link> :
             name
           }

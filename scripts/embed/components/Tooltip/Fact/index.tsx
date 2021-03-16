@@ -87,15 +87,15 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.ATTRIBUTE_ADJUST:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText traited={traited}>{fact.text || attributeToName(fact.target)}: +{fact.value.toLocaleString()}</FactText>
+          <FactText traited={traited}>{fact.text ?? attributeToName(fact.target)}: +{fact.value}</FactText>
         </FactContainer>
       case GW2FactType.BUFF:
         return <FactContainer>
           <FactIcon applyCount={fact.apply_count} src={fact.icon} />
           {
             fact.duration ?
-            <FactText traited={traited}>{fact.status}<FactText traited={traited}>({fact.duration}s)</FactText>: {markup(fact.description || '')}</FactText> :
-            <FactText traited={traited}>{fact.status}: {markup(fact.description || '')}</FactText>
+            <FactText traited={traited}>{fact.status}<FactText traited={traited}>({fact.duration}s)</FactText>: {markup(fact.description ?? '')}</FactText> :
+            <FactText traited={traited}>{fact.status}: {markup(fact.description ?? '')}</FactText>
           }
         </FactContainer>
       case GW2FactType.BUFF_CONVERSION:
@@ -129,7 +129,7 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.DISTANCE:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText traited={traited}>{markup(fact.text)}: {fact.distance.toLocaleString()}</FactText>
+          <FactText traited={traited}>{markup(fact.text)}: {fact.distance}</FactText>
         </FactContainer>
       case GW2FactType.DURATION:
         return <FactContainer>
@@ -154,7 +154,7 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.NUMBER:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText traited={traited}>{markup(fact.text)}: {fact.value.toLocaleString()}</FactText>
+          <FactText traited={traited}>{markup(fact.text)}: {fact.value}</FactText>
         </FactContainer>
       case GW2FactType.PERCENT:
         return <FactContainer>
@@ -174,12 +174,12 @@ export class TooltipFact implements m.Component<FactTooltipAttributes> {
       case GW2FactType.RADIUS:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText traited={traited}>{markup(fact.text)}: {fact.distance.toLocaleString()}</FactText>
+          <FactText traited={traited}>{markup(fact.text)}: {fact.distance}</FactText>
         </FactContainer>
       case GW2FactType.RANGE:
         return <FactContainer>
           <FactIcon src={fact.icon} />
-          <FactText traited={traited}>{markup(fact.text)}: {fact.value.toLocaleString()}</FactText>
+          <FactText traited={traited}>{markup(fact.text)}: {fact.value}</FactText>
         </FactContainer>
       case GW2FactType.RECHARGE:
         return <FactContainer className={styles.recharge}>

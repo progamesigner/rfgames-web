@@ -65,7 +65,7 @@ export function get(key: string): string | null {
 }
 
 export function parse<T>(key: string): T {
-  return JSON.parse(get(key) || EMPTY_CACHE) as T
+  return JSON.parse(get(key) ?? EMPTY_CACHE) as T
 }
 
 export function set(key: string, value: string): void {

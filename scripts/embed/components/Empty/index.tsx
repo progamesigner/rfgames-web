@@ -54,11 +54,11 @@ export class Empty implements m.Component<EmptyAttributes> {
       type
     }
   }: m.Vnode<EmptyAttributes>): m.Children {
-    const text = overrideEmptyText || overrideText || 'Not Found'
+    const text = overrideEmptyText ?? overrideText ?? 'Not Found'
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.TEXT, {
-        text: overrideTooltipText || text
+        text: overrideTooltipText ?? text
       }) :
       {}
 

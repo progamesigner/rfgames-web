@@ -162,7 +162,7 @@ export class Effect implements m.Component<EffectAttributes> {
         !disableText ?
         <Text
           className={cx(styles.name, classText)}
-        >{overrideText || id}</Text> :
+        >{overrideText ?? id}</Text> :
         null
       }
     </Container>

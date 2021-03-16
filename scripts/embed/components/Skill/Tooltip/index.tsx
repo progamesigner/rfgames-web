@@ -38,7 +38,7 @@ export class SkillTooltip implements m.Component<SkillTooltipAttributes> {
   }: m.Vnode<SkillTooltipAttributes>): m.Children {
     const facts = skill.facts ?
       sortFacts(
-        applyTraitedFacts(skill.facts, activeTraits || [], skill.traited_facts),
+        applyTraitedFacts(skill.facts, activeTraits ?? [], skill.traited_facts),
         traitedFact => traitedFact.fact.type
       ) :
       []

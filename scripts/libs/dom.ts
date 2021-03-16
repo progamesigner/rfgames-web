@@ -8,11 +8,11 @@ let scrollEventInstalled = false
 let scrollEventCallbacks = [] as ReadonlyArray<ScrollEventCallback>
 
 export function currentScrollX(): number {
-  return window.scrollX || window.pageXOffset || 0
+  return window.scrollX ?? window.pageXOffset ?? 0
 }
 
 export function currentScrollY(): number {
-  return window.scrollY || window.pageYOffset || 0
+  return window.scrollY ?? window.pageYOffset ?? 0
 }
 
 export function bindEventListener(

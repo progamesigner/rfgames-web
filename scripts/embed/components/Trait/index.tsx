@@ -68,7 +68,7 @@ export class Trait implements m.Component<TraitAttributes> {
       trait
     }
   }: m.Vnode<TraitAttributes>): m.Children {
-    const name = overrideText || trait.name
+    const name = overrideText ?? trait.name
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_TRAIT, {
@@ -96,7 +96,7 @@ export class Trait implements m.Component<TraitAttributes> {
         >
           {
             !disableIconLink ?
-            <Link href={link || buildWikiLink(store, trait.name)} /> :
+            <Link href={link ?? buildWikiLink(store, trait.name)} /> :
             null
           }
         </Icon> :
@@ -112,8 +112,8 @@ export class Trait implements m.Component<TraitAttributes> {
             !disableTextLink ?
             <Link
               className={styles.link}
-              href={link || buildWikiLink(store, trait.name)}
-              {...!disableTextLink && tooltipEvents}
+              href={link ?? buildWikiLink(store, trait.name)}
+              {...tooltipEvents}
             >{name}</Link> :
             name
           }

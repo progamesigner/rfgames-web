@@ -12,7 +12,7 @@ export function extractNumber(element: Element, name: string, defaultValue: numb
 }
 
 export function extractString(element: Element, name: string, defaultValue: string): string {
-  return element.getAttribute(makeAttributeName(name)) || defaultValue
+  return element.getAttribute(makeAttributeName(name)) ?? defaultValue
 }
 
 export function extractNumberList(element: Element, name: string): ReadonlyArray<number> {
