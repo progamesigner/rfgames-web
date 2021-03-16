@@ -1,1 +1,15 @@
+{{- $embedOptions := dict -}}
+
+{{- $embedOptions = .Page.Scratch.Get "rfgames-embeds" | slice $ | partial "functions/gw2-preload-embed.dict" | dict "resources" | merge $embedOptions -}}
+{{- $embedOptions = "gw2APILanguage" | .Site.Param | dict "language" | merge $embedOptions -}}
+{{- $embedOptions = "gw2APISchemaVersion" | .Site.Param | dict "schemaVersion" | merge $embedOptions -}}
+
+<script>
+    window.GW2_EMBED_OPTIONS = Object.assign(
+        {},
+        window.GW2_EMBED_OPTIONS,
+        {{- $embedOptions | jsonify | safeJS -}}
+    );
+</script>
+
 {{- .Inner -}}

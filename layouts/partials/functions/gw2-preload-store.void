@@ -1,0 +1,8 @@
+{{- $context := 0 | index . -}}
+{{- $type := 1 | index . -}}
+{{- $id := 2 | index . -}}
+{{- $key := 3 | index . | default "rfgames-embeds" -}}
+
+{{- $data := $key | $context.Page.Scratch.Get | default dict -}}
+{{- $ids := $type | index $data | append $id -}}
+{{- $context.Page.Scratch.SetInMap $key $type $ids -}}

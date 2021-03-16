@@ -121,6 +121,44 @@
     {{- . | printf "gw2-embed-%s" -}}
 {{- end -}}
 
+{{- with $data -}}
+    {{- $specializations := slice $context | partialCached "apis/gw2-get-specializations.dict" -}}
+
+    {{- with "id" | index . -}}
+        {{- . | slice $context $type | partial "functions/gw2-preload-store.void" -}}
+
+        {{- if $type | eq "specialization" -}}
+            {{- with . | string | index $specializations -}}
+                {{- range "minor_traits" | index . -}}
+                    {{- . | slice $context "trait" | partial "functions/gw2-preload-store.void" -}}
+                {{- end -}}
+                {{- range "major_traits" | index . -}}
+                    {{- . | slice $context "trait" | partial "functions/gw2-preload-store.void" -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+
+        {{- if $type | eq "traitline" -}}
+            {{- with . | string | index $specializations -}}
+                {{- range "minor_traits" | index . -}}
+                    {{- . | slice $context "trait" | partial "functions/gw2-preload-store.void" -}}
+                {{- end -}}
+                {{- range "major_traits" | index . -}}
+                    {{- . | slice $context "trait" | partial "functions/gw2-preload-store.void" -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- with "stat" | index . -}}
+        {{- . | slice $context "itemstat" | partial "functions/gw2-preload-store.void" -}}
+    {{- end -}}
+
+    {{- with "elite" | index . -}}
+        {{- . | slice $context "specialization" | partial "functions/gw2-preload-store.void" -}}
+    {{- end -}}
+{{- end -}}
+
 {{- if $inline -}}
     <span
         {{ range $key, $value := $attributes }}
