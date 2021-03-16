@@ -65,11 +65,11 @@ export const loader = style({
   }),
   borderRadius: percent(50),
   borderTopColor: 'currentColor',
-  bottom: em(layouts.gap * 2),
+  bottom: em(layouts.gap),
   display: 'block',
-  left: em(layouts.gap * 2),
+  left: em(layouts.gap),
   position: 'absolute',
-  right: em(layouts.gap * 2),
-  top: em(layouts.gap * 2),
+  right: em(layouts.gap),
+  top: em(layouts.gap),
   zIndex: zIndices.loader
 })
