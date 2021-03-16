@@ -104,7 +104,7 @@
                 {{- with .Params.disqusId -}}
                     id: '{{ . }}',
                 {{- else -}}
-                    {{ with .File }}
+                    {{- with .File -}}
                         id: '{{ .UniqueID }}',
                     {{- end -}}
                 {{- end -}}
