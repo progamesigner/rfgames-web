@@ -7,7 +7,6 @@ import {
   extractBoolean,
   extractNumber,
   extractOptionalString,
-  extractString,
   extractStringList,
   parseSelectedTrait,
   parseTraitlines
