@@ -60,4 +60,5 @@ export type ExtractGW2KeyType<T extends GW2Resources> = GW2ResourceMapping exten
 export type ExtractGW2ResourceType<T extends GW2Resources> = GW2ResourceMapping extends Pick<GW2ResourceMapping, T> ? GW2ResourceMapping[T][1] : never
 export type ExtractGW2ErrorType<T extends GW2Resources> = GW2ResourceMapping extends Pick<GW2ResourceMapping, T> ? GW2ResourceMapping[T][2] : never
 
-export type GW2ResourceState<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, GW2AsyncRecord<ExtractGW2ResourceType<T>, ExtractGW2ErrorType<T>>>
+export type GW2ResourceRecord<T extends GW2Resources> = GW2AsyncRecord<ExtractGW2ResourceType<T>, ExtractGW2ErrorType<T>>
+export type GW2ResourceState<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, GW2ResourceRecord<T>>

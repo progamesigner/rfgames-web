@@ -20,6 +20,7 @@ import {
   ExtractGW2KeyType,
   ExtractGW2ResourceType,
   GW2AsyncState,
+  GW2ResourceRecord,
   GW2Resources,
   GW2ResourceState,
   Optional
@@ -28,8 +29,6 @@ import {
 interface GW2Reducers {
   [key: string]: Reducer<EmbedState>;
 }
-
-type ExtractStoreRecord<T extends GW2Resources> = GW2ResourceState<T> extends Record<T, infer R> ? R : never
 
 const failureReducer = <T extends GW2Resources>(
   resource: T
@@ -111,12 +110,12 @@ const responseReducer = <T extends GW2Resources>(
 
   if (state.useLocalStorageAsCache) {
     const localStorageKey = makeResourceKey(resource, language)
-    const storedData = data as Optional<Record<ExtractGW2KeyType<T>, ExtractStoreRecord<T>>>
+    const storedData = data as Optional<GW2ResourceState<T>>
 
     if (storedData) {
       const cacheReducer = pipe(
         Object.values,
-        reduce<ExtractStoreRecord<T>, EmbedState[T]>((stored, { data }) => ({
+        reduce<GW2ResourceRecord<T>, EmbedState[T]>((stored, { data }) => ({
           ...stored,
           ...data ? {
             [data.id]: data
