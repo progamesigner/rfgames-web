@@ -4,8 +4,8 @@ import { types } from 'typestyle'
 import {
   ExtractGW2KeyType,
   ExtractGW2ResourceType,
-  ExtractGW2State,
-  GW2Resources
+  GW2Resources,
+  GW2ResourceState
 } from './gw2'
 import { TooltipState } from './tooltip'
 
@@ -31,13 +31,13 @@ export interface EmbedOptions {
 }
 
 export interface EmbedState extends Partial<EmbedOptions> {
-  [GW2Resources.ITEMS]?: ExtractGW2State<GW2Resources.ITEMS>;
-  [GW2Resources.ITEM_STATS]?: ExtractGW2State<GW2Resources.ITEM_STATS>;
-  [GW2Resources.PETS]?: ExtractGW2State<GW2Resources.PETS>;
-  [GW2Resources.PROFESSIONS]?: ExtractGW2State<GW2Resources.PROFESSIONS>;
-  [GW2Resources.SKILLS]?: ExtractGW2State<GW2Resources.SKILLS>;
-  [GW2Resources.SPECIALIZATIONS]?: ExtractGW2State<GW2Resources.SPECIALIZATIONS>;
-  [GW2Resources.TRAITS]?: ExtractGW2State<GW2Resources.TRAITS>;
+  [GW2Resources.ITEMS]?: GW2ResourceState<GW2Resources.ITEMS>;
+  [GW2Resources.ITEM_STATS]?: GW2ResourceState<GW2Resources.ITEM_STATS>;
+  [GW2Resources.PETS]?: GW2ResourceState<GW2Resources.PETS>;
+  [GW2Resources.PROFESSIONS]?: GW2ResourceState<GW2Resources.PROFESSIONS>;
+  [GW2Resources.SKILLS]?: GW2ResourceState<GW2Resources.SKILLS>;
+  [GW2Resources.SPECIALIZATIONS]?: GW2ResourceState<GW2Resources.SPECIALIZATIONS>;
+  [GW2Resources.TRAITS]?: GW2ResourceState<GW2Resources.TRAITS>;
   tooltip?: TooltipState;
   tooltipHidable?: boolean;
   tooltipStyles?: types.CSSProperties;

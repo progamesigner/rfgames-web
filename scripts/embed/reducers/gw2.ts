@@ -19,16 +19,16 @@ import {
   ExtractGW2ErrorType,
   ExtractGW2KeyType,
   ExtractGW2ResourceType,
-  ExtractGW2State,
   GW2AsyncState,
-  GW2Resources
+  GW2Resources,
+  GW2ResourceState
 } from '../types'
 
 interface GW2Reducers {
   [key: string]: Reducer<EmbedState>;
 }
 
-type ExtractStoreRecord<T extends GW2Resources> = ExtractGW2State<T> extends Record<T, infer R> ? R : never
+type ExtractStoreRecord<T extends GW2Resources> = GW2ResourceState<T> extends Record<T, infer R> ? R : never
 
 const failureReducer = <T extends GW2Resources>(
   resource: T

@@ -3,9 +3,9 @@ import { Dispatch } from 'redux'
 import {
   EmbedState,
   EmbedStore,
-  ExtractGW2State,
   GW2AsyncState,
   GW2Resources,
+  GW2ResourceState,
   GW2Specialization
 } from '../types'
 
@@ -32,7 +32,7 @@ export function isFetchFinished(state: GW2AsyncState): boolean {
 }
 
 export function mapActiveTraitlinesToTraitIds(
-  specializations: ExtractGW2State<GW2Resources.SPECIALIZATIONS>,
+  specializations: GW2ResourceState<GW2Resources.SPECIALIZATIONS>,
   activeTraitlines?: Record<number, ReadonlyArray<TraitSelection>>
 ): ReadonlyArray<number> {
   return Object.values(specializations).reduce((ids, specialization) => {

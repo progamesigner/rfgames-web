@@ -5,17 +5,17 @@ import {
   EmbedOptions,
   ExtractGW2KeyType,
   ExtractGW2ResourceType,
-  ExtractGW2State,
   GW2AsyncState,
-  GW2Resources
+  GW2Resources,
+  GW2ResourceState
 } from '../types'
 
-type GW2InitialState = Record<string, ExtractGW2State<GW2Resources>>
+type GW2InitialState = Record<string, GW2ResourceState<GW2Resources>>
 type GW2ResourceRecord<T extends GW2Resources> = Record<ExtractGW2KeyType<T>, ExtractGW2ResourceType<T>>
 
 function mapCacheToStore<T extends GW2Resources>(
   resources?: GW2ResourceRecord<T>
-): ExtractGW2State<T> {
+): GW2ResourceState<T> {
   return pipe(
     Object.values,
     filter(identity),
@@ -26,14 +26,14 @@ function mapCacheToStore<T extends GW2Resources>(
         error: null,
         state: GW2AsyncState.DONE
       }
-    }), {} as ExtractGW2State<T>)
+    }), {} as GW2ResourceState<T>)
   )(resources ?? {})
 }
 
 function stateFactory<T extends GW2Resources>(
   resource: T,
   options: EmbedOptions
-): Record<string, ExtractGW2State<T>> {
+): Record<string, GW2ResourceState<T>> {
   const {
     language,
     resources

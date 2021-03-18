@@ -10,8 +10,8 @@ import {
   ExtractGW2ErrorType,
   ExtractGW2KeyType,
   ExtractGW2ResourceType,
-  ExtractGW2State,
-  GW2Resources
+  GW2Resources,
+  GW2ResourceState
 } from '../types'
 
 type GetState = () => EmbedState
@@ -60,7 +60,7 @@ function actionFactory<T extends GW2Resources>(
       schemaVersion
     } = getState()
 
-    const item = data as ExtractGW2State<T> | undefined
+    const item = data as GW2ResourceState<T> | undefined
 
     const options = {
       accessToken,
