@@ -21,7 +21,8 @@ import {
   ExtractGW2ResourceType,
   GW2AsyncState,
   GW2Resources,
-  GW2ResourceState
+  GW2ResourceState,
+  Optional
 } from '../types'
 
 interface GW2Reducers {
@@ -110,7 +111,7 @@ const responseReducer = <T extends GW2Resources>(
 
   if (state.useLocalStorageAsCache) {
     const localStorageKey = makeResourceKey(resource, language)
-    const storedData = data as Record<ExtractGW2KeyType<T>, ExtractStoreRecord<T>> | undefined
+    const storedData = data as Optional<Record<ExtractGW2KeyType<T>, ExtractStoreRecord<T>>>
 
     if (storedData) {
       const cacheReducer = pipe(
