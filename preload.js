@@ -182,7 +182,9 @@ const transformers = [
       Object.values,
       map(item => {
         const id = item.id
+
         const name = item.name
+        const icon = item.icon
 
         const slug = slugify(item.name)
         const type = slugify(getItemType(item))
@@ -191,6 +193,7 @@ const transformers = [
           id,
           name,
           slug,
+          icon,
           type,
           ...mapArmorWeight(item),
           ...mapPredefinedItem(item),
@@ -263,6 +266,7 @@ const transformers = [
           code: profession.code,
           name: profession.name,
           slug: slugify(profession.name),
+          icon: profession.icon_big,
         },
         ...pipe(
           map(specialization => specializations[specialization]),
@@ -274,6 +278,7 @@ const transformers = [
               code: profession.code,
               name: specialization.name,
               slug: slugify(specialization.name),
+              icon: specialization.profession_icon_big,
               elite: specialization.id,
             }
           ], []),
@@ -325,11 +330,12 @@ const transformers = [
       Object.values,
       map(prop('skills_by_palette')),
       map(map(([code, id]) => {
-        const { name } = skills[id]
+        const { icon, name } = skills[id]
         return {
           id,
           name,
           slug: slugify(name),
+          icon,
           code,
         }
       })),
@@ -344,11 +350,12 @@ const transformers = [
       map(flatten),
       map(zip(revenantSkillSlots)),
       map(map(([maxSkillIndex, id]) => {
-        const { name } = skills[id]
+        const { icon, name } = skills[id]
         return {
           id,
           name,
           slug: slugify(name),
+          icon,
           code: professionSkills[revenantMaxSkillIds[maxSkillIndex]].code,
         }
       })),
@@ -358,10 +365,11 @@ const transformers = [
 
     const allSkills = pipe(
       Object.values,
-      map(({ id, name }) => ({
+      map(({ icon, id, name }) => ({
         id,
         name,
         slug: slugify(name),
+        icon,
       })),
       map(skill => [skill.id, skill]),
       fromPairs,
@@ -385,10 +393,11 @@ const transformers = [
   ({ specializations }) => {
     const pipeline = pipe(
       Object.values,
-      map(({ id, name }) => ({
+      map(({ icon, id, name }) => ({
         id,
         name,
         slug: slugify(name),
+        icon,
       })),
       map(specialization => [specialization.id, specialization]),
       fromPairs,
@@ -408,10 +417,11 @@ const transformers = [
   ({ traits }) => {
     const pipeline = pipe(
       Object.values,
-      map(({ id, name }) => ({
+      map(({ icon, id, name }) => ({
         id,
         name,
         slug: slugify(name),
+        icon,
       })),
       map(trait => [trait.id, trait]),
       fromPairs,

@@ -12,13 +12,15 @@
 
         {{- with . -}}
             {{- $name := "name" | index . -}}
+            {{- $icon := "icon_big" | index . -}}
 
             {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
 
             {{- $profession := dict -}}
             {{- $profession = $id | dict "id" | merge $profession -}}
-            {{- $profession = $slug | dict "slug" | merge $profession -}}
             {{- $profession = $name | dict "name" | merge $profession -}}
+            {{- $profession = $slug | dict "slug" | merge $profession -}}
+            {{- $profession = $icon | dict "icon" | merge $profession -}}
             {{- $profession = $code | dict "code" | merge $profession -}}
 
             {{- $data = $profession | dict $name | merge $data -}}
@@ -27,15 +29,18 @@
         {{- range "specializations" | index . -}}
             {{- with . | string | index $specializations -}}
                 {{- if "elite" | index . -}}
-                    {{- $name := "name" | index . -}}
                     {{- $elite := "id" | index . -}}
+
+                    {{- $name := "name" | index . -}}
+                    {{- $icon := "profession_icon_big" | index . -}}
 
                     {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
 
                     {{- $profession := dict -}}
                     {{- $profession = $id | dict "id" | merge $profession -}}
-                    {{- $profession = $slug | dict "slug" | merge $profession -}}
                     {{- $profession = $name | dict "name" | merge $profession -}}
+                    {{- $profession = $slug | dict "slug" | merge $profession -}}
+                    {{- $profession = $icon | dict "icon" | merge $profession -}}
                     {{- $profession = $code | dict "code" | merge $profession -}}
                     {{- $profession = $elite | dict "elite" | merge $profession -}}
 

@@ -8,7 +8,10 @@
 
     {{- range $items -}}
         {{- $id := "id" | index . -}}
+
         {{- $name := "name" | index . -}}
+        {{- $icon := "icon" | index . -}}
+
         {{- $slug := "name" | index . | slice $context | partial "functions/slugify.string" -}}
         {{- $type := "type" | index . | slice $context | partial "functions/slugify.string" -}}
 
@@ -42,6 +45,7 @@
                     {{- $item = $id | dict "id" | merge $item -}}
                     {{- $item = $name | dict "name" | merge $item -}}
                     {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $icon | dict "icon" | merge $item -}}
                     {{- $item = $type | dict "type" | merge $item -}}
                     {{- $item = $weight | dict "weight" | merge $item -}}
 
@@ -57,6 +61,7 @@
                     {{- $item = $id | dict "id" | merge $item -}}
                     {{- $item = $name | dict "name" | merge $item -}}
                     {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $icon | dict "icon" | merge $item -}}
                     {{- $item = $type | dict "type" | merge $item -}}
                     {{- $item = $weight | dict "weight" | merge $item -}}
 
@@ -79,6 +84,7 @@
                     {{- $item = $id | dict "id" | merge $item -}}
                     {{- $item = $name | dict "name" | merge $item -}}
                     {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $icon | dict "icon" | merge $item -}}
                     {{- $item = $type | dict "type" | merge $item -}}
                     {{- $item = $weight | dict "weight" | merge $item -}}
 
@@ -94,6 +100,7 @@
                     {{- $item = $id | dict "id" | merge $item -}}
                     {{- $item = $name | dict "name" | merge $item -}}
                     {{- $item = $slug | dict "slug" | merge $item -}}
+                    {{- $item = $icon | dict "icon" | merge $item -}}
                     {{- $item = $type | dict "type" | merge $item -}}
                     {{- $item = $weight | dict "weight" | merge $item -}}
 
@@ -106,6 +113,7 @@
             {{- $item = $id | dict "id" | merge $item -}}
             {{- $item = $name | dict "name" | merge $item -}}
             {{- $item = $slug | dict "slug" | merge $item -}}
+            {{- $item = $icon | dict "icon" | merge $item -}}
             {{- $item = $type | dict "type" | merge $item -}}
 
             {{- $data = $item | dict $key | merge $data -}}

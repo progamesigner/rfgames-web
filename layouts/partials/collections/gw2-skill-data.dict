@@ -15,7 +15,9 @@
 
             {{- with 1 | index . | string | index $skills -}}
                 {{- $id := "id" | index . -}}
+
                 {{- $name := "name" | index . -}}
+                {{- $icon := "icon" | index . -}}
 
                 {{- $key := $id | string -}}
                 {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
@@ -24,6 +26,7 @@
                 {{- $skill = $id | dict "id" | merge $skill -}}
                 {{- $skill = $name | dict "name" | merge $skill -}}
                 {{- $skill = $slug | dict "slug" | merge $skill -}}
+                {{- $skill = $icon | dict "icon" | merge $skill -}}
                 {{- $skill = $code | dict "code" | merge $skill -}}
 
                 {{- $data = $skill | dict $key | merge $data -}}
@@ -69,7 +72,9 @@
 
             {{- with . | string | index $skills -}}
                 {{- $id := "id" | index . -}}
+
                 {{- $name := "name" | index . -}}
+                {{- $icon := "icon" | index . -}}
 
                 {{- $key := $id | string -}}
                 {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
@@ -78,6 +83,7 @@
                 {{- $skill = $id | dict "id" | merge $skill -}}
                 {{- $skill = $name | dict "name" | merge $skill -}}
                 {{- $skill = $slug | dict "slug" | merge $skill -}}
+                {{- $skill = $icon | dict "icon" | merge $skill -}}
                 {{- $skill = $code | dict "code" | merge $skill -}}
 
                 {{- $data = $skill | dict $key | merge $data -}}
@@ -91,7 +97,9 @@
 
                 {{- with . | string | index $skills -}}
                     {{- $id := "id" | index . -}}
+
                     {{- $name := "name" | index . -}}
+                    {{- $icon := "icon" | index . -}}
 
                     {{- $key := $id | string -}}
                     {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
@@ -100,6 +108,7 @@
                     {{- $skill = $id | dict "id" | merge $skill -}}
                     {{- $skill = $name | dict "name" | merge $skill -}}
                     {{- $skill = $slug | dict "slug" | merge $skill -}}
+                    {{- $skill = $icon | dict "icon" | merge $skill -}}
                     {{- $skill = $code | dict "code" | merge $skill -}}
 
                     {{- $data = $skill | dict $key | merge $data -}}
@@ -112,7 +121,9 @@
 
                 {{- with . | string | index $skills -}}
                     {{- $id := "id" | index . -}}
+
                     {{- $name := "name" | index . -}}
+                    {{- $icon := "icon" | index . -}}
 
                     {{- $key := $id | string -}}
                     {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
@@ -121,6 +132,7 @@
                     {{- $skill = $id | dict "id" | merge $skill -}}
                     {{- $skill = $name | dict "name" | merge $skill -}}
                     {{- $skill = $slug | dict "slug" | merge $skill -}}
+                    {{- $skill = $icon | dict "icon" | merge $skill -}}
                     {{- $skill = $code | dict "code" | merge $skill -}}
 
                     {{- $data = $skill | dict $key | merge $data -}}
@@ -133,7 +145,9 @@
 
                 {{- with . | string | index $skills -}}
                     {{- $id := "id" | index . -}}
+
                     {{- $name := "name" | index . -}}
+                    {{- $icon := "icon" | index . -}}
 
                     {{- $key := $id | string -}}
                     {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
@@ -142,6 +156,7 @@
                     {{- $skill = $id | dict "id" | merge $skill -}}
                     {{- $skill = $name | dict "name" | merge $skill -}}
                     {{- $skill = $slug | dict "slug" | merge $skill -}}
+                    {{- $skill = $icon | dict "icon" | merge $skill -}}
                     {{- $skill = $code | dict "code" | merge $skill -}}
 
                     {{- $data = $skill | dict $key | merge $data -}}
@@ -155,7 +170,9 @@
 
             {{- with . | string | index $skills -}}
                 {{- $id := "id" | index . -}}
+
                 {{- $name := "name" | index . -}}
+                {{- $icon := "icon" | index . -}}
 
                 {{- $key := $id | string -}}
                 {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
@@ -164,6 +181,7 @@
                 {{- $skill = $id | dict "id" | merge $skill -}}
                 {{- $skill = $name | dict "name" | merge $skill -}}
                 {{- $skill = $slug | dict "slug" | merge $skill -}}
+                {{- $skill = $icon | dict "icon" | merge $skill -}}
                 {{- $skill = $code | dict "code" | merge $skill -}}
 
                 {{- $data = $skill | dict $key | merge $data -}}
@@ -179,12 +197,15 @@
         {{- if $slug | index $data | not -}}
             {{- $id := "id" | index . -}}
 
+            {{- $icon := "icon" | index . -}}
+
             {{- $key := $id | string -}}
 
             {{- $skill := dict -}}
             {{- $skill = $id | dict "id" | merge $skill -}}
             {{- $skill = $name | dict "name" | merge $skill -}}
             {{- $skill = $slug | dict "slug" | merge $skill -}}
+            {{- $skill = $icon | dict "icon" | merge $skill -}}
 
             {{- $data = $skill | dict $key | merge $data -}}
         {{- end -}}

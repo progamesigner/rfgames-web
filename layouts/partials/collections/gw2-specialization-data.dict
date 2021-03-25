@@ -7,7 +7,9 @@
 
     {{- range $specializations -}}
         {{- $id := "id" | index . -}}
+
         {{- $name := "name" | index . -}}
+        {{- $icon := "icon" | index . -}}
 
         {{- $key := $id | string -}}
         {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
@@ -15,6 +17,7 @@
         {{- $specialization := dict -}}
         {{- $specialization = $id | dict "id" | merge $specialization -}}
         {{- $specialization = $slug | dict "slug" | merge $specialization -}}
+        {{- $specialization = $icon | dict "icon" | merge $specialization -}}
         {{- $specialization = $name | dict "name" | merge $specialization -}}
 
         {{- $data = $specialization | dict $key | merge $data -}}
