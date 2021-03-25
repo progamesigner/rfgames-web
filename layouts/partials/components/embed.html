@@ -56,6 +56,28 @@
     {{- end -}}
 {{- end -}}
 
+{{- with $data -}}
+    {{- if $type | eq "item" -}}
+        {{- $data = "id" | index $data | slice $context | partial "functions/gw2-item-to-icon.string" | dict "icon" | merge $data -}}
+    {{- end -}}
+
+    {{- if $type | eq "profession" -}}
+        {{- $data = "name" | index $data | slice $context | partial "functions/gw2-profession-to-icon.string" | dict "icon" | merge $data -}}
+    {{- end -}}
+
+    {{- if $type | eq "skill" -}}
+        {{- $data = "id" | index $data | slice $context | partial "functions/gw2-skill-to-icon.string" | dict "icon" | merge $data -}}
+    {{- end -}}
+
+    {{- if $type | eq "specialization" -}}
+        {{- $data = "id" | index $data | slice $context | partial "functions/gw2-specialization-to-icon.string" | dict "icon" | merge $data -}}
+    {{- end -}}
+
+    {{- if $type | eq "trait" -}}
+        {{- $data = "id" | index $data | slice $context | partial "functions/gw2-trait-to-icon.string" | dict "icon" | merge $data -}}
+    {{- end -}}
+{{- end -}}
+
 {{- if "text" | index $data | not -}}
     {{- $data = "name" | index $data | dict "text" | merge $data -}}
 
@@ -171,7 +193,11 @@
             {{- if "disable-icon" | index $data | not -}}
                 <span
                     class="{{ template "__rfgames_partials_elements__embed_class__" "icon" }}"
-                ></span>
+                >
+                    {{- with "icon" | index $data -}}
+                        <span style="background-image: url({{ . }})"></span>
+                    {{- end -}}
+                </span>
             {{- end -}}
             {{- if "disable-text" | index $data | not -}}
                 <span
@@ -205,7 +231,11 @@
             {{- if "disable-icon" | index $data | not -}}
                 <div
                     class="{{ template "__rfgames_partials_elements__embed_class__" "icon" }}"
-                ></div>
+                >
+                    {{- with "icon" | index $data -}}
+                        <div style="background-image: url({{ . }})"></div>
+                    {{- end -}}
+                </div>
             {{- end -}}
             {{- if "disable-text" | index $data | not -}}
                 <div

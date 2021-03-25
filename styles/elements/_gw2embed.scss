@@ -20,6 +20,19 @@
     display: inline-block;
     position: relative;
     vertical-align: middle;
+
+    & > div,
+    & > span {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
 }
 
 .gw2-embed-text {

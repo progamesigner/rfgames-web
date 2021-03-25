@@ -1,0 +1,10 @@
+{{- $context := 0 | index . -}}
+{{- $idOrName := 1 | index . -}}
+
+{{- $table := slice $context | partialCached "collections/gw2-profession-data.dict" -}}
+
+{{- $data := $idOrName | string | index $table | default dict -}}
+
+{{- $icon := "icon" | index $data -}}
+
+{{- return $icon -}}
