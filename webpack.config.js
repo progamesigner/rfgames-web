@@ -46,7 +46,8 @@ module.exports = (env, argv) => {
       }),
       new ManifestPlugin.WebpackManifestPlugin({
         fileName: path.join(path.resolve(__dirname, 'data'), 'assets.json'),
-        publicPath: false
+        publicPath: false,
+        removeKeyHash: false
       })
     ],
     resolve: {
