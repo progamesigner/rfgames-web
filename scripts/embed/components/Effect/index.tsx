@@ -61,8 +61,8 @@ function getEffectIcon(id: Effects): string {
       return images.regeneration
     case Boons.RESISTANCE:
       return images.resistance
-    case Boons.RETALIATION:
-      return images.retaliation
+    case Boons.RESOLUTION:
+      return images.resolution
     case Boons.STABILITY:
       return images.stability
     case Boons.SWIFTNESS:

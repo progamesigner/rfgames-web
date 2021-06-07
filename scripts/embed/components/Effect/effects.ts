@@ -17,7 +17,7 @@ export const enum Boons {
   QUICKNESS = 'Quickness',
   REGENERATION = 'Regeneration',
   RESISTANCE = 'Resistance',
-  RETALIATION = 'Retaliation',
+  RESOLUTION = 'Resolution',
   STABILITY = 'Stability',
   SWIFTNESS = 'Swiftness',
   VIGOR = 'Vigor'
