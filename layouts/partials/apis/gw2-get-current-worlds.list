@@ -21,16 +21,9 @@
         {{- end -}}
     {{- end -}}
 
-    {{- $worldIds := $mainWorldIds | append $linkedWorldIds -}}
-    {{- $worldData := $worldIds | slice $context | partial "apis/gw2-get-worlds-by-world-ids.dict" -}}
-
-    {{- range $worldData -}}
-        {{- $worldName := "name" | index . -}}
-        {{- $worlds = $worlds | append $worldName -}}
-    {{- end -}}
+    {{- $worlds = $worlds | append $mainWorldIds | append $linkedWorldIds -}}
 {{- else -}}
     {{- warnf "There is no GW2_ACCESS_TOKEN set, skipping ..." -}}
-    {{- $worlds = $worlds | append "Unknown" -}}
 {{- end -}}
 
 {{- return $worlds -}}

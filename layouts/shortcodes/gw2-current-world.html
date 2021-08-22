@@ -2,13 +2,29 @@
 
 {{- $worlds := slice $ $accessToken | partialCached "apis/gw2-get-current-worlds.list" -}}
 
-{{- $mainWorld := $worlds | first 1 -}}
-{{- $linkedWorlds := $worlds | after 1 -}}
+{{- $account := dict -}}
+{{- if $accessToken | ne "" -}}
+    {{- $account = slice $ $accessToken | partial "apis/gw2-get-account.dict" -}}
+{{- end -}}
 
-{{- range $mainWorld -}}
+{{- $mainWorlds := slice -}}
+{{- $linkedWorlds := slice -}}
+
+{{- range $worlds -}}
+    {{- $worldName := . | slice $ | partial "apis/gw2-get-world-name.string" -}}
+    {{- if . | eq $account.world -}}
+        {{- $mainWorlds = $mainWorlds | append $worldName -}}
+    {{- else -}}
+        {{- $linkedWorlds = $linkedWorlds | append $worldName -}}
+    {{- end -}}
+{{- end -}}
+
+{{- range $mainWorlds -}}
     {{- if len $linkedWorlds | lt 0 -}}
         <strong>{{ . }}</strong> (linked with <strong>{{ delimit $linkedWorlds "</strong> and <strong>" }}</strong>)
     {{- else -}}
         <strong>{{ . }}</strong>
     {{- end -}}
+{{- else -}}
+    <strong>Unknown</strong>
 {{- end -}}

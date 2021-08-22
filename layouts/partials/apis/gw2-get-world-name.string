@@ -1,0 +1,10 @@
+{{- $context := 0 | index . -}}
+{{- $worldId := 1 | index . -}}
+
+{{- $data := slice $worldId | slice $context | partial "apis/gw2-get-worlds-by-world-ids.dict" -}}
+
+{{- $world := $worldId | string | index $data -}}
+
+{{- $name := "name" | index $world | default "Unknown" -}}
+
+{{- return $name -}}
