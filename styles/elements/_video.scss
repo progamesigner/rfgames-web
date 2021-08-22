@@ -1,0 +1,14 @@
+.video {
+    display: block;
+    margin: 0;
+    position: relative;
+    padding-bottom: 9 / 16 * 100%;
+
+    iframe {
+        @include overlay();
+
+        border: 0;
+        height: 100%;
+        width: 100%;
+    }
+}
