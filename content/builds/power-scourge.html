@@ -1,0 +1,218 @@
+---
+title: Power Scourge
+description: The build brings high spike damage, and a huge amount of boon corruption. You are the primary source of damage and boon striping.
+lastmod: 2021-08-23
+
+theme: necromancer
+disqus: true
+disqusId: power-scourge
+
+weight: 20
+
+menu:
+    nav:
+        parent: Builds
+
+button: scourge
+overlay: necromancer
+
+header:
+    title: Scourge
+    subtitle: Power
+
+build:
+    credits:
+        designer: ivan.6521
+    equipments:
+        weapon1:
+            types: [Axe, Focus]
+            stats: [Berserker, Berserker]
+            sigils: [Superior Sigil of Bloodlust, Superior Sigil of Energy]
+            infusions: [Mighty WvW Infusion, Mighty WvW Infusion]
+        weapon2:
+            types: [Scepter, Dagger]
+            stats: [Berserker, Berserker]
+            sigils: [Superior Sigil of Absorption, Superior Sigil of Energy]
+            infusions: [Mighty WvW Infusion, Mighty WvW Infusion]
+        helm:
+            stat: Berserker
+            rune: Superior Rune of the Scholar
+            infusion: Mighty WvW Infusion
+        shoulders:
+            stat: Berserker
+            rune: Superior Rune of the Scholar
+            infusion: Mighty WvW Infusion
+        coat:
+            stat: Berserker
+            rune: Superior Rune of the Scholar
+            infusion: Mighty WvW Infusion
+        gloves:
+            stat: Berserker
+            rune: Superior Rune of the Scholar
+            infusion: Mighty WvW Infusion
+        leggings:
+            stat: Berserker
+            rune: Superior Rune of the Scholar
+            infusion: Mighty WvW Infusion
+        boots:
+            stat: Berserker
+            rune: Superior Rune of the Scholar
+            infusion: Mighty WvW Infusion
+        back:
+            stat: Berserker
+            infusions:
+            - Mighty WvW Infusion
+            - Mighty WvW Infusion
+        accessory1:
+            stat: Marauder
+            infusion: Mighty WvW Infusion
+        accessory2:
+            stat: Marauder
+            infusion: Mighty WvW Infusion
+        amulet:
+            stat: Marauder
+            enrichment: Magical Enrichment
+        ring1:
+            stat: Marauder
+            infusions:
+            - Healing WvW Infusion
+            - Healing WvW Infusion
+            - Healing WvW Infusion
+        ring2:
+            stat: Marauder
+            infusions:
+            - Healing WvW Infusion
+            - Healing WvW Infusion
+            - Healing WvW Infusion
+    consumables:
+        food: Bowl of Sweet and Spicy Butternut Squash Soup
+        utility: Furious Sharpening Stone
+    template:
+        profession: Necromancer
+        skills:
+        - [Sand Flare, Sand Flare]
+        - [Well of Suffering, Well of Suffering]
+        - [Well of Corruption, Well of Corruption]
+        - [Trail of Anguish, Trail of Anguish]
+        - [Ghastly Breach, Ghastly Breach]
+        traits:
+        - [Spite, top, top, bottom]
+        - [Curses, middle, middle, bottom]
+        - [Scourge, top, middle, bottom]
+    ratings:
+    - { type: survivability, rating: 2 }
+    - { type: damage-burst-power, rating: 5 }
+    - { type: healing-barrier, rating: 3 }
+    - { type: cleansing-dripping, rating: 3 }
+    - { type: striping-reliable, rating: 5 }
+    - { type: supports, effects: [ Might ] }
+    - { type: pressures, effects: [ Bleeding, Crippled, Fear, Torment, Vulnerability ] }
+---
+
+{{< build-page >}}
+    {{< section title="Overview" class="page-section-build-overview" >}}
+        {{< build-overview >}}
+            <p>{{% inlines/profession name="Scourge" text="Power Scourge" %}} brings high spike damage, and a huge amount of boon corruption. You are the primary source of damage and boon striping.</p>
+            <p>As a {{% inlines/profession name="Scourge" %}}, you are granted access to:</p>
+            <ul>
+                <li>{{% inlines/skill name="Manifest Sand Shade" %}} is mainly used for range pressures.</li>
+                <li>{{% inlines/skill name="Nefarious Favor" %}} provides condition cleansing and boon striping.</li>
+                <li>{{% inlines/skill name="Sand Cascade" %}} provides condition cleansing and small amount of barrier.</li>
+                <li>{{% inlines/skill name="Garish Pillar" %}} is used inflict {{% inlines/effect name="Fear" %}} which is a crowd control.</li>
+                <li>{{% inlines/skill name="Desert Shroud" %}} is one of your primary pulse damage, barrier for yourself, and condition cleansing for allies.</li>
+            </ul>
+        {{< /build-overview >}}
+    {{< /section >}}
+
+    {{< section title="Build" class="page-section-build-content" >}}
+        {{% build-content %}}
+    {{< /section >}}
+
+    {{< section title="Guide" class="page-section-build-guide" >}}
+        {{< section title="General Guides" >}}
+            {{< section title="Positions" >}}
+                <p>As a DPS role in a team, you should always stay <strong>behind</strong> with your supporters about 180 range, so they can heal, condition cleansing, and provide you boons.</p>
+            {{< /section >}}
+            {{< section title="Bursting on Call" >}}
+                <p>In a typical zerg fight, making an enemy down by only one person is basically impossible, at least save one of wells or breach burst combinations on your commander calls.</p>
+            {{< /section >}}
+        {{< /section >}}
+
+        {{< section title="The Core of Build" >}}
+            <p>The {{% inlines/specialization name="Scourge" %}} loses access to Death Shroud in exchange for shade skills. The shade skills cost static life force which does not scale with total life force pool. Also, all traits that activate when entering / leaving shroud will instead activate when using {{% inlines/skill name="Desert Shroud" %}}.</p>
+            <p>All shade skills are cast around you and all sand shade you created by {{% inlines/skill name="Manifest Sand Shade" %}} and all shade skills except {{% inlines/skill name="Manifest Sand Shade" %}} have a half-second delay before activating.</p>
+        {{< /section >}}
+
+        {{< section title="Skills" >}}
+            {{< tabs >}}
+                {{< tab title="Skills" >}}
+                    <ul>
+                        <li>{{% inlines/skill name="Sand Flare" %}} is your healing skill and provides barriers to allies. Precast before taking damage, during kiting, or sustentation.</li>
+                        <li>{{% inlines/skill name="Well of Suffering" %}} is your biggest AoE damage, combining with crowd controls of your allies and boon striping.</li>
+                        <li>{{% inlines/skill name="Well of Corruption" %}} is a huge AoE boon striping, combining with crowd controls and damages of your allies.</li>
+                        <li>{{% inlines/skill name="Trail of Anguish" %}} is your stun-break, and can also be used for pushing.</li>
+                        <li>{{% inlines/skill name="Ghastly Breach" %}} is huge AoE damage and boon striping, combining with crowd controls and damages of your allies.</li>
+                    </ul>
+                {{< /tab >}}
+                {{< tab title="Axe / Focus" >}}
+                    <ul>
+                        <li>{{% inlines/skill name="Rending Claws" %}} is your auto-attack chain with single target {{% inlines/effect name="Vulnerability" %}}</li>
+                        <li>{{% inlines/skill name="Ghastly Claws" %}} provides heavy single target damage and life force refilling.</li>
+                        <li>{{% inlines/skill name="Unholy Feast" %}} is AoE boon striping around you and also huge damage if health of your target is below 50%.</li>
+                        <li>{{% inlines/skill name="Soul Grasp" %}} refills life force with single target {{% inlines/effect name="Vulnerability" %}}</li>
+                        <li>{{% inlines/skill name="Spinal Shivers" %}} is huge single target damage and boon striping.</li>
+                    </ul>
+                {{< /tab >}}
+                {{< tab title="Scepter / Dagger" >}}
+                    <ul>
+                        <li>{{% inlines/skill name="Blood Curse" %}} is your auto-attack chain.</li>
+                        <li>{{% inlines/skill name="Grasping Dead" %}} is AoE damage and inflicts {{% inlines/effect name="Cripple" %}}</li>
+                        <li>{{% inlines/skill name="Devouring Darkness" %}} is AoE damage and boon striping around your target.</li>
+                        <li>{{% inlines/skill name="Deathly Swarm" %}} can transfer conditions from you to your target.</li>
+                        <li>{{% inlines/skill name="Enfeebling Blood" %}} is AoE boon striping.</li>
+                    </ul>
+                {{< /tab >}}
+            {{< /tabs >}}
+        {{< /section >}}
+
+        {{< section title="Variants" >}}
+            {{< tabs >}}
+                {{< tab title="Gears" >}}
+                    <p>Replace Berserker gears with Marauder to improve survivability.</p>
+                {{< /tab >}}
+                {{< tab title="Traits" >}}
+                    <p>Replace {{% inlines/specialization name="Spite" %}} with {{% inlines/specialization name="Soul Reaping" %}} to gain more damage but need {{% inlines/effect name="Fury" %}} from your allies. If you change traitlines, remeber adjusting gears to reach 100% critical chance.</p>
+                {{< /tab >}}
+                {{< tab title="Runes" >}}
+                    <ul>
+                        <li>{{% inlines/item name="Superior Rune of the Pack" upgrade-count=6 %}} if your team cannot provide permanent {{% inlines/effect name="Fury" %}} uptime.</li>
+                    </ul>
+                {{< /tab >}}
+                {{< tab title="Sigils" >}}
+                    <ul>
+                        <li>You should always keep {{% inlines/item name="Superior Sigil of Energy" %}}.</li>
+                        <li>{{% inlines/item name="Superior Sigil of Force" %}} brings you more consistent damage.</li>
+                    </ul>
+                {{< /tab >}}
+            {{< /tabs >}}
+        {{< /section >}}
+
+        {{< section title="Videos" >}}
+            {{< grid >}}
+                {{< grid-item >}}
+                    {{% video id="SbB072w4oYU" title="Gw2 WvW | [LAYS] Necro Guide Part 1" %}}
+                {{< /grid-item >}}
+                {{< grid-item >}}
+                    {{% video id="YAYMEaF4aqc" title="Gw2 WvW | [LAYS] Necro Guide Part 2" %}}
+                {{< /grid-item >}}
+            {{< /grid >}}
+            {{< grid >}}
+                {{< grid-item >}}
+                    {{% video id="swJvQQJkQjs" title="GW2 WvW Power Scourge Bomb explained step by step" %}}
+                {{< /grid-item >}}
+                {{< grid-item >}}
+                {{< /grid-item >}}
+            {{< /grid >}}
+        {{< /section >}}
+    {{< /section >}}
+{{< /build-page >}}
