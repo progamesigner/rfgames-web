@@ -13,7 +13,7 @@
 {{- end -}}
 
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<html class="has-theme-{{ "theme" | .Param | default "default" }}" lang="{{ .Site.LanguageCode }}">
 
 <head>
     <meta charset="utf-8">
@@ -71,7 +71,7 @@
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin>
 </head>
 
-<body class="has-theme-{{ "theme" | .Param | default "default" }}">
+<body>
     <span class="back-to-top">
         {{- $ | partialCached "svgs/arrow-up.svg" -}}
     </span>

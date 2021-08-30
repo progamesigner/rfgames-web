@@ -87,6 +87,7 @@ $warrior-palette: (
     --nav-dropdown-arrow-hover-color: #{map-get($palette, 'lighter')};
     --nav-text-color: #{map-get($palette, 'medium')};
     --nav-text-hover-color: #{map-get($palette, 'lighter')};
+    --scrollbar-foreground-color: #{map-get($palette, 'darker')};
     --tab-nav-background-active-color: #{rgba(map-get($palette, 'dark'), 0.75)};
 }
 
@@ -106,7 +107,7 @@ $warrior-palette: (
     }
 }
 
-body {
+html {
     @include gw2-theme();
 
     &.has-theme-elementalist {
