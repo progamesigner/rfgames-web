@@ -500,8 +500,6 @@ const transformers = [
                 if (profession.toLowerCase() === 'elementalist') {
                   const skills = pipe(
                     weaponProfessionFilter(profession),
-                    converge(unapply(identity), map((weaponAttunementFilter))(weaponAttunements)),
-                    reduce(concat, []),
                     converge(unapply(identity), [
                       pipe(
                         weaponTypeFilter(type),
@@ -516,6 +514,8 @@ const transformers = [
                         weaponSlotFilter(weaponTailSlots),
                       ),
                     ]),
+                    reduce(concat, []),
+                    converge(unapply(identity), map((weaponAttunementFilter))(weaponAttunements)),
                     reduce(concat, []),
                     map(prop('id')),
                   )(weaponSkills)
