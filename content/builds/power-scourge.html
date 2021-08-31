@@ -105,11 +105,15 @@ build:
     - { type: healing-barrier, rating: 3 }
     - { type: cleansing-dripping, rating: 3 }
     - { type: striping-reliable, rating: 5 }
-    - { type: supports, effects: [ Might ] }
+    - { type: supports, effects: [ Might, Barrier ] }
     - { type: pressures, effects: [ Bleeding, Crippled, Fear, Torment, Vulnerability ] }
 ---
 
 {{< build-page >}}
+    {{< message icon="editing" >}}
+        <p>We are still working on adjusting, testing, and editing this build and guides. The build might work well, but we are making sure this build matching our fightstyles.</p>
+    {{< /message >}}
+
     {{< section title="Overview" class="page-section-build-overview" >}}
         {{< build-overview >}}
             <p>{{% inlines/profession name="Scourge" text="Power Scourge" %}} brings high spike damage, and a huge amount of boon corruption. You are the primary source of damage and boon striping.</p>
