@@ -17,6 +17,7 @@
 }
 
 .message-body {
+    align-items: center;
     color: var(--message-body-text-color);
     display: flex;
     font-size: var(--message-body-font-size);
@@ -28,6 +29,9 @@
 
     svg {
         fill: currentColor;
+        flex-basis: var(--message-body-icon-size);
+        flex-grow: 0;
+        flex-shrink: 0;
         height: var(--message-body-icon-size);
         margin: var(--message-body-icon-margin);
         width: var(--message-body-icon-size);
