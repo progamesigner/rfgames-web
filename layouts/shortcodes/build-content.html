@@ -568,7 +568,7 @@
 {{- define "__rfgames_shortcode_includes__build_skills__" -}}
     {{- $context := 0 | index . -}}
     {{- $skills := 1 | index . -}}
-    {{- $activeTraitlines := 1 | index . -}}
+    {{- $activeTraitlines := 2 | index . -}}
 
     <div class="gw2-embed-wrapper">
         {{- range $skills | first 1 -}}
