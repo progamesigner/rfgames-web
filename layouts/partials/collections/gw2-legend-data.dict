@@ -7,10 +7,11 @@
     {{- $skills := slice $context | partialCached "apis/gw2-get-skills.dict" -}}
 
     {{- range $legends -}}
-        {{- $legendSwapSkill := "swap" | index . | string | index $skills -}}
-
         {{- $id := "id" | index . -}}
         {{- $code := "code" | index . -}}
+        {{- $swap := "swap" | index . -}}
+
+        {{- $legendSwapSkill := $swap | string | index $skills -}}
 
         {{- $name := "name" | index $legendSwapSkill | replaceRE "Legendary (.+) Stance" "$1" -}}
 
@@ -20,6 +21,7 @@
         {{- $legend = $id | dict "id" | merge $legend -}}
         {{- $legend = $name | dict "name" | merge $legend -}}
         {{- $legend = $slug | dict "slug" | merge $legend -}}
+        {{- $legend = $swap | dict "swap" | merge $legend -}}
         {{- $legend = $code | dict "code" | merge $legend -}}
 
         {{- $data = $legend | dict $id | merge $data -}}

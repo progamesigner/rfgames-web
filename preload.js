@@ -243,6 +243,7 @@ const transformers = [
           id,
           name: name,
           slug: slugify(name),
+          swap: swap,
           code,
         }
       }),

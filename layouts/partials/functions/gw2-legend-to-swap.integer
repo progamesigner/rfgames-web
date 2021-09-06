@@ -1,0 +1,12 @@
+{{- $context := 0 | index . -}}
+{{- $idOrName := 1 | index . -}}
+
+{{- $table := slice $context | partialCached "collections/gw2-legend-data.dict" -}}
+
+{{- $id := $idOrName | slice $context | partial "functions/gw2-legend-to-id.string" -}}
+
+{{- $data := $id | index $table | default dict -}}
+
+{{- $swap := "swap" | index $data | default 0 -}}
+
+{{- return $swap -}}
