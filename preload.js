@@ -28,6 +28,7 @@ const {
   reduce,
   replace,
   reverse,
+  sortBy,
   splitEvery,
   times,
   toLower,
@@ -200,6 +201,7 @@ const transformers = [
           ...mapSelectableItem(item),
         }
       }),
+      sortBy(prop('id')),
       map(item => [item.id, item]),
       fromPairs,
     )
@@ -223,6 +225,7 @@ const transformers = [
         name,
         slug: slugify(name),
       })),
+      sortBy(prop('id')),
       map(stat => [stat.id, stat]),
       fromPairs,
     )
@@ -241,6 +244,7 @@ const transformers = [
           code,
         }
       }),
+      sortBy(prop('id')),
       map(legend => [legend.id, legend]),
       fromPairs,
     )
@@ -284,6 +288,7 @@ const transformers = [
           ], []),
         )(profession.specializations)
       ], []),
+      sortBy(prop('id')),
       map(profession => [profession.name, profession]),
       fromPairs,
     )
@@ -359,6 +364,7 @@ const transformers = [
           code: professionSkills[revenantMaxSkillIds[maxSkillIndex]].code,
         }
       })),
+      reduce(concat, []),
       map(skill => [skill.id, skill]),
       fromPairs,
     )(legends)
@@ -371,6 +377,7 @@ const transformers = [
         slug: slugify(name),
         icon,
       })),
+      sortBy(prop('id')),
       map(skill => [skill.id, skill]),
       fromPairs,
     )(skills)
@@ -399,6 +406,7 @@ const transformers = [
         slug: slugify(name),
         icon,
       })),
+      sortBy(prop('id')),
       map(specialization => [specialization.id, specialization]),
       fromPairs,
     )
@@ -423,6 +431,7 @@ const transformers = [
         slug: slugify(name),
         icon,
       })),
+      sortBy(prop('id')),
       map(trait => [trait.id, trait]),
       fromPairs,
     )
