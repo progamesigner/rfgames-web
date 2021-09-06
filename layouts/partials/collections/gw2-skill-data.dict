@@ -190,17 +190,15 @@
     {{- end -}}
 
     {{- range $skills -}}
-        {{- $name := "name" | index . -}}
+        {{- $id := "id" | index . -}}
 
+        {{- $name := "name" | index . -}}
+        {{- $icon := "icon" | index . -}}
+
+        {{- $key := $id | string -}}
         {{- $slug := $name | slice $context | partial "functions/slugify.string" -}}
 
-        {{- if $slug | index $data | not -}}
-            {{- $id := "id" | index . -}}
-
-            {{- $icon := "icon" | index . -}}
-
-            {{- $key := $id | string -}}
-
+        {{- if $key | index $data | not -}}
             {{- $skill := dict -}}
             {{- $skill = $id | dict "id" | merge $skill -}}
             {{- $skill = $name | dict "name" | merge $skill -}}

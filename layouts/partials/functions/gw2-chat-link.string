@@ -47,8 +47,8 @@
             {{- $code = $code | append $specializtion ($trait1 | add (mul $trait2 4) | add (mul $trait3 16)) -}}
         {{- end -}}
         {{- range $skills | first 5 -}}
-            {{- $terrestrialSkill := 0 | index . | slice $context | partial "functions/gw2-skill-to-id.integer" | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
-            {{- $aquaticSkill := 1 | index . | slice $context | partial "functions/gw2-skill-to-id.integer" | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $terrestrialSkill := 0 | index . | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $aquaticSkill := 1 | index . | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
 
             {{- $code = $code | append (mod $terrestrialSkill 256) (div $terrestrialSkill 256) -}}
             {{- $code = $code | append (mod $aquaticSkill 256) (div $aquaticSkill 256) -}}

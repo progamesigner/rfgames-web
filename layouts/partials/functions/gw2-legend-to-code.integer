@@ -3,10 +3,19 @@
 
 {{- $table := slice $context | partialCached "collections/gw2-legend-data.dict" -}}
 
-{{- $id := $idOrName | slice $context | partial "functions/gw2-legend-to-id.string" -}}
+{{- $data := where (sort $table "code" "asc") "code" "ne" nil -}}
 
-{{- $data := $id | string | index $table | default dict -}}
+{{- $code := 0 -}}
 
-{{- $code := "code" | index $data | default 0 -}}
+{{- if $idOrName | string | eq $idOrName -}}
+    {{- $slug := $idOrName | slice $context | partial "functions/slugify.string" -}}
+    {{- range where $data "slug" $slug -}}
+        {{- $code = "code" | index . | default $code -}}
+    {{- end -}}
+{{- else -}}
+    {{- range where $data "id" $idOrName -}}
+        {{- $code = "code" | index . | default $code -}}
+    {{- end -}}
+{{- end -}}
 
 {{- return $code -}}
