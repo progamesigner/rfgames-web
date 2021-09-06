@@ -65,20 +65,31 @@
         {{- end -}}
 
         {{- if $profession | eq "revenant" -}}
-            {{- $terrestrialLegend1 := 0 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
-            {{- $terrestrialLegend2 := 1 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
-            {{- $aquaticLegend1 := 2 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
-            {{- $aquaticLegend2 := 3 | index $legends | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
-            {{- $inactiveTerrestrialSkill1 := 4 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
-            {{- $inactiveTerrestrialSkill2 := 5 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
-            {{- $inactiveTerrestrialSkill3 := 6 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
-            {{- $inactiveAquaticSkill1 := 7 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
-            {{- $inactiveAquaticSkill2 := 8 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
-            {{- $inactiveAquaticSkill3 := 9 | index $legends | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+            {{- $legendSkills := $skills | after 5 | after 1 | first 3 -}}
 
-            {{- $code = $code | append (mod $terrestrialLegend1 256) (mod $terrestrialLegend2 256) (mod $aquaticLegend1 256) (mod $aquaticLegend2 256) -}}
-            {{- $code = $code | append (mod $inactiveTerrestrialSkill1 256) (div $inactiveTerrestrialSkill1 256) (mod $inactiveTerrestrialSkill2 256) (div $inactiveTerrestrialSkill2 256) (mod $inactiveTerrestrialSkill3 256) (div $inactiveTerrestrialSkill3 256) -}}
-            {{- $code = $code | append (mod $inactiveAquaticSkill1 256) (div $inactiveAquaticSkill1 256) (mod $inactiveAquaticSkill2 256) (div $inactiveAquaticSkill2 256) (mod $inactiveAquaticSkill3 256) (div $inactiveAquaticSkill3 256) -}}
+            {{- range $legends -}}
+                {{- $terrestrialLegend := 0 | index . | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
+
+                {{- $code = $code | append (mod $terrestrialLegend 256) -}}
+            {{- end -}}
+
+            {{- range $legends -}}
+                {{- $aquaticLegend := 1 | index . | slice $context | partial "functions/gw2-legend-to-code.integer" -}}
+
+                {{- $code = $code | append (mod $aquaticLegend 256) -}}
+            {{- end -}}
+
+            {{- range $legendSkills -}}
+                {{- $terrestrialLegendSkill := 0 | index . | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+
+                {{- $code = $code | append (mod $terrestrialLegendSkill 256) (div $terrestrialLegendSkill 256) -}}
+            {{- end -}}
+
+            {{- range $legendSkills -}}
+                {{- $aquaticLegendSkill := 1 | index . | slice $context | partial "functions/gw2-skill-to-code.integer" -}}
+
+                {{- $code = $code | append (mod $aquaticLegendSkill 256) (div $aquaticLegendSkill 256) -}}
+            {{- end -}}
         {{- end -}}
 
         {{- if and ($profession | ne "ranger") ($profession | ne "revenant") -}}
