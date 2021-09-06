@@ -40,6 +40,8 @@ const GW2_API_ACCESS_TOKEN = process.env.GW2_ACCESS_TOKEN
 const GW2_API_LANGUAGE = 'en'
 const GW2_API_SCHEMA_VERSION = '2021-01-01T00:00:00Z'
 
+const args = process.argv.slice(2)
+
 const ensure = promisify(mkdir)
 const read = promisify(readFile)
 const write = promisify(writeFile)
@@ -690,6 +692,15 @@ const transformers = [
 
 const pipeline = pipe(
   map(async ([type, url]) => {
+    if (args.includes('--use-preloaded-files')) {
+      return read(`data/preloads/${type}.json`)
+        .then(data => {
+          return {
+            [type]: JSON.parse(data),
+          }
+        })
+    }
+
     const pageSize = 200
 
     const pipeline = pipe(
