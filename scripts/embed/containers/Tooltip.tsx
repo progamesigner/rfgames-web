@@ -47,7 +47,7 @@ function isSmallScreen(window: Window): boolean {
 }
 
 function isTouchDevice(window: Window): boolean {
-  return window.navigator.maxTouchPoints > 0
+  return window.navigator.maxTouchPoints > 0 && window.navigator.maxTouchPoints < 256
 }
 
 export class TooltipContainer implements m.Component<TooltipContainerAttributes> {
