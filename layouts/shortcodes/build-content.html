@@ -569,23 +569,70 @@
     {{- $context := 0 | index . -}}
     {{- $skills := 1 | index . -}}
     {{- $activeTraitlines := 2 | index . -}}
+    {{- $legends := 3 | index . -}}
 
     <div class="gw2-embed-wrapper">
-        {{- range $skills | first 1 -}}
-            {{- range . | first 1 -}}
-                {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "healing" . $activeTraitlines -}}
+        <div class="tabs">
+            {{- if $legends -}}
+                <div class="tab-nav">
+                    <ul>
+                        {{- range $index, $legend := $legends -}}
+                            {{- if $index | eq 0 -}}
+                                <li class="is-active">
+                                    {{- with 0 | index $legend | slice $context | partial "functions/gw2-legend-to-swap.integer" -}}
+                                        {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "legend" . $activeTraitlines false -}}
+                                    {{- end -}}
+                                </li>
+                            {{- else -}}
+                                <li>
+                                    {{- with 0 | index $legend | slice $context | partial "functions/gw2-legend-to-swap.integer" -}}
+                                        {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "legend" . $activeTraitlines false -}}
+                                    {{- end -}}
+                                </li>
+                            {{- end -}}
+                        {{- end -}}
+                    </ul>
+                </div>
             {{- end -}}
-        {{- end -}}
-        {{- range $skills | after 1 | first 3 -}}
-            {{- range . | first 1 -}}
-                {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "utility" . $activeTraitlines -}}
+
+            <div class="tab is-active">
+                {{- range $skills | first 1 -}}
+                    {{- range . | first 1 -}}
+                        {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "healing" . $activeTraitlines -}}
+                    {{- end -}}
+                {{- end -}}
+                {{- range $skills | after 1 | first 3 -}}
+                    {{- range . | first 1 -}}
+                        {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "utility" . $activeTraitlines -}}
+                    {{- end -}}
+                {{- end -}}
+                {{- range $skills | after 4 | first 1 -}}
+                    {{- range . | first 1 -}}
+                        {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "elite" . $activeTraitlines -}}
+                    {{- end -}}
+                {{- end -}}
+            </div>
+
+            {{- if $legends -}}
+                <div class="tab">
+                    {{- range $skills | after 5 | first 1 -}}
+                        {{- range . | first 1 -}}
+                            {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "healing" . $activeTraitlines -}}
+                        {{- end -}}
+                    {{- end -}}
+                    {{- range $skills | after 5 | after 1 | first 3 -}}
+                        {{- range . | first 1 -}}
+                            {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "utility" . $activeTraitlines -}}
+                        {{- end -}}
+                    {{- end -}}
+                    {{- range $skills | after 5 | after 4 | first 1 -}}
+                        {{- range . | first 1 -}}
+                            {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "elite" . $activeTraitlines -}}
+                        {{- end -}}
+                    {{- end -}}
+                </div>
             {{- end -}}
-        {{- end -}}
-        {{- range $skills | after 4 -}}
-            {{- range . | first 1 -}}
-                {{- template "__rfgames_shortcode_includes__build_skill__" slice $context "elite" . $activeTraitlines -}}
-            {{- end -}}
-        {{- end -}}
+        </div>
     </div>
 {{- end -}}
 
@@ -685,9 +732,7 @@
 <div class="build-card is-skills">
     <h5 class="title">Skills</h5>
     <div class="build-card-content">
-        <div class="gw2-embed-wrapper">
-            {{- template "__rfgames_shortcode_includes__build_skills__" slice $ $template.skills $activeTraitlines -}}
-        </div>
+        {{- template "__rfgames_shortcode_includes__build_skills__" slice $ $template.skills $activeTraitlines $template.legends -}}
     </div>
 </div>
 

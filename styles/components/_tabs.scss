@@ -77,7 +77,7 @@
 .tab {
     display: none;
 
-    &.is-active {
+    @include has-active() {
         display: block;
     }
 }

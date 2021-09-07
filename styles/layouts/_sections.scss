@@ -75,9 +75,42 @@
         }
 
         &.is-skills {
-            .gw2-embed-wrapper {
-                align-items: flex-start;
-                flex-direction: column;
+            .gw2-embed {
+                --gw2-embed-icon-size: var(--gw2-embed-size);
+            }
+
+            .tabs {
+                width: 100%;
+            }
+
+            .tab-nav {
+                --tab-nav-padding: var(--build-tab-nav-padding);
+
+                @include block(var(--build-tab-nav-spacing));
+
+                ul {
+                    display: flex;
+                    justify-content: space-around;
+                }
+
+                li {
+                    background-color: transparent;
+                    cursor: pointer;
+                    flex-basis: 0;
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    opacity: var(--build-tab-nav-opacity);
+                    transition: opacity var(--speed-slow) var(--easing);
+
+                    @include has-hover() {
+                        opacity: var(--build-tab-nav-hover-opacity);
+                    }
+
+                    @include has-active() {
+                        background-color: transparent;
+                        opacity: var(--build-tab-nav-active-opacity);
+                    }
+                }
             }
         }
 
@@ -128,6 +161,12 @@
         &.is-skill {
             grid-template-areas: "icon text";
             grid-template-columns: var(--gw2-embed-size) auto;
+            grid-template-rows: var(--gw2-embed-size);
+        }
+
+        &.is-legend {
+            grid-template-areas: "icon";
+            grid-template-columns: var(--gw2-embed-size);
             grid-template-rows: var(--gw2-embed-size);
         }
 

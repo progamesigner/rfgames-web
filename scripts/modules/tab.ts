@@ -10,7 +10,7 @@ export function bootstrap(window: Window): void {
       const tabs = element.querySelectorAll('.tab')
 
       element
-        .querySelectorAll('.tab-nav a')
+        .querySelectorAll('.tab-nav li')
         .forEach((element, index) => {
           element.addEventListener('click', event => {
             navs.forEach(nav => {
