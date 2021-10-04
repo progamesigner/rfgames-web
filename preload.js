@@ -332,7 +332,21 @@ const transformers = [
       map(reduce(max, 0)),
       zip(revenantSkillSlots),
       fromPairs,
-    )(legends)
+    )({
+      ...legends,
+      Legend7: {
+        id: 'Legend7',
+        code: 6,
+        swap: 62891,
+        heal: 62719,
+        elite: 62942,
+        utilities: [
+          62832,
+          62962,
+          62878
+        ]
+      }
+    })
 
     const professionSkills = pipe(
       Object.values,
