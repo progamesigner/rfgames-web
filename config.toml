@@ -27,3 +27,7 @@ googleAnalytics = "UA-109064425-4"
   gw2APILanguage = 'en'
   gw2APISchemaVersion = '2021-01-01T00:00:00Z'
   gw2WikiLanguage = 'en'
+
+[security]
+  [security.funcs]
+    getenv = ['^GW2_', '^HUGO_']
