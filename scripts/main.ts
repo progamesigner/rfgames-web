@@ -5,7 +5,11 @@ async function initialize() {
     } = await import(/* webpackChunkName: 'bootstrap' */ './bootstrap')
     bootstrap(window)
   } catch (error) {
-    console.error(error.message)
+    if (error instanceof Error) {
+      console.error(error.message)
+    } else {
+      console.error(error)
+    }
   }
 }
 

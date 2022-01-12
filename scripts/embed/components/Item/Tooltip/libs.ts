@@ -136,14 +136,12 @@ export function calculateStatAttribute(
 export function createTakePipe(
   slots: number
 ): (items: ReadonlyArray<number>) => ReadonlyArray<number> {
-  return pipe<
-    ReadonlyArray<number>,
-    ReadonlyArray<number>,
-    ReadonlyArray<number>
-  >(
+  const pipeline = pipe<Array<number>, Array<number>, Array<number>, ReadonlyArray<number>>(
+    (...items) => items,
     append(times(always(0), slots)),
-    take(slots)
+    take(slots),
   )
+  return items => pipeline(...items)
 }
 
 export function parseItemFlags(item: GW2Item): ItemFlags {

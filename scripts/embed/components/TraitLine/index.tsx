@@ -110,7 +110,7 @@ export class TraitLine implements m.Component<TraitLineAttributes> {
       store
     }
   }: m.Vnode<TraitLineAttributes>): m.Children {
-    const majorTraitChunks = splitEvery(3)(data.major_traits)
+    const majorTraitChunks = splitEvery(3)(data.major_traits as Array<number>)
 
     const tooltipEvents = !disableTooltip ?
       bindTooltipEvents(store, TooltipType.GW2_SPECIALIZATION, {

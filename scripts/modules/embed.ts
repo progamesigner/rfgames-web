@@ -13,7 +13,11 @@ async function initialize(window: Window): Promise<void> {
     } = await import(/* webpackChunkName: 'embed-bootstrap' */ `../embed/bootstrap`)
     bootstrap(window)
   } catch (error) {
-    console.error(error.message)
+    if (error instanceof Error) {
+      console.error(error.message)
+    } else {
+      console.error(error)
+    }
   }
 }
 

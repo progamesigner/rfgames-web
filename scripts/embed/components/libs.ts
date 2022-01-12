@@ -84,7 +84,7 @@ export function applyTraitedFacts(
   traits: ReadonlyArray<number>,
   traitedFacts: ReadonlyArray<GW2TraitedFact> = [],
 ): ReadonlyArray<TraitedFact> {
-  const untratedFacts = mapUntratedFacts(facts)
+  const untratedFacts = mapUntratedFacts(facts as Array<GW2Fact>)
 
   return traitedFacts
     .filter(fact => traits.includes(fact.requires_trait))
@@ -199,5 +199,5 @@ export function sortFacts<T>(
   facts: ReadonlyArray<T>,
   typer: (fact: T) => GW2FactType
 ): ReadonlyArray<T> {
-  return sortBy((fact: T) => factOrders[typer(fact)])(facts)
+  return sortBy((fact: T) => factOrders[typer(fact)])(facts as Array<T>)
 }

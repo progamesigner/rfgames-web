@@ -2,7 +2,7 @@ import * as m from 'mithril'
 
 import { slice } from 'rambda'
 
-import { GW2Trait, TooltipType } from '../../../types'
+import { GW2Trait, GW2TraitSkill, TooltipType } from '../../../types'
 
 import { SkillTooltip } from '../../Skill/Tooltip'
 import {
@@ -51,7 +51,7 @@ export class TraitTooltip implements m.Component<TraitTooltipAttributes> {
     return m.fragment({}, [
       ...(
         trait.skills ?
-        slice(index ?? 0, 1)(trait.skills).map(skill =>
+        slice(index ?? 0, 1)(trait.skills as Array<GW2TraitSkill>).map(skill =>
           <SkillTooltip key={skill.id} activeTraits={activeTraits} skill={skill} />
         ) :
         []

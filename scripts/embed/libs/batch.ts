@@ -32,7 +32,11 @@ export function batch<T, R, A extends ReadonlyArray<unknown>>(
     try {
       defer.resolve && defer.resolve(func(ids, ...args as A))
     } catch (error) {
-      defer.reject && defer.reject(error)
+      if (error instanceof Error) {
+        defer.reject && defer.reject(error as Error)
+      } else {
+        defer.reject && defer.reject(new Error(error as string))
+      }
     }
 
     debouncedIds = []

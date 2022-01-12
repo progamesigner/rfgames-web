@@ -86,7 +86,7 @@ const requestReducer = <T extends GW2Resources>(
 
   return {
     ...state,
-    [resource]: reducer(ids)
+    [resource]: reducer(ids as Array<ExtractGW2KeyType<T>>)
   }
 }
 

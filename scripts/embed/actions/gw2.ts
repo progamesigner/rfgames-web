@@ -79,7 +79,7 @@ function actionFactory<T extends GW2Resources>(
       uniq
     )
 
-    const idsToFetch = fetchIdsFilter(ids)
+    const idsToFetch = fetchIdsFilter(ids as Array<ExtractGW2KeyType<T>>)
 
     if (idsToFetch.length > 0) {
       const fetcher = pipe(

@@ -162,8 +162,8 @@ $speed: 86ms !default;
 
     --block-spacing: #{$block-spacing};
     --border-color: #{$background-alternative-color};
-    --delay-long: #{$delay * 1.5};
-    --delay-short: #{$delay / 1.5};
+    --delay-long: #{calc($delay * 1.5)};
+    --delay-short: #{calc($delay / 1.5)};
     --delay: #{$delay};
     --drop-shadow: 0 0.5rem 0.5rem #{rgba($background-color, 0.15)};
     --easing: #{$easing};
@@ -171,8 +171,8 @@ $speed: 86ms !default;
     --scrollbar-foreground-color: #{map-get($primary-palette, 500)};
     --scrollbar-width: auto;
     --selection-background-color: #{map-get($primary-palette, 700)};
-    --speed-fast: #{$speed / 1.5};
-    --speed-slow: #{$speed * 1.5};
+    --speed-fast: #{calc($speed / 1.5)};
+    --speed-slow: #{calc($speed * 1.5)};
     --speed: #{$speed};
 
     --tablet-breakpoint: #{$tablet-breakpoint};
@@ -268,8 +268,8 @@ $speed: 86ms !default;
     --icon-raduis: #{$radius};
 
     --section-gap: #{$gap};
-    --section-nested-gap: #{$gap / 2};
-    --section-nested-nested-gap: #{$gap / 4};
+    --section-nested-gap: #{calc($gap / 2)};
+    --section-nested-nested-gap: #{calc($gap / 4)};
 
     --subtitle-font-family: #{$font-family-title};
     --subtitle-font-size: #{$font-size-5};

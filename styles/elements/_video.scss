@@ -2,7 +2,7 @@
     display: block;
     margin: 0;
     position: relative;
-    padding-bottom: 9 / 16 * 100%;
+    padding-bottom: calc(9 / 16 * 100%);
 
     iframe {
         @include overlay();

@@ -160,9 +160,9 @@
     content: '';
     display: block;
     height: $dimensions;
-    left: calc(50% - #{$dimensions / 2});
+    left: calc(50% - #{calc($dimensions / 2)});
     position: absolute;
-    top: calc(50% - #{$dimensions / 2});
+    top: calc(50% - #{calc($dimensions / 2)});
     width: $dimensions;
 }
 
