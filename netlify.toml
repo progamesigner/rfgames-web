@@ -5,7 +5,7 @@
 
 [build.environment]
   HUGO_VERSION = "0.92.0"
-  NODE_VERSION = "14"
+  NODE_VERSION = "17.3.1"
 
 [template.environment]
   GW2_ACCESS_TOKEN = ""
