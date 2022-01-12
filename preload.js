@@ -4,9 +4,7 @@ const { mkdir, readFile, writeFile } = require('fs')
 const { stringify } = require('querystring')
 const { promisify } = require('util')
 
-const {
-  default: fetch,
-} = require('node-fetch')
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args))
 const {
   adjust,
   always,
