@@ -4,11 +4,11 @@
             {{- range $index, $title := .Scratch.Get "tab-list" -}}
                 {{- if $index | eq 0 -}}
                     <li class="is-active">
-                        <a>{{ $title }}</a>
+                        <span>{{ $title }}</span>
                     </li>
                 {{- else -}}
                     <li>
-                        <a>{{ $title }}</a>
+                        <span>{{ $title }}</span>
                     </li>
                 {{- end -}}
             {{- end -}}

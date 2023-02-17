@@ -53,9 +53,11 @@
         }
     }
 
-    a {
+    a,
+    span {
         align-items: center;
         color: var(--tab-nav-text-color);
+        cursor: pointer;
         display: flex;
         justify-content: center;
         outline: none;
