@@ -19,10 +19,17 @@ relativeURLs = true
 disqusShortname = "rfgames"
 googleAnalytics = "UA-109064425-4"
 
+[menus]
+[[menus.nav]]
+  title = "Discord"
+  parent = "Community"
+  url = "https://discord.com/invite/xsSWwn3"
+
 [params]
   applicationFormURL = "https://api.rfgames.tw/v1/apply"
   contactFormURL = "https://api.rfgames.tw/v1/contact"
   description = "A NA SEA fight-focused WvW guild"
+  discordURL = "https://discord.com/invite/xsSWwn3"
   gitRepository = "https://github.com/progamesigner/rfgames-web"
   gw2APILanguage = 'en'
   gw2APISchemaVersion = '2021-01-01T00:00:00Z'

@@ -1,9 +1,13 @@
 {{- $page := .Get 0 -}}
 
-{{- with .Site.GetPage $page -}}
-    {{- $menu := or ("menu" | .Param) ("menus" | .Param) | default dict -}}
-    {{- $nav := "nav" | index $menu | default dict -}}
-    {{- "url" | index $nav | default .RelPermalink | printf -}}
+{{- if $page | eq "community/discord" -}}
+    {{ "discordURL" | .Page.Param | default "#" }}
 {{- else -}}
-    {{- relref .Page $page -}}
+    {{- with .Site.GetPage $page -}}
+        {{- $menu := or ("menu" | .Param) ("menus" | .Param) | default dict -}}
+        {{- $nav := "nav" | index $menu | default dict -}}
+        {{- "url" | index $nav | default .RelPermalink | printf -}}
+    {{- else -}}
+        {{- relref .Page $page -}}
+    {{- end -}}
 {{- end -}}
