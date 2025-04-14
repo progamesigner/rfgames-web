@@ -1,11 +1,11 @@
 [build]
-  base = "/"
-  command = "npm run deploy:prod"
-  publish = "public"
+base = "/"
+command = "npm run deploy:prod"
+publish = "public"
 
 [build.environment]
-  HUGO_VERSION = "0.146.3"
-  NODE_VERSION = "17.3.1"
+HUGO_VERSION = "0.146.4"
+NODE_VERSION = "17.3.1"
 
 [template.environment]
-  GW2_ACCESS_TOKEN = ""
+GW2_ACCESS_TOKEN = ""
