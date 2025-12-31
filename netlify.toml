@@ -4,7 +4,7 @@ command = "npm run deploy:prod"
 publish = "public"
 
 [build.environment]
-HUGO_VERSION = "0.153.4"
+HUGO_VERSION = "0.153.5"
 NODE_VERSION = "17.3.1"
 
 [template.environment]
